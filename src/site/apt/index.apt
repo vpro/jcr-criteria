@@ -1,0 +1,105 @@
+                                 --------------------------
+                                     O p e n u t i l s
+                                 --------------------------
+                                     Fabrizio Giustina
+                                 --------------------------
+
+About openutils-mgnlcriteria
+
+  <<<Criteria>>> is a simplified API for retrieving JCR Nodes by composing <<<Criterion>>> objects. This is a
+  very convenient approach for functionality like "search" screens where there is a variable number of conditions to be
+  placed upon the result set.
+  
+  The <<<JCRCriteriaFactory>>> is a factory for <<<Criteria>>>. <<<Criterion>>> instances are usually obtained
+  via the factory methods on <<<Restrictions>>>. eg.
+  
+  openutils-mgnlcriteria API is blatantly inspired by {{{http://www.hibernate.org/hib_docs/reference/en/html/querycriteria.html} Hibernate's Criteria API}}.
+  
+  <<openutils-mgnlcriteria requires JDK 1.5.x or superior>>
+
+Usage
+
+  People already familiar with Hibernate's Criteria will find almost no difference (type names and methods have been kept the same on purpose, whenever possible): 
+  you create a <<<Criteria>>> object with one of the static methods in <<<JCRCriteriaFactory>>> and start adding <<<Restrictions>>> and a final optional <<<Order>>>. 
+  Then you call the <<<list()>>> method to get your <<<Collection>>> of results (that is instances of <<<info.magnolia.cms.core.Content>>>). As in Hibernate's Criteria, method chaining is supported.
+  Here is an example:
+  
++----------------------------------------------+
+  Calendar begin = Calendar.getInstance();
+  begin.set(2004, 0, 1);
+  Calendar end = Calendar.getInstance();
+  end.set(2008, 11, 1);
+       
+  Collection<Content> pets = JCRCriteriaFactory.createMgnlCriteria("//dogs//*", MgnlContext.getQueryManager("website"), "mgnl:content").add(
+                    Restrictions.contains("@name", "Nana")).add(
+                    Restrictions.gt("@weight", new Float(10))).add(
+                    Restrictions.between("@birthDate", begin, end).addOrder(
+                    Order.desc("@jcr:score()")).list();
+  
++----------------------------------------------+
+
+ All this will be translated into the following xpath statement
+  
+ <<<//dogs//*[((jcr:contains(@name, 'Nana')) and (@weight>10.0) and (@birthDate >=xs:dateTime('2004-01-01T00:00:00.000+00:00') and @birthDate <=xs:dateTime('2008-12-01T23:59:59.000+00:00')))] order by @jcr:score() descending>>>
+ 
+ Anyone writing xpath queries by hand knows how painful and error-prone this can be.
+
+ You can also specify a different type to be returned in the Collection of results. eg.
+  
++----------------------------------------------+  
+
+Collection<Pet> pets = JCRCriteriaFactory.createMgnlCriteria("//dogs//*", MgnlContext.getQueryManager("website"), "mgnl:content", Pet.class).add(
+                    Restrictions.contains("@name", "Nana")).add(
+                    Restrictions.gt("@weight", new Float(10))).add(
+                    Restrictions.between("@birthDate", begin, end).addOrder(
+                    Order.desc("@jcr:score()")).list();
++----------------------------------------------+
+ 
+ Internally, this will use <<<info.magnolia.content2bean.Content2BeanUtil.toBean()>>> to transform nodes into beans. 
+ 
+ So, for example, if you have a domain <<<Pet>>> class like this 
+
++----------------------------------------------+  
+ public class Pet
+{
+    private String name;
+    private Float weight;
+    private Calendar birthDate;
+    
+    //getters and setters here...
+}    
++----------------------------------------------+
+
+ <<<Content>>> nodes returned by the above query will be automatically converted to and populate instances of the <<<Pet>>> type.
+
+ Furthermore, you may want to have only a subset of the whole resultset returned, much like in a MySQL limit clause.  
+ In this case, you will use the <<<JCRCriteriaFactory.createMgnlCriteriaWithLimit>>> factory method.
+ For this to work, the underlying JCR repository implementation must support this feature (Jackrabbit 1.4+ does).
+ 
+ Here is an example.
+
++----------------------------------------------+
+ Collection<Pet> pets = JCRCriteriaFactory.createMgnlCriteriaWithLimit("//dogs//*", MgnlContext.getQueryManager("website"), "mgnl:content", Pet.class).add(
+                    Restrictions.contains("@name", "Nana")).add(
+                    Restrictions.gt("@weight", new Float(10))).add(
+                    Restrictions.between("@birthDate", begin, end).
+                    setFirstResult(5).
+                    setMaxResults(10).
+                    addOrder(Order.desc("@jcr:score()")).list();
++----------------------------------------------+         
+
+ Notice the <<<setFirstResult(int)>>> and <<<setMaxResults(int)>>> methods. 
+ Now calling <<<list()>>> will cause to return a subset of only ten <<<Pet>>> objects, starting from the 6th item (counting starts from 0) returned by query.             
+
+ A word of warning about implementations returned by <<<JCRCriteriaFactory>>>. They are NOT thread-safe, therefore client code
+ wishing to use one of them as a shared global variable MUST coordinate access to it. These objects are actually meant to be 
+ instantiated and used within a method scope (e.g. a service method), where no concurrent issues arise.
+  
+ Finally, it is good to know that openutils-mgnlcriteria API catches all checked exceptions thrown by JCR and Magnolia and 
+ wraps them into its own runtime <<<net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException>>>, leaving to
+ the API user the choice whether to catch it or not and, when needed, get to the original cause of error.    
+
+
+Released versions
+
+ Check it at {{{http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlcriteria}http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlcriteria}}

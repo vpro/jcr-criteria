@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+  <!-- log4j test configuration -->
+  <appender name="test-appender" class="org.apache.log4j.ConsoleAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%-5p %c.%M(%C{1}.java:%L)   %m%n" />
+    </layout>
+  </appender>
+  <category name="jdbc">
+    <priority value="WARN" />
+  </category>
+  <category name="it">
+    <priority value="INFO" />
+  </category>
+  <category name="info">
+    <priority value="INFO" />
+  </category>
+  <category name="org">
+    <priority value="WARN" />
+  </category>
+  <category name="com">
+    <priority value="WARN" />
+  </category>
+  <category name="net">
+    <priority value="WARN" />
+  </category>
+  <category name="org.dbunit">
+    <priority value="WARN" />
+  </category>
+  <category name="it.openmindonline.sapere.search.SapereSearcher">
+    <priority value="DEBUG" />
+  </category>
+  <category name="score">
+    <priority value="INFO" />
+  </category>
+  <root>
+    <priority value="ALL" />
+    <appender-ref ref="test-appender" />
+  </root>
+</log4j:configuration>

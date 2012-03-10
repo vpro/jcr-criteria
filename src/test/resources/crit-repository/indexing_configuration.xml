@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration SYSTEM "http://jackrabbit.apache.org/dtd/indexing-configuration-1.2.dtd">
+<configuration xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:mgnl="http://www.magnolia.info/jcr/mgnl"
+  xmlns:jcr="http://www.jcp.org/jcr/1.0">
+  <analyzers>
+    <analyzer class="net.sourceforge.openutils.mgnlcriteria.utils.ASCIIFoldingAnalyzer">
+      <property>text</property>
+    </analyzer>
+    <analyzer class="net.sourceforge.openutils.mgnlcriteria.utils.ASCIIFoldingAnalyzer">
+      <property>title</property>
+    </analyzer>
+    <analyzer class="net.sourceforge.openutils.mgnlcriteria.utils.ASCIIFoldingAnalyzer">
+      <property>FULLTEXT</property>
+    </analyzer>
+  </analyzers>
+
+
+<!--
+  <index-rule nodeType="nt:hierarchyNode">
+    <property boost="10" useInExcerpt="false">title</property>
+    <property boost="1.0" useInExcerpt="true">text</property>
+  </index-rule>
+  <index-rule nodeType="mgnl:content">
+    <property boost="10" useInExcerpt="false">title</property>
+    <property boost="1.0" useInExcerpt="true">text</property>
+  </index-rule>
+  <index-rule nodeType="mgnl:contentNode">
+    <property boost="0.5"   useInExcerpt="false">title</property>
+    <property boost="1.0"   useInExcerpt="true">text</property>
+  </index-rule>
+  -->
+
+  <!-- index text content on paragraphs -->
+  <!-- aggregates content on the main column -->
+
+  <aggregate primaryType="mgnl:content">
+    <include primaryType="mgnl:contentNode">mainframe/*</include>
+  </aggregate>
+
+
+
+
+  <!-- index metadata attributes inside the main node, to allow sorting! -->
+  <aggregate primaryType="mgnl:content">
+    <include>mgnl:creationdate</include>
+    <include-property>MetaData/mgnl:creationdate</include-property>
+  </aggregate>
+  <aggregate primaryType="mgnl:content">
+    <include>mgnl:lastmodified</include>
+    <include-property>MetaData/mgnl:lastmodified</include-property>
+  </aggregate>
+</configuration>
