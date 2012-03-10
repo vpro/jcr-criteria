@@ -36,7 +36,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
  * Calendar end = Calendar.getInstance();
  * end.set(2001, Calendar.DECEMBER, 31);
  *
- * Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE)
+ * Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE)
  *     .setBasePath("/pets")
  *     .add(Restrictions.contains("@title", "Lucky"))
  *     .add(Restrictions.eq("@petType", "dog"))
@@ -60,7 +60,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
  * <pre>
  * Criteria criteria = JCRCriteriaFactory
  *     .createCriteria()
- *     .setWorkspace(ContentRepository.WEBSITE)
+ *     .setWorkspace(RepositoryConstants.WEBSITE)
  *     .setBasePath("/pets")
  *     .add(Restrictions.betweenDates("@birthDate", begin, end))
  *     .addOrder(Order.asc("@birthDate"))
@@ -75,7 +75,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
  * Another way to paginate results is by using the <code>setPaging</code> method:
  * 
  * <pre>
- * Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE)
+ * Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE)
  *     .setBasePath("/pets")
  *     .add(Restrictions.betweenDates("@birthDate", begin, end))
  *     .addOrder(Order.asc("@birthDate"))

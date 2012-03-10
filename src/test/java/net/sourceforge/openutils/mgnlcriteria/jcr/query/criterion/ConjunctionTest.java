@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion;
 
-import info.magnolia.cms.beans.config.ContentRepository;
+import info.magnolia.repository.RepositoryConstants;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 
@@ -43,7 +43,7 @@ public class ConjunctionTest
     {
         Criteria criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/")
             .add(Restrictions.eq("MetaData/@mgnl:template", "t-photogallery-sheet"))
             .add(Restrictions.isNotNull("@playlist"))
@@ -68,7 +68,7 @@ public class ConjunctionTest
             .add(Restrictions.isNotNull("@playlist"));
         Criteria criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/")
             .add(conjunction)
             .addOrder(Order.desc("@photogalleryDate"));

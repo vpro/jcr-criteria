@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.security.AccessManager;
 import info.magnolia.cms.security.AccessManagerImpl;
@@ -27,6 +26,7 @@ import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.PermissionImpl;
 import info.magnolia.cms.util.SimpleUrlPattern;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
@@ -92,7 +92,7 @@ public class AccessibleResultItemResultIteratorTest extends
 		// ----- 2 (title=Basil, petType=hamster, birthDate=2002-08-06)
 
 		HierarchyManager hm = MgnlContext
-				.getHierarchyManager(ContentRepository.WEBSITE);
+				.getHierarchyManager(RepositoryConstants.WEBSITE);
 		hm.save();
 
 		Permission readDogsPermission = new PermissionImpl();
@@ -115,7 +115,7 @@ public class AccessibleResultItemResultIteratorTest extends
 	@Test
 	public void testGetContent() throws Exception {
 		HierarchyManager hm = MgnlContext
-				.getHierarchyManager(ContentRepository.WEBSITE);
+				.getHierarchyManager(RepositoryConstants.WEBSITE);
 
 		try {
 			// Allowed access
@@ -146,7 +146,7 @@ public class AccessibleResultItemResultIteratorTest extends
 		end.set(2001, Calendar.DECEMBER, 31);
 
 		Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(
-				ContentRepository.WEBSITE).setBasePath("/pets").add(
+				RepositoryConstants.WEBSITE).setBasePath("/pets").add(
 				Restrictions.between("@birthDate", begin, end)).addOrder(
 				Order.asc("@birthDate"));
 

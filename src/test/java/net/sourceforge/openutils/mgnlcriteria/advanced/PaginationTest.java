@@ -19,8 +19,8 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
@@ -63,7 +63,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
         // --- X
         // --- Y
         // --- Z
-        MgnlContext.getHierarchyManager(ContentRepository.WEBSITE).save();
+        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
     }
 
     /**
@@ -73,7 +73,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     @Test
     public void testNoPagination() throws Exception
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.addOrder(Order.asc("@title"));
@@ -97,7 +97,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     @Test
     public void testForEachSupport() throws Exception
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.addOrder(Order.asc("@title"));
@@ -121,7 +121,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     @Test
     public void testSetFirstResult() throws Exception
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.addOrder(Order.asc("@title"));
@@ -143,7 +143,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     @Test
     public void testSetMaxResults() throws Exception
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.addOrder(Order.asc("@title"));
@@ -170,7 +170,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     @Test
     public void testSetPaging() throws Exception
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.addOrder(Order.asc("@title"));
@@ -196,7 +196,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     @Test
     public void testSetPagingLastPage() throws Exception
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.addOrder(Order.asc("@title"));
@@ -219,7 +219,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     @Test
     public void testSetPagingEvenPage() throws Exception
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.addOrder(Order.asc("@title"));

@@ -22,9 +22,9 @@
  */
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
@@ -71,7 +71,7 @@ public class CorrectElementsWithoutMaxResults extends TestNgRepositoryTestcase
         // ----- 2 (title=Basil, petType=hamster, birthDate=2002-08-06)
         // ************************************************************
         // total 13 pets
-        MgnlContext.getHierarchyManager(ContentRepository.WEBSITE).save();
+        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
     }
 
     @Test
@@ -180,7 +180,7 @@ public class CorrectElementsWithoutMaxResults extends TestNgRepositoryTestcase
     {
         return JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/jcr:root/pets/*/*")
             .add(Restrictions.eq("@jcr:primaryType", ItemType.CONTENT.getSystemName()))
             .setForcePagingWithDocumentOrder(true);

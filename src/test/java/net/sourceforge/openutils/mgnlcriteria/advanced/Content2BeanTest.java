@@ -19,8 +19,8 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
@@ -59,14 +59,14 @@ public class Content2BeanTest extends TestNgRepositoryTestcase
 
         super.setUp();
 
-        MgnlContext.getHierarchyManager(ContentRepository.WEBSITE).save();
+        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void testLoremAndIpsum() throws Exception
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.contains("@title", "lorem ipsum"));

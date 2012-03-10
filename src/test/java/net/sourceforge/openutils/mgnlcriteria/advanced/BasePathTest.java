@@ -19,8 +19,8 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
@@ -74,7 +74,7 @@ public class BasePathTest extends TestNgRepositoryTestcase
         // --------- MagnoliaCriteriaImpl
         // ----------- MagnoliaCriteriaWithLimitImpl
         // ------- AdvancedCriteriaImpl
-        MgnlContext.getHierarchyManager(ContentRepository.WEBSITE).save();
+        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
     }
 
     /**
@@ -163,7 +163,7 @@ public class BasePathTest extends TestNgRepositoryTestcase
 
     private Collection<String> searchPaths(String basePath, String title)
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(basePath);
         criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, "mgnl:content"));
         if (!StringUtils.isEmpty(title))

@@ -25,6 +25,7 @@ import java.io.Reader;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
+import org.apache.lucene.util.Version;
 
 
 /**
@@ -68,7 +69,7 @@ public abstract class BaseAnalyzer extends Analyzer
      */
     protected StandardTokenizer tokenize(Reader reader)
     {
-        return new StandardTokenizer(reader);
+        return new StandardTokenizer(Version.LUCENE_30, reader);
     }
 
     /**

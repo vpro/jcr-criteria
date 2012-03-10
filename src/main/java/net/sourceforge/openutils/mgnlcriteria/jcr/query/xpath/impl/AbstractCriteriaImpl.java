@@ -19,8 +19,8 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.impl;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -66,7 +66,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
 
     protected String spellCheckString;
 
-    protected String workspace = ContentRepository.WEBSITE;
+    protected String workspace = RepositoryConstants.WEBSITE;
 
     protected boolean forcePagingWithDocumentOrder;
 

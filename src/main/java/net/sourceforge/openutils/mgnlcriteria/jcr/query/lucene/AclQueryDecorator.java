@@ -39,8 +39,8 @@ import org.apache.jackrabbit.core.SessionImpl;
 import org.apache.jackrabbit.core.query.lucene.MatchAllDocsQuery;
 import org.apache.jackrabbit.core.query.lucene.QueryDecoratorSupport;
 import org.apache.jackrabbit.core.query.lucene.SearchIndex;
-import org.apache.lucene.search.Query;
 import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.Query;
 
 
 /**

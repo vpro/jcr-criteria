@@ -19,9 +19,9 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
@@ -64,14 +64,14 @@ public class JcrContainsQuestionMarkTest extends TestNgRepositoryTestcase
         // - lorem ipsum
         // - dolor sit
         // - dolor sit amet
-        MgnlContext.getHierarchyManager(ContentRepository.WEBSITE).save();
+        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
     }
 
     @SuppressWarnings("deprecation")
     @Test
     public void testTrailingUnescaped() throws Exception
     {
-        HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
+        HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE);
 
         AdvancedResultImpl advResult = null;
         try
@@ -96,7 +96,7 @@ public class JcrContainsQuestionMarkTest extends TestNgRepositoryTestcase
     @Test
     public void testTrailingEscaped() throws Exception
     {
-        HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
+        HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE);
 
         String stmt = "//*[((@jcr:primaryType='mgnl:content') and (jcr:contains(@title,'test\\?')))] order by @jcr:score";
         AdvancedResultImpl advResult = QueryExecutorHelper.execute(stmt, Query.XPATH, hm, -1, 0, null, false);
@@ -109,7 +109,7 @@ public class JcrContainsQuestionMarkTest extends TestNgRepositoryTestcase
     @Test
     public void testMiddle() throws Exception
     {
-        HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
+        HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE);
         String stmt;
         AdvancedResultImpl advResult;
 

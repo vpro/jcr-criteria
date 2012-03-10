@@ -19,8 +19,8 @@
 
 package net.sourceforge.openutils.mgnlcriteria.tests;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -142,7 +142,7 @@ public class CriteriaTestUtils
 
     public static AdvancedResult search(String searchText, int page, int itemsPerPage)
     {
-        return search(searchText, StringUtils.EMPTY, ContentRepository.WEBSITE, false, page, itemsPerPage);
+        return search(searchText, StringUtils.EMPTY, RepositoryConstants.WEBSITE, false, page, itemsPerPage);
     }
 
     public static AdvancedResult search(String searchText, String path, String repository, boolean titleOnly, int page,

@@ -19,9 +19,9 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
@@ -56,7 +56,7 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
 
         super.setUp();
 
-        MgnlContext.getHierarchyManager(ContentRepository.WEBSITE).save();
+        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
     }
 
     @Test

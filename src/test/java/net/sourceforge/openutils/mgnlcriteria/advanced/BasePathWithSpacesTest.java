@@ -19,8 +19,8 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
@@ -56,7 +56,7 @@ public class BasePathWithSpacesTest extends TestNgRepositoryTestcase
         // Nodes in this workspace:
         // - Lorem ipsum dolor sit amet
         // --- consectetur adipisici elit
-        MgnlContext.getHierarchyManager(ContentRepository.WEBSITE).save();
+        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
     }
 
     /**
@@ -65,7 +65,7 @@ public class BasePathWithSpacesTest extends TestNgRepositoryTestcase
     @Test
     public void test() throws Exception
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/Lorem ipsum dolor sit amet");
         criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, "mgnl:content"));
         AdvancedResult advResult = criteria.execute();
@@ -80,7 +80,7 @@ public class BasePathWithSpacesTest extends TestNgRepositoryTestcase
     @Test
     public void testWithParams() throws Exception
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("//*[prop1='A' and prop2='B']/Lorem ipsum dolor sit amet");
         criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, "mgnl:content"));
         // criteria.addOrder(Order.desc("@jcr:score"));

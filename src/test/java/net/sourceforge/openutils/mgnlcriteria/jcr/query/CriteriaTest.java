@@ -19,12 +19,12 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
@@ -78,7 +78,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // ----- 11 (title=Freddy, petType=bird, birthDate=2000-03-09)
         // --- hamsters (title=Hamsters)
         // ----- 2 (title=Basil, petType=hamster, birthDate=2002-08-06)
-        MgnlContext.getHierarchyManager(ContentRepository.WEBSITE).save();
+        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
     }
 
     /**
@@ -132,13 +132,13 @@ public class CriteriaTest extends TestNgRepositoryTestcase
     @Test
     public void testExecuteTrivial() throws Exception
     {
-        HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
+        HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE);
         Content node = hm.getContent("/pets");
         Assert.assertEquals(node.getTitle(), "Pets");
 
         Criteria criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/jcr:root/*")
             .add(Restrictions.eq("@jcr:primaryType", ItemType.CONTENT.getSystemName()))
             .add(Restrictions.eq("@title", "Pets"));
@@ -178,7 +178,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
 
         Criteria criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/pets")
             .add(Restrictions.contains("@title", "Lucky"))
             .add(Restrictions.eq("@petType", "dog"))
@@ -201,7 +201,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
 
         Criteria criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/pets")
             .add(Restrictions.betweenDates("@birthDate", begin, end))
             .addOrder(Order.asc("@birthDate"))
@@ -242,7 +242,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
 
         Criteria criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/pets")
             .add(Restrictions.betweenDates("@birthDate", begin, end))
             .addOrder(Order.asc("@birthDate"))
@@ -282,7 +282,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // gets the oldest pet (ascending order)
         criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/pets")
             .add(Restrictions.isNotNull("@petType"))
             .addOrder(Order.asc("@birthDate"));
@@ -298,7 +298,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // gets the youngest pet (descending order)
         criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/pets")
             .add(Restrictions.isNotNull("@petType"))
             .addOrder(Order.desc("@birthDate"));
@@ -325,7 +325,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // order by @birthDate ascending, @title ascending
         criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/pets")
             .add(Restrictions.isNotNull("@petType"))
             .addOrder(Order.asc("@birthDate"))
@@ -341,7 +341,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // order by @birthDate ascending, @title descending
         criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/pets")
             .add(Restrictions.isNotNull("@petType"))
             .addOrder(Order.asc("@birthDate"))
@@ -365,7 +365,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
 
         criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/pets")
             .add(Restrictions.isNotNull("@petType"))
             .add(Restrictions.eq("@title", "Leo"));
@@ -378,7 +378,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         date.add(Calendar.DAY_OF_YEAR, 1);
         criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/pets")
             .add(Restrictions.isNotNull("@petType"))
             .add(Restrictions.eq("@title", "Leo"));
@@ -392,7 +392,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         date.add(Calendar.HOUR, 1);
         criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(ContentRepository.WEBSITE)
+            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/pets")
             .add(Restrictions.isNotNull("@petType"))
             .add(Restrictions.eq("@title", "Leo"));

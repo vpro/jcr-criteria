@@ -19,8 +19,8 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
@@ -69,7 +69,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         // - lorem ipsum
         // - dolor sit
         // - dolor sit amet
-        MgnlContext.getHierarchyManager(ContentRepository.WEBSITE).save();
+        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
     }
 
     @Test
@@ -210,7 +210,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
 
     private Criteria criteria(String titleSearch, boolean escape)
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.contains("@title", titleSearch, escape));

@@ -19,9 +19,9 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
@@ -58,14 +58,14 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     {
         super.setUp();
 
-        MgnlContext.getHierarchyManager(ContentRepository.WEBSITE).save();
+        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
     }
 
     @Test
     public void testEscapeQuotesForEqRestriction() throws Exception
     {
         String title = "Tallart, Camille d'Hostun, cónte di-";
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.eq("@title", title));
@@ -94,7 +94,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     public void testEscapeDoubleQuotesForContainsRestriction() throws Exception
     {
         String searchText = "\"Milano\"";
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.contains("@title", searchText));
@@ -112,7 +112,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     public void testEscapeInvalidChars() throws Exception
     {
         String searchText = "\"Milano(){}[]+*?^|\\/!";
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.contains("@title", searchText));
@@ -130,7 +130,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     public void testEscapeSingleQuotesForContainsRestriction() throws Exception
     {
         String searchText = "Milano'";
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.contains("@title", searchText));
@@ -148,7 +148,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     public void testEscapePlusForContainsRestriction() throws Exception
     {
         String searchText = "Milano +";
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.contains("@title", searchText));
@@ -185,7 +185,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     public void testEscapePipes() throws Exception
     {
         String searchText = "giovanni paolo ||";
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.contains("@title", searchText));
@@ -208,7 +208,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     {
         String searchText = ":)";
 
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.eq("@title", searchText));
@@ -232,7 +232,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     {
         String searchText = "(ai)(n)(uk)";
 
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.contains("@title", searchText));
@@ -259,7 +259,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     public void testEscapeUnconventionalKeywords0() throws Exception
     {
         String searchText = "(fr: )(n)";
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
 
         Disjunction disjunction = Restrictions.disjunction();
@@ -293,7 +293,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
 
         String searchText = ":";
 
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.contains("@title", searchText));
@@ -314,7 +314,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
 
         String searchText = ")";
 
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.contains("@title", searchText));
 
@@ -332,7 +332,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
 
         String searchText = ": )";
 
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.contains("@title", searchText));
 
@@ -349,7 +349,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     public void testEscapeOrKeyword() throws Exception
     {
         String searchText = "OR SONO";
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.contains("@title", searchText));
@@ -367,7 +367,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     public void testEscapeOrKeywordWithEqual() throws Exception
     {
         String searchText = "OR SONO";
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.eq("@title", searchText));
@@ -385,7 +385,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     public void testEscapeAndKeyword() throws Exception
     {
         String searchText = "AND ME";
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
         criteria.add(Restrictions.contains("@title", searchText));
@@ -404,7 +404,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
 
         String searchText = ":)";
 
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
         criteria.add(Restrictions.contains("@title", searchText));
 

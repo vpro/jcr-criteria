@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query.lucene;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.security.AccessManager;
 import info.magnolia.cms.security.AccessManagerImpl;
@@ -29,6 +28,7 @@ import info.magnolia.cms.util.SimpleUrlPattern;
 import info.magnolia.context.AbstractRepositoryStrategy;
 import info.magnolia.context.DefaultRepositoryStrategy;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.mock.MockWebContext;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
@@ -36,7 +36,6 @@ import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -92,7 +91,7 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
         // --- hamsters (title=Hamsters)
         // ----- 2 (title=Basil, petType=hamster, birthDate=2002-08-06)
 
-        HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
+        HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE);
         hm.save();
     }
 
@@ -112,7 +111,7 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
             Field hmsField = AbstractRepositoryStrategy.class.getDeclaredField("hierarchyManagers");
             hmsField.setAccessible(true);
             Map hms = (Map) hmsField.get(drs);
-            hms.put("website_website", MgnlContext.getHierarchyManager(ContentRepository.WEBSITE));
+            hms.put("website_website", MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE));
         }
         catch (Exception e)
         {
@@ -153,14 +152,14 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
         p.setPattern(new SimpleUrlPattern("/pets/dogs/*"));
         p.setPermissions(Permission.READ);
         pList.add(p);
-        MgnlContext.getAccessManager(ContentRepository.WEBSITE).setPermissionList(pList);
+        MgnlContext.getAccessManager(RepositoryConstants.WEBSITE).setPermissionList(pList);
 
         Calendar begin = Calendar.getInstance();
         begin.set(1999, Calendar.JANUARY, 1);
         Calendar end = Calendar.getInstance();
         end.set(2001, Calendar.DECEMBER, 31);
 
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE).setBasePath(
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE).setBasePath(
             "/pets").add(Restrictions.between("@birthDate", begin, end)).addOrder(Order.asc("@birthDate"));
 
         // Query results:
@@ -208,14 +207,14 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
         p.setPattern(new SimpleUrlPattern("/pets/dogs/*"));
         p.setPermissions(Permission.NONE);
         pList.add(p);
-        MgnlContext.getAccessManager(ContentRepository.WEBSITE).setPermissionList(pList);
+        MgnlContext.getAccessManager(RepositoryConstants.WEBSITE).setPermissionList(pList);
 
         Calendar begin = Calendar.getInstance();
         begin.set(1999, Calendar.JANUARY, 1);
         Calendar end = Calendar.getInstance();
         end.set(2001, Calendar.DECEMBER, 31);
 
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(ContentRepository.WEBSITE).setBasePath(
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE).setBasePath(
             "/pets").add(Restrictions.between("@birthDate", begin, end)).addOrder(Order.asc("@birthDate"));
 
         AdvancedResult result = criteria.execute();
