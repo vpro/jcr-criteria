@@ -36,7 +36,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import javax.jcr.Item;
+import javax.jcr.Node;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
@@ -64,11 +64,11 @@ public class MappedDefaultContent extends DefaultContent implements Map<String, 
      * @throws RepositoryException
      * @throws AccessDeniedException
      */
-    public MappedDefaultContent(Item elem, HierarchyManager hierarchyManager)
+    public MappedDefaultContent(Node elem, HierarchyManager hierarchyManager)
         throws RepositoryException,
         AccessDeniedException
     {
-        super(elem, hierarchyManager);
+        super(elem);
     }
 
     /**

@@ -65,7 +65,7 @@ public class AdvancedResultItemImpl extends MappedDefaultContent implements Adva
         throws RepositoryException,
         AccessDeniedException
     {
-        super(item, hierarchyManager);
+        super(item);
         this.row = row;
     }
 
