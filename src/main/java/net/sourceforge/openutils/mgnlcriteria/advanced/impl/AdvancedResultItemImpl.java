@@ -26,6 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.jcr.Item;
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 import javax.jcr.query.Row;
@@ -65,7 +66,7 @@ public class AdvancedResultItemImpl extends MappedDefaultContent implements Adva
         throws RepositoryException,
         AccessDeniedException
     {
-        super(item);
+        super((Node) item, hierarchyManager);
         this.row = row;
     }
 
