@@ -184,7 +184,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <magnolia.version>4.5</magnolia.version>
+    <magnolia.version>4.5.1</magnolia.version>
     <jackrabbit.version>2.4.0</jackrabbit.version>
     <jcr.version>2.0</jcr.version>
   </properties>
