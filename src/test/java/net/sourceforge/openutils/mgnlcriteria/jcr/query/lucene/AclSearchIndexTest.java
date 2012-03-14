@@ -28,7 +28,9 @@ import info.magnolia.cms.util.SimpleUrlPattern;
 import info.magnolia.context.AbstractRepositoryStrategy;
 import info.magnolia.context.DefaultRepositoryStrategy;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.repository.RepositoryManager;
 import info.magnolia.test.mock.MockWebContext;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
@@ -105,7 +107,8 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
         super.modifyContextesToUseRealRepository();
 
         MockWebContext mwc = (MockWebContext) MgnlContext.getInstance();
-        DefaultRepositoryStrategy drs = new DefaultRepositoryStrategy(mwc);
+        RepositoryManager repositoryManager = Components.getComponent(RepositoryManager.class);
+        DefaultRepositoryStrategy drs = new DefaultRepositoryStrategy(repositoryManager, mwc);
         try
         {
             Field hmsField = AbstractRepositoryStrategy.class.getDeclaredField("hierarchyManagers");
