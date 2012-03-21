@@ -19,8 +19,11 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
+import info.magnolia.cms.i18n.DefaultI18nContentSupport;
+import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
@@ -64,6 +67,8 @@ public class PaginationTest extends TestNgRepositoryTestcase
         // --- Y
         // --- Z
         MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
+
+        ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
     }
 
     /**
