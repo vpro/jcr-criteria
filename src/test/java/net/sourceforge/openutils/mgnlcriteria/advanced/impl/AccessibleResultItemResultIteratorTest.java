@@ -65,7 +65,10 @@ import org.testng.annotations.Test;
  * 
  * @author dschivo
  */
-@RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = "/crit-bootstrap/website.pets.xml")
+@RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = {
+    "/crit-bootstrap/website.pets.xml",
+    "/crit-bootstrap/userroles.anonymous.xml",
+    "/crit-bootstrap/users.system.anonymous.xml" })
 public class AccessibleResultItemResultIteratorTest extends
 		TestNgRepositoryTestcase {
 
