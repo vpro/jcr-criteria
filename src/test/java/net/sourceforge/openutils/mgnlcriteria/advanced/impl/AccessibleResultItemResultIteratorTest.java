@@ -24,10 +24,14 @@ import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.cms.security.AccessManager;
 import info.magnolia.cms.security.AccessManagerImpl;
+import info.magnolia.cms.security.MgnlRoleManager;
+import info.magnolia.cms.security.MgnlUserManager;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.PermissionImpl;
+import info.magnolia.cms.security.Realm;
 import info.magnolia.cms.security.SecuritySupport;
 import info.magnolia.cms.security.SecuritySupportImpl;
+import info.magnolia.cms.security.User;
 import info.magnolia.cms.util.SimpleUrlPattern;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
@@ -65,7 +69,7 @@ import org.testng.annotations.Test;
 public class AccessibleResultItemResultIteratorTest extends
 		TestNgRepositoryTestcase {
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -112,7 +116,20 @@ public class AccessibleResultItemResultIteratorTest extends
 //		amField.set(hm, am);
 
 		ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
-		ComponentsTestUtil.setInstance(SecuritySupport.class, new SecuritySupportImpl());
+
+        // info.magnolia.cms.security.SecurityTest.setUp()
+        final SecuritySupportImpl sec = new SecuritySupportImpl();
+        sec.addUserManager(Realm.REALM_SYSTEM.getName(), new MgnlUserManager()
+        {
+
+            @Override
+            public User getAnonymousUser()
+            {
+                return getUser("anonymous");
+            }
+        });
+        sec.setRoleManager(new MgnlRoleManager());
+        ComponentsTestUtil.setInstance(SecuritySupport.class, sec);
 	}
 
 	/**
