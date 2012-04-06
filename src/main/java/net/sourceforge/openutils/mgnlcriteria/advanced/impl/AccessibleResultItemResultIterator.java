@@ -20,11 +20,11 @@
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
 import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.security.AccessDeniedException;
+import info.magnolia.cms.security.PermissionUtil;
 
 import java.util.NoSuchElementException;
 
-import javax.jcr.ItemNotFoundException;
+import javax.jcr.Session;
 import javax.jcr.query.RowIterator;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
@@ -77,26 +77,10 @@ public class AccessibleResultItemResultIterator extends AdvancedResultItemResult
         // search for the next accessible result
         do
         {
-            try
+            next = super.next();
+            if (!PermissionUtil.isGranted(hm.getWorkspace().getName(), next.getHandle(), Session.ACTION_READ))
             {
-                next = super.next();
-            }
-            catch (RuntimeException e)
-            {
-
-                if (e.getCause() instanceof AccessDeniedException)
-                {
-                    // if it is an access-denied exception then ignore it
-                }
-                else if (e.getCause() instanceof ItemNotFoundException)
-                {
-                    // if it is an access-denied exception then ignore it
-                    log.warn("Ignoring invalid node while iterating {}", e.getCause().getMessage());
-                }
-                else
-                {
-                    throw e;
-                }
+                next = null;
             }
         }
         while (next == null && super.hasNext());
