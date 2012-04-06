@@ -25,13 +25,12 @@ import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.cms.security.AccessManager;
 import info.magnolia.cms.security.AccessManagerImpl;
 import info.magnolia.cms.security.MgnlRoleManager;
-import info.magnolia.cms.security.MgnlUserManager;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.PermissionImpl;
 import info.magnolia.cms.security.Realm;
 import info.magnolia.cms.security.SecuritySupport;
 import info.magnolia.cms.security.SecuritySupportImpl;
-import info.magnolia.cms.security.User;
+import info.magnolia.cms.security.SystemUserManager;
 import info.magnolia.cms.util.SimpleUrlPattern;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
@@ -122,15 +121,7 @@ public class AccessibleResultItemResultIteratorTest extends
 
         // info.magnolia.cms.security.SecurityTest.setUp()
         final SecuritySupportImpl sec = new SecuritySupportImpl();
-        sec.addUserManager(Realm.REALM_SYSTEM.getName(), new MgnlUserManager()
-        {
-
-            @Override
-            public User getAnonymousUser()
-            {
-                return getUser("anonymous");
-            }
-        });
+        sec.addUserManager(Realm.REALM_SYSTEM.getName(), new SystemUserManager());
         sec.setRoleManager(new MgnlRoleManager());
         ComponentsTestUtil.setInstance(SecuritySupport.class, sec);
 	}
