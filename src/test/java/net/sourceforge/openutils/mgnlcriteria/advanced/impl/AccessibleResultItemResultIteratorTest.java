@@ -26,6 +26,8 @@ import info.magnolia.cms.security.AccessManager;
 import info.magnolia.cms.security.AccessManagerImpl;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.PermissionImpl;
+import info.magnolia.cms.security.SecuritySupport;
+import info.magnolia.cms.security.SecuritySupportImpl;
 import info.magnolia.cms.util.SimpleUrlPattern;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
@@ -33,7 +35,6 @@ import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
-import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.Collections;
 
@@ -111,6 +112,7 @@ public class AccessibleResultItemResultIteratorTest extends
 //		amField.set(hm, am);
 
 		ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
+		ComponentsTestUtil.setInstance(SecuritySupport.class, new SecuritySupportImpl());
 	}
 
 	/**
