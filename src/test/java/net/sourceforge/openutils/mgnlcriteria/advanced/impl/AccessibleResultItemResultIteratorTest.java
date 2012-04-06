@@ -27,6 +27,7 @@ import info.magnolia.cms.security.AccessManagerImpl;
 import info.magnolia.cms.security.MgnlRoleManager;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.PermissionImpl;
+import info.magnolia.cms.security.PermissionUtil;
 import info.magnolia.cms.security.Realm;
 import info.magnolia.cms.security.SecuritySupport;
 import info.magnolia.cms.security.SecuritySupportImpl;
@@ -41,7 +42,7 @@ import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 import java.util.Calendar;
 import java.util.Collections;
 
-import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
@@ -131,25 +132,21 @@ public class AccessibleResultItemResultIteratorTest extends
 	 * 
 	 * @throws Exception
 	 */
-	@Test
-	public void testGetContent() throws Exception {
-		HierarchyManager hm = MgnlContext
-				.getHierarchyManager(RepositoryConstants.WEBSITE);
+    @Test
+    public void testGetContent() throws Exception
+    {
+        HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE);
 
-		try {
-			// Allowed access
-			hm.getContent("/pets/dogs/3");
-		} catch (RepositoryException e) {
-			Assert.fail("should be allowed to read path /pets/dogs");
-		}
+        // Allowed access
+        Assert.assertTrue(
+            PermissionUtil.isGranted(hm.getWorkspace().getName(), "/pets/dogs/3", Session.ACTION_READ),
+            "should be allowed to read path /pets/dogs");
 
-		try {
-			// Not allowed access
-			hm.getContent("/pets/cats/1");
-			Assert.fail("should not be allowed to read path /pets/cats");
-		} catch (RepositoryException e) {
-		}
-	}
+        // Not allowed access
+        Assert.assertFalse(
+            PermissionUtil.isGranted(hm.getWorkspace().getName(), "/pets/cats/1", Session.ACTION_READ),
+            "should not be allowed to read path /pets/cats");
+    }
 
 	/**
 	 * Tests the method of an advanced result for iterating over accessible
