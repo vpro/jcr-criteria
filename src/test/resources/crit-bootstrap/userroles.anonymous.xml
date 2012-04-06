@@ -32,7 +32,7 @@
       <sv:value>2006-05-04T17:05:45.177+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2012-04-06T15:35:30.586+02:00</sv:value>
+      <sv:value>2012-04-06T16:06:24.003+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
       <sv:value/>
@@ -146,7 +146,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>0393512b-b316-4573-b9a4-b695844512c6</sv:value>
+      <sv:value>d888a667-2b90-4040-9f9d-6f322f0664fc</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -159,7 +159,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.592+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.009+02:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="0">
@@ -170,7 +170,7 @@
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>b83b4e8c-c025-4f0e-a6bc-6fbcd18b36f2</sv:value>
+        <sv:value>df4f0cee-01c7-4869-be8d-c63b43d5cd48</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>superuser</sv:value>
@@ -189,7 +189,7 @@
           <sv:value>superuser</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-          <sv:value>2012-04-06T15:35:30.593+02:00</sv:value>
+          <sv:value>2012-04-06T16:06:24.010+02:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -201,7 +201,7 @@
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>93b12ff7-06fb-4cc9-a65e-ad22169ffd4f</sv:value>
+        <sv:value>e11cc36b-190b-41f1-badb-3fba28ddb0f1</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>superuser</sv:value>
@@ -220,7 +220,7 @@
           <sv:value>superuser</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-          <sv:value>2012-04-06T15:35:30.593+02:00</sv:value>
+          <sv:value>2012-04-06T16:06:24.012+02:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -233,7 +233,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>517dd7cc-2f7e-452d-a59b-5776954cc893</sv:value>
+      <sv:value>85557ec5-c2f0-47e9-ab37-2b6110cd0e5d</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -246,7 +246,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.594+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.013+02:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -258,7 +258,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>9d84ab5d-02eb-4e50-a8f6-1d6779ba681a</sv:value>
+      <sv:value>705a827c-639d-41fb-8e02-1ebe02812664</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -271,7 +271,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.596+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.015+02:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="0">
@@ -282,13 +282,13 @@
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>aab8fb1b-4047-476d-b26c-8b973e56e66f</sv:value>
+        <sv:value>a5db2d45-7854-4a35-bae1-45fa9021bfdb</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="path" sv:type="String">
-        <sv:value>/pets/dogs/*</sv:value>
+        <sv:value>/*</sv:value>
       </sv:property>
       <sv:property sv:name="permissions" sv:type="Long">
         <sv:value>8</sv:value>
@@ -301,7 +301,7 @@
           <sv:value>superuser</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-          <sv:value>2012-04-06T15:35:30.596+02:00</sv:value>
+          <sv:value>2012-04-06T16:06:24.015+02:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -314,7 +314,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>a5216fbf-b065-459a-8919-7f58655c50cf</sv:value>
+      <sv:value>5823bedf-49ad-4121-81b8-e4fc86489f12</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -327,7 +327,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.598+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.017+02:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -339,7 +339,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>cd5e0085-3f78-4880-aac7-b17c6f157a94</sv:value>
+      <sv:value>3ed47dd1-c076-4962-87b6-54d7089b4e51</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -352,7 +352,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.599+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.018+02:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -364,7 +364,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>e8fc2d29-3104-4ef2-99b1-1db66ae5caf0</sv:value>
+      <sv:value>412438c8-0401-4c75-b9d1-329f862a066c</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -377,7 +377,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.600+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.019+02:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -389,7 +389,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>9f5e8c32-4596-4da9-8738-a541d3815fdc</sv:value>
+      <sv:value>e6305fc5-6b49-4b55-a2eb-cf6106bee53c</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -402,7 +402,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.602+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.021+02:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="0">
@@ -413,7 +413,7 @@
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>42e7bbf8-23d4-4b3f-b2f4-534b92f9c08a</sv:value>
+        <sv:value>babded40-2e91-4eb5-8703-c5da59c51963</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>superuser</sv:value>
@@ -432,7 +432,7 @@
           <sv:value>superuser</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-          <sv:value>2012-04-06T15:35:30.602+02:00</sv:value>
+          <sv:value>2012-04-06T16:06:24.021+02:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -445,7 +445,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>b0033704-589e-46d3-b982-05d5d52bf774</sv:value>
+      <sv:value>1d251269-986e-4b59-942e-490c387dc322</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -458,7 +458,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.603+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.023+02:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -470,7 +470,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>ff411a3e-a078-43e6-947a-89b4d8232c71</sv:value>
+      <sv:value>8b1bbe83-1e9c-43fe-ab6d-5d3d9391c9bf</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -483,7 +483,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.605+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.024+02:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -495,7 +495,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>4ef3dea1-b4b6-4bc9-ad74-32f844d4e6e4</sv:value>
+      <sv:value>9bd3cf2c-1fe4-4dba-9459-119b9a34ec3d</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -508,7 +508,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.606+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.025+02:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -520,7 +520,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>7be64a8b-3846-4da2-b06d-c6f17b0c9562</sv:value>
+      <sv:value>85710131-1c71-4a5c-818e-9cd91b83ca56</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -533,7 +533,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.606+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.026+02:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -545,7 +545,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>bcdfbda0-aac4-4412-bd0f-9b0d1ce42f02</sv:value>
+      <sv:value>356eec7b-5418-4a09-bc79-9b059e67de31</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -558,7 +558,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.608+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.028+02:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -570,7 +570,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>9bbc6a68-8f6c-4469-b5d6-71ea24d62583</sv:value>
+      <sv:value>56364942-3db9-4ab8-99df-00ec7cad4cfa</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -583,7 +583,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.608+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.029+02:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -595,7 +595,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>1dc275cb-f674-40e2-a959-4cf5337ca1f8</sv:value>
+      <sv:value>7eaf5d7e-62a6-4301-bf59-f051394159bf</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -608,7 +608,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.609+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.030+02:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -620,7 +620,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>06c1f506-8864-4c89-98a7-4a3ae27042e8</sv:value>
+      <sv:value>14ae319a-add2-4fdf-819a-cd8e92506bcf</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -633,7 +633,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.609+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.031+02:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -645,7 +645,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>5b8b58e6-4e03-4ab9-b0a4-1875444767f5</sv:value>
+      <sv:value>60583cde-0a0e-4b74-b0bb-a31c39de8e05</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -658,7 +658,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.611+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.033+02:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="0">
@@ -669,7 +669,7 @@
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>293f1ae3-2341-4afa-8f5c-64271fd4a64b</sv:value>
+        <sv:value>54ff16e9-b523-447e-a659-9313b3a24fb9</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>superuser</sv:value>
@@ -688,7 +688,7 @@
           <sv:value>superuser</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-          <sv:value>2012-04-06T15:35:30.612+02:00</sv:value>
+          <sv:value>2012-04-06T16:06:24.033+02:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -701,7 +701,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>8743eb82-6ca0-4d53-a142-73141611ff22</sv:value>
+      <sv:value>60c6a1ef-8ab2-4365-b5d2-183def11b950</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -714,7 +714,7 @@
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-04-06T15:35:30.613+02:00</sv:value>
+        <sv:value>2012-04-06T16:06:24.034+02:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>

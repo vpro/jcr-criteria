@@ -23,8 +23,14 @@
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.security.MgnlRoleManager;
+import info.magnolia.cms.security.Realm;
+import info.magnolia.cms.security.SecuritySupport;
+import info.magnolia.cms.security.SecuritySupportImpl;
+import info.magnolia.cms.security.SystemUserManager;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
@@ -39,7 +45,10 @@ import org.testng.annotations.Test;
 /**
  * @author carlo
  */
-@RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = "/crit-bootstrap/website.pets.xml")
+@RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = {
+    "/crit-bootstrap/website.pets.xml",
+    "/crit-bootstrap/userroles.anonymous.xml",
+    "/crit-bootstrap/users.system.anonymous.xml" })
 public class CorrectElementsWithoutMaxResults extends TestNgRepositoryTestcase
 {
 
@@ -72,6 +81,12 @@ public class CorrectElementsWithoutMaxResults extends TestNgRepositoryTestcase
         // ************************************************************
         // total 13 pets
         MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
+
+        // info.magnolia.cms.security.SecurityTest.setUp()
+        final SecuritySupportImpl sec = new SecuritySupportImpl();
+        sec.addUserManager(Realm.REALM_SYSTEM.getName(), new SystemUserManager());
+        sec.setRoleManager(new MgnlRoleManager());
+        ComponentsTestUtil.setInstance(SecuritySupport.class, sec);
     }
 
     @Test

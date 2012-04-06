@@ -20,8 +20,16 @@
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.i18n.DefaultI18nContentSupport;
+import info.magnolia.cms.i18n.I18nContentSupport;
+import info.magnolia.cms.security.MgnlRoleManager;
+import info.magnolia.cms.security.Realm;
+import info.magnolia.cms.security.SecuritySupport;
+import info.magnolia.cms.security.SecuritySupportImpl;
+import info.magnolia.cms.security.SystemUserManager;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
@@ -45,7 +53,10 @@ import org.testng.annotations.Test;
  * @author lbrindisi
  * @version $Id$
  */
-@RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = "/crit-bootstrap/website.00000.xml")
+@RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = {
+    "/crit-bootstrap/website.00000.xml",
+    "/crit-bootstrap/userroles.anonymous.xml",
+    "/crit-bootstrap/users.system.anonymous.xml" })
 public class XpathEscapeTest extends TestNgRepositoryTestcase
 {
 
@@ -59,6 +70,14 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         super.setUp();
 
         MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
+
+        ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
+
+        // info.magnolia.cms.security.SecurityTest.setUp()
+        final SecuritySupportImpl sec = new SecuritySupportImpl();
+        sec.addUserManager(Realm.REALM_SYSTEM.getName(), new SystemUserManager());
+        sec.setRoleManager(new MgnlRoleManager());
+        ComponentsTestUtil.setInstance(SecuritySupport.class, sec);
     }
 
     @Test
