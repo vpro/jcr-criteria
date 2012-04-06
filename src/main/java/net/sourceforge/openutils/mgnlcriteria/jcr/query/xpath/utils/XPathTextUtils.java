@@ -155,7 +155,7 @@ public final class XPathTextUtils
                 else if (ch == '(')
                 {
                     // "(" is the beginning of an expression only when used with the element() function
-                    if (StringUtils.endsWith(StringUtils.substring(path, i), "element"))
+                    if (StringUtils.endsWith(StringUtils.substring(path, 0, i), "element"))
                     {
                         inXpathCondition++;
                         xpathWithFunction = true;
