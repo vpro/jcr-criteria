@@ -21,25 +21,34 @@ package net.sourceforge.openutils.mgnlcriteria.jcr.query.lucene;
 
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.security.AccessManager;
-import info.magnolia.cms.security.AccessManagerImpl;
+import info.magnolia.cms.security.MgnlRoleManager;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.PermissionImpl;
+import info.magnolia.cms.security.Realm;
+import info.magnolia.cms.security.SecuritySupport;
+import info.magnolia.cms.security.SecuritySupportImpl;
+import info.magnolia.cms.security.SystemUserManager;
 import info.magnolia.cms.util.SimpleUrlPattern;
-import info.magnolia.context.AbstractRepositoryStrategy;
+import info.magnolia.context.Context;
+import info.magnolia.context.ContextDecorator;
 import info.magnolia.context.DefaultRepositoryStrategy;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.repository.RepositoryManager;
+import info.magnolia.test.ComponentsTestUtil;
 import info.magnolia.test.mock.MockWebContext;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
+
+import javax.jcr.Node;
+import javax.jcr.Session;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
@@ -49,6 +58,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
 
+import org.apache.commons.lang.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -58,7 +68,10 @@ import org.testng.annotations.Test;
  * Tests that this custom search index modifies the lucene query according to ACL rules.
  * @author dschivo
  */
-@RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-acl-search-index-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = "/crit-bootstrap/website.pets.xml")
+@RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-acl-search-index-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = {
+    "/crit-bootstrap/website.pets.xml",
+    "/crit-bootstrap/userroles.anonymous.xml",
+    "/crit-bootstrap/users.system.anonymous.xml" })
 public class AclSearchIndexTest extends TestNgRepositoryTestcase
 {
 
@@ -95,45 +108,12 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
 
         HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE);
         hm.save();
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    protected void modifyContextesToUseRealRepository()
-    {
-        super.modifyContextesToUseRealRepository();
-
-        MockWebContext mwc = (MockWebContext) MgnlContext.getInstance();
-        RepositoryManager repositoryManager = Components.getComponent(RepositoryManager.class);
-        DefaultRepositoryStrategy drs = new DefaultRepositoryStrategy(repositoryManager, mwc);
-        try
-        {
-            Field hmsField = AbstractRepositoryStrategy.class.getDeclaredField("hierarchyManagers");
-            hmsField.setAccessible(true);
-            Map hms = (Map) hmsField.get(drs);
-            hms.put("website_website", MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE));
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException(e);
-        }
-
-        AccessManager am = new AccessManagerImpl();
-        try
-        {
-            Field amsField = DefaultRepositoryStrategy.class.getDeclaredField("accessManagers");
-            amsField.setAccessible(true);
-            Map ams = (Map) amsField.get(drs);
-            ams.put("website_website", am);
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException(e);
-        }
-        mwc.setRepositoryStrategy(drs);
+        // info.magnolia.cms.security.SecurityTest.setUp()
+        final SecuritySupportImpl sec = new SecuritySupportImpl();
+        sec.addUserManager(Realm.REALM_SYSTEM.getName(), new SystemUserManager());
+        sec.setRoleManager(new MgnlRoleManager());
+        ComponentsTestUtil.setInstance(SecuritySupport.class, sec);
     }
 
     /**
@@ -143,52 +123,95 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
     @Test
     public void testDogsOnly() throws Exception
     {
-        List<Permission> pList = new ArrayList<Permission>();
-        // ACL rule: deny permission on pets subtree
-        Permission p;
-        p = new PermissionImpl();
-        p.setPattern(new SimpleUrlPattern("/pets/*"));
-        p.setPermissions(Permission.NONE);
-        pList.add(p);
-        // ACL rule: read permission on dogs subtree
-        p = new PermissionImpl();
-        p.setPattern(new SimpleUrlPattern("/pets/dogs/*"));
-        p.setPermissions(Permission.READ);
-        pList.add(p);
-        MgnlContext.getAccessManager(RepositoryConstants.WEBSITE).setPermissionList(pList);
+        final AccessManager wrappedAM = MgnlContext.getAccessManager(RepositoryConstants.WEBSITE);
+        final AccessManager wrapperAM = new AccessManager()
+        {
 
-        Calendar begin = Calendar.getInstance();
-        begin.set(1999, Calendar.JANUARY, 1);
-        Calendar end = Calendar.getInstance();
-        end.set(2001, Calendar.DECEMBER, 31);
+            public boolean isGranted(String path, long permissions)
+            {
+                // ACL rule: deny permission on pets subtree
+                if (StringUtils.startsWith(path, "/pets/"))
+                {
+                    // ACL rule: read permission on dogs subtree
+                    return StringUtils.startsWith(path, "/pets/dogs/");
+                }
+                return wrappedAM.isGranted(path, permissions);
+            }
 
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE).setBasePath(
-            "/pets").add(Restrictions.between("@birthDate", begin, end)).addOrder(Order.asc("@birthDate"));
+            public void setPermissionList(List<Permission> permissions)
+            {
+                wrappedAM.setPermissionList(permissions);
+            }
 
-        // Query results:
-        // --- 9 (title=Lucky, petType=bird, birthDate=1999-08-06)
-        // --- 6 (title=George, petType=snake, birthDate=2000-01-20)
-        // --- 4 (title=Jewel, petType=dog, birthDate=2000-03-07)
-        // --- 11 (title=Freddy, petType=bird, birthDate=2000-03-09)
-        // --- 12 (title=Lucky, petType=dog, birthDate=2000-06-24)
-        // --- 1 (title=Leo, petType=cat, birthDate=2000-09-07)
-        // --- 5 (title=Iggy, petType=lizard, birthDate=2000-11-30)
-        // --- 3 (title=Rosy, petType=dog, birthDate=2001-04-17)
-        AdvancedResult result = criteria.execute();
+            public List<Permission> getPermissionList()
+            {
+                return wrappedAM.getPermissionList();
+            }
 
-        // Accessible results (dogs only):
-        // --- 4 (title=Jewel, petType=dog, birthDate=2000-03-07)
-        // --- 12 (title=Lucky, petType=dog, birthDate=2000-06-24)
-        // --- 3 (title=Rosy, petType=dog, birthDate=2001-04-17)
-        ResultIterator<AdvancedResultItem> iterator = result.getItems();
+            public long getPermissions(String path)
+            {
+                return wrappedAM.getPermissions(path);
+            }
+        };
+        MgnlContext.setInstance(new ContextDecorator(MgnlContext.getInstance())
+        {
 
-        Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(iterator.next().getName(), "4");
-        Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(iterator.next().getName(), "12");
-        Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(iterator.next().getName(), "3");
-        Assert.assertFalse(iterator.hasNext());
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public AccessManager getAccessManager(String name)
+            {
+                if (RepositoryConstants.WEBSITE.equals(name))
+                {
+                    return wrapperAM;
+                }
+                return super.getAccessManager(name);
+            }
+        });
+        try
+        {
+            Calendar begin = Calendar.getInstance();
+            begin.set(1999, Calendar.JANUARY, 1);
+            Calendar end = Calendar.getInstance();
+            end.set(2001, Calendar.DECEMBER, 31);
+
+            Criteria criteria = JCRCriteriaFactory
+                .createCriteria()
+                .setWorkspace(RepositoryConstants.WEBSITE)
+                .setBasePath("/pets")
+                .add(Restrictions.between("@birthDate", begin, end))
+                .addOrder(Order.asc("@birthDate"));
+
+            // Query results:
+            // --- 9 (title=Lucky, petType=bird, birthDate=1999-08-06)
+            // --- 6 (title=George, petType=snake, birthDate=2000-01-20)
+            // --- 4 (title=Jewel, petType=dog, birthDate=2000-03-07)
+            // --- 11 (title=Freddy, petType=bird, birthDate=2000-03-09)
+            // --- 12 (title=Lucky, petType=dog, birthDate=2000-06-24)
+            // --- 1 (title=Leo, petType=cat, birthDate=2000-09-07)
+            // --- 5 (title=Iggy, petType=lizard, birthDate=2000-11-30)
+            // --- 3 (title=Rosy, petType=dog, birthDate=2001-04-17)
+            AdvancedResult result = criteria.execute();
+
+            // Accessible results (dogs only):
+            // --- 4 (title=Jewel, petType=dog, birthDate=2000-03-07)
+            // --- 12 (title=Lucky, petType=dog, birthDate=2000-06-24)
+            // --- 3 (title=Rosy, petType=dog, birthDate=2001-04-17)
+            ResultIterator<AdvancedResultItem> iterator = result.getItems();
+
+            Assert.assertTrue(iterator.hasNext());
+            Assert.assertEquals(iterator.next().getName(), "4");
+            Assert.assertTrue(iterator.hasNext());
+            Assert.assertEquals(iterator.next().getName(), "12");
+            Assert.assertTrue(iterator.hasNext());
+            Assert.assertEquals(iterator.next().getName(), "3");
+            Assert.assertFalse(iterator.hasNext());
+        }
+        finally
+        {
+            MgnlContext.setInstance(((ContextDecorator) MgnlContext.getInstance()).getWrappedContext());
+        }
     }
 
     /**
@@ -198,49 +221,92 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
     @Test
     public void testDogsExcluded() throws Exception
     {
-        List<Permission> pList = new ArrayList<Permission>();
-        Permission p;
-        // ACL rule: read permission on pets subtree
-        p = new PermissionImpl();
-        p.setPattern(new SimpleUrlPattern("/pets/*"));
-        p.setPermissions(Permission.READ);
-        pList.add(p);
-        // ACL rule: deny permission on dogs subtree
-        p = new PermissionImpl();
-        p.setPattern(new SimpleUrlPattern("/pets/dogs/*"));
-        p.setPermissions(Permission.NONE);
-        pList.add(p);
-        MgnlContext.getAccessManager(RepositoryConstants.WEBSITE).setPermissionList(pList);
+        final AccessManager wrappedAM = MgnlContext.getAccessManager(RepositoryConstants.WEBSITE);
+        final AccessManager wrapperAM = new AccessManager()
+        {
 
-        Calendar begin = Calendar.getInstance();
-        begin.set(1999, Calendar.JANUARY, 1);
-        Calendar end = Calendar.getInstance();
-        end.set(2001, Calendar.DECEMBER, 31);
+            public boolean isGranted(String path, long permissions)
+            {
+                // ACL rule: read permission on pets subtree
+                if (StringUtils.startsWith(path, "/pets/"))
+                {
+                    // ACL rule: deny permission on dogs subtree
+                    return !StringUtils.startsWith(path, "/pets/dogs/");
+                }
+                return wrappedAM.isGranted(path, permissions);
+            }
 
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE).setBasePath(
-            "/pets").add(Restrictions.between("@birthDate", begin, end)).addOrder(Order.asc("@birthDate"));
+            public void setPermissionList(List<Permission> permissions)
+            {
+                wrappedAM.setPermissionList(permissions);
+            }
 
-        AdvancedResult result = criteria.execute();
+            public List<Permission> getPermissionList()
+            {
+                return wrappedAM.getPermissionList();
+            }
 
-        // Accessible results (dogs excluded):
-        // --- 9 (title=Lucky, petType=bird, birthDate=1999-08-06)
-        // --- 6 (title=George, petType=snake, birthDate=2000-01-20)
-        // --- 11 (title=Freddy, petType=bird, birthDate=2000-03-09)
-        // --- 1 (title=Leo, petType=cat, birthDate=2000-09-07)
-        // --- 5 (title=Iggy, petType=lizard, birthDate=2000-11-30)
-        ResultIterator<AdvancedResultItem> iterator = result.getItems();
+            public long getPermissions(String path)
+            {
+                return wrappedAM.getPermissions(path);
+            }
+        };
+        MgnlContext.setInstance(new ContextDecorator(MgnlContext.getInstance())
+        {
 
-        Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(iterator.next().getName(), "9");
-        Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(iterator.next().getName(), "6");
-        Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(iterator.next().getName(), "11");
-        Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(iterator.next().getName(), "1");
-        Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(iterator.next().getName(), "5");
-        Assert.assertFalse(iterator.hasNext());
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public AccessManager getAccessManager(String name)
+            {
+                if (RepositoryConstants.WEBSITE.equals(name))
+                {
+                    return wrapperAM;
+                }
+                return super.getAccessManager(name);
+            }
+        });
+        try
+        {
+            Calendar begin = Calendar.getInstance();
+            begin.set(1999, Calendar.JANUARY, 1);
+            Calendar end = Calendar.getInstance();
+            end.set(2001, Calendar.DECEMBER, 31);
+
+            Criteria criteria = JCRCriteriaFactory
+                .createCriteria()
+                .setWorkspace(RepositoryConstants.WEBSITE)
+                .setBasePath("/pets")
+                .add(Restrictions.between("@birthDate", begin, end))
+                .addOrder(Order.asc("@birthDate"));
+
+            AdvancedResult result = criteria.execute();
+
+            // Accessible results (dogs excluded):
+            // --- 9 (title=Lucky, petType=bird, birthDate=1999-08-06)
+            // --- 6 (title=George, petType=snake, birthDate=2000-01-20)
+            // --- 11 (title=Freddy, petType=bird, birthDate=2000-03-09)
+            // --- 1 (title=Leo, petType=cat, birthDate=2000-09-07)
+            // --- 5 (title=Iggy, petType=lizard, birthDate=2000-11-30)
+            ResultIterator<AdvancedResultItem> iterator = result.getItems();
+
+            Assert.assertTrue(iterator.hasNext());
+            Assert.assertEquals(iterator.next().getName(), "9");
+            Assert.assertTrue(iterator.hasNext());
+            Assert.assertEquals(iterator.next().getName(), "6");
+            Assert.assertTrue(iterator.hasNext());
+            Assert.assertEquals(iterator.next().getName(), "11");
+            Assert.assertTrue(iterator.hasNext());
+            Assert.assertEquals(iterator.next().getName(), "1");
+            Assert.assertTrue(iterator.hasNext());
+            Assert.assertEquals(iterator.next().getName(), "5");
+            Assert.assertFalse(iterator.hasNext());
+        }
+        finally
+        {
+            MgnlContext.setInstance(((ContextDecorator) MgnlContext.getInstance()).getWrappedContext());
+        }
     }
 
 }
