@@ -110,7 +110,9 @@ public class MagnoliaCriteriaTest
         criteria.add(Restrictions.eq("@property", "test"));
         String xpathExpression = criteria.toXpathExpression();
 
-        Assert.assertEquals(xpathExpression, "//path/with(paren_x002c_thesis)/test//*[( (@property='test')  )] ");
+        Assert.assertEquals(
+            xpathExpression,
+            "//path/with_x0028_paren_x002c_thesis_x0029_/test//*[( (@property='test')  )] ");
     }
 
     /**
