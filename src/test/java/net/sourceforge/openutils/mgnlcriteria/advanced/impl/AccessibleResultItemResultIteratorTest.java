@@ -29,6 +29,7 @@ import info.magnolia.cms.security.SecuritySupport;
 import info.magnolia.cms.security.SecuritySupportImpl;
 import info.magnolia.cms.security.SystemUserManager;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
@@ -99,6 +100,10 @@ public class AccessibleResultItemResultIteratorTest extends
 		HierarchyManager hm = MgnlContext
 				.getHierarchyManager(RepositoryConstants.WEBSITE);
 		hm.save();
+
+        Session userrolesSession = MgnlContext.getJCRSession("userroles");
+        PropertyUtil.setProperty(userrolesSession.getNode("/anonymous/acl_website/0"), "path", "/pets/dogs/*");
+        userrolesSession.save();
 
 		ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
 
