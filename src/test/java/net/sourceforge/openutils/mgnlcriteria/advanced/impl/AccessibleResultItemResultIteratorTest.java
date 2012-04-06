@@ -22,17 +22,12 @@ package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
-import info.magnolia.cms.security.AccessManager;
-import info.magnolia.cms.security.AccessManagerImpl;
 import info.magnolia.cms.security.MgnlRoleManager;
-import info.magnolia.cms.security.Permission;
-import info.magnolia.cms.security.PermissionImpl;
 import info.magnolia.cms.security.PermissionUtil;
 import info.magnolia.cms.security.Realm;
 import info.magnolia.cms.security.SecuritySupport;
 import info.magnolia.cms.security.SecuritySupportImpl;
 import info.magnolia.cms.security.SystemUserManager;
-import info.magnolia.cms.util.SimpleUrlPattern;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
@@ -40,7 +35,6 @@ import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
 import java.util.Calendar;
-import java.util.Collections;
 
 import javax.jcr.Session;
 
@@ -105,18 +99,6 @@ public class AccessibleResultItemResultIteratorTest extends
 		HierarchyManager hm = MgnlContext
 				.getHierarchyManager(RepositoryConstants.WEBSITE);
 		hm.save();
-
-		Permission readDogsPermission = new PermissionImpl();
-		readDogsPermission.setPattern(new SimpleUrlPattern("/pets/dogs/*"));
-		readDogsPermission.setPermissions(Permission.READ);
-
-		AccessManager am = new AccessManagerImpl();
-		am.setPermissionList(Collections.singletonList(readDogsPermission));
-
-		// java.lang.NoSuchFieldException: accessManager
-//		Field amField = hm.getClass().getDeclaredField("accessManager");
-//		amField.setAccessible(true);
-//		amField.set(hm, am);
 
 		ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
 
