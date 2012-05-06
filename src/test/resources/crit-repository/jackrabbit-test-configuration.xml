@@ -19,6 +19,7 @@
       <param name="blobFSBlockSize" value="1" /><!-- store in memory -->
     </PersistenceManager>
     <SearchIndex class="org.apache.jackrabbit.core.query.lucene.SearchIndex">
+      <param name="analyzer" value="net.sourceforge.openutils.mgnlcriteria.utils.ASCIIFoldingAnalyzer" />
       <param name="path" value="${rep.home}/indexes/${wsp.name}" />
       <param name="indexingConfiguration" value="${rep.home}/../../test-classes/crit-repository/indexing_configuration.xml" />
       <param name="supportHighlighting" value="true" />
