@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE Repository PUBLIC "-//The Apache Software Foundation//DTD Jackrabbit 1.6//EN" "http://jackrabbit.apache.org/dtd/repository-1.6.dtd">
-<!-- TESTING-ONLY configuration! repositories are in memory only and any change is lost upon restart -->
+<!DOCTYPE Repository PUBLIC "-//The Apache Software Foundation//DTD Jackrabbit 2.0//EN" "http://jackrabbit.apache.org/dtd/repository-2.0.dtd">
+<!-- TESTING-ONLY configuration! repositories are in memory only and any
+  change is lost upon restart -->
 <Repository>
   <FileSystem class="org.apache.jackrabbit.core.fs.mem.MemoryFileSystem">
   </FileSystem>
@@ -10,38 +11,29 @@
       <param name="anonymousId" value="anonymous" />
     </LoginModule>
   </Security>
-  <Workspaces rootPath="${rep.home}/workspaces" defaultWorkspace="default" />
-  <Workspace name="default">
+  <Workspaces rootPath="${rep.home}" defaultWorkspace="defaultworkspace" />
+  <Workspace name="${wsp.name}">
     <FileSystem class="org.apache.jackrabbit.core.fs.mem.MemoryFileSystem">
     </FileSystem>
     <PersistenceManager class="org.apache.jackrabbit.core.persistence.bundle.BundleFsPersistenceManager">
       <param name="blobFSBlockSize" value="1" /><!-- store in memory -->
     </PersistenceManager>
     <SearchIndex class="net.sourceforge.openutils.mgnlcriteria.jcr.query.lucene.AclSearchIndex">
+      <param name="path" value="${rep.home}/indexes/${wsp.name}" />
       <param name="indexingConfiguration" value="${rep.home}/../../test-classes/crit-repository/indexing_configuration.xml" />
-      <param name="path" value="${wsp.home}/index" />
-      <param name="useCompoundFile" value="false" /><!-- lasciare a false solo per i tests -->
-      <param name="minMergeDocs" value="100" />
-      <param name="volatileIdleTime" value="3" />
-      <param name="maxMergeDocs" value="100000" />
-      <param name="mergeFactor" value="10" />
-      <param name="maxFieldLength" value="10000" />
-      <param name="bufferSize" value="10" />
-      <param name="cacheSize" value="1000" />
-      <param name="autoRepair" value="true" />
-      <param name="queryClass" value="org.apache.jackrabbit.core.query.QueryImpl" />
-      <param name="respectDocumentOrder" value="true" />
-      <param name="resultFetchSize" value="2147483647" />
-      <param name="extractorPoolSize" value="3" />
-      <param name="extractorTimeout" value="100" />
-      <param name="extractorBackLogSize" value="100" />
-      <param name="enableConsistencyCheck" value="true" />
-      <param name="autoRepair" value="true" />
-      <param name="forceConsistencyCheck" value="false" />
-      <param name="directoryManagerClass" value="org.apache.jackrabbit.core.query.lucene.directory.RAMDirectoryManager" />
       <param name="supportHighlighting" value="true" />
-      <param name="analyzer" value="net.sourceforge.openutils.mgnlcriteria.utils.ASCIIFoldingAnalyzer" />
+      <param name="useCompoundFile" value="false" /><!-- solo per memory -->
+      <param name="cacheSize" value="10000" />
+      <param name="initializeHierarchyCache" value="false" />
+      <param name="enableConsistencyCheck" value="false" />
+      <param name="forceConsistencyCheck" value="false" />
+      <param name="autoRepair" value="true" />
+      <param name="respectDocumentOrder" value="true" />
+      <param name="directoryManagerClass" value="org.apache.jackrabbit.core.query.lucene.directory.RAMDirectoryManager" />
+      <FileSystem class="org.apache.jackrabbit.core.fs.mem.MemoryFileSystem">
+      </FileSystem>
     </SearchIndex>
+    <ISMLocking class="org.apache.jackrabbit.core.state.FineGrainedISMLocking" />
   </Workspace>
   <Versioning rootPath="${rep.home}/version">
     <FileSystem class="org.apache.jackrabbit.core.fs.mem.MemoryFileSystem">
@@ -49,28 +41,19 @@
     <PersistenceManager class="org.apache.jackrabbit.core.persistence.bundle.BundleFsPersistenceManager">
       <param name="blobFSBlockSize" value="1" /><!-- store in memory -->
     </PersistenceManager>
+    <ISMLocking class="org.apache.jackrabbit.core.state.FineGrainedISMLocking" />
   </Versioning>
-  <SearchIndex class="org.apache.jackrabbit.core.query.lucene.SearchIndex">
+  <SearchIndex class="net.sourceforge.openutils.mgnlcriteria.jcr.query.lucene.AclSearchIndex">
+    <param name="analyzer" value="net.sourceforge.openutils.mgnlcriteria.utils.ASCIIFoldingAnalyzer" />
+    <param name="path" value="${rep.home}/indexes/jcrsystem" />
     <param name="indexingConfiguration" value="${rep.home}/../../test-classes/crit-repository/indexing_configuration.xml" />
-    <param name="path" value="${rep.home}/index" />
-    <param name="useCompoundFile" value="false" /><!-- lasciare a false solo per i tests -->
-    <param name="minMergeDocs" value="100" />
-    <param name="volatileIdleTime" value="3" />
-    <param name="maxMergeDocs" value="100000" />
-    <param name="mergeFactor" value="10" />
-    <param name="maxFieldLength" value="10000" />
-    <param name="bufferSize" value="10" />
-    <param name="cacheSize" value="1000" />
+    <param name="supportHighlighting" value="true" />
+    <param name="useCompoundFile" value="false" /><!-- solo per memory -->
+    <param name="cacheSize" value="10000" />
+    <param name="initializeHierarchyCache" value="false" />
+    <param name="enableConsistencyCheck" value="false" />
     <param name="forceConsistencyCheck" value="false" />
     <param name="autoRepair" value="true" />
-    <param name="analyzer" value="net.sourceforge.openutils.mgnlcriteria.utils.ASCIIFoldingAnalyzer" />
-    <param name="queryClass" value="org.apache.jackrabbit.core.query.QueryImpl" />
-    <param name="respectDocumentOrder" value="true" />
-    <param name="resultFetchSize" value="2147483647" />
-    <param name="extractorPoolSize" value="3" />
-    <param name="extractorTimeout" value="100" />
-    <param name="extractorBackLogSize" value="100" />
-    <param name="supportHighlighting" value="true" />
     <param name="directoryManagerClass" value="org.apache.jackrabbit.core.query.lucene.directory.RAMDirectoryManager" />
     <FileSystem class="org.apache.jackrabbit.core.fs.mem.MemoryFileSystem">
     </FileSystem>
