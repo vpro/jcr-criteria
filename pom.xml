@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>net.sourceforge.openutils</groupId>
@@ -9,7 +8,7 @@
   </parent>
   <artifactId>openutils-mgnlcriteria</artifactId>
   <name>Criteria API for Magnolia CMS</name>
-  <version>5.0.0-SNAPSHOT</version>
+  <version>5.0.0</version>
   <inceptionYear>2009</inceptionYear>
   <description>A Hibernate's Criteria-like API to programmatically generate JCR queries with Magnolia</description>
   <licenses>
@@ -24,9 +23,9 @@
     <url>http://jira.openmindlab.com/browse/CRIT</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlcriteria</connection>
-    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlcriteria</developerConnection>
-    <url>http://openutils.svn.sourceforge.net/viewcvs.cgi/openutils/trunk/openutils-mgnlcriteria</url>
+    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlcriteria-5.0.0</connection>
+    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlcriteria-5.0.0</developerConnection>
+    <url>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlcriteria-5.0.0</url>
   </scm>
   <build>
     <resources>
