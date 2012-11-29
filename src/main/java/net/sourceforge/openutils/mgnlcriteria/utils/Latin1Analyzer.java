@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcriteria.utils;
 
-import org.apache.lucene.analysis.ISOLatin1AccentFilter;
+import org.apache.lucene.analysis.ASCIIFoldingFilter;
 import org.apache.lucene.analysis.LowerCaseFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardFilter;
@@ -38,7 +38,7 @@ public class Latin1Analyzer extends BaseAnalyzer
     {
         TokenStream result = new StandardFilter(tokenStream);
         result = new LowerCaseFilter(result);
-        result = new ISOLatin1AccentFilter(result);
+        result = new ASCIIFoldingFilter(result);
         return result;
     }
 
