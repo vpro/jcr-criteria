@@ -73,7 +73,7 @@
             <include>src/**/*.java</include>
           </includes>
           <properties>
-            <year>${project.inceptionYear}-2011</year>
+            <year>${project.inceptionYear}-2013</year>
             <name>${project.name}</name>
             <description>${project.description}</description>
             <url>${project.url}</url>
