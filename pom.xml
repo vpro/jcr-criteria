@@ -24,9 +24,9 @@
     <url>http://jira.openmindlab.com/browse/CRIT</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlcriteria</connection>
-    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlcriteria</developerConnection>
-    <url>http://openutils.svn.sourceforge.net/viewcvs.cgi/openutils/trunk/openutils-mgnlcriteria</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlcriteria</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlcriteria</developerConnection>
+    <url>http://openutils.svn.sourceforge.net/viewvc/openutils/magnoliamodules/trunk/openutils-mgnlcriteria</url>
   </scm>
   <build>
     <resources>
