@@ -5,4 +5,10 @@
   <displayName>Magnolia Criteria API</displayName>
   <description>A Hibernate's Criteria-like API to programmatically generate JCR queries with Magnolia</description>
   <version>${project.version}</version>
+  <dependencies>
+    <dependency>
+      <name>core</name>
+      <version>4.5/*</version>
+    </dependency>
+  </dependencies>
 </module>
