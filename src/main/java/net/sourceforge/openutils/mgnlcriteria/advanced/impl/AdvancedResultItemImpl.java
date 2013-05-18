@@ -64,6 +64,8 @@ import javax.jcr.version.VersionHistory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1399,6 +1401,41 @@ public class AdvancedResultItemImpl extends ContentMap implements AdvancedResult
         {
             throw new RuntimeRepositoryException(e);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object get(Object key)
+    {
+        if (key == null)
+        {
+            return null;
+        }
+
+        String keystr = ObjectUtils.toString(key);
+
+        if (StringUtils.equals(keystr, "handle"))
+        {
+            keystr = "@path";
+        }
+
+        Object result = super.get(keystr);
+
+        if (result == null)
+        {
+            try
+            {
+                return PropertyUtils.getProperty(this, keystr);
+            }
+            catch (Throwable e)
+            {
+                // ignore
+            }
+        }
+
+        return result;
     }
 
 }
