@@ -19,9 +19,9 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.content2bean.Content2BeanException;
 import info.magnolia.content2bean.Content2BeanUtil;
+import info.magnolia.jcr.RuntimeRepositoryException;
 
 import javax.jcr.Item;
 import javax.jcr.RepositoryException;
@@ -37,6 +37,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIteratorImpl;
 import net.sourceforge.openutils.mgnlcriteria.utils.JcrCompatUtils;
+import net.sourceforge.openutils.mgnlcriteria.utils.ToBeanUtils;
 
 import org.apache.jackrabbit.core.query.lucene.QueryResultImpl;
 import org.slf4j.Logger;
@@ -58,15 +59,10 @@ public class AdvancedResultImpl implements AdvancedResult
 
     private final String statement;
 
-    private HierarchyManager hm;
-
     private String spellCheckerSuggestion;
 
     private final Query spellCheckerQuery;
 
-    /**
-     * Logger.
-     */
     private Logger log = LoggerFactory.getLogger(AdvancedResultImpl.class);
 
     private final boolean applyLocalPaging;
@@ -86,10 +82,9 @@ public class AdvancedResultImpl implements AdvancedResult
         int itemsPerPage,
         int pageNumberStartingFromOne,
         String statement,
-        HierarchyManager hm,
         Query spellCheckerQuery)
     {
-        this(jcrQueryResult, itemsPerPage, pageNumberStartingFromOne, statement, hm, spellCheckerQuery, false);
+        this(jcrQueryResult, itemsPerPage, pageNumberStartingFromOne, statement, spellCheckerQuery, false);
     }
 
     /**
@@ -106,19 +101,10 @@ public class AdvancedResultImpl implements AdvancedResult
         int itemsPerPage,
         int pageNumberStartingFromOne,
         String statement,
-        HierarchyManager hm,
         Query spellCheckerQuery,
         boolean applyLocalPaging)
     {
-        this(
-            jcrQueryResult,
-            itemsPerPage,
-            pageNumberStartingFromOne,
-            statement,
-            hm,
-            spellCheckerQuery,
-            applyLocalPaging,
-            0);
+        this(jcrQueryResult, itemsPerPage, pageNumberStartingFromOne, statement, spellCheckerQuery, applyLocalPaging, 0);
     }
 
     /**
@@ -136,7 +122,6 @@ public class AdvancedResultImpl implements AdvancedResult
         int itemsPerPage,
         int pageNumberStartingFromOne,
         String statement,
-        HierarchyManager hm,
         Query spellCheckerQuery,
         boolean applyLocalPaging,
         int offset)
@@ -144,7 +129,6 @@ public class AdvancedResultImpl implements AdvancedResult
         this.jcrQueryResult = jcrQueryResult;
         this.itemsPerPage = itemsPerPage;
         this.statement = statement;
-        this.hm = hm;
         this.spellCheckerQuery = spellCheckerQuery;
         this.pageNumberStartingFromOne = pageNumberStartingFromOne;
         this.applyLocalPaging = applyLocalPaging;
@@ -223,7 +207,7 @@ public class AdvancedResultImpl implements AdvancedResult
             rows.skip(offset);
 
             // removing folllowing records and alter getSize()
-            return new AccessibleResultItemResultIterator(rows, this.hm)
+            return new AccessibleResultItemResultIterator(rows)
             {
 
                 /**
@@ -246,7 +230,7 @@ public class AdvancedResultImpl implements AdvancedResult
             };
         }
 
-        return new AccessibleResultItemResultIterator(rows, this.hm);
+        return new AccessibleResultItemResultIterator(rows);
     }
 
     /**
@@ -327,7 +311,7 @@ public class AdvancedResultImpl implements AdvancedResult
             rows.skip(offset);
 
             // removing folllowing records and alter getSize()
-            return new ResultIteratorImpl<K>(rows, this.hm)
+            return new ResultIteratorImpl<K>(rows)
             {
 
                 /**
@@ -360,24 +344,17 @@ public class AdvancedResultImpl implements AdvancedResult
                             return null;
                         }
 
-                        return (K) Content2BeanUtil.toBean(
-                            new AdvancedResultItemImpl(row, jcrNode, this.hm),
-                            true,
-                            theclass);
+                        return (K) ToBeanUtils.toBean(new AdvancedResultItemImpl(row, jcrNode), true, theclass);
                     }
                     catch (RepositoryException e)
                     {
-                        throw new RuntimeException(e);
-                    }
-                    catch (Content2BeanException e)
-                    {
-                        throw new RuntimeException(e);
+                        throw new RuntimeRepositoryException(e);
                     }
                 }
             };
         }
 
-        return new ResultIteratorImpl<K>(rows, hm)
+        return new ResultIteratorImpl<K>(rows)
         {
 
             @SuppressWarnings("unchecked")
@@ -392,18 +369,11 @@ public class AdvancedResultImpl implements AdvancedResult
                         return null;
                     }
 
-                    return (K) Content2BeanUtil.toBean(
-                        new AdvancedResultItemImpl(row, jcrNode, this.hm),
-                        true,
-                        theclass);
+                    return (K) ToBeanUtils.toBean(new AdvancedResultItemImpl(row, jcrNode), true, theclass);
                 }
                 catch (RepositoryException e)
                 {
-                    throw new RuntimeException(e);
-                }
-                catch (Content2BeanException e)
-                {
-                    throw new RuntimeException(e);
+                    throw new RuntimeRepositoryException(e);
                 }
             }
         };

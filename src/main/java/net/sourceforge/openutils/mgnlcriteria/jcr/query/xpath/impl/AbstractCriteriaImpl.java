@@ -16,16 +16,18 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.impl;
 
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.RuntimeRepositoryException;
 import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlcriteria.advanced.impl.QueryExecutorHelper;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
@@ -232,14 +234,21 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
         String language = javax.jcr.query.Query.XPATH;
         String stmt = toXpathExpression();
 
-        return QueryExecutorHelper.execute(
-            stmt,
-            language,
-            MgnlContext.getHierarchyManager(workspace),
-            maxResults,
-            offset,
-            spellCheckString,
-            forcePagingWithDocumentOrder && this.orderEntries.isEmpty());
+        try
+        {
+            return QueryExecutorHelper.execute(
+                stmt,
+                language,
+                MgnlContext.getJCRSession(workspace),
+                maxResults,
+                offset,
+                spellCheckString,
+                forcePagingWithDocumentOrder && this.orderEntries.isEmpty());
+        }
+        catch (RepositoryException e)
+        {
+            throw new RuntimeRepositoryException(e);
+        }
     }
 
 }

@@ -19,9 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.cms.security.MgnlRoleManager;
@@ -31,6 +29,9 @@ import info.magnolia.cms.security.SecuritySupportImpl;
 import info.magnolia.cms.security.SystemUserManager;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
@@ -41,6 +42,7 @@ import java.util.Calendar;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.utils.XPathTextUtils;
+import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.testng.Assert;
@@ -89,7 +91,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // ----- 11 (title=Freddy, petType=bird, birthDate=2000-03-09)
         // --- hamsters (title=Hamsters)
         // ----- 2 (title=Basil, petType=hamster, birthDate=2002-08-06)
-        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
+        MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
 
         ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
 
@@ -151,21 +153,21 @@ public class CriteriaTest extends TestNgRepositoryTestcase
     @Test
     public void testExecuteTrivial() throws Exception
     {
-        HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE);
-        Content node = hm.getContent("/pets");
-        Assert.assertEquals(node.getTitle(), "Pets");
+        // Session hm = MgnlContext.getJCRSession(RepositoryConstants.WEBSITE);
+        // Content node = hm.getContent("/pets");
+        // Assert.assertEquals(CriteriaTestUtils.title(node), "Pets");
 
         Criteria criteria = JCRCriteriaFactory
             .createCriteria()
             .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/jcr:root/*")
-            .add(Restrictions.eq("@jcr:primaryType", ItemType.CONTENT.getSystemName()))
+            .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_CONTENT))
             .add(Restrictions.eq("@title", "Pets"));
         AdvancedResult result = criteria.execute();
         ResultIterator<AdvancedResultItem> iterator = result.getItems();
         Assert.assertTrue(iterator.hasNext());
-        Content resultNode = iterator.next();
-        Assert.assertEquals(resultNode.getTitle(), "Pets");
+        AdvancedResultItem resultNode = iterator.next();
+        Assert.assertEquals(CriteriaTestUtils.title(resultNode), "Pets");
     }
 
     /**
@@ -182,7 +184,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
 
         ResultIterator<AdvancedResultItem> iterator = result.getItems();
         Assert.assertEquals(iterator.getSize(), 1);
-        Assert.assertEquals(iterator.next().getName(), "12");
+        Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "12");
     }
 
     /**
@@ -242,9 +244,9 @@ public class CriteriaTest extends TestNgRepositoryTestcase
 
         ResultIterator<AdvancedResultItem> iterator = result.getItems();
         Assert.assertEquals(iterator.getSize(), 3);
-        Assert.assertEquals(iterator.next().getName(), "1");
-        Assert.assertEquals(iterator.next().getName(), "5");
-        Assert.assertEquals(iterator.next().getName(), "3");
+        Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "1");
+        Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "5");
+        Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "3");
     }
 
     /**
@@ -282,9 +284,9 @@ public class CriteriaTest extends TestNgRepositoryTestcase
 
         ResultIterator<AdvancedResultItem> iterator = result.getItems();
         Assert.assertEquals(iterator.getSize(), 3);
-        Assert.assertEquals(iterator.next().getName(), "1");
-        Assert.assertEquals(iterator.next().getName(), "5");
-        Assert.assertEquals(iterator.next().getName(), "3");
+        Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "1");
+        Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "5");
+        Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "3");
     }
 
     /**
@@ -309,7 +311,8 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // ----- 7 (title=Samantha, petType=cat, birthDate=1995-09-04)
         // ----- 8 (title=Max, petType=cat, birthDate=1995-09-04)
         Assert.assertTrue(iterator.hasNext());
-        birthDate = NodeDataUtil.getDate(iterator.next(), "birthDate", null);
+     
+        birthDate = PropertyUtil.getDate(iterator.next(), "birthDate", null);
         Assert.assertEquals(birthDate.get(Calendar.YEAR), 1995);
         Assert.assertEquals(birthDate.get(Calendar.MONTH) + 1, 9);
         Assert.assertEquals(birthDate.get(Calendar.DAY_OF_MONTH), 4);
@@ -324,7 +327,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         iterator = criteria.execute().getItems();
         // ----- 2 (title=Basil, petType=hamster, birthDate=2002-08-06)
         Assert.assertTrue(iterator.hasNext());
-        birthDate = NodeDataUtil.getDate(iterator.next(), "birthDate", null);
+        birthDate = PropertyUtil.getDate(iterator.next(), "birthDate", null);
         Assert.assertEquals(birthDate.get(Calendar.YEAR), 2002);
         Assert.assertEquals(birthDate.get(Calendar.MONTH) + 1, 8);
         Assert.assertEquals(birthDate.get(Calendar.DAY_OF_MONTH), 6);
@@ -353,9 +356,9 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // ----- 8 (title=Max, petType=cat, birthDate=1995-09-04)
         // ----- 7 (title=Samantha, petType=cat, birthDate=1995-09-04)
         Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(iterator.next().getTitle(), "Max");
+        Assert.assertEquals(CriteriaTestUtils.title(iterator.next()), "Max");
         Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(iterator.next().getTitle(), "Samantha");
+        Assert.assertEquals(CriteriaTestUtils.title(iterator.next()), "Samantha");
 
         // order by @birthDate ascending, @title descending
         criteria = JCRCriteriaFactory
@@ -369,9 +372,9 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // ----- 7 (title=Samantha, petType=cat, birthDate=1995-09-04)
         // ----- 8 (title=Max, petType=cat, birthDate=1995-09-04)
         Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(iterator.next().getTitle(), "Samantha");
+        Assert.assertEquals(CriteriaTestUtils.title(iterator.next()), "Samantha");
         Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(iterator.next().getTitle(), "Max");
+        Assert.assertEquals(CriteriaTestUtils.title(iterator.next()), "Max");
     }
 
     @Test
@@ -379,7 +382,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
     {
         Criteria criteria;
         ResultIterator<AdvancedResultItem> iterator;
-        Content node;
+        AdvancedResultItem node;
         Calendar date;
 
         criteria = JCRCriteriaFactory
@@ -391,9 +394,9 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         iterator = criteria.execute().getItems();
         Assert.assertTrue(iterator.hasNext());
         node = iterator.next();
-        Assert.assertEquals(node.getTitle(), "Leo");
+        Assert.assertEquals(CriteriaTestUtils.title(node), "Leo");
 
-        date = (Calendar) node.getMetaData().getCreationDate().clone();
+        date = (Calendar) MetaDataUtil.getMetaData(node).getCreationDate().clone();
         date.add(Calendar.DAY_OF_YEAR, 1);
         criteria = JCRCriteriaFactory
             .createCriteria()
@@ -405,9 +408,9 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         iterator = criteria.execute().getItems();
         Assert.assertTrue(iterator.hasNext());
         node = iterator.next();
-        Assert.assertEquals(node.getTitle(), "Leo");
+        Assert.assertEquals(CriteriaTestUtils.title(node), "Leo");
 
-        date = (Calendar) node.getMetaData().getCreationDate().clone();
+        date = (Calendar) MetaDataUtil.getMetaData(node).getCreationDate().clone();
         date.add(Calendar.HOUR, 1);
         criteria = JCRCriteriaFactory
             .createCriteria()
@@ -419,7 +422,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         iterator = criteria.execute().getItems();
         Assert.assertTrue(iterator.hasNext());
         node = iterator.next();
-        Assert.assertEquals(node.getTitle(), "Leo");
+        Assert.assertEquals(CriteriaTestUtils.title(node), "Leo");
     }
 
 }

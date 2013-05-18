@@ -19,35 +19,23 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query.lucene;
 
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.security.AccessManager;
 import info.magnolia.cms.security.MgnlRoleManager;
 import info.magnolia.cms.security.Permission;
-import info.magnolia.cms.security.PermissionImpl;
 import info.magnolia.cms.security.Realm;
 import info.magnolia.cms.security.SecuritySupport;
 import info.magnolia.cms.security.SecuritySupportImpl;
 import info.magnolia.cms.security.SystemUserManager;
-import info.magnolia.cms.util.SimpleUrlPattern;
-import info.magnolia.context.Context;
 import info.magnolia.context.ContextDecorator;
-import info.magnolia.context.DefaultRepositoryStrategy;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.jcr.util.NodeUtil;
-import info.magnolia.jcr.util.PropertyUtil;
-import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
-import info.magnolia.repository.RepositoryManager;
 import info.magnolia.test.ComponentsTestUtil;
-import info.magnolia.test.mock.MockWebContext;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.jcr.Node;
 import javax.jcr.Session;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
@@ -57,6 +45,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
+import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.testng.Assert;
@@ -106,7 +95,7 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
         // --- hamsters (title=Hamsters)
         // ----- 2 (title=Basil, petType=hamster, birthDate=2002-08-06)
 
-        HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE);
+        Session hm = MgnlContext.getJCRSession(RepositoryConstants.WEBSITE);
         hm.save();
 
         // info.magnolia.cms.security.SecurityTest.setUp()
@@ -201,11 +190,11 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
             ResultIterator<AdvancedResultItem> iterator = result.getItems();
 
             Assert.assertTrue(iterator.hasNext());
-            Assert.assertEquals(iterator.next().getName(), "4");
+            Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "4");
             Assert.assertTrue(iterator.hasNext());
-            Assert.assertEquals(iterator.next().getName(), "12");
+            Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "12");
             Assert.assertTrue(iterator.hasNext());
-            Assert.assertEquals(iterator.next().getName(), "3");
+            Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "3");
             Assert.assertFalse(iterator.hasNext());
         }
         finally
@@ -292,15 +281,15 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
             ResultIterator<AdvancedResultItem> iterator = result.getItems();
 
             Assert.assertTrue(iterator.hasNext());
-            Assert.assertEquals(iterator.next().getName(), "9");
+            Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "9");
             Assert.assertTrue(iterator.hasNext());
-            Assert.assertEquals(iterator.next().getName(), "6");
+            Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "6");
             Assert.assertTrue(iterator.hasNext());
-            Assert.assertEquals(iterator.next().getName(), "11");
+            Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "11");
             Assert.assertTrue(iterator.hasNext());
-            Assert.assertEquals(iterator.next().getName(), "1");
+            Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "1");
             Assert.assertTrue(iterator.hasNext());
-            Assert.assertEquals(iterator.next().getName(), "5");
+            Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "5");
             Assert.assertFalse(iterator.hasNext());
         }
         finally

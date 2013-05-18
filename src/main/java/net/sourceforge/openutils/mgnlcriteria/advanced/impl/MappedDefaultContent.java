@@ -21,7 +21,6 @@ package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.core.DefaultContent;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.NodeDataUtil;
@@ -50,6 +49,7 @@ import org.slf4j.LoggerFactory;
  * @author fgiust
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class MappedDefaultContent extends DefaultContent implements Map<String, Object>
 {
 
@@ -64,7 +64,7 @@ public class MappedDefaultContent extends DefaultContent implements Map<String, 
      * @throws RepositoryException
      * @throws AccessDeniedException
      */
-    public MappedDefaultContent(Node elem, HierarchyManager hierarchyManager)
+    public MappedDefaultContent(Node elem)
         throws RepositoryException,
         AccessDeniedException
     {

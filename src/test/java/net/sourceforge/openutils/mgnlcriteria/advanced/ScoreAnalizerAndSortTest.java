@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.cms.security.MgnlRoleManager;
@@ -67,7 +66,7 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
 
         super.setUp();
 
-        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
+        MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
 
         ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
 
@@ -85,7 +84,7 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
         // Alighieri, Dante
 
         AdvancedResult advResult = CriteriaTestUtils.search("Dante Alighieri", 1, 200);
-        Collection< ? extends Content> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         CriteriaTestUtils.assertNumOfResults(2, result, "Dante Alighieri");
     }
@@ -98,7 +97,7 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
         // fàgiànò
 
         AdvancedResult advResult = CriteriaTestUtils.search("fagiano", 1, 200);
-        Collection< ? extends Content> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         CriteriaTestUtils.assertNumOfResults(3, result, "fagiano");
 
@@ -120,7 +119,7 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
         // canna da pesca
 
         AdvancedResult advResult = CriteriaTestUtils.search("pesca", 1, 200);
-        Collection< ? extends Content> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         CriteriaTestUtils.assertSortedResults(new String[]{"pèsca", "canna da pesca" }, result, "pesca");
     }
@@ -162,7 +161,7 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
         // "Faccina sorridente :)"
 
         AdvancedResult advResult = CriteriaTestUtils.search("francia", 1, 200);
-        Collection< ? extends Content> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         Assert.assertEquals(advResult.getTotalSize(), 7);
 
@@ -183,7 +182,7 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
 
         CriteriaTestUtils.assertUnsortedResults(
             new String[]{"Frància", "Parigi (Francia)", "Parigi (Frància)", },
-            ((List< ? extends Content>) result).subList(0, 3),
+            ((List<AdvancedResultItem>) result).subList(0, 3),
             "francia");
 
         // the remaining 4 pages have the same score, so the order is not stable

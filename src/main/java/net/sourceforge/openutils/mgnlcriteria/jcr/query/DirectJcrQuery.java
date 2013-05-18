@@ -19,7 +19,8 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query;
 
-import info.magnolia.cms.core.HierarchyManager;
+import javax.jcr.Session;
+
 import net.sourceforge.openutils.mgnlcriteria.advanced.impl.QueryExecutorHelper;
 
 
@@ -31,7 +32,7 @@ import net.sourceforge.openutils.mgnlcriteria.advanced.impl.QueryExecutorHelper;
 public class DirectJcrQuery implements ExecutableQuery
 {
 
-    private HierarchyManager hm;
+    private Session session;
 
     private String query;
 
@@ -48,9 +49,9 @@ public class DirectJcrQuery implements ExecutableQuery
      * @param query
      * @param language
      */
-    public DirectJcrQuery(HierarchyManager hm, String query, String language)
+    public DirectJcrQuery(Session session, String query, String language)
     {
-        this.hm = hm;
+        this.session = session;
         this.query = query;
         this.language = language;
     }
@@ -108,7 +109,7 @@ public class DirectJcrQuery implements ExecutableQuery
     public AdvancedResult execute()
     {
 
-        return QueryExecutorHelper.execute(query, language, hm, maxResults, offset, spellCheckString, false);
+        return QueryExecutorHelper.execute(query, language, session, maxResults, offset, spellCheckString, false);
     }
 
 }

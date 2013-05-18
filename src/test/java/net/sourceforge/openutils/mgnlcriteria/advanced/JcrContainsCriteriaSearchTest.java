@@ -44,6 +44,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
+import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.testng.Assert;
@@ -80,7 +81,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         // - lorem ipsum
         // - dolor sit
         // - dolor sit amet
-        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
+        MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
 
         ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
 
@@ -100,7 +101,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         Assert.assertEquals(advResult.getTotalSize(), 1);
         ResultIterator<AdvancedResultItem> items = advResult.getItems();
         AdvancedResultItem item = items.next();
-        Assert.assertEquals(item.getTitle(), "lorem ipsum");
+        Assert.assertEquals(CriteriaTestUtils.title(item), "lorem ipsum");
     }
 
     @Test
@@ -112,7 +113,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         Assert.assertEquals(advResult.getTotalSize(), 1);
         ResultIterator<AdvancedResultItem> items = advResult.getItems();
         AdvancedResultItem item = items.next();
-        Assert.assertEquals(item.getTitle(), "lorem");
+        Assert.assertEquals(CriteriaTestUtils.title(item), "lorem");
     }
 
     @Test
@@ -126,7 +127,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         List<String> titles = new ArrayList<String>();
         while (items.hasNext())
         {
-            titles.add(items.next().getTitle());
+            titles.add(CriteriaTestUtils.title(items.next()));
         }
         Collections.sort(titles);
         Assert.assertEquals(titles.get(0), "dolor sit amet");
@@ -147,7 +148,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         List<String> titles = new ArrayList<String>();
         while (items.hasNext())
         {
-            titles.add(items.next().getTitle());
+            titles.add(CriteriaTestUtils.title(items.next()));
         }
         Collections.sort(titles);
         Assert.assertEquals(titles.get(0), "dolor sit amet");
@@ -175,7 +176,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         Assert.assertEquals(advResult.getTotalSize(), 1);
         ResultIterator<AdvancedResultItem> items = advResult.getItems();
         AdvancedResultItem item = items.next();
-        Assert.assertEquals(item.getTitle(), "hello test? world");
+        Assert.assertEquals(CriteriaTestUtils.title(item), "hello test? world");
     }
 
     @Test
@@ -199,7 +200,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         Assert.assertEquals(advResult.getTotalSize(), 1);
         ResultIterator<AdvancedResultItem> items = advResult.getItems();
         AdvancedResultItem item = items.next();
-        Assert.assertEquals(item.getTitle(), "hello te?st world");
+        Assert.assertEquals(CriteriaTestUtils.title(item), "hello te?st world");
     }
 
     @Test
@@ -224,7 +225,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         Assert.assertEquals(advResult.getTotalSize(), 1);
         ResultIterator<AdvancedResultItem> items = advResult.getItems();
         AdvancedResultItem item = items.next();
-        Assert.assertEquals(item.getTitle(), "hello \"Milano\" world");
+        Assert.assertEquals(CriteriaTestUtils.title(item), "hello \"Milano\" world");
     }
 
     private Criteria criteria(String titleSearch, boolean escape)

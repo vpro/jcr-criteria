@@ -37,6 +37,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
+import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -103,7 +104,7 @@ public class OrderingTest extends TestNgRepositoryTestcase
         // --- X
         // --- Y
         // --- Z
-        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
+        MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
 
         ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
 
@@ -135,7 +136,7 @@ public class OrderingTest extends TestNgRepositoryTestcase
         int i = 0;
         for (AdvancedResultItem currentResult : resultIterator)
         {
-            Assert.assertEquals(currentResult.getTitle(), LETTERS_ARRAY[i]);
+            Assert.assertEquals(CriteriaTestUtils.title(currentResult), LETTERS_ARRAY[i]);
             i++;
         }
     }
@@ -166,10 +167,10 @@ public class OrderingTest extends TestNgRepositoryTestcase
         int i = 0;
         for (AdvancedResultItem currentResult : resultIterator)
         {
-            Assert.assertEquals(currentResult.getTitle(), LETTERS_ARRAY[i], "Position "
+            Assert.assertEquals(CriteriaTestUtils.title(currentResult), LETTERS_ARRAY[i], "Position "
                 + i
                 + ": found "
-                + currentResult.getTitle()
+                + CriteriaTestUtils.title(currentResult)
                 + " instead of "
                 + LETTERS_ARRAY[i]);
             i++;
@@ -183,10 +184,10 @@ public class OrderingTest extends TestNgRepositoryTestcase
         while (resultIterator.hasNext() && resultIterator.hasNext() && resultIterator.hasNext())
         {
             AdvancedResultItem currentResult = resultIterator.next();
-            Assert.assertEquals(currentResult.getTitle(), LETTERS_ARRAY[i], "Position "
+            Assert.assertEquals(CriteriaTestUtils.title(currentResult), LETTERS_ARRAY[i], "Position "
                 + i
                 + ": found "
-                + currentResult.getTitle()
+                + CriteriaTestUtils.title(currentResult)
                 + " instead of "
                 + LETTERS_ARRAY[i]);
             i++;
@@ -265,10 +266,10 @@ public class OrderingTest extends TestNgRepositoryTestcase
         int i = 0;
         for (AdvancedResultItem currentResult : resultIterator)
         {
-            Assert.assertEquals(currentResult.getTitle(), LETTERS_ARRAY[i + offset], "Position "
+            Assert.assertEquals(CriteriaTestUtils.title(currentResult), LETTERS_ARRAY[i + offset], "Position "
                 + i
                 + ": found "
-                + currentResult.getTitle()
+                + CriteriaTestUtils.title(currentResult)
                 + " instead of "
                 + LETTERS_ARRAY[i + offset]);
             i++;
@@ -282,10 +283,10 @@ public class OrderingTest extends TestNgRepositoryTestcase
         while (resultIterator.hasNext() && resultIterator.hasNext() && resultIterator.hasNext())
         {
             AdvancedResultItem currentResult = resultIterator.next();
-            Assert.assertEquals(currentResult.getTitle(), LETTERS_ARRAY[i + offset], "Position "
+            Assert.assertEquals(CriteriaTestUtils.title(currentResult), LETTERS_ARRAY[i + offset], "Position "
                 + i
                 + ": found "
-                + currentResult.getTitle()
+                + CriteriaTestUtils.title(currentResult)
                 + " instead of "
                 + LETTERS_ARRAY[i + offset]);
             i++;

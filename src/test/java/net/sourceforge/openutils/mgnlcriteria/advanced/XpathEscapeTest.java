@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.cms.security.MgnlRoleManager;
@@ -36,6 +35,7 @@ import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 import java.util.Collection;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
@@ -69,7 +69,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     {
         super.setUp();
 
-        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
+        MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
 
         ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
 
@@ -99,13 +99,13 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         }
         Assert.assertNotNull(advResult);
 
-        Assert.assertEquals(advResult.getFirstResult().getTitle(), title);
+        Assert.assertEquals(CriteriaTestUtils.title(advResult.getFirstResult()), title);
 
-        Collection< ? extends Content> collection = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<AdvancedResultItem> collection = CriteriaTestUtils.collectCollectionFromResult(advResult);
         Assert.assertEquals(collection.size(), 1);
-        for (Content content : collection)
+        for (AdvancedResultItem content : collection)
         {
-            Assert.assertEquals(content.getTitle(), title);
+            Assert.assertEquals(CriteriaTestUtils.title(content), title);
         }
     }
 
@@ -186,7 +186,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     {
 
         AdvancedResult advResult = CriteriaTestUtils.search("superuser", 1, 200);
-        Collection< ? extends Content> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         CriteriaTestUtils.assertNumOfResults(0, result, "superuser");
     }
@@ -195,7 +195,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
     public void testNotInPrivatePropertiesNoTemplates()
     {
         AdvancedResult advResult = CriteriaTestUtils.search("t-redirect", 1, 200);
-        Collection< ? extends Content> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         CriteriaTestUtils.assertNumOfResults(0, result, "t-redirect");
     }
@@ -322,7 +322,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
             "//*[( (@jcr:primaryType='mgnl:content')  and  ( jcr:contains(@title, '\\:') )  )] ");
 
         AdvancedResult advResult = criteria.execute();
-        Collection< ? extends Content> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         CriteriaTestUtils.assertNumOfResults(0, result, searchText);
     }
@@ -340,7 +340,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         Assert.assertEquals(criteria.toXpathExpression(), "//*[( ( jcr:contains(@title, '\\)') )  )] ");
 
         AdvancedResult advResult = criteria.execute();
-        Collection< ? extends Content> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         CriteriaTestUtils.assertNumOfResults(0, result, searchText);
     }
@@ -359,7 +359,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         Assert.assertEquals(criteria.toXpathExpression(), "//*[( ( jcr:contains(@title, '\\: \\)') )  )] ");
 
         AdvancedResult advResult = criteria.execute();
-        Collection< ? extends Content> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         CriteriaTestUtils.assertNumOfResults(0, result, searchText);
     }
@@ -431,7 +431,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         Assert.assertEquals(criteria.toXpathExpression(), "//*[( ( jcr:contains(@title, '\\: \\)') )  )] ");
 
         AdvancedResult advResult = criteria.execute();
-        Collection< ? extends Content> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         CriteriaTestUtils.assertNumOfResults(0, result, searchText);
     }

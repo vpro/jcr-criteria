@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlcriteria.tests;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.repository.RepositoryConstants;
 
 import java.io.StringWriter;
@@ -52,14 +51,14 @@ import org.testng.Assert;
 public class CriteriaTestUtils
 {
 
-    public static void assertNumOfResults(int expected, Collection< ? extends Content> result, String search)
+    public static void assertNumOfResults(int expected, Collection<AdvancedResultItem> result, String search)
     {
         if (result.size() != expected)
         {
             List<String> titles = new ArrayList<String>();
-            for (Content content : result)
+            for (AdvancedResultItem content : result)
             {
-                titles.add(content.getTitle());
+                titles.add(title(content));
             }
 
             Assert.fail("Wrong result when searching for \""
@@ -73,15 +72,15 @@ public class CriteriaTestUtils
         }
     }
 
-    public static void assertUnsortedResults(String[] expected, Collection< ? extends Content> result, String search)
+    public static void assertUnsortedResults(String[] expected, Collection<AdvancedResultItem> result, String search)
     {
         Arrays.sort(expected);
 
         List<String> titles = new ArrayList<String>();
 
-        for (Content content : result)
+        for (AdvancedResultItem content : result)
         {
-            titles.add(content.getTitle());
+            titles.add(title(content));
         }
         Collections.sort(titles);
 
@@ -103,12 +102,12 @@ public class CriteriaTestUtils
 
     }
 
-    public static void assertSortedResults(String[] expected, Collection< ? extends Content> result, String search)
+    public static void assertSortedResults(String[] expected, Collection<AdvancedResultItem> result, String search)
     {
         List<String> titles = new ArrayList<String>();
-        for (Content content : result)
+        for (AdvancedResultItem content : result)
         {
-            titles.add(content.getTitle());
+            titles.add(title(content));
         }
 
         if (result.size() != expected.length)
@@ -208,5 +207,20 @@ public class CriteriaTestUtils
 
         CollectionUtils.addAll(list, items);
         return list;
+    }
+
+    public static String title(AdvancedResultItem item)
+    {
+        return item.getTitle();
+    }
+
+    public static String name(AdvancedResultItem item)
+    {
+        return item.getName();
+    }
+
+    public static String path(AdvancedResultItem item)
+    {
+        return item.getHandle();
     }
 }

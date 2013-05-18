@@ -16,34 +16,34 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-// TEMPORARY COPIED HERE TO AVOID CIRCULAR DEPENDENCY - MuST SPLIT mgnlutils to FIX
-package it.openutils.mgnlutils.test;
+package net.sourceforge.openutils.mgnlcriteria.utils;
 
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import info.magnolia.content2bean.Content2BeanException;
+
+import javax.jcr.Node;
 
 
 /**
- * TestNG version of Magnolia RepositoryTestcase. Extend this class and configure it by adding a @RepositoryTestConfiguration
- * annotation.
+ * Transitionary class for shielding the usage of the deprecated Content2Bean while waiting for Node2Bean which is
+ * available only in Magnolia 5 (guys, deprecating classes before giving a replacement is not nice).
  * @author fgiust
  * @version $Id$
  */
-public abstract class TestNgRepositoryTestcase extends AbstractRepositoryTestcase
+public class ToBeanUtils
 {
 
-    @Override
-    @BeforeClass
-    public void setUp() throws Exception
+    public static Object toBean(Node node, boolean recursive, final Class defaultClass)
     {
-        super.setUp();
+        try
+        {
+            return info.magnolia.content2bean.Content2BeanUtil.toBean(
+                new info.magnolia.cms.core.DefaultContent(node),
+                recursive,
+                defaultClass);
+        }
+        catch (Content2BeanException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
-
-    @Override
-    @AfterClass
-    public void tearDown() throws Exception
-    {
-        super.tearDown();
-    }
-
 }

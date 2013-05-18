@@ -41,6 +41,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Criterion;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
+import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.testng.Assert;
@@ -83,7 +84,7 @@ public class BasePathTest extends TestNgRepositoryTestcase
         // --------- MagnoliaCriteriaImpl
         // ----------- MagnoliaCriteriaWithLimitImpl
         // ------- AdvancedCriteriaImpl
-        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
+        MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
 
         // info.magnolia.cms.security.SecurityTest.setUp()
         final SecuritySupportImpl sec = new SecuritySupportImpl();
@@ -190,7 +191,7 @@ public class BasePathTest extends TestNgRepositoryTestcase
         List<String> paths = new ArrayList<String>();
         while (items.hasNext())
         {
-            paths.add(items.next().getHandle());
+            paths.add(CriteriaTestUtils.path(items.next()));
         }
         return paths;
     }

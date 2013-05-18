@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.security.AccessDeniedException;
 
 import javax.jcr.Item;
@@ -44,9 +43,9 @@ public class AdvancedResultItemResultIterator extends ResultIteratorImpl<Advance
      * @param rowIterator
      * @param hm
      */
-    public AdvancedResultItemResultIterator(RowIterator rowIterator, HierarchyManager hm)
+    public AdvancedResultItemResultIterator(RowIterator rowIterator)
     {
-        super(rowIterator, hm);
+        super(rowIterator);
     }
 
     /**
@@ -63,7 +62,7 @@ public class AdvancedResultItemResultIterator extends ResultIteratorImpl<Advance
                 return null;
             }
 
-            return new AdvancedResultItemImpl(row, jcrNode, this.hm);
+            return new AdvancedResultItemImpl(row, jcrNode);
         }
         catch (AccessDeniedException e)
         {

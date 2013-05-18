@@ -19,11 +19,13 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.security.PermissionUtil;
+import info.magnolia.jcr.RuntimeRepositoryException;
+import info.magnolia.jcr.util.NodeUtil;
 
 import java.util.NoSuchElementException;
 
+import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.query.RowIterator;
 
@@ -53,9 +55,9 @@ public class AccessibleResultItemResultIterator extends AdvancedResultItemResult
     /**
      *
      */
-    public AccessibleResultItemResultIterator(RowIterator rowIterator, HierarchyManager hm)
+    public AccessibleResultItemResultIterator(RowIterator rowIterator)
     {
-        super(rowIterator, hm);
+        super(rowIterator);
     }
 
     /**
@@ -78,9 +80,19 @@ public class AccessibleResultItemResultIterator extends AdvancedResultItemResult
         do
         {
             next = super.next();
-            if (!PermissionUtil.isGranted(hm.getWorkspace().getName(), next.getHandle(), Session.ACTION_READ))
+            try
             {
-                next = null;
+                if (!PermissionUtil.isGranted(
+                    next.getSession().getWorkspace().getName(),
+                    NodeUtil.getPathIfPossible(next.getJCRNode()),
+                    Session.ACTION_READ))
+                {
+                    next = null;
+                }
+            }
+            catch (RepositoryException e)
+            {
+                throw new RuntimeRepositoryException(e);
             }
         }
         while (next == null && super.hasNext());

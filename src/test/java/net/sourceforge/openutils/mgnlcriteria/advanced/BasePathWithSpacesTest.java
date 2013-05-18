@@ -65,7 +65,7 @@ public class BasePathWithSpacesTest extends TestNgRepositoryTestcase
         // Nodes in this workspace:
         // - Lorem ipsum dolor sit amet
         // --- consectetur adipisici elit
-        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
+        MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
 
         // info.magnolia.cms.security.SecurityTest.setUp()
         final SecuritySupportImpl sec = new SecuritySupportImpl();

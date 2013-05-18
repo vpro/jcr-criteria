@@ -36,6 +36,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
+import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -63,7 +64,7 @@ public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
 
         super.setUp();
 
-        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
+        MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
 
         // info.magnolia.cms.security.SecurityTest.setUp()
         final SecuritySupportImpl sec = new SecuritySupportImpl();
@@ -84,7 +85,7 @@ public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
 
         ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
         Assert.assertTrue(resultIterator.hasNext());
-        Assert.assertEquals(resultIterator.next().getName(), "ceb55065-e6cd-451a-8ce0-7e495e7e8fbc");
+        Assert.assertEquals(CriteriaTestUtils.name(resultIterator.next()), "ceb55065-e6cd-451a-8ce0-7e495e7e8fbc");
     }
 
     @Test

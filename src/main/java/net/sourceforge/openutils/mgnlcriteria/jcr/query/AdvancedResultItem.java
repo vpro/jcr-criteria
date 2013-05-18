@@ -19,7 +19,9 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query;
 
-import info.magnolia.cms.core.Content;
+import java.util.Map;
+
+import javax.jcr.Node;
 
 
 /**
@@ -27,7 +29,7 @@ import info.magnolia.cms.core.Content;
  * @author fgiust
  * @version $Id$
  */
-public interface AdvancedResultItem extends Content
+public interface AdvancedResultItem extends Node, Map<String, Object>
 {
 
     /**
@@ -55,4 +57,29 @@ public interface AdvancedResultItem extends Content
      * @return the score
      */
     double getScore(String selector);
+
+    /**
+     * Method added for compatibility with the old info.magnolia.cms.core.Content. Not needed, AdvancedResultItem
+     * directly implements javax.jcr.Node.
+     * @return the base jcr node
+     */
+    Node getJCRNode();
+
+    /**
+     * Method added for compatibility with the old info.magnolia.cms.core.Content
+     * @return the "title" property in this node
+     */
+    String getTitle();
+
+    /**
+     * Same as getName() in javax.jcr.node, but it doesn't throw any checked exception
+     * @return the name of this node
+     */
+    String getName();
+
+    /**
+     * Method added for compatibility with the old info.magnolia.cms.core.Content. You should use getPath()
+     * @return the node path
+     */
+    String getHandle();
 }

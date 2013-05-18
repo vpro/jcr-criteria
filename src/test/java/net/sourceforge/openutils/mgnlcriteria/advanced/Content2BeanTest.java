@@ -41,6 +41,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
+import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.testng.Assert;
@@ -70,7 +71,7 @@ public class Content2BeanTest extends TestNgRepositoryTestcase
 
         super.setUp();
 
-        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
+        MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
 
         ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
 
@@ -96,13 +97,13 @@ public class Content2BeanTest extends TestNgRepositoryTestcase
         Assert.assertEquals(advResult.getTotalSize(), 1);
         ResultIterator<AdvancedResultItem> items = advResult.getItems();
         AdvancedResultItem item = items.next();
-        Assert.assertEquals(item.getTitle(), "lorem ipsum");
-        Assert.assertEquals(item.getHandle(), "/contains/lorem-ipsum");
+        Assert.assertEquals(CriteriaTestUtils.title(item), "lorem ipsum");
+        Assert.assertEquals(CriteriaTestUtils.path(item), "/contains/lorem-ipsum");
 
         // this is also a Map!
         Assert.assertEquals(((Map<String, Object>) item).get("title"), "lorem ipsum");
         Assert.assertEquals(((Map<String, Object>) item).get("text"), "ohoh");
-        Assert.assertEquals(((Map<String, Object>) item).get("number"), "5");
+        Assert.assertEquals(((Map<String, Object>) item).get("number").toString(), "5");
         Assert.assertEquals(((Map<String, Object>) item).get("handle"), "/contains/lorem-ipsum");
 
         ResultIterator<Page> itemsTransformed = advResult.getItems(Page.class);

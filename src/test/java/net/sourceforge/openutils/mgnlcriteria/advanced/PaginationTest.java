@@ -38,6 +38,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
+import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -74,7 +75,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
         // --- X
         // --- Y
         // --- Z
-        MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE).save();
+        MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
 
         ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
 
@@ -103,14 +104,14 @@ public class PaginationTest extends TestNgRepositoryTestcase
         ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
         Assert.assertEquals(resultIterator.getSize(), 26);
 
-        Assert.assertEquals(resultIterator.next().getTitle(), "A");
+        Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "A");
 
         AdvancedResultItem content = null;
         while (resultIterator.hasNext())
         {
             content = resultIterator.next();
         }
-        Assert.assertEquals(content.getTitle(), "Z");
+        Assert.assertEquals(CriteriaTestUtils.title(content), "Z");
     }
 
     @Test
@@ -151,7 +152,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
 
         ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
 
-        Assert.assertEquals(resultIterator.next().getTitle(), "J");
+        Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "J");
         Assert.assertEquals(resultIterator.getSize(), 17);
     }
 
@@ -179,7 +180,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
         {
             content = resultIterator.next();
         }
-        Assert.assertEquals(content.getTitle(), "J");
+        Assert.assertEquals(CriteriaTestUtils.title(content), "J");
     }
 
     /**
@@ -201,11 +202,11 @@ public class PaginationTest extends TestNgRepositoryTestcase
         ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
 
         Assert.assertEquals(resultIterator.getSize(), 5);
-        Assert.assertEquals(resultIterator.next().getTitle(), "K");
-        Assert.assertEquals(resultIterator.next().getTitle(), "L");
-        Assert.assertEquals(resultIterator.next().getTitle(), "M");
-        Assert.assertEquals(resultIterator.next().getTitle(), "N");
-        Assert.assertEquals(resultIterator.next().getTitle(), "O");
+        Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "K");
+        Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "L");
+        Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "M");
+        Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "N");
+        Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "O");
     }
 
     /**
@@ -227,8 +228,8 @@ public class PaginationTest extends TestNgRepositoryTestcase
         ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
 
         Assert.assertEquals(resultIterator.getSize(), 2);
-        Assert.assertEquals(resultIterator.next().getTitle(), "Y");
-        Assert.assertEquals(resultIterator.next().getTitle(), "Z");
+        Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "Y");
+        Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "Z");
     }
 
     /**

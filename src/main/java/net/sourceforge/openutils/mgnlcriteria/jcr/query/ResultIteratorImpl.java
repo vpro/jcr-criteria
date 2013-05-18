@@ -19,8 +19,6 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query;
 
-import info.magnolia.cms.core.HierarchyManager;
-
 import java.util.Iterator;
 
 import javax.jcr.query.Row;
@@ -42,17 +40,11 @@ public abstract class ResultIteratorImpl<T> implements ResultIterator<T>
     protected RowIterator rowIterator;
 
     /**
-     * Magnolia Hierarchy Manager
-     */
-    protected final HierarchyManager hm;
-
-    /**
      * @param rowIterator
      */
-    public ResultIteratorImpl(RowIterator rowIterator, HierarchyManager hm)
+    public ResultIteratorImpl(RowIterator rowIterator)
     {
         this.rowIterator = rowIterator;
-        this.hm = hm;
     }
 
     /**

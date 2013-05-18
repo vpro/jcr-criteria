@@ -19,8 +19,6 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
-import info.magnolia.cms.core.HierarchyManager;
-
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.query.InvalidQueryException;
@@ -69,34 +67,33 @@ public final class QueryExecutorHelper
      * Executes a jcr query.
      * @param stmt the statement of the jcr query
      * @param language the language of the jcr query
-     * @param hm the HirarchyManager for obtaining the QueryManager
+     * @param jcrSession the Session
      * @param maxResults maximun number of results to retrieve
      * @param offset the index of the first result to retrieve (0, 1, 2, ...)
      * @param spellCheckString the input string used for spell checking
      * @return the execution result
      */
-    public static AdvancedResultImpl execute(String stmt, String language, HierarchyManager hm, int maxResults,
+    public static AdvancedResultImpl execute(String stmt, String language, Session jcrSession, int maxResults,
         int offset, String spellCheckString)
     {
-        return execute(stmt, language, hm, maxResults, offset, spellCheckString, false);
+        return execute(stmt, language, jcrSession, maxResults, offset, spellCheckString, false);
     }
 
     /**
      * Executes a jcr query.
      * @param stmt the statement of the jcr query
      * @param language the language of the jcr query
-     * @param hm the HirarchyManager for obtaining the QueryManager
+     * @param jcrSession the Session
      * @param maxResults maximun number of results to retrieve
      * @param offset the index of the first result to retrieve (0, 1, 2, ...)
      * @param spellCheckString the input string used for spell checking
      * @param forcePagingWithDocumentOrder see {@link Criteria#setForcePagingWithDocumentOrder(boolean)}
      * @return the execution result
      */
-    public static AdvancedResultImpl execute(String stmt, String language, HierarchyManager hm, int maxResults,
+    @SuppressWarnings("deprecation")
+    public static AdvancedResultImpl execute(String stmt, String language, Session jcrSession, int maxResults,
         int offset, String spellCheckString, boolean forcePagingWithDocumentOrder)
     {
-
-        Session jcrSession = hm.getWorkspace().getSession();
         javax.jcr.query.QueryManager jcrQueryManager;
 
         try
@@ -143,7 +140,6 @@ public final class QueryExecutorHelper
                     maxResults,
                     pageNumberStartingFromOne,
                     stmt,
-                    hm,
                     spellCheckerQuery,
                     forcePagingWithDocumentOrder,
                     offset);

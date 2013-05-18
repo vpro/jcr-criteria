@@ -19,7 +19,8 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query;
 
-import info.magnolia.cms.core.HierarchyManager;
+import javax.jcr.Session;
+
 import net.sourceforge.openutils.mgnlcriteria.advanced.impl.AdvancedCriteriaImpl;
 
 
@@ -54,9 +55,9 @@ public final class JCRCriteriaFactory
      * @param language the language of the query
      * @return a DirectJcrQuery
      */
-    public static DirectJcrQuery createDirectJcrQuery(HierarchyManager hm, String query, String language)
+    public static DirectJcrQuery createDirectJcrQuery(Session session, String query, String language)
     {
-        return new DirectJcrQuery(hm, query, language);
+        return new DirectJcrQuery(session, query, language);
     }
 
 }

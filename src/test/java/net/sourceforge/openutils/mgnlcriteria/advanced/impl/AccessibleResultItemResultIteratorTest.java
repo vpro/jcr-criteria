@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.cms.security.MgnlRoleManager;
@@ -46,6 +45,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
+import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -96,10 +96,9 @@ public class AccessibleResultItemResultIteratorTest extends
 		// ----- 11 (title=Freddy, petType=bird, birthDate=2000-03-09)
 		// --- hamsters (title=Hamsters)
 		// ----- 2 (title=Basil, petType=hamster, birthDate=2002-08-06)
-
-		HierarchyManager hm = MgnlContext
-				.getHierarchyManager(RepositoryConstants.WEBSITE);
-		hm.save();
+ 
+		MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
+ 
 
         Session userrolesSession = MgnlContext.getJCRSession("userroles");
         PropertyUtil.setProperty(userrolesSession.getNode("/anonymous/acl_website/0"), "path", "/pets/dogs/*");
@@ -122,16 +121,14 @@ public class AccessibleResultItemResultIteratorTest extends
     @Test
     public void testGetContent() throws Exception
     {
-        HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE);
-
         // Allowed access
         Assert.assertTrue(
-            PermissionUtil.isGranted(hm.getWorkspace().getName(), "/pets/dogs/3", Session.ACTION_READ),
+            PermissionUtil.isGranted(RepositoryConstants.WEBSITE, "/pets/dogs/3", Session.ACTION_READ),
             "should be allowed to read path /pets/dogs");
 
         // Not allowed access
         Assert.assertFalse(
-            PermissionUtil.isGranted(hm.getWorkspace().getName(), "/pets/cats/1", Session.ACTION_READ),
+            PermissionUtil.isGranted(RepositoryConstants.WEBSITE, "/pets/cats/1", Session.ACTION_READ),
             "should not be allowed to read path /pets/cats");
     }
 
@@ -171,11 +168,11 @@ public class AccessibleResultItemResultIteratorTest extends
 		ResultIterator<AdvancedResultItem> iterator = result.getItems();
 
 		Assert.assertTrue(iterator.hasNext());
-		Assert.assertEquals(iterator.next().getName(), "4");
+		Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "4");
 		Assert.assertTrue(iterator.hasNext());
-		Assert.assertEquals(iterator.next().getName(), "12");
+		Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "12");
 		Assert.assertTrue(iterator.hasNext());
-		Assert.assertEquals(iterator.next().getName(), "3");
+		Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "3");
 		Assert.assertFalse(iterator.hasNext());
 	}
 
