@@ -27,10 +27,8 @@ import info.magnolia.cms.security.Realm;
 import info.magnolia.cms.security.SecuritySupport;
 import info.magnolia.cms.security.SecuritySupportImpl;
 import info.magnolia.cms.security.SystemUserManager;
-import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.MetaDataUtil;
-import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
@@ -38,6 +36,8 @@ import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
 import java.util.Calendar;
+
+import javax.jcr.Node;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
@@ -164,9 +164,9 @@ public class CriteriaTest extends TestNgRepositoryTestcase
             .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_CONTENT))
             .add(Restrictions.eq("@title", "Pets"));
         AdvancedResult result = criteria.execute();
-        ResultIterator<AdvancedResultItem> iterator = result.getItems();
+        ResultIterator<? extends Node> iterator = result.getItems();
         Assert.assertTrue(iterator.hasNext());
-        AdvancedResultItem resultNode = iterator.next();
+        Node resultNode = iterator.next();
         Assert.assertEquals(CriteriaTestUtils.title(resultNode), "Pets");
     }
 
@@ -182,7 +182,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         AdvancedResult result = criteria.execute();
         Assert.assertEquals(result.getTotalSize(), 1);
 
-        ResultIterator<AdvancedResultItem> iterator = result.getItems();
+        ResultIterator<? extends Node> iterator = result.getItems();
         Assert.assertEquals(iterator.getSize(), 1);
         Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "12");
     }
@@ -242,7 +242,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // --- 3 (title=Rosy, petType=dog, birthDate=2001-04-17)
         Assert.assertEquals(result.getTotalSize(), 8);
 
-        ResultIterator<AdvancedResultItem> iterator = result.getItems();
+        ResultIterator<? extends Node> iterator = result.getItems();
         Assert.assertEquals(iterator.getSize(), 3);
         Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "1");
         Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "5");
@@ -282,7 +282,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // --- 3 (title=Rosy, petType=dog, birthDate=2001-04-17)
         Assert.assertEquals(result.getTotalSize(), 8);
 
-        ResultIterator<AdvancedResultItem> iterator = result.getItems();
+        ResultIterator<? extends Node> iterator = result.getItems();
         Assert.assertEquals(iterator.getSize(), 3);
         Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "1");
         Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "5");
@@ -297,7 +297,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
     public void testAddOrder() throws Exception
     {
         Criteria criteria;
-        ResultIterator<AdvancedResultItem> iterator;
+        ResultIterator<? extends Node> iterator;
         Calendar birthDate;
 
         // gets the oldest pet (ascending order)
@@ -311,7 +311,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // ----- 7 (title=Samantha, petType=cat, birthDate=1995-09-04)
         // ----- 8 (title=Max, petType=cat, birthDate=1995-09-04)
         Assert.assertTrue(iterator.hasNext());
-     
+
         birthDate = PropertyUtil.getDate(iterator.next(), "birthDate", null);
         Assert.assertEquals(birthDate.get(Calendar.YEAR), 1995);
         Assert.assertEquals(birthDate.get(Calendar.MONTH) + 1, 9);
@@ -342,7 +342,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
     public void testAddOrderMultiple() throws Exception
     {
         Criteria criteria;
-        ResultIterator<AdvancedResultItem> iterator;
+        ResultIterator<? extends Node> iterator;
 
         // order by @birthDate ascending, @title ascending
         criteria = JCRCriteriaFactory
@@ -381,8 +381,8 @@ public class CriteriaTest extends TestNgRepositoryTestcase
     public void testDateComparison() throws Exception
     {
         Criteria criteria;
-        ResultIterator<AdvancedResultItem> iterator;
-        AdvancedResultItem node;
+        ResultIterator<? extends Node> iterator;
+        Node node;
         Calendar date;
 
         criteria = JCRCriteriaFactory

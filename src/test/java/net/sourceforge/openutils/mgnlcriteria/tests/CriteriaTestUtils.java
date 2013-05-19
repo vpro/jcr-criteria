@@ -19,6 +19,8 @@
 
 package net.sourceforge.openutils.mgnlcriteria.tests;
 
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.repository.RepositoryConstants;
 
 import java.io.StringWriter;
@@ -27,6 +29,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import javax.jcr.Node;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
@@ -51,12 +55,12 @@ import org.testng.Assert;
 public class CriteriaTestUtils
 {
 
-    public static void assertNumOfResults(int expected, Collection<AdvancedResultItem> result, String search)
+    public static void assertNumOfResults(int expected, Collection<Node> result, String search)
     {
         if (result.size() != expected)
         {
             List<String> titles = new ArrayList<String>();
-            for (AdvancedResultItem content : result)
+            for (Node content : result)
             {
                 titles.add(title(content));
             }
@@ -72,13 +76,13 @@ public class CriteriaTestUtils
         }
     }
 
-    public static void assertUnsortedResults(String[] expected, Collection<AdvancedResultItem> result, String search)
+    public static void assertUnsortedResults(String[] expected, Collection<Node> result, String search)
     {
         Arrays.sort(expected);
 
         List<String> titles = new ArrayList<String>();
 
-        for (AdvancedResultItem content : result)
+        for (Node content : result)
         {
             titles.add(title(content));
         }
@@ -102,10 +106,10 @@ public class CriteriaTestUtils
 
     }
 
-    public static void assertSortedResults(String[] expected, Collection<AdvancedResultItem> result, String search)
+    public static void assertSortedResults(String[] expected, Collection<Node> result, String search)
     {
         List<String> titles = new ArrayList<String>();
-        for (AdvancedResultItem content : result)
+        for (Node content : result)
         {
             titles.add(title(content));
         }
@@ -199,28 +203,28 @@ public class CriteriaTestUtils
         return criteria;
     }
 
-    public static Collection<AdvancedResultItem> collectCollectionFromResult(AdvancedResult result)
+    public static Collection<Node> collectCollectionFromResult(AdvancedResult result)
     {
 
-        ResultIterator<AdvancedResultItem> items = result.getItems();
-        ArrayList<AdvancedResultItem> list = new ArrayList<AdvancedResultItem>();
+        ResultIterator<? extends Node> items = result.getItems();
+        ArrayList<Node> list = new ArrayList<Node>();
 
         CollectionUtils.addAll(list, items);
         return list;
     }
 
-    public static String title(AdvancedResultItem item)
+    public static String title(Node item)
     {
-        return item.getTitle();
+        return PropertyUtil.getString(item, "title");
     }
 
-    public static String name(AdvancedResultItem item)
+    public static String name(Node item)
     {
-        return item.getName();
+        return NodeUtil.getName(item);
     }
 
-    public static String path(AdvancedResultItem item)
+    public static String path(Node item)
     {
-        return item.getHandle();
+        return NodeUtil.getPathIfPossible(item);
     }
 }

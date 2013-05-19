@@ -29,8 +29,10 @@ import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
+
+import javax.jcr.Node;
+
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
@@ -83,7 +85,7 @@ public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
 
         AdvancedResult advResult = criteria.execute();
 
-        ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
+        ResultIterator<? extends Node> resultIterator = advResult.getItems();
         Assert.assertTrue(resultIterator.hasNext());
         Assert.assertEquals(CriteriaTestUtils.name(resultIterator.next()), "ceb55065-e6cd-451a-8ce0-7e495e7e8fbc");
     }
@@ -98,7 +100,7 @@ public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
 
         AdvancedResult advResult = criteria.execute();
 
-        ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
+        ResultIterator<? extends Node> resultIterator = advResult.getItems();
         Assert.assertFalse(resultIterator.hasNext());
     }
 
@@ -112,7 +114,7 @@ public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
 
         AdvancedResult advResult = criteria.execute();
 
-        ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
+        ResultIterator<? extends Node> resultIterator = advResult.getItems();
         Assert.assertFalse(resultIterator.hasNext());
     }
 

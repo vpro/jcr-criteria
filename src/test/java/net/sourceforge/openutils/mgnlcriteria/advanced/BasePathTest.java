@@ -34,8 +34,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.jcr.Node;
+
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
@@ -187,7 +188,7 @@ public class BasePathTest extends TestNgRepositoryTestcase
             criteria.add(Restrictions.eq("@title", title));
         }
         AdvancedResult advResult = criteria.execute();
-        ResultIterator<AdvancedResultItem> items = advResult.getItems();
+        ResultIterator<? extends Node> items = advResult.getItems();
         List<String> paths = new ArrayList<String>();
         while (items.hasNext())
         {

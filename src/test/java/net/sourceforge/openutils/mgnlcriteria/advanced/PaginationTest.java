@@ -31,8 +31,10 @@ import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
+
+import javax.jcr.Node;
+
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
@@ -101,12 +103,12 @@ public class PaginationTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), 26);
 
-        ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
+        ResultIterator<? extends Node> resultIterator = advResult.getItems();
         Assert.assertEquals(resultIterator.getSize(), 26);
 
         Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "A");
 
-        AdvancedResultItem content = null;
+        Node content = null;
         while (resultIterator.hasNext())
         {
             content = resultIterator.next();
@@ -125,7 +127,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
 
         int count = 0;
 
-        for (AdvancedResultItem content : advResult.getItems())
+        for (Node content : advResult.getItems())
         {
             Assert.assertNotNull(content);
             count++;
@@ -150,7 +152,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), 26);
 
-        ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
+        ResultIterator<? extends Node> resultIterator = advResult.getItems();
 
         Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "J");
         Assert.assertEquals(resultIterator.getSize(), 17);
@@ -172,10 +174,10 @@ public class PaginationTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), 26);
 
-        ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
+        ResultIterator<? extends Node> resultIterator = advResult.getItems();
         Assert.assertEquals(resultIterator.getSize(), 10);
 
-        AdvancedResultItem content = null;
+        Node content = null;
         while (resultIterator.hasNext())
         {
             content = resultIterator.next();
@@ -199,7 +201,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), 26);
 
-        ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
+        ResultIterator<? extends Node> resultIterator = advResult.getItems();
 
         Assert.assertEquals(resultIterator.getSize(), 5);
         Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "K");
@@ -225,7 +227,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), 26);
 
-        ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
+        ResultIterator<? extends Node> resultIterator = advResult.getItems();
 
         Assert.assertEquals(resultIterator.getSize(), 2);
         Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "Y");
@@ -249,7 +251,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
         Assert.assertEquals(advResult.getTotalSize(), 26);
         Assert.assertEquals(advResult.getNumberOfPages(), 6);
 
-        ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
+        ResultIterator<? extends Node> resultIterator = advResult.getItems();
         Assert.assertEquals(resultIterator.getSize(), 5);
     }
 }

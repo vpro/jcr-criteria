@@ -19,11 +19,10 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
-import info.magnolia.content2bean.Content2BeanException;
-import info.magnolia.content2bean.Content2BeanUtil;
 import info.magnolia.jcr.RuntimeRepositoryException;
 
 import javax.jcr.Item;
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 import javax.jcr.query.InvalidQueryException;

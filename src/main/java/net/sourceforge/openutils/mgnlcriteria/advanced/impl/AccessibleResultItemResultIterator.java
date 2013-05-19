@@ -25,6 +25,7 @@ import info.magnolia.jcr.util.NodeUtil;
 
 import java.util.NoSuchElementException;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.query.RowIterator;
@@ -84,7 +85,7 @@ public class AccessibleResultItemResultIterator extends AdvancedResultItemResult
             {
                 if (!PermissionUtil.isGranted(
                     next.getSession().getWorkspace().getName(),
-                    NodeUtil.getPathIfPossible(next.getJCRNode()),
+                    NodeUtil.getPathIfPossible(next),
                     Session.ACTION_READ))
                 {
                     next = null;

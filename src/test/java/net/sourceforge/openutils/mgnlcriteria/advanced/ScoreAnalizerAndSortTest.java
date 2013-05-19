@@ -35,6 +35,8 @@ import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 import java.util.Collection;
 import java.util.List;
 
+import javax.jcr.Node;
+
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
@@ -84,7 +86,7 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
         // Alighieri, Dante
 
         AdvancedResult advResult = CriteriaTestUtils.search("Dante Alighieri", 1, 200);
-        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<Node> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         CriteriaTestUtils.assertNumOfResults(2, result, "Dante Alighieri");
     }
@@ -97,19 +99,21 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
         // fàgiànò
 
         AdvancedResult advResult = CriteriaTestUtils.search("fagiano", 1, 200);
-        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<Node> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         CriteriaTestUtils.assertNumOfResults(3, result, "fagiano");
 
-        ResultIterator<AdvancedResultItem> iterator = advResult.getItems();
+        ResultIterator<? extends Node> iterator = advResult.getItems();
 
-        Assert.assertTrue(iterator.next().getScore() > iterator.next().getScore());
+        Assert.assertTrue(((AdvancedResultItem) iterator.next()).getScore() > ((AdvancedResultItem) iterator.next())
+            .getScore());
 
         iterator = advResult.getItems();
 
         // not sure what the selector name "s" means, but that's the only valid selector for this query, according to
         // jackrabbit
-        Assert.assertTrue(iterator.next().getScore("s") > iterator.next().getScore("s"));
+        Assert.assertTrue(((AdvancedResultItem) iterator.next()).getScore("s") > ((AdvancedResultItem) iterator.next())
+            .getScore("s"));
     }
 
     @Test
@@ -119,7 +123,7 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
         // canna da pesca
 
         AdvancedResult advResult = CriteriaTestUtils.search("pesca", 1, 200);
-        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<Node> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         CriteriaTestUtils.assertSortedResults(new String[]{"pèsca", "canna da pesca" }, result, "pesca");
     }
@@ -161,7 +165,7 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
         // "Faccina sorridente :)"
 
         AdvancedResult advResult = CriteriaTestUtils.search("francia", 1, 200);
-        Collection<AdvancedResultItem> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
+        Collection<Node> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
 
         Assert.assertEquals(advResult.getTotalSize(), 7);
 
@@ -182,7 +186,7 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
 
         CriteriaTestUtils.assertUnsortedResults(
             new String[]{"Frància", "Parigi (Francia)", "Parigi (Frància)", },
-            ((List<AdvancedResultItem>) result).subList(0, 3),
+            ((List<Node>) result).subList(0, 3),
             "francia");
 
         // the remaining 4 pages have the same score, so the order is not stable

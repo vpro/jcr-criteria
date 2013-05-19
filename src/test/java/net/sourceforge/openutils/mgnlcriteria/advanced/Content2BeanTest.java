@@ -34,8 +34,9 @@ import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
 import java.util.Map;
 
+import javax.jcr.Node;
+
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
@@ -95,8 +96,8 @@ public class Content2BeanTest extends TestNgRepositoryTestcase
         AdvancedResult advResult = criteria.execute();
         Assert.assertNotNull(advResult);
         Assert.assertEquals(advResult.getTotalSize(), 1);
-        ResultIterator<AdvancedResultItem> items = advResult.getItems();
-        AdvancedResultItem item = items.next();
+        ResultIterator<? extends Node> items = advResult.getItems();
+        Node item = items.next();
         Assert.assertEquals(CriteriaTestUtils.title(item), "lorem ipsum");
         Assert.assertEquals(CriteriaTestUtils.path(item), "/contains/lorem-ipsum");
 

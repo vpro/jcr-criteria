@@ -31,8 +31,10 @@ import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
+
+import javax.jcr.Node;
+
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
@@ -130,11 +132,11 @@ public class OrderingTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), LETTERS_ARRAY.length);
 
-        ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
+        ResultIterator<? extends Node> resultIterator = advResult.getItems();
         Assert.assertEquals(resultIterator.getSize(), LETTERS_ARRAY.length);
 
         int i = 0;
-        for (AdvancedResultItem currentResult : resultIterator)
+        for (Node currentResult : resultIterator)
         {
             Assert.assertEquals(CriteriaTestUtils.title(currentResult), LETTERS_ARRAY[i]);
             i++;
@@ -161,11 +163,11 @@ public class OrderingTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), LETTERS_ARRAY.length, "Unset total size.");
 
-        ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
+        ResultIterator<? extends Node> resultIterator = advResult.getItems();
         Assert.assertEquals(resultIterator.getSize(), PAGINATION_LENGTH, "Wrong iterator size.");
 
         int i = 0;
-        for (AdvancedResultItem currentResult : resultIterator)
+        for (Node currentResult : resultIterator)
         {
             Assert.assertEquals(CriteriaTestUtils.title(currentResult), LETTERS_ARRAY[i], "Position "
                 + i
@@ -183,7 +185,7 @@ public class OrderingTest extends TestNgRepositoryTestcase
         // check that hasNext doesn't change the result of getPosition()
         while (resultIterator.hasNext() && resultIterator.hasNext() && resultIterator.hasNext())
         {
-            AdvancedResultItem currentResult = resultIterator.next();
+            Node currentResult = resultIterator.next();
             Assert.assertEquals(CriteriaTestUtils.title(currentResult), LETTERS_ARRAY[i], "Position "
                 + i
                 + ": found "
@@ -260,11 +262,11 @@ public class OrderingTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), LETTERS_ARRAY.length, "Unset total size.");
 
-        ResultIterator<AdvancedResultItem> resultIterator = advResult.getItems();
+        ResultIterator<? extends Node> resultIterator = advResult.getItems();
         Assert.assertEquals(resultIterator.getSize(), LETTERS_ARRAY.length - offset, "Wrong iterator size.");
 
         int i = 0;
-        for (AdvancedResultItem currentResult : resultIterator)
+        for (Node currentResult : resultIterator)
         {
             Assert.assertEquals(CriteriaTestUtils.title(currentResult), LETTERS_ARRAY[i + offset], "Position "
                 + i
@@ -282,7 +284,7 @@ public class OrderingTest extends TestNgRepositoryTestcase
         // check that hasNext doesn't change the result of getPosition()
         while (resultIterator.hasNext() && resultIterator.hasNext() && resultIterator.hasNext())
         {
-            AdvancedResultItem currentResult = resultIterator.next();
+            Node currentResult = resultIterator.next();
             Assert.assertEquals(CriteriaTestUtils.title(currentResult), LETTERS_ARRAY[i + offset], "Position "
                 + i
                 + ": found "

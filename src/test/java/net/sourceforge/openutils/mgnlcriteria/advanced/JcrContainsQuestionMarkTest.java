@@ -38,6 +38,7 @@ import javax.jcr.query.Query;
 import net.sourceforge.openutils.mgnlcriteria.advanced.impl.AdvancedResultImpl;
 import net.sourceforge.openutils.mgnlcriteria.advanced.impl.QueryExecutorHelper;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
+import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -121,7 +122,7 @@ public class JcrContainsQuestionMarkTest extends TestNgRepositoryTestcase
         AdvancedResultImpl advResult = QueryExecutorHelper.execute(stmt, Query.XPATH, hm, -1, 0, null, false);
 
         Assert.assertEquals(advResult.getTotalSize(), 1);
-        Assert.assertEquals(advResult.getItems().next().getTitle(), "hello test? world");
+        Assert.assertEquals(CriteriaTestUtils.title(advResult.getItems().next()), "hello test? world");
     }
 
     @SuppressWarnings("deprecation")
@@ -139,6 +140,6 @@ public class JcrContainsQuestionMarkTest extends TestNgRepositoryTestcase
         stmt = "//*[((@jcr:primaryType='mgnl:content') and (jcr:contains(@title,'te\\?st')))] order by @jcr:score";
         advResult = QueryExecutorHelper.execute(stmt, Query.XPATH, hm, -1, 0, null, false);
         Assert.assertEquals(advResult.getTotalSize(), 1);
-        Assert.assertEquals(advResult.getItems().next().getTitle(), "hello te?st world");
+        Assert.assertEquals(CriteriaTestUtils.title(advResult.getItems().next()), "hello te?st world");
     }
 }

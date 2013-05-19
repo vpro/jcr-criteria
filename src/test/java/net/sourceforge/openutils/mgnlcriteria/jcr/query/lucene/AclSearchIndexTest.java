@@ -36,6 +36,7 @@ import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.jcr.Node;
 import javax.jcr.Session;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
@@ -187,7 +188,7 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
             // --- 4 (title=Jewel, petType=dog, birthDate=2000-03-07)
             // --- 12 (title=Lucky, petType=dog, birthDate=2000-06-24)
             // --- 3 (title=Rosy, petType=dog, birthDate=2001-04-17)
-            ResultIterator<AdvancedResultItem> iterator = result.getItems();
+            ResultIterator<? extends Node> iterator = result.getItems();
 
             Assert.assertTrue(iterator.hasNext());
             Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "4");
@@ -278,7 +279,7 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
             // --- 11 (title=Freddy, petType=bird, birthDate=2000-03-09)
             // --- 1 (title=Leo, petType=cat, birthDate=2000-09-07)
             // --- 5 (title=Iggy, petType=lizard, birthDate=2000-11-30)
-            ResultIterator<AdvancedResultItem> iterator = result.getItems();
+            ResultIterator<? extends Node> iterator = result.getItems();
 
             Assert.assertTrue(iterator.hasNext());
             Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "9");

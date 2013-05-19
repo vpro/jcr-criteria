@@ -29,8 +29,10 @@ import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
+
+import javax.jcr.Node;
+
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
@@ -84,7 +86,7 @@ public class BasePathWithSpacesTest extends TestNgRepositoryTestcase
         criteria.setBasePath("/Lorem ipsum dolor sit amet");
         criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, "mgnl:content"));
         AdvancedResult advResult = criteria.execute();
-        ResultIterator<AdvancedResultItem> items = advResult.getItems();
+        ResultIterator<? extends Node> items = advResult.getItems();
         Assert.assertTrue(items.hasNext());
         Assert.assertEquals(items.next().getName(), "consectetur adipisici elit");
     }
