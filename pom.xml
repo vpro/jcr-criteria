@@ -5,7 +5,7 @@
     <groupId>net.sourceforge.openutils</groupId>
     <artifactId>openutils-parent</artifactId>
     <relativePath>../openutils-parent</relativePath>
-    <version>1.12</version>
+    <version>1.13</version>
   </parent>
   <artifactId>openutils-mgnlcriteria</artifactId>
   <name>Criteria API for Magnolia CMS</name>
@@ -26,7 +26,7 @@
   <scm>
     <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlcriteria</connection>
     <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlcriteria</developerConnection>
-    <url>http://openutils.svn.sourceforge.net/viewvc/openutils/magnoliamodules/trunk/openutils-mgnlcriteria</url>
+    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/magnoliamodules/trunk/openutils-mgnlcriteria</url>
   </scm>
   <build>
     <resources>
@@ -129,21 +129,6 @@
       <artifactId>commons-lang</artifactId>
       <version>2.4</version>
     </dependency>
-    <!--
-    no cycles
-    <dependency>
-      <groupId>net.sourceforge.openutils</groupId>
-      <artifactId>openutils-mgnlutils</artifactId>
-      <version>5.0.0</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>info.magnolia</groupId>
-          <artifactId>magnolia-module-admininterface</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    -->
     <dependency>
       <groupId>javax.jcr</groupId>
       <artifactId>jcr</artifactId>
