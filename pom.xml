@@ -8,7 +8,7 @@
   </parent>
   <artifactId>openutils-mgnlcriteria</artifactId>
   <name>Criteria API for Magnolia CMS</name>
-  <version>5.0.1</version>
+  <version>5.0.2-SNAPSHOT</version>
   <inceptionYear>2009</inceptionYear>
   <description>A Hibernate's Criteria-like API to programmatically generate JCR queries with Magnolia</description>
   <licenses>
@@ -23,9 +23,9 @@
     <url>http://jira.openmindlab.com/browse/CRIT</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlcriteria-5.0.1</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlcriteria-5.0.1</developerConnection>
-    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/tags/openutils-mgnlcriteria-5.0.1</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlcriteria</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlcriteria</developerConnection>
+    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/magnoliamodules/trunk/openutils-mgnlcriteria</url>
   </scm>
   <build>
     <resources>
