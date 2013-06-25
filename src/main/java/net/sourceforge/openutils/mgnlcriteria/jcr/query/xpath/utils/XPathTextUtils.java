@@ -145,6 +145,11 @@ public final class XPathTextUtils
             {
                 encodedPath.append("_x002c_");
             }
+            // CRIT-53
+            else if (inXpathCondition <= 0 && ch == '\u00b0')
+            {
+                encodedPath.append("_x00b0_");
+            }
             else
             {
 
