@@ -150,6 +150,11 @@ public final class XPathTextUtils
             {
                 encodedPath.append("_x00b0_");
             }
+            // CRIT-54
+            else if (inXpathCondition <= 0 && ch == '$')
+            {
+                encodedPath.append("_x0024_");
+            }
             else
             {
 
