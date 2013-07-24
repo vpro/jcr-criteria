@@ -39,7 +39,6 @@ import java.util.List;
 import javax.jcr.Node;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
@@ -228,6 +227,30 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         ResultIterator<? extends Node> items = advResult.getItems();
         Node item = items.next();
         Assert.assertEquals(CriteriaTestUtils.title(item), "hello \"Milano\" world");
+    }
+
+    @Test
+    public void testColonEscape() throws Exception
+    {
+        String textEnteredByUser = "l:u";
+        Criteria criteria = criteria(textEnteredByUser, true);
+        Assert.assertEquals(
+            StringUtils.remove(criteria.toXpathExpression(), ' '),
+            "//*[((@jcr:primaryType='mgnl:content')and(jcr:contains(@title,'l\\:u')))]orderby@jcr:scoredescending");
+        AdvancedResult advResult = null;
+        try
+        {
+            advResult = criteria.execute();
+        }
+        catch (JCRQueryException e)
+        {
+            Assert.fail("Invalid query. " + e.getMessage());
+        }
+        Assert.assertNotNull(advResult);
+        Assert.assertEquals(advResult.getTotalSize(), 1);
+        ResultIterator<? extends Node> items = advResult.getItems();
+        Node item = items.next();
+        Assert.assertEquals(CriteriaTestUtils.title(item), "hello l:u");
     }
 
     private Criteria criteria(String titleSearch, boolean escape)
