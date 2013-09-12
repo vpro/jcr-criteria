@@ -22,7 +22,6 @@ package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 import info.magnolia.cms.security.AccessDeniedException;
 
 import javax.jcr.Item;
-import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.query.Row;
 import javax.jcr.query.RowIterator;

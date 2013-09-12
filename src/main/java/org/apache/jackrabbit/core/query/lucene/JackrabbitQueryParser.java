@@ -39,17 +39,17 @@ package org.apache.jackrabbit.core.query.lucene;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
-import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.search.Query;
+import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.Query;
 import org.apache.lucene.util.Version;
 
 /**

@@ -21,8 +21,6 @@ package net.sourceforge.openutils.mgnlcriteria.jcr.query;
 
 import java.util.Iterator;
 
-import javax.jcr.Node;
-
 
 /**
  * The result of a jcr query. You can access to the actual result items using getItems(). This bean will also give you

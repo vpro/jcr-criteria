@@ -33,7 +33,6 @@ import java.util.List;
 import javax.jcr.Node;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;

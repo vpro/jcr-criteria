@@ -25,7 +25,6 @@ import info.magnolia.jcr.util.NodeUtil;
 
 import java.util.NoSuchElementException;
 
-import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.query.RowIterator;
