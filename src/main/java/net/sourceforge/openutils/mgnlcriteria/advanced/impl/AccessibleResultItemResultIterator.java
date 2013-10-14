@@ -80,22 +80,26 @@ public class AccessibleResultItemResultIterator extends AdvancedResultItemResult
         do
         {
             next = super.next();
-            try
+            if (next != null) // may happen for broken indexes?
             {
-                if (!PermissionUtil.isGranted(
-                    next.getSession().getWorkspace().getName(),
-                    NodeUtil.getPathIfPossible(next),
-                    Session.ACTION_READ))
+                try
                 {
-                    next = null;
+                    if (!PermissionUtil.isGranted(
+                        next.getSession().getWorkspace().getName(),
+                        NodeUtil.getPathIfPossible(next),
+                        Session.ACTION_READ))
+                    {
+                        next = null;
+                    }
                 }
-            }
-            catch (RepositoryException e)
-            {
-                throw new RuntimeRepositoryException(e);
+                catch (RepositoryException e)
+                {
+                    throw new RuntimeRepositoryException(e);
+                }
             }
         }
         while (next == null && super.hasNext());
+        
         // return true if a next result exists and it is accessible
         return next != null;
     }
