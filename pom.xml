@@ -4,7 +4,7 @@
     <groupId>net.sourceforge.openutils</groupId>
     <artifactId>openutils-parent</artifactId>
     <relativePath>../openutils-parent</relativePath>
-    <version>1.13</version>
+    <version>1.14</version>
   </parent>
   <artifactId>openutils-mgnlcriteria</artifactId>
   <name>Criteria API for Magnolia CMS</name>
