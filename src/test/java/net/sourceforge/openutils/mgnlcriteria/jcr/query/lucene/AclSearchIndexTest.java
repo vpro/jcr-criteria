@@ -115,6 +115,9 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
     public void testDogsOnly() throws Exception
     {
         final AccessManager wrappedAM = MgnlContext.getAccessManager(RepositoryConstants.WEBSITE);
+
+        Assert.assertNotNull(wrappedAM, "AccessManager is null");
+
         final AccessManager wrapperAM = new AccessManager()
         {
 
@@ -213,6 +216,9 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
     public void testDogsExcluded() throws Exception
     {
         final AccessManager wrappedAM = MgnlContext.getAccessManager(RepositoryConstants.WEBSITE);
+
+        Assert.assertNotNull(wrappedAM, "AccessManager is null");
+
         final AccessManager wrapperAM = new AccessManager()
         {
 
