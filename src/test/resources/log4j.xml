@@ -28,9 +28,6 @@
   <category name="org.dbunit">
     <priority value="WARN" />
   </category>
-  <category name="it.openmindonline.sapere.search.SapereSearcher">
-    <priority value="DEBUG" />
-  </category>
   <category name="score">
     <priority value="INFO" />
   </category>

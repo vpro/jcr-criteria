@@ -37,14 +37,14 @@ public abstract class BaseAnalyzer extends Analyzer
 {
 
     @Override
-    public TokenStream tokenStream(String fieldName, Reader reader)
+    public final TokenStream tokenStream(String fieldName, Reader reader)
     {
         StandardTokenizer tokenStream = tokenize(reader);
         return tokenFiltersChain(tokenStream);
     }
 
     @Override
-    public TokenStream reusableTokenStream(String fieldName, Reader reader) throws IOException
+    public final TokenStream reusableTokenStream(String fieldName, Reader reader) throws IOException
     {
         SavedStreams streams = (SavedStreams) getPreviousTokenStream();
         if (streams == null)
