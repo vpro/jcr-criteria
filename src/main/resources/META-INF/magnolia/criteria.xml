@@ -8,7 +8,7 @@
   <dependencies>
     <dependency>
       <name>core</name>
-      <version>4.5/*</version>
+      <version>4.5.11/4.5.99</version>
     </dependency>
   </dependencies>
 </module>
