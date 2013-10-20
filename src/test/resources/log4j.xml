@@ -31,6 +31,9 @@
   <category name="score">
     <priority value="INFO" />
   </category>
+  <category name="info.magnolia.objectfactory.ObservedComponentFactory">
+    <priority value="WARN" />
+  </category>
   <root>
     <priority value="ALL" />
     <appender-ref ref="test-appender" />

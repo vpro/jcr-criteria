@@ -59,7 +59,9 @@ import org.testng.annotations.Test;
 @RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = {
     "/crit-bootstrap/website.Criteria.xml",
     "/crit-bootstrap/userroles.anonymous.xml",
-    "/crit-bootstrap/users.system.anonymous.xml" })
+    "/crit-bootstrap/users.system.anonymous.xml",
+    "/crit-bootstrap/config.server.auditLogging.xml",
+    "/crit-bootstrap/config.server.i18n.content.xml" })
 public class BasePathTest extends TestNgRepositoryTestcase
 {
 
@@ -189,7 +191,7 @@ public class BasePathTest extends TestNgRepositoryTestcase
             criteria.add(Restrictions.eq("@title", title));
         }
         AdvancedResult advResult = criteria.execute();
-        ResultIterator<? extends Node> items = advResult.getItems();
+        ResultIterator< ? extends Node> items = advResult.getItems();
         List<String> paths = new ArrayList<String>();
         while (items.hasNext())
         {

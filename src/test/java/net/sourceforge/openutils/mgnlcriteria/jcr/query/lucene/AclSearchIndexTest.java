@@ -60,7 +60,9 @@ import org.testng.annotations.Test;
 @RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-acl-search-index-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = {
     "/crit-bootstrap/website.pets.xml",
     "/crit-bootstrap/userroles.anonymous.xml",
-    "/crit-bootstrap/users.system.anonymous.xml" })
+    "/crit-bootstrap/users.system.anonymous.xml",
+    "/crit-bootstrap/config.server.auditLogging.xml",
+    "/crit-bootstrap/config.server.i18n.content.xml" })
 public class AclSearchIndexTest extends TestNgRepositoryTestcase
 {
 
@@ -187,7 +189,7 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
             // --- 4 (title=Jewel, petType=dog, birthDate=2000-03-07)
             // --- 12 (title=Lucky, petType=dog, birthDate=2000-06-24)
             // --- 3 (title=Rosy, petType=dog, birthDate=2001-04-17)
-            ResultIterator<? extends Node> iterator = result.getItems();
+            ResultIterator< ? extends Node> iterator = result.getItems();
 
             Assert.assertTrue(iterator.hasNext());
             Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "4");
@@ -278,7 +280,7 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
             // --- 11 (title=Freddy, petType=bird, birthDate=2000-03-09)
             // --- 1 (title=Leo, petType=cat, birthDate=2000-09-07)
             // --- 5 (title=Iggy, petType=lizard, birthDate=2000-11-30)
-            ResultIterator<? extends Node> iterator = result.getItems();
+            ResultIterator< ? extends Node> iterator = result.getItems();
 
             Assert.assertTrue(iterator.hasNext());
             Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "9");

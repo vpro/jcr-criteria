@@ -55,7 +55,9 @@ import org.testng.annotations.Test;
 @RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = {
     "/crit-bootstrap/website.letters.xml",
     "/crit-bootstrap/userroles.anonymous.xml",
-    "/crit-bootstrap/users.system.anonymous.xml" })
+    "/crit-bootstrap/users.system.anonymous.xml",
+    "/crit-bootstrap/config.server.auditLogging.xml",
+    "/crit-bootstrap/config.server.i18n.content.xml" })
 public class PaginationTest extends TestNgRepositoryTestcase
 {
 
@@ -104,7 +106,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), 26);
 
-        ResultIterator<? extends Node> resultIterator = advResult.getItems();
+        ResultIterator< ? extends Node> resultIterator = advResult.getItems();
         Assert.assertEquals(resultIterator.getSize(), 26);
 
         Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "A");
@@ -153,7 +155,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), 26);
 
-        ResultIterator<? extends Node> resultIterator = advResult.getItems();
+        ResultIterator< ? extends Node> resultIterator = advResult.getItems();
 
         Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "J");
         Assert.assertEquals(resultIterator.getSize(), 17);
@@ -175,7 +177,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), 26);
 
-        ResultIterator<? extends Node> resultIterator = advResult.getItems();
+        ResultIterator< ? extends Node> resultIterator = advResult.getItems();
         Assert.assertEquals(resultIterator.getSize(), 10);
 
         Node content = null;
@@ -202,7 +204,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), 26);
 
-        ResultIterator<? extends Node> resultIterator = advResult.getItems();
+        ResultIterator< ? extends Node> resultIterator = advResult.getItems();
 
         Assert.assertEquals(resultIterator.getSize(), 5);
         Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "K");
@@ -228,7 +230,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), 26);
 
-        ResultIterator<? extends Node> resultIterator = advResult.getItems();
+        ResultIterator< ? extends Node> resultIterator = advResult.getItems();
 
         Assert.assertEquals(resultIterator.getSize(), 2);
         Assert.assertEquals(CriteriaTestUtils.title(resultIterator.next()), "Y");
@@ -252,7 +254,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
         Assert.assertEquals(advResult.getTotalSize(), 26);
         Assert.assertEquals(advResult.getNumberOfPages(), 6);
 
-        ResultIterator<? extends Node> resultIterator = advResult.getItems();
+        ResultIterator< ? extends Node> resultIterator = advResult.getItems();
         Assert.assertEquals(resultIterator.getSize(), 5);
     }
 }

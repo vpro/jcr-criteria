@@ -52,7 +52,9 @@ import org.testng.annotations.Test;
 @RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = {
     "/crit-bootstrap/website.Lorem ipsum dolor sit amet.xml",
     "/crit-bootstrap/userroles.anonymous.xml",
-    "/crit-bootstrap/users.system.anonymous.xml" })
+    "/crit-bootstrap/users.system.anonymous.xml",
+    "/crit-bootstrap/config.server.auditLogging.xml",
+    "/crit-bootstrap/config.server.i18n.content.xml" })
 public class BasePathWithSpacesTest extends TestNgRepositoryTestcase
 {
 
@@ -85,9 +87,9 @@ public class BasePathWithSpacesTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/Lorem ipsum dolor sit amet");
-        criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, MgnlNodeType.NT_PAGE  ));
+        criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, MgnlNodeType.NT_PAGE));
         AdvancedResult advResult = criteria.execute();
-        ResultIterator<? extends Node> items = advResult.getItems();
+        ResultIterator< ? extends Node> items = advResult.getItems();
         Assert.assertTrue(items.hasNext());
         Assert.assertEquals(items.next().getName(), "consectetur adipisici elit");
     }

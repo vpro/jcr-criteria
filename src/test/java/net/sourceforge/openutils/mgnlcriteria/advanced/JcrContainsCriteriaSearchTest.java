@@ -61,7 +61,9 @@ import org.testng.annotations.Test;
 @RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = {
     "/crit-bootstrap/website.contains.xml",
     "/crit-bootstrap/userroles.anonymous.xml",
-    "/crit-bootstrap/users.system.anonymous.xml" })
+    "/crit-bootstrap/users.system.anonymous.xml",
+    "/crit-bootstrap/config.server.auditLogging.xml",
+    "/crit-bootstrap/config.server.i18n.content.xml" })
 public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
 {
 
@@ -101,7 +103,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         AdvancedResult advResult = criteria.execute();
         Assert.assertNotNull(advResult);
         Assert.assertEquals(advResult.getTotalSize(), 1);
-        ResultIterator<? extends Node> items = advResult.getItems();
+        ResultIterator< ? extends Node> items = advResult.getItems();
         Node item = items.next();
         Assert.assertEquals(CriteriaTestUtils.title(item), "lorem ipsum");
     }
@@ -113,7 +115,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         AdvancedResult advResult = criteria.execute();
         Assert.assertNotNull(advResult);
         Assert.assertEquals(advResult.getTotalSize(), 1);
-        ResultIterator<? extends Node> items = advResult.getItems();
+        ResultIterator< ? extends Node> items = advResult.getItems();
         Node item = items.next();
         Assert.assertEquals(CriteriaTestUtils.title(item), "lorem");
     }
@@ -125,7 +127,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         AdvancedResult advResult = criteria.execute();
         Assert.assertNotNull(advResult);
         Assert.assertEquals(advResult.getTotalSize(), 2);
-        ResultIterator<? extends Node> items = advResult.getItems();
+        ResultIterator< ? extends Node> items = advResult.getItems();
         List<String> titles = new ArrayList<String>();
         while (items.hasNext())
         {
@@ -146,7 +148,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         AdvancedResult advResult = criteria.execute();
         Assert.assertNotNull(advResult);
         Assert.assertEquals(advResult.getTotalSize(), 2);
-        ResultIterator<? extends Node> items = advResult.getItems();
+        ResultIterator< ? extends Node> items = advResult.getItems();
         List<String> titles = new ArrayList<String>();
         while (items.hasNext())
         {
@@ -176,7 +178,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         }
         Assert.assertNotNull(advResult);
         Assert.assertEquals(advResult.getTotalSize(), 1);
-        ResultIterator<? extends Node> items = advResult.getItems();
+        ResultIterator< ? extends Node> items = advResult.getItems();
         Node item = items.next();
         Assert.assertEquals(CriteriaTestUtils.title(item), "hello test? world");
     }
@@ -200,7 +202,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         }
         Assert.assertNotNull(advResult);
         Assert.assertEquals(advResult.getTotalSize(), 1);
-        ResultIterator<? extends Node> items = advResult.getItems();
+        ResultIterator< ? extends Node> items = advResult.getItems();
         Node item = items.next();
         Assert.assertEquals(CriteriaTestUtils.title(item), "hello te?st world");
     }
@@ -225,7 +227,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         }
         Assert.assertNotNull(advResult);
         Assert.assertEquals(advResult.getTotalSize(), 1);
-        ResultIterator<? extends Node> items = advResult.getItems();
+        ResultIterator< ? extends Node> items = advResult.getItems();
         Node item = items.next();
         Assert.assertEquals(CriteriaTestUtils.title(item), "hello \"Milano\" world");
     }
@@ -249,7 +251,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         }
         Assert.assertNotNull(advResult);
         Assert.assertEquals(advResult.getTotalSize(), 1);
-        ResultIterator<? extends Node> items = advResult.getItems();
+        ResultIterator< ? extends Node> items = advResult.getItems();
         Node item = items.next();
         Assert.assertEquals(CriteriaTestUtils.title(item), "hello l:u");
     }

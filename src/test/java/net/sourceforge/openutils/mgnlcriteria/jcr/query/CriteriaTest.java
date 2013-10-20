@@ -57,7 +57,9 @@ import org.testng.annotations.Test;
 @RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = {
     "/crit-bootstrap/website.pets.xml",
     "/crit-bootstrap/userroles.anonymous.xml",
-    "/crit-bootstrap/users.system.anonymous.xml" })
+    "/crit-bootstrap/users.system.anonymous.xml",
+    "/crit-bootstrap/config.server.auditLogging.xml",
+    "/crit-bootstrap/config.server.i18n.content.xml" })
 public class CriteriaTest extends TestNgRepositoryTestcase
 {
 
@@ -164,7 +166,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
             .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE))
             .add(Restrictions.eq("@title", "Pets"));
         AdvancedResult result = criteria.execute();
-        ResultIterator<? extends Node> iterator = result.getItems();
+        ResultIterator< ? extends Node> iterator = result.getItems();
         Assert.assertTrue(iterator.hasNext());
         Node resultNode = iterator.next();
         Assert.assertEquals(CriteriaTestUtils.title(resultNode), "Pets");
@@ -182,7 +184,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         AdvancedResult result = criteria.execute();
         Assert.assertEquals(result.getTotalSize(), 1);
 
-        ResultIterator<? extends Node> iterator = result.getItems();
+        ResultIterator< ? extends Node> iterator = result.getItems();
         Assert.assertEquals(iterator.getSize(), 1);
         Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "12");
     }
@@ -242,7 +244,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // --- 3 (title=Rosy, petType=dog, birthDate=2001-04-17)
         Assert.assertEquals(result.getTotalSize(), 8);
 
-        ResultIterator<? extends Node> iterator = result.getItems();
+        ResultIterator< ? extends Node> iterator = result.getItems();
         Assert.assertEquals(iterator.getSize(), 3);
         Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "1");
         Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "5");
@@ -282,7 +284,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         // --- 3 (title=Rosy, petType=dog, birthDate=2001-04-17)
         Assert.assertEquals(result.getTotalSize(), 8);
 
-        ResultIterator<? extends Node> iterator = result.getItems();
+        ResultIterator< ? extends Node> iterator = result.getItems();
         Assert.assertEquals(iterator.getSize(), 3);
         Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "1");
         Assert.assertEquals(CriteriaTestUtils.name(iterator.next()), "5");
@@ -297,7 +299,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
     public void testAddOrder() throws Exception
     {
         Criteria criteria;
-        ResultIterator<? extends Node> iterator;
+        ResultIterator< ? extends Node> iterator;
         Calendar birthDate;
 
         // gets the oldest pet (ascending order)
@@ -342,7 +344,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
     public void testAddOrderMultiple() throws Exception
     {
         Criteria criteria;
-        ResultIterator<? extends Node> iterator;
+        ResultIterator< ? extends Node> iterator;
 
         // order by @birthDate ascending, @title ascending
         criteria = JCRCriteriaFactory
@@ -381,7 +383,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
     public void testDateComparison() throws Exception
     {
         Criteria criteria;
-        ResultIterator<? extends Node> iterator;
+        ResultIterator< ? extends Node> iterator;
         Node node;
         Calendar date;
 

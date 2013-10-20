@@ -52,7 +52,9 @@ import org.testng.annotations.Test;
 @RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = {
     "/crit-bootstrap/website.myproject.xml",
     "/crit-bootstrap/userroles.anonymous.xml",
-    "/crit-bootstrap/users.system.anonymous.xml" })
+    "/crit-bootstrap/users.system.anonymous.xml",
+    "/crit-bootstrap/config.server.auditLogging.xml",
+    "/crit-bootstrap/config.server.i18n.content.xml" })
 public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
 {
 
@@ -85,7 +87,7 @@ public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
 
         AdvancedResult advResult = criteria.execute();
 
-        ResultIterator<? extends Node> resultIterator = advResult.getItems();
+        ResultIterator< ? extends Node> resultIterator = advResult.getItems();
         Assert.assertTrue(resultIterator.hasNext());
         Assert.assertEquals(CriteriaTestUtils.name(resultIterator.next()), "ceb55065-e6cd-451a-8ce0-7e495e7e8fbc");
     }
@@ -100,7 +102,7 @@ public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
 
         AdvancedResult advResult = criteria.execute();
 
-        ResultIterator<? extends Node> resultIterator = advResult.getItems();
+        ResultIterator< ? extends Node> resultIterator = advResult.getItems();
         Assert.assertFalse(resultIterator.hasNext());
     }
 
@@ -114,7 +116,7 @@ public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
 
         AdvancedResult advResult = criteria.execute();
 
-        ResultIterator<? extends Node> resultIterator = advResult.getItems();
+        ResultIterator< ? extends Node> resultIterator = advResult.getItems();
         Assert.assertFalse(resultIterator.hasNext());
     }
 

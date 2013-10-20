@@ -54,7 +54,9 @@ import org.testng.annotations.Test;
 @RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/crit-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/crit-repository/test-repositories.xml", bootstrapFiles = {
     "/crit-bootstrap/website.letters.xml",
     "/crit-bootstrap/userroles.anonymous.xml",
-    "/crit-bootstrap/users.system.anonymous.xml" })
+    "/crit-bootstrap/users.system.anonymous.xml",
+    "/crit-bootstrap/config.server.auditLogging.xml",
+    "/crit-bootstrap/config.server.i18n.content.xml" })
 public class OrderingTest extends TestNgRepositoryTestcase
 {
 
@@ -133,7 +135,7 @@ public class OrderingTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), LETTERS_ARRAY.length);
 
-        ResultIterator<? extends Node> resultIterator = advResult.getItems();
+        ResultIterator< ? extends Node> resultIterator = advResult.getItems();
         Assert.assertEquals(resultIterator.getSize(), LETTERS_ARRAY.length);
 
         int i = 0;
@@ -164,7 +166,7 @@ public class OrderingTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), LETTERS_ARRAY.length, "Unset total size.");
 
-        ResultIterator<? extends Node> resultIterator = advResult.getItems();
+        ResultIterator< ? extends Node> resultIterator = advResult.getItems();
         Assert.assertEquals(resultIterator.getSize(), PAGINATION_LENGTH, "Wrong iterator size.");
 
         int i = 0;
@@ -263,7 +265,7 @@ public class OrderingTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(advResult.getTotalSize(), LETTERS_ARRAY.length, "Unset total size.");
 
-        ResultIterator<? extends Node> resultIterator = advResult.getItems();
+        ResultIterator< ? extends Node> resultIterator = advResult.getItems();
         Assert.assertEquals(resultIterator.getSize(), LETTERS_ARRAY.length - offset, "Wrong iterator size.");
 
         int i = 0;
