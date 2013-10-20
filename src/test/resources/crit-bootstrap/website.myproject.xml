@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sv:node sv:name="myproject" xmlns:sv="http://www.jcp.org/jcr/sv/1.0">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
-    <sv:value>mgnl:content</sv:value>
+    <sv:value>mgnl:page</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
     <sv:value>mix:lockable</sv:value>
@@ -31,7 +31,7 @@
   </sv:node>
   <sv:node sv:name="Notizie-Meteo">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -62,7 +62,7 @@
   </sv:node>
   <sv:node sv:name="Sport">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -92,7 +92,7 @@
     </sv:node>
     <sv:node sv:name="F1">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -207,7 +207,7 @@
     </sv:node>
     <sv:node sv:name="Tennis">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -238,7 +238,7 @@
     </sv:node>
     <sv:node sv:name="Calcio">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -269,7 +269,7 @@
     </sv:node>
     <sv:node sv:name="Atletica">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -300,7 +300,7 @@
     </sv:node>
     <sv:node sv:name="Basket">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -332,7 +332,7 @@
   </sv:node>
   <sv:node sv:name="Divertimento">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>

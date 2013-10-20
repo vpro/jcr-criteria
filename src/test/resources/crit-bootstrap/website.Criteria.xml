@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sv:node sv:name="Criteria" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
-    <sv:value>mgnl:content</sv:value>
+    <sv:value>mgnl:page</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
     <sv:value>mix:lockable</sv:value>
@@ -37,7 +37,7 @@
   </sv:node>
   <sv:node sv:name="AbstractCriteriaImpl">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -73,7 +73,7 @@
     </sv:node>
     <sv:node sv:name="AbstractMagnoliaCriteriaImpl">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -109,7 +109,7 @@
       </sv:node>
       <sv:node sv:name="MagnoliaCriteriaImpl">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -145,7 +145,7 @@
         </sv:node>
         <sv:node sv:name="MagnoliaCriteriaWithLimitImpl">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:content</sv:value>
+            <sv:value>mgnl:page</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
             <sv:value>mix:lockable</sv:value>
@@ -184,7 +184,7 @@
     </sv:node>
     <sv:node sv:name="AdvancedCriteriaImpl">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -222,7 +222,7 @@
   </sv:node>
   <sv:node sv:name="AdvancedCriteriaImpl">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -259,7 +259,7 @@
   </sv:node>
   <sv:node sv:name="TranslatableCriteria">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -295,7 +295,7 @@
     </sv:node>
     <sv:node sv:name="AbstractCriteriaImpl">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -331,7 +331,7 @@
       </sv:node>
       <sv:node sv:name="AbstractMagnoliaCriteriaImpl">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -367,7 +367,7 @@
         </sv:node>
         <sv:node sv:name="MagnoliaCriteriaImpl">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:content</sv:value>
+            <sv:value>mgnl:page</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
             <sv:value>mix:lockable</sv:value>
@@ -403,7 +403,7 @@
           </sv:node>
           <sv:node sv:name="MagnoliaCriteriaWithLimitImpl">
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:content</sv:value>
+              <sv:value>mgnl:page</sv:value>
             </sv:property>
             <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
               <sv:value>mix:lockable</sv:value>
@@ -442,7 +442,7 @@
       </sv:node>
       <sv:node sv:name="AdvancedCriteriaImpl">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>

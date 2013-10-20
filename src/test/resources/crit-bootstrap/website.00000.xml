@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sv:node sv:name="00000" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
-    <sv:value>mgnl:content</sv:value>
+    <sv:value>mgnl:page</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
     <sv:value>mix:lockable</sv:value>
@@ -34,7 +34,7 @@
   </sv:node>
   <sv:node sv:name="900580">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -312,7 +312,7 @@
   </sv:node>
   <sv:node sv:name="900300">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -739,7 +739,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
   </sv:node>
   <sv:node sv:name="900581">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -1017,7 +1017,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
   </sv:node>
   <sv:node sv:name="900582">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -1295,7 +1295,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
   </sv:node>
   <sv:node sv:name="900301">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -1651,7 +1651,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
   </sv:node>
   <sv:node sv:name="900583">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -1929,7 +1929,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
   </sv:node>
   <sv:node sv:name="900396">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -2164,7 +2164,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
   </sv:node>
   <sv:node sv:name="900397">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -2399,7 +2399,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
   </sv:node>
   <sv:node sv:name="9003810">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -2682,7 +2682,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
   </sv:node>
   <sv:node sv:name="900386">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -2965,7 +2965,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
   </sv:node>
   <sv:node sv:name="900387">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -3248,7 +3248,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
   </sv:node>
   <sv:node sv:name="900388">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -3531,7 +3531,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
   </sv:node>
   <sv:node sv:name="900389">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -3814,7 +3814,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
   </sv:node>
   <sv:node sv:name="1025978">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -4088,7 +4088,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
   </sv:node>
   <sv:node sv:name="900398">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -4323,7 +4323,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
   </sv:node>
   <sv:node sv:name="900399">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -4558,7 +4558,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
   </sv:node>
   <sv:node sv:name="1025979">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -4832,7 +4832,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
   </sv:node>
   <sv:node sv:name="10259710">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
