@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.cms.security.MgnlRoleManager;
@@ -126,7 +127,7 @@ public class OrderingTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
 
         AdvancedResult advResult = criteria.execute();
 
@@ -153,7 +154,7 @@ public class OrderingTest extends TestNgRepositoryTestcase
 
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.setPaging(PAGINATION_LENGTH, 1);
         criteria.setForcePagingWithDocumentOrder(true);
 
@@ -211,7 +212,7 @@ public class OrderingTest extends TestNgRepositoryTestcase
 
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.setPaging(PAGINATION_LENGTH, 1);
         criteria.setForcePagingWithDocumentOrder(true);
 
@@ -251,7 +252,7 @@ public class OrderingTest extends TestNgRepositoryTestcase
 
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.setForcePagingWithDocumentOrder(true);
         criteria.setFirstResult(offset);
         criteria.setMaxResults(Integer.MAX_VALUE);

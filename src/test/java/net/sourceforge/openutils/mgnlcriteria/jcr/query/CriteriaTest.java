@@ -161,7 +161,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
             .createCriteria()
             .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/jcr:root/*")
-            .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_CONTENT))
+            .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE))
             .add(Restrictions.eq("@title", "Pets"));
         AdvancedResult result = criteria.execute();
         ResultIterator<? extends Node> iterator = result.getItems();

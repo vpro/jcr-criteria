@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.cms.security.MgnlRoleManager;
@@ -257,7 +258,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.add(Restrictions.contains("@title", titleSearch, escape));
         criteria.addOrder(Order.desc("@jcr:score"));
         return criteria;

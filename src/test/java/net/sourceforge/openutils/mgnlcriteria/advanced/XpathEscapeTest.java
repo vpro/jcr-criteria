@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.cms.security.MgnlRoleManager;
@@ -87,7 +88,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         String title = "Tallart, Camille d'Hostun, cónte di-";
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.add(Restrictions.eq("@title", title));
         AdvancedResult advResult = null;
         try
@@ -116,7 +117,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         String searchText = "\"Milano\"";
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.add(Restrictions.contains("@title", searchText));
         try
         {
@@ -134,7 +135,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         String searchText = "\"Milano(){}[]+*?^|\\/!";
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.add(Restrictions.contains("@title", searchText));
         try
         {
@@ -152,7 +153,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         String searchText = "Milano'";
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.add(Restrictions.contains("@title", searchText));
         try
         {
@@ -170,7 +171,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         String searchText = "Milano +";
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.add(Restrictions.contains("@title", searchText));
         try
         {
@@ -207,7 +208,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         String searchText = "giovanni paolo ||";
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.add(Restrictions.contains("@title", searchText));
         try
         {
@@ -230,7 +231,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
 
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.add(Restrictions.eq("@title", searchText));
         try
         {
@@ -254,7 +255,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
 
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.add(Restrictions.contains("@title", searchText));
 
         Assert.assertEquals(
@@ -315,7 +316,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
 
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.add(Restrictions.contains("@title", searchText));
 
         Assert.assertEquals(
@@ -371,7 +372,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         String searchText = "OR SONO";
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.add(Restrictions.contains("@title", searchText));
 
         Assert.assertEquals(
@@ -389,7 +390,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         String searchText = "OR SONO";
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.add(Restrictions.eq("@title", searchText));
 
         Assert.assertEquals(
@@ -407,7 +408,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
         String searchText = "AND ME";
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(StringUtils.EMPTY);
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.add(Restrictions.contains("@title", searchText));
 
         Assert.assertEquals(

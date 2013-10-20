@@ -92,7 +92,7 @@
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -346,7 +346,7 @@
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -697,7 +697,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -950,7 +950,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -1207,7 +1207,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -1509,7 +1509,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -1762,7 +1762,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -1972,7 +1972,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -2183,7 +2183,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -2441,7 +2441,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -2699,7 +2699,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -2957,7 +2957,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -3215,7 +3215,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -3475,7 +3475,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -3721,7 +3721,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -3931,7 +3931,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -4144,7 +4144,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>
@@ -4393,7 +4393,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
         <sv:value>t-lemma-enc</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="mainframe">
+    <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
       </sv:property>

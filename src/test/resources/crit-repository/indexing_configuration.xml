@@ -33,19 +33,19 @@
   <!-- index text content on paragraphs -->
   <!-- aggregates content on the main column -->
 
-  <aggregate primaryType="mgnl:content">
-    <include primaryType="mgnl:contentNode">mainframe/*</include>
+  <aggregate primaryType="mgnl:page">
+    <include primaryType="mgnl:component">main/*</include>
   </aggregate>
 
 
 
 
   <!-- index metadata attributes inside the main node, to allow sorting! -->
-  <aggregate primaryType="mgnl:content">
+  <aggregate primaryType="mgnl:page">
     <include>mgnl:creationdate</include>
     <include-property>MetaData/mgnl:creationdate</include-property>
   </aggregate>
-  <aggregate primaryType="mgnl:content">
+  <aggregate primaryType="mgnl:page">
     <include>mgnl:lastmodified</include>
     <include-property>MetaData/mgnl:lastmodified</include-property>
   </aggregate>

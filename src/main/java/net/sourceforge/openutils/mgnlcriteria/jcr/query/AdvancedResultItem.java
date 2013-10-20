@@ -29,7 +29,7 @@ import javax.jcr.Node;
  * @author fgiust
  * @version $Id$
  */
-public interface AdvancedResultItem extends Node, Map<String, Object>
+public interface AdvancedResultItem extends Node
 {
 
     /**
@@ -70,12 +70,6 @@ public interface AdvancedResultItem extends Node, Map<String, Object>
      * @return the "title" property in this node
      */
     String getTitle();
-
-    /**
-     * Same as getName() in javax.jcr.node, but it doesn't throw any checked exception
-     * @return the name of this node
-     */
-    String getName();
 
     /**
      * Method added for compatibility with the old info.magnolia.cms.core.Content. You should use getPath()

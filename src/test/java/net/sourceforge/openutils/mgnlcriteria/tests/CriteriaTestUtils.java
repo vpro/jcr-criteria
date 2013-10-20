@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcriteria.tests;
 
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.repository.RepositoryConstants;
@@ -193,7 +194,7 @@ public class CriteriaTestUtils
             .createCriteria()
             .setWorkspace(repo)
             .addOrder(Order.desc("@jcr:score"))
-            .add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+            .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
 
         if (startnode != null)
         {

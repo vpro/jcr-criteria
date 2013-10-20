@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.security.MgnlRoleManager;
 import info.magnolia.cms.security.Realm;
 import info.magnolia.cms.security.SecuritySupport;
@@ -182,7 +183,7 @@ public class BasePathTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(basePath);
-        criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, "mgnl:content"));
+        criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, MgnlNodeType.NT_PAGE));
         if (!StringUtils.isEmpty(title))
         {
             criteria.add(Restrictions.eq("@title", title));

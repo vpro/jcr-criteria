@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.security.MgnlRoleManager;
 import info.magnolia.cms.security.Realm;
 import info.magnolia.cms.security.SecuritySupport;
@@ -84,7 +85,7 @@ public class BasePathWithSpacesTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/Lorem ipsum dolor sit amet");
-        criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, "mgnl:content"));
+        criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, MgnlNodeType.NT_PAGE  ));
         AdvancedResult advResult = criteria.execute();
         ResultIterator<? extends Node> items = advResult.getItems();
         Assert.assertTrue(items.hasNext());
@@ -99,7 +100,7 @@ public class BasePathWithSpacesTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("//*[prop1='A' and prop2='B']/Lorem ipsum dolor sit amet");
-        criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, "mgnl:content"));
+        criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, MgnlNodeType.NT_PAGE));
         // criteria.addOrder(Order.desc("@jcr:score"));
         AdvancedResult advResult = criteria.execute();
 

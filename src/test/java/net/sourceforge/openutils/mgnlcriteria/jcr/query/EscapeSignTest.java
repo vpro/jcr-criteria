@@ -90,7 +90,7 @@ public class EscapeSignTest extends TestNgRepositoryTestcase
             .createCriteria()
             .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/jcr:root/escape-sign/fo°o/*")
-            .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_CONTENT));
+            .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         AdvancedResult result = criteria.execute();
         ResultIterator< ? extends Node> iterator = result.getItems();
         Assert.assertTrue(iterator.hasNext());
@@ -109,7 +109,7 @@ public class EscapeSignTest extends TestNgRepositoryTestcase
             .createCriteria()
             .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/jcr:root/escape-sign/fo$o/*")
-            .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_CONTENT));
+            .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         AdvancedResult result = criteria.execute();
         ResultIterator< ? extends Node> iterator = result.getItems();
         Assert.assertTrue(iterator.hasNext());

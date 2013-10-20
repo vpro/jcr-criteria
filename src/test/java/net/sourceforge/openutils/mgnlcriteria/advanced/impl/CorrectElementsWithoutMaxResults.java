@@ -197,7 +197,7 @@ public class CorrectElementsWithoutMaxResults extends TestNgRepositoryTestcase
             .createCriteria()
             .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/jcr:root/pets/*/*")
-            .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_CONTENT))
+            .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE))
             .setForcePagingWithDocumentOrder(true);
     }
 

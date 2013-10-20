@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.cms.security.MgnlRoleManager;
@@ -97,7 +98,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.addOrder(Order.asc("@title"));
         AdvancedResult advResult = criteria.execute();
 
@@ -121,7 +122,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.addOrder(Order.asc("@title"));
         AdvancedResult advResult = criteria.execute();
 
@@ -145,7 +146,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.addOrder(Order.asc("@title"));
         criteria.setFirstResult(9);
         AdvancedResult advResult = criteria.execute();
@@ -167,7 +168,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.addOrder(Order.asc("@title"));
         criteria.setMaxResults(10);
         AdvancedResult advResult = criteria.execute();
@@ -194,7 +195,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.addOrder(Order.asc("@title"));
         criteria.setPaging(5, 3);
         AdvancedResult advResult = criteria.execute();
@@ -220,7 +221,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.addOrder(Order.asc("@title"));
         criteria.setPaging(8, 4);
         AdvancedResult advResult = criteria.execute();
@@ -243,7 +244,7 @@ public class PaginationTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/letters");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:content"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
         criteria.addOrder(Order.asc("@title"));
         criteria.setPaging(5, 1);
 
