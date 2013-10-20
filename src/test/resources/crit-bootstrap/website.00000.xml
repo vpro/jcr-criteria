@@ -94,7 +94,7 @@
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -124,7 +124,7 @@
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -172,35 +172,10 @@
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>a9a5bcb5-7027-4acc-ae46-538e00670f4a</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:41.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -239,7 +214,7 @@
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -269,7 +244,7 @@
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -373,7 +348,7 @@
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -403,7 +378,7 @@
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -450,35 +425,10 @@
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>5effc461-e4cb-41fd-9a62-af2bc0782897</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:31.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="i2">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -524,35 +474,10 @@
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>48998939-d1c9-4607-afb7-3e77d3e3e329</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:31.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="i3">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -598,35 +523,10 @@
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>151215ed-6b3c-4cdb-9a06-76ad9186383a</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:31.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -666,7 +566,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -696,7 +596,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -799,7 +699,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -829,7 +729,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -877,35 +777,10 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>5ee3a345-29f5-4672-b769-9cbd13be2145</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:41.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -944,7 +819,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -974,7 +849,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -1077,7 +952,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -1107,7 +982,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -1155,35 +1030,10 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>8bbe4b69-2402-4a4b-a8cc-3a12555cbe37</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:41.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -1222,7 +1072,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -1252,7 +1102,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -1359,7 +1209,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -1389,7 +1239,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -1436,35 +1286,10 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>ae0796e3-1a24-4e20-95cf-47674bcec4f1</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:31.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="i3">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -1510,35 +1335,10 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>e77bbcfc-acb5-4073-afc0-e072a06ef3d5</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:31.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -1578,7 +1378,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -1608,7 +1408,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -1711,7 +1511,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -1741,7 +1541,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -1789,35 +1589,10 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>58d97f89-3e02-43f8-ab40-8c41ed3943a5</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:41.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -1856,7 +1631,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -1886,7 +1661,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -1989,7 +1764,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -2019,7 +1794,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -2065,35 +1840,10 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>3ab0e97d-9e2d-413c-81d9-a46a9fd2d840</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:35.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -2132,7 +1882,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -2224,7 +1974,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -2254,7 +2004,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -2300,35 +2050,10 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>46ab32e0-3468-4878-b10a-1eec06bc39dd</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:35.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -2367,7 +2092,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -2460,7 +2185,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -2490,7 +2215,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -2540,35 +2265,10 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>734f3356-0ac0-40b3-8fda-61046bf805b7</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:35.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -2608,7 +2308,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -2638,7 +2338,7 @@ d5b12456-097a-3cdd-8f16-ded1343730e6
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -2743,7 +2443,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -2773,7 +2473,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -2823,35 +2523,10 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>dbd97fab-80a9-4b6c-8bc4-7f4e1ea01366</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:35.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -2891,7 +2566,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -2921,7 +2596,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -3026,7 +2701,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -3056,7 +2731,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -3106,35 +2781,10 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>cf760751-40a2-4283-bc48-4211e27ec206</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:35.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -3174,7 +2824,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -3204,7 +2854,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -3309,7 +2959,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -3339,7 +2989,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -3389,35 +3039,10 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>e0f1e6b5-353f-4c69-ae39-931bbf934efb</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:35.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -3457,7 +3082,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -3487,7 +3112,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -3592,7 +3217,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -3622,7 +3247,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -3672,35 +3297,10 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>46555ab2-1947-4367-bd25-f04bf94a0640</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:35.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -3740,7 +3340,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -3770,7 +3370,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -3877,7 +3477,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -3907,7 +3507,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -3948,35 +3548,10 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>fea1bf7a-1b2f-34bc-92c6-75d82978d07f</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-02T02:02:42.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -4015,7 +3590,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -4045,7 +3620,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -4148,7 +3723,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -4178,7 +3753,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -4224,35 +3799,10 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>5e917570-a7a9-4017-ad35-79680b377b2c</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:35.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -4291,7 +3841,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -4383,7 +3933,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -4413,7 +3963,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -4459,35 +4009,10 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>62d490c6-ffa2-4681-987b-364c1d8061c4</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-05T13:01:35.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -4526,7 +4051,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -4621,7 +4146,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -4651,7 +4176,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -4692,35 +4217,10 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>8aaab906-c253-468a-b816-d49491fd6a16</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-02T02:02:42.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -4759,7 +4259,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -4789,7 +4289,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -4895,7 +4395,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="mainframe">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -4925,7 +4425,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="i1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -4966,35 +4466,10 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
             <sv:value>p-text-image</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="text_files">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-            <sv:value>mix:lockable</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>879d7398-e65c-420a-983d-7f45178a68ee</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2010-02-02T02:02:42.001+01:00</sv:value>
-            </sv:property>
-          </sv:node>
-        </sv:node>
       </sv:node>
       <sv:node sv:name="999">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -5033,7 +4508,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
     </sv:node>
     <sv:node sv:name="columnDx">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -5063,7 +4538,7 @@ fonematica	ac85f5b4-1cf5-3f88-89c4-a56a14ac657b
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>

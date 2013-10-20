@@ -122,7 +122,7 @@
       </sv:node>
       <sv:node sv:name="0a67369b-8cc6-43d8-b2d3-c07b12a2ed5f">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -152,7 +152,7 @@
         </sv:node>
         <sv:node sv:name="versions">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:contentNode</sv:value>
+            <sv:value>mgnl:component</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
             <sv:value>mix:lockable</sv:value>
@@ -176,7 +176,7 @@
           </sv:node>
           <sv:node sv:name="ceb55065-e6cd-451a-8ce0-7e495e7e8fbc">
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:contentNode</sv:value>
+              <sv:value>mgnl:component</sv:value>
             </sv:property>
             <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
               <sv:value>mix:lockable</sv:value>
