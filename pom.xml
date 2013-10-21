@@ -178,7 +178,7 @@
   </dependencies>
   <properties>
     <magnolia.version>4.5.11</magnolia.version>
-    <jackrabbit.version>2.6.4</jackrabbit.version>
+    <jackrabbit.version>2.4.4</jackrabbit.version>
     <jcr.version>2.0</jcr.version>
   </properties>
   <!-- test running maven with -Djcr.version=2.0 -Djackrabbit.version=2.0.0 -Djcr.version=2.0 -Djackrabbit.version=2.1.0 -->

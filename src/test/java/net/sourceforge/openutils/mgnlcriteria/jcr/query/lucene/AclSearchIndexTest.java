@@ -26,6 +26,7 @@ import info.magnolia.cms.security.Realm;
 import info.magnolia.cms.security.SecuritySupport;
 import info.magnolia.cms.security.SecuritySupportImpl;
 import info.magnolia.cms.security.SystemUserManager;
+import info.magnolia.context.Context;
 import info.magnolia.context.ContextDecorator;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
@@ -114,7 +115,8 @@ public class AclSearchIndexTest extends TestNgRepositoryTestcase
     @Test
     public void testDogsOnly() throws Exception
     {
-        final AccessManager wrappedAM = MgnlContext.getAccessManager(RepositoryConstants.WEBSITE);
+        Context ctx = MgnlContext.getInstance();
+        final AccessManager wrappedAM = ctx.getAccessManager(RepositoryConstants.WEBSITE);
 
         Assert.assertNotNull(wrappedAM, "AccessManager is null");
 

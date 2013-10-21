@@ -79,15 +79,6 @@
     <sv:property sv:name="0" sv:type="String">
       <sv:value>d98728c7-b80f-444d-bfda-b54b28dc240c</sv:value>
     </sv:property>
-    <sv:property sv:name="00" sv:type="String">
-      <sv:value>a106b4cf-d205-418c-acf3-27263612f5a4</sv:value>
-    </sv:property>
-    <sv:property sv:name="01" sv:type="String">
-      <sv:value>0e008dcd-3412-47fe-ab91-a1a1b3c38baa</sv:value>
-    </sv:property>
-    <sv:property sv:name="02" sv:type="String">
-      <sv:value>cf760801-f21e-4548-af47-e21cf9c4317a</sv:value>
-    </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>admin</sv:value>
     </sv:property>

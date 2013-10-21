@@ -5,10 +5,11 @@
 <Repository>
   <FileSystem class="org.apache.jackrabbit.core.fs.mem.MemoryFileSystem">
   </FileSystem>
-  <Security appName="Jackrabbit">
-    <AccessManager class="org.apache.jackrabbit.core.security.SimpleAccessManager"></AccessManager>
-    <LoginModule class="org.apache.jackrabbit.core.security.SimpleLoginModule">
-      <param name="anonymousId" value="anonymous" />
+  <Security appName="magnolia">
+    <SecurityManager class="org.apache.jackrabbit.core.DefaultSecurityManager" />
+    <AccessManager class="org.apache.jackrabbit.core.security.DefaultAccessManager">
+    </AccessManager>
+    <LoginModule class="info.magnolia.jaas.sp.jcr.JackrabbitAuthenticationModule">
     </LoginModule>
   </Security>
   <Workspaces rootPath="${rep.home}" defaultWorkspace="defaultworkspace" />
@@ -35,6 +36,9 @@
       </FileSystem>
     </SearchIndex>
     <ISMLocking class="org.apache.jackrabbit.core.state.FineGrainedISMLocking" />
+    <WorkspaceSecurity>
+      <AccessControlProvider class="info.magnolia.cms.core.MagnoliaAccessProvider" />
+    </WorkspaceSecurity>
   </Workspace>
   <Versioning rootPath="${rep.home}/version">
     <FileSystem class="org.apache.jackrabbit.core.fs.mem.MemoryFileSystem">

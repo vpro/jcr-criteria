@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.security.MgnlRoleManager;
 import info.magnolia.cms.security.Realm;
 import info.magnolia.cms.security.SecuritySupport;
@@ -82,7 +83,7 @@ public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("//myproject/Sport/F1/0a67369b-8cc6-43d8-b2d3-c07b12a2ed5f/versions/*");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:contentNode"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_COMPONENT));
         criteria.addOrder(Order.desc("@jcr:created"));
 
         AdvancedResult advResult = criteria.execute();
@@ -97,7 +98,7 @@ public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("//myproject/Sport/F1/-0a67369b-8cc6-43d8-b2d3-c07b12a2ed5f/versions/*");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:contentNode"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_COMPONENT));
         criteria.addOrder(Order.desc("@jcr:created"));
 
         AdvancedResult advResult = criteria.execute();
@@ -111,7 +112,7 @@ public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
     {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/myproject/Sport/F1/0a67369b-8cc6-43d8-b2d3-(c07b12a2ed5f)");
-        criteria.add(Restrictions.eq("@jcr:primaryType", "mgnl:contentNode"));
+        criteria.add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_COMPONENT));
         criteria.addOrder(Order.desc("@jcr:created"));
 
         AdvancedResult advResult = criteria.execute();
