@@ -73,7 +73,9 @@ public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
 
         // info.magnolia.cms.security.SecurityTest.setUp()
         final SecuritySupportImpl sec = new SecuritySupportImpl();
-        sec.addUserManager(Realm.REALM_SYSTEM.getName(), new SystemUserManager());
+        SystemUserManager systemUserManager = new SystemUserManager();
+        systemUserManager.setRealmName(Realm.REALM_SYSTEM.getName());
+        sec.addUserManager(Realm.REALM_SYSTEM.getName(), systemUserManager);
         sec.setRoleManager(new MgnlRoleManager());
         ComponentsTestUtil.setInstance(SecuritySupport.class, sec);
     }
