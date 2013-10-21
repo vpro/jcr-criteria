@@ -177,6 +177,15 @@ public class PaginationTest extends TestNgRepositoryTestcase
         criteria.setMaxResults(10);
         AdvancedResult advResult = criteria.execute();
 
+        // test is broken with jackrabbit > 2.6.1 due to https://issues.apache.org/jira/browse/JCR-3402
+        // starting from jackrabbit 2.6.2 size is only set if the number of fetched nodes is < total number of result,
+        // considering offset (e.g if you have 97 results and paging by 10, the total number will only be returned when
+        // asking for page 10, which is pretty useless)
+        if (advResult.getTotalSize() == -1)
+        {
+            Assert.fail("total number of results not set for query " + criteria.toXpathExpression());
+        }
+
         Assert.assertEquals(advResult.getTotalSize(), 26);
 
         ResultIterator< ? extends Node> resultIterator = advResult.getItems();
@@ -203,6 +212,11 @@ public class PaginationTest extends TestNgRepositoryTestcase
         criteria.addOrder(Order.asc("@title"));
         criteria.setPaging(5, 3);
         AdvancedResult advResult = criteria.execute();
+
+        if (advResult.getTotalSize() == -1)
+        {
+            Assert.fail("total number of results not set for query " + criteria.toXpathExpression());
+        }
 
         Assert.assertEquals(advResult.getTotalSize(), 26);
 
@@ -253,6 +267,12 @@ public class PaginationTest extends TestNgRepositoryTestcase
         criteria.setPaging(5, 1);
 
         AdvancedResult advResult = criteria.execute();
+
+        if (advResult.getTotalSize() == -1)
+        {
+            Assert.fail("total number of results not set for query " + criteria.toXpathExpression());
+        }
+
         Assert.assertEquals(advResult.getTotalSize(), 26);
         Assert.assertEquals(advResult.getNumberOfPages(), 6);
 
