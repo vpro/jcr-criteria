@@ -104,11 +104,11 @@ public class Content2BeanTest extends TestNgRepositoryTestcase
         Assert.assertEquals(CriteriaTestUtils.title(item), "lorem ipsum");
         Assert.assertEquals(CriteriaTestUtils.path(item), "/contains/lorem-ipsum");
 
-        // this is also a Map!
-        Assert.assertEquals(((Map<String, Object>) item).get("title"), "lorem ipsum");
-        Assert.assertEquals(((Map<String, Object>) item).get("text"), "ohoh");
-        Assert.assertEquals(((Map<String, Object>) item).get("number").toString(), "5");
-        Assert.assertEquals(((Map<String, Object>) item).get("handle"), "/contains/lorem-ipsum");
+        // not a Map anymore, now that we implement Node and not ContentMap!
+        // Assert.assertEquals(((Map<String, Object>) item).get("title"), "lorem ipsum");
+        // Assert.assertEquals(((Map<String, Object>) item).get("text"), "ohoh");
+        // Assert.assertEquals(((Map<String, Object>) item).get("number").toString(), "5");
+        // Assert.assertEquals(((Map<String, Object>) item).get("handle"), "/contains/lorem-ipsum");
 
         ResultIterator<Page> itemsTransformed = advResult.getItems(Page.class);
         Assert.assertNotNull(itemsTransformed);

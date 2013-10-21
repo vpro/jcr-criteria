@@ -166,7 +166,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         Criteria criteria = criteria(textEnteredByUser, true);
         Assert.assertEquals(
             StringUtils.remove(criteria.toXpathExpression(), ' '),
-            "//*[((@jcr:primaryType='mgnl:content')and(jcr:contains(@title,'test\\?')))]orderby@jcr:scoredescending");
+            "//*[((@jcr:primaryType='mgnl:page')and(jcr:contains(@title,'test\\?')))]orderby@jcr:scoredescending");
         AdvancedResult advResult = null;
         try
         {
@@ -190,7 +190,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         Criteria criteria = criteria(textEnteredByUser, true);
         Assert.assertEquals(
             StringUtils.remove(criteria.toXpathExpression(), ' '),
-            "//*[((@jcr:primaryType='mgnl:content')and(jcr:contains(@title,'te\\?st')))]orderby@jcr:scoredescending");
+            "//*[((@jcr:primaryType='mgnl:page')and(jcr:contains(@title,'te\\?st')))]orderby@jcr:scoredescending");
         AdvancedResult advResult = null;
         try
         {
@@ -215,7 +215,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         Assert
             .assertEquals(
                 StringUtils.remove(criteria.toXpathExpression(), ' '),
-                "//*[((@jcr:primaryType='mgnl:content')and(jcr:contains(@title,'\\\"Milano\\\"')))]orderby@jcr:scoredescending");
+                "//*[((@jcr:primaryType='mgnl:page')and(jcr:contains(@title,'\\\"Milano\\\"')))]orderby@jcr:scoredescending");
         AdvancedResult advResult = null;
         try
         {
@@ -239,7 +239,7 @@ public class JcrContainsCriteriaSearchTest extends TestNgRepositoryTestcase
         Criteria criteria = criteria(textEnteredByUser, true);
         Assert.assertEquals(
             StringUtils.remove(criteria.toXpathExpression(), ' '),
-            "//*[((@jcr:primaryType='mgnl:content')and(jcr:contains(@title,'l\\:u')))]orderby@jcr:scoredescending");
+            "//*[((@jcr:primaryType='mgnl:page')and(jcr:contains(@title,'l\\:u')))]orderby@jcr:scoredescending");
         AdvancedResult advResult = null;
         try
         {

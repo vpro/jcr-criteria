@@ -262,7 +262,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(
             criteria.toXpathExpression(),
-            "//*[( (@jcr:primaryType='mgnl:content')  and  ( jcr:contains(@title, '\\(ai\\)\\(n\\)\\(uk\\)') )  )] ");
+            "//*[( (@jcr:primaryType='mgnl:page')  and  ( jcr:contains(@title, '\\(ai\\)\\(n\\)\\(uk\\)') )  )] ");
 
         try
         {
@@ -323,7 +323,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(
             criteria.toXpathExpression(),
-            "//*[( (@jcr:primaryType='mgnl:content')  and  ( jcr:contains(@title, '\\:') )  )] ");
+            "//*[( (@jcr:primaryType='mgnl:page')  and  ( jcr:contains(@title, '\\:') )  )] ");
 
         AdvancedResult advResult = criteria.execute();
         Collection<Node> result = CriteriaTestUtils.collectCollectionFromResult(advResult);
@@ -379,7 +379,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(
             criteria.toXpathExpression(),
-            "//*[( (@jcr:primaryType='mgnl:content')  and  ( jcr:contains(@title, '\"OR\" SONO') )  )] ");
+            "//*[( (@jcr:primaryType='mgnl:page')  and  ( jcr:contains(@title, '\"OR\" SONO') )  )] ");
 
         AdvancedResult advResult = criteria.execute();
         CriteriaTestUtils.assertNumOfResults(1, CriteriaTestUtils.collectCollectionFromResult(advResult), searchText);
@@ -397,7 +397,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(
             criteria.toXpathExpression(),
-            "//*[( (@jcr:primaryType='mgnl:content')  and  (@title='OR SONO')  )] ");
+            "//*[( (@jcr:primaryType='mgnl:page')  and  (@title='OR SONO')  )] ");
 
         AdvancedResult advResult = criteria.execute();
         CriteriaTestUtils.assertNumOfResults(1, CriteriaTestUtils.collectCollectionFromResult(advResult), searchText);
@@ -415,7 +415,7 @@ public class XpathEscapeTest extends TestNgRepositoryTestcase
 
         Assert.assertEquals(
             criteria.toXpathExpression(),
-            "//*[( (@jcr:primaryType='mgnl:content')  and  ( jcr:contains(@title, 'AND ME') )  )] ");
+            "//*[( (@jcr:primaryType='mgnl:page')  and  ( jcr:contains(@title, 'AND ME') )  )] ");
 
         AdvancedResult advResult = criteria.execute();
         CriteriaTestUtils.assertNumOfResults(0, CriteriaTestUtils.collectCollectionFromResult(advResult), searchText);

@@ -98,7 +98,7 @@ public class JcrContainsQuestionMarkTest extends TestNgRepositoryTestcase
         AdvancedResultImpl advResult = null;
         try
         {
-            String stmt = "//*[((@jcr:primaryType='mgnl:content') and (jcr:contains(@title,'test?')))] order by @jcr:score";
+            String stmt = "//*[((@jcr:primaryType='mgnl:page') and (jcr:contains(@title,'test?')))] order by @jcr:score";
             advResult = QueryExecutorHelper.execute(stmt, Query.XPATH, hm, 10, 0, null, false);
         }
         catch (JCRQueryException e)
@@ -120,7 +120,7 @@ public class JcrContainsQuestionMarkTest extends TestNgRepositoryTestcase
     {
         Session hm = MgnlContext.getJCRSession(RepositoryConstants.WEBSITE);
 
-        String stmt = "//*[((@jcr:primaryType='mgnl:content') and (jcr:contains(@title,'test\\?')))] order by @jcr:score";
+        String stmt = "//*[((@jcr:primaryType='mgnl:page') and (jcr:contains(@title,'test\\?')))] order by @jcr:score";
         AdvancedResultImpl advResult = QueryExecutorHelper.execute(stmt, Query.XPATH, hm, -1, 0, null, false);
 
         Assert.assertEquals(advResult.getTotalSize(), 1);
@@ -135,11 +135,11 @@ public class JcrContainsQuestionMarkTest extends TestNgRepositoryTestcase
         String stmt;
         AdvancedResultImpl advResult;
 
-        stmt = "//*[((@jcr:primaryType='mgnl:content') and (jcr:contains(@title,'te?st')))] order by @jcr:score";
+        stmt = "//*[((@jcr:primaryType='mgnl:page') and (jcr:contains(@title,'te?st')))] order by @jcr:score";
         advResult = QueryExecutorHelper.execute(stmt, Query.XPATH, hm, -1, 0, null, false);
         Assert.assertEquals(advResult.getTotalSize(), 0);
 
-        stmt = "//*[((@jcr:primaryType='mgnl:content') and (jcr:contains(@title,'te\\?st')))] order by @jcr:score";
+        stmt = "//*[((@jcr:primaryType='mgnl:page') and (jcr:contains(@title,'te\\?st')))] order by @jcr:score";
         advResult = QueryExecutorHelper.execute(stmt, Query.XPATH, hm, -1, 0, null, false);
         Assert.assertEquals(advResult.getTotalSize(), 1);
         Assert.assertEquals(CriteriaTestUtils.title(advResult.getItems().next()), "hello te?st world");
