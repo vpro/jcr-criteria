@@ -20,14 +20,8 @@
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
 import info.magnolia.cms.core.MgnlNodeType;
-import info.magnolia.cms.security.MgnlRoleManager;
-import info.magnolia.cms.security.Realm;
-import info.magnolia.cms.security.SecuritySupport;
-import info.magnolia.cms.security.SecuritySupportImpl;
-import info.magnolia.cms.security.SystemUserManager;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
-import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
@@ -55,7 +49,7 @@ import org.testng.annotations.Test;
     "/crit-bootstrap/userroles.anonymous.xml",
     "/crit-bootstrap/users.system.anonymous.xml",
     "/crit-bootstrap/config.server.auditLogging.xml",
-    "/crit-bootstrap/config.server.i18n.content.xml" })
+    "/crit-bootstrap/config.server.i18n.content.xml" }, security = true)
 public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
 {
 
@@ -70,14 +64,6 @@ public class FirstDigitEscapeTest extends TestNgRepositoryTestcase
         super.setUp();
 
         MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
-
-        // info.magnolia.cms.security.SecurityTest.setUp()
-        final SecuritySupportImpl sec = new SecuritySupportImpl();
-        SystemUserManager systemUserManager = new SystemUserManager();
-        systemUserManager.setRealmName(Realm.REALM_SYSTEM.getName());
-        sec.addUserManager(Realm.REALM_SYSTEM.getName(), systemUserManager);
-        sec.setRoleManager(new MgnlRoleManager());
-        ComponentsTestUtil.setInstance(SecuritySupport.class, sec);
     }
 
     @Test

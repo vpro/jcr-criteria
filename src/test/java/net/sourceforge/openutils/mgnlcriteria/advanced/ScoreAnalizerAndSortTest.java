@@ -21,11 +21,6 @@ package net.sourceforge.openutils.mgnlcriteria.advanced;
 
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
-import info.magnolia.cms.security.MgnlRoleManager;
-import info.magnolia.cms.security.Realm;
-import info.magnolia.cms.security.SecuritySupport;
-import info.magnolia.cms.security.SecuritySupportImpl;
-import info.magnolia.cms.security.SystemUserManager;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
@@ -56,7 +51,7 @@ import org.testng.annotations.Test;
     "/crit-bootstrap/userroles.anonymous.xml",
     "/crit-bootstrap/users.system.anonymous.xml",
     "/crit-bootstrap/config.server.auditLogging.xml",
-    "/crit-bootstrap/config.server.i18n.content.xml" })
+    "/crit-bootstrap/config.server.i18n.content.xml" }, security = true)
 public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
 {
 
@@ -73,14 +68,6 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
         MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
 
         ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
-
-        // info.magnolia.cms.security.SecurityTest.setUp()
-        final SecuritySupportImpl sec = new SecuritySupportImpl();
-        SystemUserManager systemUserManager = new SystemUserManager();
-        systemUserManager.setRealmName(Realm.REALM_SYSTEM.getName());
-        sec.addUserManager(Realm.REALM_SYSTEM.getName(), systemUserManager);
-        sec.setRoleManager(new MgnlRoleManager());
-        ComponentsTestUtil.setInstance(SecuritySupport.class, sec);
     }
 
     @Test
@@ -109,15 +96,23 @@ public class ScoreAnalizerAndSortTest extends TestNgRepositoryTestcase
 
         ResultIterator< ? extends Node> iterator = advResult.getItems();
 
-        Assert.assertTrue(((AdvancedResultItem) iterator.next()).getScore() > ((AdvancedResultItem) iterator.next())
-            .getScore());
+        AdvancedResultItem first = (AdvancedResultItem) iterator.next();
+        AdvancedResultItem second = (AdvancedResultItem) iterator.next();
+
+        Assert.assertTrue(first.getScore() >= second.getScore(), "First element score "
+            + first.getScore()
+            + " is not greater of "
+            + second.getScore());
+        // actually, the score should be the same, since the word is always contained in the title... accents should not
+        // be considered
 
         iterator = advResult.getItems();
 
         // not sure what the selector name "s" means, but that's the only valid selector for this query, according to
         // jackrabbit
-        Assert.assertTrue(((AdvancedResultItem) iterator.next()).getScore("s") > ((AdvancedResultItem) iterator.next())
-            .getScore("s"));
+        Assert
+            .assertTrue(((AdvancedResultItem) iterator.next()).getScore("s") >= ((AdvancedResultItem) iterator.next())
+                .getScore("s"));
     }
 
     @Test

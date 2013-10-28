@@ -14,20 +14,14 @@
     </analyzer>
   </analyzers>
 
-
+ 
   <index-rule nodeType="nt:hierarchyNode">
     <property boost="10" useInExcerpt="false">title</property>
     <property boost="1.0" useInExcerpt="true">text</property>
+    <property useInExcerpt="false" nodeScopeIndex="false" isRegexp="true">.*</property>
+    <property useInExcerpt="false" nodeScopeIndex="false" isRegexp="true">.*:.*</property>
   </index-rule>
-  <index-rule nodeType="mgnl:page">
-    <property boost="10" useInExcerpt="false">title</property>
-    <property boost="1.0" useInExcerpt="true">text</property>
-  </index-rule>
-  <index-rule nodeType="mgnl:component">
-    <property boost="0.5"   useInExcerpt="false">title</property>
-    <property boost="1.0"   useInExcerpt="true">text</property>
-  </index-rule>
-
+  
   <!-- index text content on paragraphs -->
   <!-- aggregates content on the main column -->
 

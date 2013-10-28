@@ -22,11 +22,6 @@ package net.sourceforge.openutils.mgnlcriteria.jcr.query;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
-import info.magnolia.cms.security.MgnlRoleManager;
-import info.magnolia.cms.security.Realm;
-import info.magnolia.cms.security.SecuritySupport;
-import info.magnolia.cms.security.SecuritySupportImpl;
-import info.magnolia.cms.security.SystemUserManager;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.PropertyUtil;
@@ -58,8 +53,7 @@ import org.testng.annotations.Test;
     "/crit-bootstrap/website.pets.xml",
     "/crit-bootstrap/userroles.anonymous.xml",
     "/crit-bootstrap/users.system.anonymous.xml",
-    "/crit-bootstrap/config.server.auditLogging.xml",
-    "/crit-bootstrap/config.server.i18n.content.xml" })
+    "/crit-bootstrap/config.server.auditLogging.xml" }, security = true)
 public class CriteriaTest extends TestNgRepositoryTestcase
 {
 
@@ -96,14 +90,6 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
 
         ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
-
-        // info.magnolia.cms.security.SecurityTest.setUp()
-        final SecuritySupportImpl sec = new SecuritySupportImpl();
-        SystemUserManager systemUserManager = new SystemUserManager();
-        systemUserManager.setRealmName(Realm.REALM_SYSTEM.getName());
-        sec.addUserManager(Realm.REALM_SYSTEM.getName(), systemUserManager);
-        sec.setRoleManager(new MgnlRoleManager());
-        ComponentsTestUtil.setInstance(SecuritySupport.class, sec);
     }
 
     /**
@@ -184,7 +170,7 @@ public class CriteriaTest extends TestNgRepositoryTestcase
         Criteria criteria = toXpathExpressionJavadocExampleCriteria();
 
         AdvancedResult result = criteria.execute();
-        Assert.assertEquals(result.getTotalSize(), 1);
+        Assert.assertEquals(result.getTotalSize(), 1, "Expected 1 result for query " + criteria.toXpathExpression());
 
         ResultIterator< ? extends Node> iterator = result.getItems();
         Assert.assertEquals(iterator.getSize(), 1);
