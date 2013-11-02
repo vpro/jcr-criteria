@@ -347,6 +347,16 @@ public final class Restrictions
     }
 
     /**
+     * Apply a restriction on the node primary type. Shorcut for add(Restrictions.eq("@jcr:primaryType", value)).
+     * @param nodetypes - list of accepted nodetypes.
+     * @return Criterion
+     */
+    public static Criterion hasNodeType(String... nodetypes)
+    {
+        return new InExpression("@jcr:primaryType", nodetypes, false);
+    }
+
+    /**
      * Group expressions together in a single conjunction (A and B and C...)
      * @return Conjunction
      */

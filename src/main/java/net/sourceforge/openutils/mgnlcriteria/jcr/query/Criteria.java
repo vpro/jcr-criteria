@@ -107,12 +107,18 @@ public interface Criteria extends ExecutableQuery
     Criteria add(Criterion criterion);
 
     /**
-     * Add an {@link Order ordering} to the result set. Only <strong>one Order criterion per query</strong> can be
-     * applied. Any Order added after the first one will be ignored.
+     * Add an {@link Order ordering} to the result set.
      * @param order The {@link Order order} object representing an ordering to be applied to the results.
      * @return this (for method chaining)
      */
     Criteria addOrder(Order order);
+
+    /**
+     * Add an {@link Order ordering} for score to the result set. Shortcut for .addOrder(Order.desc("@jcr:score")).
+     * @param order The {@link Order order} object representing an ordering to be applied to the results.
+     * @return this (for method chaining)
+     */
+    Criteria addOrderByScore();
 
     /**
      * Set a limit upon the number of objects to be retrieved.

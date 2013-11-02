@@ -115,6 +115,15 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
     /**
      * {@inheritDoc}
      */
+    public Criteria addOrderByScore()
+    {
+        orderEntries.add(new OrderEntry(Order.desc("@jcr:score"), this));
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public Criteria setBasePath(String path)
     {
         // check if the specified path is already an xpath query
