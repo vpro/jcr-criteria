@@ -154,7 +154,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltests</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.10</version>
       <scope>test</scope>
     </dependency>
     <dependency>
