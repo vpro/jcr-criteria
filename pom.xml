@@ -3,7 +3,7 @@
   <groupId>net.sourceforge.openutils</groupId>
   <artifactId>openutils-mgnlcriteria</artifactId>
   <name>Criteria API for Magnolia CMS</name>
-  <version>5.0.11-SNAPSHOT</version>
+  <version>5.0.11-VPRO</version>
   <inceptionYear>2009</inceptionYear>
   <description>A Hibernate's Criteria-like API to programmatically generate JCR queries with Magnolia</description>
   <licenses>
