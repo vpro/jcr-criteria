@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.function.IntSupplier;
 
 import javax.jcr.RepositoryException;
@@ -219,16 +220,20 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     public IntSupplier getCountSupplier() {
         return () -> {
             long startTime = System.nanoTime();
-            Criteria countCriteria = JCRCriteriaFactory.createCriteria();
-            for (CriterionEntry c : getCriterionEntries()) {
-                countCriteria.add(c.getCriterion());
-            }
-            countCriteria.setBasePath(path);
-            countCriteria.setSpellCheckString(spellCheckString);
-            countCriteria.setWorkspace(workspace);
+            try {
+                Criteria countCriteria = JCRCriteriaFactory.createCriteria();
+                for (CriterionEntry c : getCriterionEntries()) {
+                    countCriteria.add(c.getCriterion());
+                }
+                countCriteria.setBasePath(path);
+                countCriteria.setSpellCheckString(spellCheckString);
+                countCriteria.setWorkspace(workspace);
 
-            log.info("Total size not available, determining now");
-            return countCriteria.execute().getTotalSize();
+
+                return countCriteria.execute().getTotalSize();
+            } finally {
+                log.info("Total size was not available, determining it costed {} ms", TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS));
+            }
         };
     }
 
