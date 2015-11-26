@@ -229,7 +229,7 @@ public class JackrabbitQueryParser extends QueryParser {
      * @return the translated String.
      */
     private String translateWildcards(String input) {
-        StringBuffer translated = new StringBuffer(input.length());
+        StringBuilder translated = new StringBuilder(input.length());
         boolean escaped = false;
         for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) == '\\') {
