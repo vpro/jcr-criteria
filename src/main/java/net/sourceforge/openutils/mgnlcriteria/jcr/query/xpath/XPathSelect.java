@@ -27,8 +27,7 @@ import org.apache.commons.lang.StringUtils;
  * @author Federico Grilli
  * @version $Id$
  */
-public class XPathSelect
-{
+public class XPathSelect {
 
     private String root;
 
@@ -41,27 +40,23 @@ public class XPathSelect
     /**
      * Construct an XPATH <tt>SELECT</tt> statement from the given clauses
      */
-    public String toStatementString()
-    {
+    public String toStatementString() {
         StringBuilder buf = new StringBuilder(guesstimatedBufferSize);
 
         buf.append(root);
 
-        if (StringUtils.isNotEmpty(predicate))
-        {
-            buf.append("[(" + predicate + " )] ");
+        if (StringUtils.isNotEmpty(predicate)) {
+            buf.append("[(").append(predicate).append(" )] ");
         }
 
-        if (StringUtils.isNotEmpty(orderByClause))
-        {
+        if (StringUtils.isNotEmpty(orderByClause)) {
             buf.append(" order by ").append(orderByClause);
         }
 
         return buf.toString();
     }
 
-    public XPathSelect setOrderByClause(String orderByClause)
-    {
+    public XPathSelect setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
         this.guesstimatedBufferSize += orderByClause.length();
         return this;
@@ -71,8 +66,7 @@ public class XPathSelect
      * Sets the selectClause.
      * @param root the root path for the jcr query
      */
-    public XPathSelect setRoot(String root)
-    {
+    public XPathSelect setRoot(String root) {
         this.root = root;
         this.guesstimatedBufferSize += root.length();
         return this;
@@ -82,8 +76,7 @@ public class XPathSelect
      * Sets the predicate.
      * @param predicate The predicate to set
      */
-    public XPathSelect setPredicate(String predicate)
-    {
+    public XPathSelect setPredicate(String predicate) {
         this.predicate = predicate;
         this.guesstimatedBufferSize += predicate.length();
         return this;

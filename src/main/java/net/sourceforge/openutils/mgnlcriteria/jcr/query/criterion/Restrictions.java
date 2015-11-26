@@ -19,10 +19,10 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion;
 
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.utils.XPathTextUtils;
+
 import java.util.Calendar;
 import java.util.Collection;
-
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.utils.XPathTextUtils;
 
 
 /**
@@ -33,11 +33,9 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.utils.XPathTextUti
  * @author Federico Grilli
  * @version $Id$
  */
-public final class Restrictions
-{
+public final class Restrictions {
 
-    private Restrictions()
-    {
+    private Restrictions() {
         // cannot be instantiated
     }
 
@@ -48,8 +46,7 @@ public final class Restrictions
      * @param value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
      * @return Criterion
      */
-    public static SimpleExpression eq(String nodeName, Object value)
-    {
+    public static SimpleExpression eq(String nodeName, Object value) {
         return new SimpleExpression(nodeName, value, "=");
     }
 
@@ -77,13 +74,13 @@ public final class Restrictions
      * <ul>
      * <li>Question: My xpath is '//*[jcr:like(@propertyName,
      * '%somevalue%')]' and it takes minutes to complete.
-     * 
+     *
      * <li>Answer: a jcr:like with % will be translated to a WildcardQuery lucene
      * query. In order to prevent extremely slow WildcardQueries, a Wildcard
      * term should not start with one of the wildcards * or ?. So this is not a
      * Jackrabbit implementation detail, but a general Lucene (and I think
      * inverted indexes in general) issue [1]
-     * 
+     *
      * <li>Conclusion: Avoid % prefixes in jcr:like. Use jcr:contains when
      * searching for a specific word. If jcr:contains is not suitable, you can
      * work around the problem by creating a custom lucene analyzer for the
@@ -116,13 +113,13 @@ public final class Restrictions
      * <em>
      * <ul>
      * <li>Question: My xpath is '//*[jcr:like(@propertyName, '%somevalue%')]' and it takes minutes to complete.
-     * 
+     *
      * <li>Answer: a jcr:like with % will be translated to a WildcardQuery lucene
      * query. In order to prevent extremely slow WildcardQueries, a Wildcard
      * term should not start with one of the wildcards * or ?. So this is not a
      * Jackrabbit implementation detail, but a general Lucene (and I think
      * inverted indexes in general) issue [1]
-     * 
+     *
      * <li>Conclusion: Avoid % prefixes in jcr:like. Use jcr:contains when
      * searching for a specific word. If jcr:contains is not suitable, you can
      * work around the problem by creating a custom lucene analyzer for the
