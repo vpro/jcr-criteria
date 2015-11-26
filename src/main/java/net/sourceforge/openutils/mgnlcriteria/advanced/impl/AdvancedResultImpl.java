@@ -141,8 +141,6 @@ public class AdvancedResultImpl implements AdvancedResult  {
             }
 
             if (queryTotalSize == -1) {
-                long startTime = System.nanoTime();
-                LOG.info("Total size not available, determining now");
                 totalResults = queryCounter.getAsInt();
             } else {
                 totalResults = queryTotalSize;
