@@ -23,8 +23,7 @@ package net.sourceforge.openutils.mgnlcriteria.jcr.query;
  * @author fgiust
  * @version $Id$
  */
-public interface ExecutableQuery
-{
+public interface ExecutableQuery {
 
     /**
      * Executes the query

@@ -26,7 +26,6 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.impl.AbstractCrite
  * @author fgiust
  * @version $Id$
  */
-public class AdvancedCriteriaImpl extends AbstractCriteriaImpl
-{
+public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
 
 }

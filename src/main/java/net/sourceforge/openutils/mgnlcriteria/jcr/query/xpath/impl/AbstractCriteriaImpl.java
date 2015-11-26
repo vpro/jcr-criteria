@@ -22,14 +22,6 @@ package net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.impl;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.RuntimeRepositoryException;
 import info.magnolia.repository.RepositoryConstants;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
-import javax.jcr.RepositoryException;
-
 import net.sourceforge.openutils.mgnlcriteria.advanced.impl.QueryExecutorHelper;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
@@ -39,6 +31,13 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.JCRMagnoliaCriteriaQueryTranslator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.XPathSelect;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.utils.XPathTextUtils;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -78,34 +77,28 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public Collection<CriterionEntry> getCriterionEntries()
     {
         return Collections.unmodifiableCollection(criterionEntries);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
+    @Override
     public Collection<OrderEntry> getOrderEntries()
     {
         return Collections.unmodifiableCollection(orderEntries);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
+    @Override
     public Criteria add(Criterion criterion)
     {
         criterionEntries.add(new CriterionEntry(criterion, this));
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public Criteria addOrder(Order order)
     {
         orderEntries.add(new OrderEntry(order, this));
@@ -115,15 +108,15 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
     /**
      * {@inheritDoc}
      */
+    @Override
     public Criteria addOrderByScore()
     {
         orderEntries.add(new OrderEntry(Order.desc("@jcr:score"), this));
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
+    @Override
     public Criteria setBasePath(String path)
     {
         // check if the specified path is already an xpath query
@@ -157,9 +150,8 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
         return offset;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
+    @Override
     public Criteria setFirstResult(int firstResult)
     {
         this.offset = firstResult;
@@ -175,9 +167,8 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
         return maxResults;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
+    @Override
     public Criteria setMaxResults(int maxResults)
     {
         this.maxResults = maxResults;
@@ -187,6 +178,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
     /**
      * {@inheritDoc}
      */
+    @Override
     public Criteria setPaging(int itemsPerPage, int pageNumberStartingFromOne)
     {
         this.maxResults = itemsPerPage;
@@ -194,36 +186,30 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
+    @Override
     public Criteria setSpellCheckString(String spellCheckString)
     {
         this.spellCheckString = spellCheckString;
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public Criteria setWorkspace(String workspace)
     {
         this.workspace = workspace;
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
+    @Override
     public Criteria setForcePagingWithDocumentOrder(boolean force)
     {
         this.forcePagingWithDocumentOrder = force;
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public String toXpathExpression()
     {
         JCRMagnoliaCriteriaQueryTranslator translator = new JCRMagnoliaCriteriaQueryTranslator(this);
@@ -235,11 +221,9 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
         return stmt;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public AdvancedResult execute()
-    {
+
+    @Override
+    public AdvancedResult execute() {
         @SuppressWarnings("deprecation")
         String language = javax.jcr.query.Query.XPATH;
         String stmt = toXpathExpression();
