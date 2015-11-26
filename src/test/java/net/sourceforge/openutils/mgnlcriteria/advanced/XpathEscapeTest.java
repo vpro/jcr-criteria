@@ -27,11 +27,6 @@ import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
-
-import java.util.Collection;
-
-import javax.jcr.Node;
-
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
@@ -39,6 +34,10 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Disjunction;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
 import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
+
+import java.util.Collection;
+
+import javax.jcr.Node;
 
 import org.apache.commons.lang.StringUtils;
 import org.testng.Assert;
@@ -56,8 +55,7 @@ import org.testng.annotations.Test;
     "/crit-bootstrap/users.system.anonymous.xml",
     "/crit-bootstrap/config.server.auditLogging.xml",
     "/crit-bootstrap/config.server.i18n.content.xml" }, security = true)
-public class XpathEscapeTest extends TestNgRepositoryTestcase
-{
+public class XpathEscapeTest extends TestNgRepositoryTestcase {
 
     /**
      * {@inheritDoc}

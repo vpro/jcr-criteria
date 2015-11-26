@@ -23,13 +23,13 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.utils.XPathTextUtils;
 
+import java.util.function.IntSupplier;
+
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import javax.jcr.query.InvalidQueryException;
 import javax.jcr.query.Query;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.jackrabbit.core.query.QueryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,10 +64,41 @@ public final class QueryExecutorHelper {
      * @param spellCheckString the input string used for spell checking
      * @return the execution result
      */
-    public static AdvancedResultImpl execute(String stmt, String language, Session jcrSession, int maxResults,
-        int offset, String spellCheckString)
-    {
+    public static AdvancedResultImpl execute(
+        String stmt,
+        String language,
+        IntSupplier queryCounter,
+        Session jcrSession,
+        int maxResults,
+        int offset,
+        String spellCheckString) {
+        return execute(stmt, language, queryCounter, jcrSession, maxResults, offset, spellCheckString, false);
+    }
+
+    public static AdvancedResultImpl execute(
+        String stmt,
+        String language,
+        Session jcrSession,
+        int maxResults,
+        int offset,
+        String spellCheckString) {
+
         return execute(stmt, language, jcrSession, maxResults, offset, spellCheckString, false);
+    }
+
+    public static AdvancedResultImpl execute(
+        String stmt,
+        String language,
+        Session jcrSession,
+        int maxResults,
+        int offset,
+        String spellCheckString,
+        boolean forcePagingWithDocumentOrder
+        ) {
+        return execute(stmt, language, () -> {
+            throw new UnsupportedOperationException();
+
+        }, jcrSession, maxResults, offset, spellCheckString, forcePagingWithDocumentOrder);
     }
 
     /**
@@ -82,39 +113,42 @@ public final class QueryExecutorHelper {
      * @return the execution result
      */
     @SuppressWarnings("deprecation")
-    public static AdvancedResultImpl execute(String stmt, String language, Session jcrSession, int maxResults,
-        int offset, String spellCheckString, boolean forcePagingWithDocumentOrder) {
+    public static AdvancedResultImpl execute(
+        String stmt,
+        String language,
+        IntSupplier queryCounter,
+        Session jcrSession,
+        int maxResults,
+        int offset,
+        String spellCheckString,
+        boolean forcePagingWithDocumentOrder) {
         javax.jcr.query.QueryManager jcrQueryManager;
 
-        try
-        {
+        try {
             jcrQueryManager = jcrSession.getWorkspace().getQueryManager();
 
-            QueryImpl query = (QueryImpl) jcrQueryManager.createQuery(stmt, language);
+            @SuppressWarnings("deprecation")
+            Query query = jcrQueryManager.createQuery(stmt, language);
 
-            if (!forcePagingWithDocumentOrder)
-            {
-                if (maxResults > 0)
-                {
+
+            if (!forcePagingWithDocumentOrder) {
+                if (maxResults > 0) {
                     query.setLimit(maxResults);
                 }
 
-                if (offset > 0)
-                {
+                if (offset > 0) {
                     query.setOffset(offset);
                 }
             }
 
             int pageNumberStartingFromOne = 1;
-            if (maxResults > 0 && offset > maxResults - 1)
-            {
+            if (maxResults > 0 && offset > maxResults - 1) {
                 pageNumberStartingFromOne = (offset / maxResults) + 1;
             }
 
             Query spellCheckerQuery = null;
 
-            if (StringUtils.isNotBlank(spellCheckString))
-            {
+            if (StringUtils.isNotBlank(spellCheckString)) {
                 spellCheckerQuery = jcrQueryManager.createQuery(
                     "/jcr:root[rep:spellcheck('"
                         + XPathTextUtils.stringToJCRSearchExp(spellCheckString)
@@ -125,7 +159,8 @@ public final class QueryExecutorHelper {
             try {
                 executing.set(Boolean.TRUE);
                 return new AdvancedResultImpl(
-                    query,
+                    query.execute(),
+                    queryCounter,
                     maxResults,
                     pageNumberStartingFromOne,
                     stmt,
@@ -135,15 +170,7 @@ public final class QueryExecutorHelper {
             } finally {
                 executing.set(Boolean.FALSE);
             }
-        }
-        catch (InvalidQueryException e)
-        {
-            JCRQueryException jqe = new JCRQueryException(stmt, e);
-            LOG.error(jqe.getMessage());
-            throw jqe;
-        }
-        catch (RepositoryException e)
-        {
+        } catch (RepositoryException e) {
             JCRQueryException jqe = new JCRQueryException(stmt, e);
             LOG.error(jqe.getMessage());
             throw jqe;
@@ -153,10 +180,8 @@ public final class QueryExecutorHelper {
 
     /**
      * Indicates if this helper class is executing a query
-     * @return
      */
-    public static boolean isExecuting()
-    {
+    public static boolean isExecuting() {
         return executing.get();
     }
 

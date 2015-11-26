@@ -25,6 +25,7 @@ import info.magnolia.repository.RepositoryConstants;
 import net.sourceforge.openutils.mgnlcriteria.advanced.impl.QueryExecutorHelper;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.TranslatableCriteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Criterion;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.IntSupplier;
 
 import javax.jcr.RepositoryException;
 
@@ -49,18 +51,17 @@ import org.slf4j.LoggerFactory;
  * @author fgrilli
  * @version $Id$
  */
-public abstract class AbstractCriteriaImpl implements TranslatableCriteria
-{
+public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
-    protected Logger log = LoggerFactory.getLogger(getClass());
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     protected String path = Criterion.ALL_ELEMENTS;
 
     protected Class< ? > classType;
 
-    protected List<CriterionEntry> criterionEntries = new ArrayList<CriterionEntry>();
+    protected List<CriterionEntry> criterionEntries = new ArrayList<>();
 
-    protected List<OrderEntry> orderEntries = new ArrayList<OrderEntry>();
+    protected List<OrderEntry> orderEntries = new ArrayList<>();
 
     protected int maxResults;
 
@@ -72,68 +73,52 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
 
     protected boolean forcePagingWithDocumentOrder;
 
-    protected AbstractCriteriaImpl()
-    {
+    protected AbstractCriteriaImpl() {
 
     }
 
     @Override
-    public Collection<CriterionEntry> getCriterionEntries()
-    {
+    public Collection<CriterionEntry> getCriterionEntries() {
         return Collections.unmodifiableCollection(criterionEntries);
     }
 
 
     @Override
-    public Collection<OrderEntry> getOrderEntries()
-    {
+    public Collection<OrderEntry> getOrderEntries() {
         return Collections.unmodifiableCollection(orderEntries);
     }
 
 
     @Override
-    public Criteria add(Criterion criterion)
-    {
+    public Criteria add(Criterion criterion) {
         criterionEntries.add(new CriterionEntry(criterion, this));
         return this;
     }
 
     @Override
-    public Criteria addOrder(Order order)
-    {
+    public Criteria addOrder(Order order) {
         orderEntries.add(new OrderEntry(order, this));
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public Criteria addOrderByScore()
-    {
+    public Criteria addOrderByScore() {
         orderEntries.add(new OrderEntry(Order.desc("@jcr:score"), this));
         return this;
     }
 
 
     @Override
-    public Criteria setBasePath(String path)
-    {
+    public Criteria setBasePath(String path) {
         // check if the specified path is already an xpath query
-        if (StringUtils.contains(path, "*"))
-        {
+        if (StringUtils.contains(path, "*")) {
             this.path = path;
-        }
-        else
-        {
+        } else {
             // convert the node handle to a xpath query
-            if (StringUtils.isEmpty(StringUtils.remove(path, '/')))
-            {
+            if (StringUtils.isEmpty(StringUtils.remove(path, '/'))) {
                 // root node
                 this.path = Criterion.ALL_ELEMENTS;
-            }
-            else
-            {
+            } else {
                 // the handle already starts with a single '/', so prepend another one
                 this.path = "/" + StringUtils.defaultString(StringUtils.removeEnd(path, "/")) + "//*";
             }
@@ -145,15 +130,13 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
      * Returns the firstResult.
      * @return the firstResult
      */
-    public int getFirstResult()
-    {
+    public int getFirstResult() {
         return offset;
     }
 
 
     @Override
-    public Criteria setFirstResult(int firstResult)
-    {
+    public Criteria setFirstResult(int firstResult) {
         this.offset = firstResult;
         return this;
     }
@@ -162,25 +145,19 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
      * Returns the maxResults.
      * @return the maxResults
      */
-    public int getMaxResults()
-    {
+    public int getMaxResults() {
         return maxResults;
     }
 
 
     @Override
-    public Criteria setMaxResults(int maxResults)
-    {
+    public Criteria setMaxResults(int maxResults) {
         this.maxResults = maxResults;
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public Criteria setPaging(int itemsPerPage, int pageNumberStartingFromOne)
-    {
+    public Criteria setPaging(int itemsPerPage, int pageNumberStartingFromOne) {
         this.maxResults = itemsPerPage;
         this.offset = (Math.max(pageNumberStartingFromOne, 1) - 1) * maxResults;
         return this;
@@ -188,30 +165,26 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
 
 
     @Override
-    public Criteria setSpellCheckString(String spellCheckString)
-    {
+    public Criteria setSpellCheckString(String spellCheckString) {
         this.spellCheckString = spellCheckString;
         return this;
     }
 
     @Override
-    public Criteria setWorkspace(String workspace)
-    {
+    public Criteria setWorkspace(String workspace) {
         this.workspace = workspace;
         return this;
     }
 
 
     @Override
-    public Criteria setForcePagingWithDocumentOrder(boolean force)
-    {
+    public Criteria setForcePagingWithDocumentOrder(boolean force) {
         this.forcePagingWithDocumentOrder = force;
         return this;
     }
 
     @Override
-    public String toXpathExpression()
-    {
+    public String toXpathExpression() {
         JCRMagnoliaCriteriaQueryTranslator translator = new JCRMagnoliaCriteriaQueryTranslator(this);
         XPathSelect statement = new XPathSelect();
         statement.setRoot(XPathTextUtils.encodeDigitsInPath(this.path));
@@ -227,22 +200,36 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria
         @SuppressWarnings("deprecation")
         String language = javax.jcr.query.Query.XPATH;
         String stmt = toXpathExpression();
-
-        try
-        {
+        try {
             return QueryExecutorHelper.execute(
                 stmt,
                 language,
+                getCountSupplier(),
                 MgnlContext.getJCRSession(workspace),
                 maxResults,
                 offset,
                 spellCheckString,
                 forcePagingWithDocumentOrder && this.orderEntries.isEmpty());
-        }
-        catch (RepositoryException e)
-        {
+        } catch (RepositoryException e) {
             throw new RuntimeRepositoryException(e);
         }
+    }
+
+    @Override
+    public IntSupplier getCountSupplier() {
+        return () -> {
+            long startTime = System.nanoTime();
+            Criteria countCriteria = JCRCriteriaFactory.createCriteria();
+            for (CriterionEntry c : getCriterionEntries()) {
+                countCriteria.add(c.getCriterion());
+            }
+            countCriteria.setBasePath(path);
+            countCriteria.setSpellCheckString(spellCheckString);
+            countCriteria.setWorkspace(workspace);
+
+            log.info("Total size not available, determining now");
+            return countCriteria.execute().getTotalSize();
+        };
     }
 
 }

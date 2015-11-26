@@ -24,6 +24,8 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.*;
 import net.sourceforge.openutils.mgnlcriteria.utils.JcrCompatUtils;
 import net.sourceforge.openutils.mgnlcriteria.utils.ToBeanUtils;
 
+import java.util.function.IntSupplier;
+
 import javax.jcr.Item;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
@@ -43,7 +45,7 @@ public class AdvancedResultImpl implements AdvancedResult  {
     private static final Logger LOG = LoggerFactory.getLogger(AdvancedResultImpl.class);
 
     private final QueryResult jcrQueryResult;
-    private final Query originQuery;
+    private final IntSupplier queryCounter;
 
     private final int itemsPerPage;
 
@@ -64,25 +66,27 @@ public class AdvancedResultImpl implements AdvancedResult  {
 
 
     AdvancedResultImpl(
-        Query jcrQuery,
+        QueryResult jcrQueryResult,
+        IntSupplier queryCounter,
         int itemsPerPage,
         int pageNumberStartingFromOne,
         String statement,
         Query spellCheckerQuery) throws RepositoryException {
-        this(jcrQuery, itemsPerPage, pageNumberStartingFromOne, statement, spellCheckerQuery, false);
+        this(jcrQueryResult, queryCounter, itemsPerPage, pageNumberStartingFromOne, statement, spellCheckerQuery, false);
     }
 
     /**
      * @param applyLocalPaging don't assume the result iterator is already paginated, do it "manually"
      */
     AdvancedResultImpl(
-        Query jcrQueryResult,
+        QueryResult jcrQueryResult,
+        IntSupplier queryCounter,
         int itemsPerPage,
         int pageNumberStartingFromOne,
         String statement,
         Query spellCheckerQuery,
         boolean applyLocalPaging) throws RepositoryException {
-        this(jcrQueryResult, itemsPerPage, pageNumberStartingFromOne, statement, spellCheckerQuery, applyLocalPaging, 0);
+        this(jcrQueryResult, queryCounter, itemsPerPage, pageNumberStartingFromOne, statement, spellCheckerQuery, applyLocalPaging, 0);
     }
 
     /**
@@ -91,15 +95,16 @@ public class AdvancedResultImpl implements AdvancedResult  {
      * @param offset TODO
      */
     AdvancedResultImpl(
-        Query jcrQuery,
+        QueryResult jcrQueryResult,
+        IntSupplier queryCounter,
         int itemsPerPage,
         int pageNumberStartingFromOne,
         String statement,
         Query spellCheckerQuery,
         boolean applyLocalPaging,
         int offset) throws RepositoryException {
-        this.jcrQueryResult = jcrQuery.execute();
-        this.originQuery = jcrQuery;
+        this.jcrQueryResult = jcrQueryResult;
+        this.queryCounter = queryCounter;
         this.itemsPerPage = itemsPerPage;
         this.statement = statement;
         this.spellCheckerQuery = spellCheckerQuery;
@@ -138,18 +143,7 @@ public class AdvancedResultImpl implements AdvancedResult  {
             if (queryTotalSize == -1) {
                 long startTime = System.nanoTime();
                 LOG.info("Total size not available, determining now");
-                originQuery.setLimit(Integer.MAX_VALUE);
-                originQuery.setOffset(0);
-                try {
-                    totalResults = 0;
-                    RowIterator i = originQuery.execute().getRows();
-                    while(i.hasNext()) {
-                        i.nextRow();
-                        totalResults++;
-                    }
-                } catch (RepositoryException e) {
-                    LOG.error(e.getMessage(), e);
-                }
+                totalResults = queryCounter.getAsInt();
             } else {
                 totalResults = queryTotalSize;
 

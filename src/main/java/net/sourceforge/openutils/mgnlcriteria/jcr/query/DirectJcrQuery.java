@@ -23,14 +23,15 @@ import javax.jcr.Session;
 
 import net.sourceforge.openutils.mgnlcriteria.advanced.impl.QueryExecutorHelper;
 
+import java.util.function.IntSupplier;
+
 
 /**
  * @see JCRCriteriaFactory#createDirectJcrQuery(info.magnolia.cms.core.HierarchyManager, String, String)
  * @author fgiust
  * @version $Id$
  */
-public class DirectJcrQuery implements ExecutableQuery
-{
+public class DirectJcrQuery implements ExecutableQuery  {
 
     private Session session;
 
@@ -45,12 +46,10 @@ public class DirectJcrQuery implements ExecutableQuery
     private int offset;
 
     /**
-     * @param hm
      * @param query
      * @param language
      */
-    public DirectJcrQuery(Session session, String query, String language)
-    {
+    public DirectJcrQuery(Session session, String query, String language) {
         this.session = session;
         this.query = query;
         this.language = language;
@@ -61,8 +60,7 @@ public class DirectJcrQuery implements ExecutableQuery
      * @param spellCheckString the spellCheckString to set
      * @return the DirectJcrQuery instance for chaining
      */
-    public DirectJcrQuery setSpellCheckString(String spellCheckString)
-    {
+    public DirectJcrQuery setSpellCheckString(String spellCheckString) {
         this.spellCheckString = spellCheckString;
         return this;
     }
@@ -72,8 +70,7 @@ public class DirectJcrQuery implements ExecutableQuery
      * @param maxResults the maxResults to set
      * @return the DirectJcrQuery instance for chaining
      */
-    public DirectJcrQuery setMaxResultsPerPage(int maxResults)
-    {
+    public DirectJcrQuery setMaxResultsPerPage(int maxResults) {
         this.maxResults = maxResults;
         return this;
     }
@@ -83,8 +80,7 @@ public class DirectJcrQuery implements ExecutableQuery
      * @param offset the offset to set
      * @return the DirectJcrQuery instance for chaining
      */
-    public DirectJcrQuery setOffset(int offset)
-    {
+    public DirectJcrQuery setOffset(int offset) {
         this.offset = offset;
         return this;
     }
@@ -96,20 +92,27 @@ public class DirectJcrQuery implements ExecutableQuery
      * @param pageNumberStartingFromOne page number (starting from 1)
      * @return the DirectJcrQuery instance for chaining
      */
-    public DirectJcrQuery setPaging(int itemsPerPage, int pageNumberStartingFromOne)
-    {
+    public DirectJcrQuery setPaging(int itemsPerPage, int pageNumberStartingFromOne) {
         this.maxResults = itemsPerPage;
         this.offset = (Math.max(pageNumberStartingFromOne, 1) - 1) * maxResults;
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public AdvancedResult execute()
-    {
+    @Override
+    public AdvancedResult execute() {
 
-        return QueryExecutorHelper.execute(query, language, session, maxResults, offset, spellCheckString, false);
+        return QueryExecutorHelper.execute(
+            query,
+            language,
+            () -> {
+                throw new UnsupportedOperationException();
+
+            },
+            session,
+            maxResults,
+            offset,
+            spellCheckString,
+            false);
     }
 
 }

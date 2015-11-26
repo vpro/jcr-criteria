@@ -27,11 +27,10 @@ import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
-
-import javax.jcr.Node;
-
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
 import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
+
+import javax.jcr.Node;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -47,16 +46,11 @@ import org.testng.annotations.Test;
     "/crit-bootstrap/users.system.anonymous.xml",
     "/crit-bootstrap/config.server.auditLogging.xml",
     "/crit-bootstrap/config.server.i18n.content.xml" }, security = true)
-public class EscapeSignTest extends TestNgRepositoryTestcase
-{
+public class EscapeSignTest extends TestNgRepositoryTestcase {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @BeforeClass
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         super.setUp();
 
         // Nodes in this workspace:

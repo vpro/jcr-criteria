@@ -19,8 +19,6 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query;
 
-import javax.jcr.Session;
-
 import net.sourceforge.openutils.mgnlcriteria.advanced.impl.AdvancedCriteriaImpl;
 
 
@@ -31,11 +29,9 @@ import net.sourceforge.openutils.mgnlcriteria.advanced.impl.AdvancedCriteriaImpl
  * @author diego_schivo
  * @version $Id$
  */
-public final class JCRCriteriaFactory
-{
+public final class JCRCriteriaFactory {
 
-    private JCRCriteriaFactory()
-    {
+    private JCRCriteriaFactory() {
     }
 
     /**
@@ -43,21 +39,9 @@ public final class JCRCriteriaFactory
      * returned.
      * @return an AdvancedCriteriaImpl
      */
-    public static Criteria createCriteria()
-    {
+    public static Criteria createCriteria() {
         return new AdvancedCriteriaImpl();
     }
 
-    /**
-     * Creates a jcr query using the specified statement.
-     * @param hm the HierarchyManager
-     * @param query the statement of the query
-     * @param language the language of the query
-     * @return a DirectJcrQuery
-     */
-    public static DirectJcrQuery createDirectJcrQuery(Session session, String query, String language)
-    {
-        return new DirectJcrQuery(session, query, language);
-    }
 
 }

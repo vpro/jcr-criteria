@@ -19,11 +19,11 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query;
 
-import java.io.Serializable;
-import java.util.Collection;
-
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Criterion;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
+
+import java.io.Serializable;
+import java.util.Collection;
 
 
 /**
@@ -31,8 +31,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
  * @author fgiust
  * @version $Id$
  */
-public interface TranslatableCriteria extends Criteria
-{
+public interface TranslatableCriteria extends Criteria {
 
     /**
      * Gets the Order entries of this Criteria instance.
@@ -46,8 +45,7 @@ public interface TranslatableCriteria extends Criteria
      */
     Collection<CriterionEntry> getCriterionEntries();
 
-    public static final class CriterionEntry implements Serializable
-    {
+    final class CriterionEntry implements Serializable {
 
         private static final long serialVersionUID = 1L;
 
@@ -55,31 +53,26 @@ public interface TranslatableCriteria extends Criteria
 
         private final Criteria criteria;
 
-        public CriterionEntry(Criterion criterion, Criteria criteria)
-        {
+        public CriterionEntry(Criterion criterion, Criteria criteria) {
             this.criteria = criteria;
             this.criterion = criterion;
         }
 
-        public Criterion getCriterion()
-        {
+        public Criterion getCriterion() {
             return criterion;
         }
 
-        public Criteria getCriteria()
-        {
+        public Criteria getCriteria() {
             return criteria;
         }
 
         @Override
-        public String toString()
-        {
+        public String toString() {
             return criterion.toString();
         }
     }
 
-    public static final class OrderEntry implements Serializable
-    {
+    final class OrderEntry implements Serializable {
 
         private static final long serialVersionUID = 1L;
 
@@ -87,25 +80,21 @@ public interface TranslatableCriteria extends Criteria
 
         private final Criteria criteria;
 
-        public OrderEntry(Order order, Criteria criteria)
-        {
+        public OrderEntry(Order order, Criteria criteria) {
             this.criteria = criteria;
             this.order = order;
         }
 
-        public Order getOrder()
-        {
+        public Order getOrder() {
             return order;
         }
 
-        public Criteria getCriteria()
-        {
+        public Criteria getCriteria() {
             return criteria;
         }
 
         @Override
-        public String toString()
-        {
+        public String toString() {
             return order.toString();
         }
     }

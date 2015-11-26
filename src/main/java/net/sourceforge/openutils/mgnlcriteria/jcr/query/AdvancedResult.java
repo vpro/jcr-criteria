@@ -28,8 +28,7 @@ import java.util.Iterator;
  * @author fgiust
  * @version $Id$
  */
-public interface AdvancedResult
-{
+public interface AdvancedResult  {
 
     /**
      * An empty result.
@@ -93,48 +92,47 @@ public interface AdvancedResult
      * @author fgiust
      * @version $Id$
      */
-    class EmptyResult implements AdvancedResult
-    {
+    class EmptyResult implements AdvancedResult {
 
         private ResultIterator<AdvancedResultItem> iterator = new EmptyResultIterator();
 
-        public int getTotalSize()
-        {
+        @Override
+        public int getTotalSize() {
             return 0;
         }
 
-        public String getSpellCheckerSuggestion()
-        {
+        @Override
+        public String getSpellCheckerSuggestion() {
             return null;
         }
 
-        public int getPage()
-        {
+        @Override
+        public int getPage() {
             return 0;
         }
 
-        public int getItemsPerPage()
-        {
+        @Override
+        public int getItemsPerPage() {
             return 0;
         }
 
-        public ResultIterator<AdvancedResultItem> getItems()
-        {
+        @Override
+        public ResultIterator<AdvancedResultItem> getItems() {
             return iterator;
         }
 
-        public int getNumberOfPages()
-        {
+        @Override
+        public int getNumberOfPages() {
             return 0;
         }
 
-        public AdvancedResultItem getFirstResult()
-        {
+        @Override
+        public AdvancedResultItem getFirstResult() {
             return null;
         }
 
-        public <K> ResultIterator<K> getItems(Class<K> theclass)
-        {
+        @Override
+        public <K> ResultIterator<K> getItems(Class<K> theclass) {
             return null;
         }
     }
@@ -143,44 +141,43 @@ public interface AdvancedResult
      * @author fgiust
      * @version $Id$
      */
-    static final class EmptyResultIterator implements ResultIterator<AdvancedResultItem>
-    {
+    final class EmptyResultIterator implements ResultIterator<AdvancedResultItem> {
 
-        public void skip(long skipNum)
-        {
+        @Override
+        public void skip(long skipNum) {
             // nothing to do
         }
 
-        public long getSize()
-        {
+        @Override
+        public long getSize() {
             return 0;
         }
 
-        public long getPosition()
-        {
+        @Override
+        public long getPosition() {
             return 0;
         }
 
-        public boolean hasNext()
-        {
+        @Override
+        public boolean hasNext() {
             return false;
         }
 
-        public AdvancedResultItem next()
-        {
+        @Override
+        public AdvancedResultItem next() {
             return null;
         }
 
-        public void remove()
-        {
+        @Override
+        public void remove() {
             // nothing to do
         }
 
         /**
          * Adds foreach support.
          */
-        public Iterator iterator()
-        {
+        @Override
+        public Iterator<AdvancedResultItem> iterator() {
             return this;
         }
     }

@@ -108,7 +108,6 @@ public class JcrContainsQuestionMarkTest extends TestNgRepositoryTestcase
     public void testTrailingEscaped() throws Exception
     {
         Session hm = MgnlContext.getJCRSession(RepositoryConstants.WEBSITE);
-
         String stmt = "//*[((@jcr:primaryType='mgnl:page') and (jcr:contains(@title,'test\\?')))] order by @jcr:score";
         AdvancedResultImpl advResult = QueryExecutorHelper.execute(stmt, Query.XPATH, hm, -1, 0, null, false);
 

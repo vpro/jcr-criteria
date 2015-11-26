@@ -22,6 +22,8 @@ package net.sourceforge.openutils.mgnlcriteria.jcr.query;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Criterion;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 
+import java.util.function.IntSupplier;
+
 
 /**
  * <tt>Criteria</tt> is a simplified API for retrieving JCR Nodes by composing <tt>Criterion</tt> objects. This is a
@@ -29,7 +31,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
  * placed upon the result set.<br>
  * The <tt>JCRCriteriaFactory</tt> is a factory for <tt>Criteria</tt>. <tt>Criterion</tt> instances are usually obtained
  * via the factory methods on <tt>Restrictions</tt>. eg.
- * 
+ *
  * <pre>
  * Calendar begin = Calendar.getInstance();
  * begin.set(1999, Calendar.JANUARY, 1);
@@ -43,20 +45,20 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
  *     .add(Restrictions.betweenDates("@birthDate", begin, end))
  *     .addOrder(Order.desc("@title"));
  * </pre>
- * 
+ *
  * will be translated into the following xpath statement
- * 
+ *
  * <pre>
  *  //pets//*[((jcr:contains(@title, 'Lucky')) and (@petType='dog')
  *    and (@birthDate &gt;=xs:dateTime('1999-01-01T00:00:00.000+00:00')
  *    and @birthDate &lt;=xs:dateTime('2001-12-31T23:59:59.999+00:00')))]
  *    order by @title descending
  * </pre>
- * 
+ *
  * Furthermore, you may want to have only a subset of the whole result set returned, much like in a MySQL limit clause.
  * In this case, you will use the <code>setFirstResult</code> and <code>setMaxResults</code> methods. Here is an
  * example.
- * 
+ *
  * <pre>
  * Criteria criteria = JCRCriteriaFactory
  *     .createCriteria()
@@ -67,13 +69,13 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
  *     .setFirstResult(5)
  *     .setMaxResults(5);
  *</pre>
- * 
+ *
  * Notice the <code>setFirstResult(int)</code> and <code>setMaxResults(int)</code> methods. Now executing the query will
  * return a subset of no more than five results, starting from the 6th item (counting starts from 0). If you dont
  * specify these two calls, the entire result set will be returned. If you only call <code>setMaxResults(int)</code>,
  * the result set will be the subset of elements <code>[0, maxResults]</code> (firstResultValue is 0 by default).<br>
  * Another way to paginate results is by using the <code>setPaging</code> method:
- * 
+ *
  * <pre>
  * Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE)
  *     .setBasePath("/pets")
@@ -81,7 +83,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
  *     .addOrder(Order.asc("@birthDate"))
  *     .setPaging(5, 2);
  *</pre>
- * 
+ *
  * <br>
  * A word of warning about implementations returned by <code>JCRCriteriaFactory</code>. They are <strong>NOT</strong>
  * thread-safe, therefore client code wishing to use one of them as a shared global variable <strong>MUST</strong>
@@ -96,8 +98,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
  * @author fgiust
  * @version $Id$
  */
-public interface Criteria extends ExecutableQuery
-{
+public interface Criteria extends ExecutableQuery {
 
     /**
      * Add a {@link Criterion restriction} to constrain the results to be retrieved.
@@ -115,7 +116,6 @@ public interface Criteria extends ExecutableQuery
 
     /**
      * Add an {@link Order ordering} for score to the result set. Shortcut for .addOrder(Order.desc("@jcr:score")).
-     * @param order The {@link Order order} object representing an ordering to be applied to the results.
      * @return this (for method chaining)
      */
     Criteria addOrderByScore();
@@ -189,4 +189,7 @@ public interface Criteria extends ExecutableQuery
      * @return this (for method chaining)
      */
     Criteria setForcePagingWithDocumentOrder(boolean force);
+
+    IntSupplier getCountSupplier();
+
 }
