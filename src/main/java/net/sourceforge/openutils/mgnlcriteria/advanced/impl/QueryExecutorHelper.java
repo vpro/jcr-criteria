@@ -19,18 +19,17 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.utils.XPathTextUtils;
+
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.query.InvalidQueryException;
 import javax.jcr.query.Query;
 
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.utils.XPathTextUtils;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.jackrabbit.core.query.QueryImpl;
-import org.apache.jackrabbit.core.query.lucene.QueryResultImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,26 +39,18 @@ import org.slf4j.LoggerFactory;
  * @author fgiust
  * @version $Id$
  */
-public final class QueryExecutorHelper
-{
+public final class QueryExecutorHelper {
 
-    /**
-     * Logger.
-     */
-    private static Logger log = LoggerFactory.getLogger(QueryExecutorHelper.class);
+    private static final Logger LOG = LoggerFactory.getLogger(QueryExecutorHelper.class);
 
-    private static ThreadLocal<Boolean> executing = new ThreadLocal<Boolean>()
-    {
-
+    private static ThreadLocal<Boolean> executing = new ThreadLocal<Boolean>() {
         @Override
-        protected Boolean initialValue()
-        {
+        protected Boolean initialValue() {
             return Boolean.FALSE;
-        };
+        }
     };
 
-    private QueryExecutorHelper()
-    {
+    private QueryExecutorHelper() {
         // don't instantiate
     }
 
@@ -92,8 +83,7 @@ public final class QueryExecutorHelper
      */
     @SuppressWarnings("deprecation")
     public static AdvancedResultImpl execute(String stmt, String language, Session jcrSession, int maxResults,
-        int offset, String spellCheckString, boolean forcePagingWithDocumentOrder)
-    {
+        int offset, String spellCheckString, boolean forcePagingWithDocumentOrder) {
         javax.jcr.query.QueryManager jcrQueryManager;
 
         try
@@ -132,33 +122,30 @@ public final class QueryExecutorHelper
                     Query.XPATH);
             }
 
-            try
-            {
+            try {
                 executing.set(Boolean.TRUE);
                 return new AdvancedResultImpl(
-                    (QueryResultImpl) query.execute(),
+                    query,
                     maxResults,
                     pageNumberStartingFromOne,
                     stmt,
                     spellCheckerQuery,
                     forcePagingWithDocumentOrder,
                     offset);
-            }
-            finally
-            {
+            } finally {
                 executing.set(Boolean.FALSE);
             }
         }
         catch (InvalidQueryException e)
         {
             JCRQueryException jqe = new JCRQueryException(stmt, e);
-            log.error(jqe.getMessage());
+            LOG.error(jqe.getMessage());
             throw jqe;
         }
         catch (RepositoryException e)
         {
             JCRQueryException jqe = new JCRQueryException(stmt, e);
-            log.error(jqe.getMessage());
+            LOG.error(jqe.getMessage());
             throw jqe;
         }
 
