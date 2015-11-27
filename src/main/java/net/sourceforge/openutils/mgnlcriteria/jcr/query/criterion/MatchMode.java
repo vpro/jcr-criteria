@@ -29,18 +29,15 @@ import java.util.Map;
  * @author Federico Grilli
  */
 @SuppressWarnings("serial")
-public abstract class MatchMode implements Serializable
-{
+public abstract class MatchMode implements Serializable {
 
     /**
      * Match the start of the string to the pattern
      */
-    public static final MatchMode START = new MatchMode("START")
-    {
+    public static final MatchMode START = new MatchMode("START") {
 
         @Override
-        public String toMatchString(String pattern)
-        {
+        public String toMatchString(String pattern) {
             return pattern + '%';
         }
     };
@@ -48,12 +45,10 @@ public abstract class MatchMode implements Serializable
     /**
      * Match the end of the string to the pattern
      */
-    public static final MatchMode END = new MatchMode("END")
-    {
+    public static final MatchMode END = new MatchMode("END") {
 
         @Override
-        public String toMatchString(String pattern)
-        {
+        public String toMatchString(String pattern) {
             return '%' + pattern;
         }
     };
@@ -61,35 +56,30 @@ public abstract class MatchMode implements Serializable
     /**
      * Match the pattern anywhere in the string
      */
-    public static final MatchMode ANYWHERE = new MatchMode("ANYWHERE")
-    {
+    public static final MatchMode ANYWHERE = new MatchMode("ANYWHERE") {
 
         @Override
-        public String toMatchString(String pattern)
-        {
+        public String toMatchString(String pattern) {
             return '%' + pattern + '%';
         }
     };
 
-    private static final Map<String, MatchMode> INSTANCES = new HashMap<String, MatchMode>();
+    private static final Map<String, MatchMode> INSTANCES = new HashMap<>();
 
     private static final long serialVersionUID = -7446324572335777782L;
 
     private final String name;
 
-    protected MatchMode(String name)
-    {
+    protected MatchMode(String name) {
         this.name = name;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString(){
         return name;
     }
 
-    static
-    {
+    static {
         INSTANCES.put(END.name, END);
         INSTANCES.put(START.name, START);
         INSTANCES.put(ANYWHERE.name, ANYWHERE);

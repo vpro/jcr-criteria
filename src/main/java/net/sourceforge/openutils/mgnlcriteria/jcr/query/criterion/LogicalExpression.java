@@ -26,14 +26,9 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
 /**
  * Superclass of binary logical expressions
  * @author Federico Grilli
- * @version $Id$
- */
-public class LogicalExpression extends BaseCriterion implements Criterion
-{
+  */
+public class LogicalExpression extends BaseCriterion implements Criterion {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 4524284746715983618L;
 
     private final Criterion lhs;
@@ -42,29 +37,26 @@ public class LogicalExpression extends BaseCriterion implements Criterion
 
     private final String op;
 
-    protected LogicalExpression(Criterion lhs, Criterion rhs, String op)
-    {
+    protected LogicalExpression(Criterion lhs, Criterion rhs, String op) {
         this.lhs = lhs;
         this.rhs = rhs;
         this.op = op;
     }
 
-    public String toXPathString(Criteria criteria) throws JCRQueryException
-    {
+    @Override
+    public String toXPathString(Criteria criteria) throws JCRQueryException {
 
         String fragment = '(' + lhs.toXPathString(criteria) + ' ' + getOp() + ' ' + rhs.toXPathString(criteria) + ')';
         log.debug("xpathString is {} ", fragment);
         return fragment;
     }
 
-    public String getOp()
-    {
+    public String getOp() {
         return op;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return lhs.toString() + ' ' + getOp() + ' ' + rhs.toString();
     }
 }

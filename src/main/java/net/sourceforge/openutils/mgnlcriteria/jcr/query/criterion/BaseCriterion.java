@@ -28,8 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author fgiust
  * @version $Id$
  */
-public abstract class BaseCriterion implements Criterion
-{
+public abstract class BaseCriterion implements Criterion {
 
     /**
      * Stable serialVersionUID

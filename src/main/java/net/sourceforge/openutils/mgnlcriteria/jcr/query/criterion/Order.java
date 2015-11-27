@@ -27,8 +27,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
  * Represents an order imposed upon a <tt>Criteria</tt> result set
  * @author Federico Grilli
  */
-public class Order extends BaseCriterion implements Criterion
-{
+public class Order extends BaseCriterion implements Criterion {
 
     /**
      *
@@ -42,17 +41,13 @@ public class Order extends BaseCriterion implements Criterion
     /**
      * Constructor for Order.
      */
-    protected Order(String nodeName, boolean ascending)
-    {
+    protected Order(String nodeName, boolean ascending) {
         this.nodeName = nodeName;
         this.ascending = ascending;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public String toXPathString(Criteria criteria) throws JCRQueryException
-    {
+    @Override
+    public String toXPathString(Criteria criteria) throws JCRQueryException {
         StringBuilder fragment = new StringBuilder(" ");
         fragment.append(nodeName);
         fragment.append(ascending ? " ascending" : " descending");
@@ -67,8 +62,7 @@ public class Order extends BaseCriterion implements Criterion
      * @param propertyName jcr property name, e.g. "@title"
      * @return Order
      */
-    public static Order asc(String propertyName)
-    {
+    public static Order asc(String propertyName) {
         return new Order(propertyName, true);
     }
 
@@ -77,14 +71,12 @@ public class Order extends BaseCriterion implements Criterion
      * @param propertyName jcr property name, e.g. "@title"
      * @return Order
      */
-    public static Order desc(String propertyName)
-    {
+    public static Order desc(String propertyName) {
         return new Order(propertyName, false);
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return nodeName + ' ' + (ascending ? "ascending" : "descending");
     }
 }

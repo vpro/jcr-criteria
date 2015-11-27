@@ -25,32 +25,27 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
 
 /**
  * @author fgrilli
- * @version $Id$
  */
-public class LikeExpression extends JCRFunctionExpression
-{
+public class LikeExpression extends JCRFunctionExpression {
 
     private static final long serialVersionUID = 1810624472706401714L;
 
     private MatchMode matchMode;
 
-    public LikeExpression(String propertyName, Object value, String function, MatchMode matchMode)
-    {
+    public LikeExpression(String propertyName, Object value, String function, MatchMode matchMode) {
         super(propertyName, value, function);
-        if (matchMode == null)
-        {
+        if (matchMode == null) {
             throw new IllegalArgumentException("MatchMode can't be null");
         }
         this.matchMode = matchMode;
     }
 
     @Override
-    public String toXPathString(Criteria criteria) throws JCRQueryException
-    {
+    public String toXPathString(Criteria criteria) throws JCRQueryException {
         StringBuilder fragment = new StringBuilder();
-        fragment.append(" (" + function + "(");
+        fragment.append(" (").append(function).append("(");
         fragment.append(propertyName);
-        fragment.append(", '" + matchMode.toMatchString(value.toString()) + "') ) ");
+        fragment.append(", '").append(matchMode.toMatchString(value.toString())).append("') ) ");
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
     }

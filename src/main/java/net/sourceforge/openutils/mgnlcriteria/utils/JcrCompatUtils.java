@@ -35,42 +35,30 @@ import org.slf4j.LoggerFactory;
  * @author fgiust
  * @version $Id$
  */
-public final class JcrCompatUtils
-{
+public final class JcrCompatUtils {
 
-    /**
-     * Logger.
-     */
-    private static Logger log = LoggerFactory.getLogger(JcrCompatUtils.class);
+
+    private static Logger LOG = LoggerFactory.getLogger(JcrCompatUtils.class);
 
     // don't instantiate
-    private JcrCompatUtils()
-    {
+    private JcrCompatUtils() {
 
     }
 
-    public static Item getJCRNode(Row row) throws RepositoryException
-    {
+    public static Item getJCRNode(Row row) throws RepositoryException {
 
-        try
-        {
+        try {
             return (Item) PropertyUtils.getProperty(row, "node");
-        }
-        catch (IllegalAccessException e)
-        {
-        }
-        catch (InvocationTargetException e)
-        {
-            log.warn("Error extracting node from row: {}", e.getTargetException() != null ? e
+        } catch (IllegalAccessException e) {
+        } catch (InvocationTargetException e) {
+            LOG.warn("Error extracting node from row: {}", e.getTargetException() != null ? e
                 .getTargetException()
                 .getClass()
                 .getName()
                 + " "
                 + e.getTargetException().getMessage() : e.getMessage());
-        }
-        catch (NoSuchMethodException e)
-        {
-            log
+        } catch (NoSuchMethodException e) {
+            LOG
                 .error("Unsupported version of jackrabbit detected, you need at least 1.6.x or a jcr 2.0 compliant version");
         }
 

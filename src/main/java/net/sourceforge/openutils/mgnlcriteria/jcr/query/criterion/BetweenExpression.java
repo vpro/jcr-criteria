@@ -19,19 +19,18 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion;
 
-import java.util.Calendar;
-
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.utils.XPathTextUtils;
+
+import java.util.Calendar;
 
 
 /**
  * @author fgrilli
  * @version $Id$
  */
-public class BetweenExpression extends BaseCriterion implements Criterion
-{
+public class BetweenExpression extends BaseCriterion implements Criterion {
 
     private static final long serialVersionUID = 6686395240415024541L;
 
@@ -41,53 +40,32 @@ public class BetweenExpression extends BaseCriterion implements Criterion
 
     private final Object hi;
 
-    protected BetweenExpression(String propertyName, Object lo, Object hi)
-    {
+    protected BetweenExpression(String propertyName, Object lo, Object hi) {
         this.propertyName = propertyName;
         this.lo = lo;
         this.hi = hi;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return propertyName + " between " + lo + " and " + hi;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public String toXPathString(Criteria criteria) throws JCRQueryException
-    {
+    @Override
+    public String toXPathString(Criteria criteria) throws JCRQueryException {
         StringBuilder fragment = new StringBuilder();
         fragment.append(" (").append(propertyName).append(" >= ");
 
-        if (lo instanceof String && hi instanceof String)
-        {
-            fragment.append("'" + lo + "' and " + propertyName + " <= '" + hi + "'");
-        }
-        else if (lo instanceof Number && hi instanceof Number)
-        {
-            fragment.append(lo + " and " + propertyName + " <= " + hi);
-        }
-        else if (lo instanceof Calendar && hi instanceof Calendar)
-        {
+        if (lo instanceof String && hi instanceof String) {
+            fragment.append("'").append(lo).append("' and ").append(propertyName).append(" <= '").append(hi).append("'");
+        } else if (lo instanceof Number && hi instanceof Number) {
+            fragment.append(lo).append(" and ").append(propertyName).append(" <= ").append(hi);
+        } else if (lo instanceof Calendar && hi instanceof Calendar) {
             Calendar cal = (Calendar) lo;
             Calendar cal2 = (Calendar) hi;
 
-            fragment.append(XS_DATETIME_FUNCTION
-                + "('"
-                + XPathTextUtils.toXsdDate(cal)
-                + "')  and "
-                + propertyName
-                + " <= "
-                + XS_DATETIME_FUNCTION
-                + "('"
-                + XPathTextUtils.toXsdDate(cal2)
-                + "') ");
-        }
-        else
-        {
+            fragment.append(XS_DATETIME_FUNCTION + "('").append(XPathTextUtils.toXsdDate(cal)).append("')  and ").append(propertyName).append(" <= ").append(XS_DATETIME_FUNCTION).append("('").append(XPathTextUtils.toXsdDate(cal2)).append("') ");
+        } else {
             String msg = "values provided are not of the accepted types String, Number, Calendar";
             log.error(msg);
             throw new IllegalArgumentException(msg);

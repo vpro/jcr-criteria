@@ -19,21 +19,18 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
-import info.magnolia.jcr.RuntimeRepositoryException;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.*;
 import net.sourceforge.openutils.mgnlcriteria.utils.JcrCompatUtils;
 import net.sourceforge.openutils.mgnlcriteria.utils.ToBeanUtils;
-
-import java.util.function.IntSupplier;
+import org.apache.jackrabbit.api.query.JackrabbitQueryResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jcr.Item;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 import javax.jcr.query.*;
-
-import org.apache.jackrabbit.api.query.JackrabbitQueryResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.function.IntSupplier;
 
 
 /**
@@ -240,7 +237,7 @@ public class AdvancedResultImpl implements AdvancedResult  {
 
             return (K) ToBeanUtils.toBean(new AdvancedResultItemImpl(row, jcrNode), true, theclass);
         } catch (RepositoryException e) {
-            throw new RuntimeRepositoryException(e);
+            throw new RuntimeException(e);
         }
 
     }

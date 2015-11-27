@@ -23,13 +23,11 @@ package net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion;
  * @author Federico Grilli
  * @version $Id$
  */
-public class Disjunction extends Junction
-{
+public class Disjunction extends Junction {
 
     private static final long serialVersionUID = 1573336261639362776L;
 
-    protected Disjunction()
-    {
+    protected Disjunction() {
         super("or");
     }
 }

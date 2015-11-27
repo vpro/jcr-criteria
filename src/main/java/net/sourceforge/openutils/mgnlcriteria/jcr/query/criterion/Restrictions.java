@@ -31,7 +31,6 @@ import java.util.Collection;
  * the static factory methods of this class.
  * @author fgiust
  * @author Federico Grilli
- * @version $Id$
  */
 public final class Restrictions {
 

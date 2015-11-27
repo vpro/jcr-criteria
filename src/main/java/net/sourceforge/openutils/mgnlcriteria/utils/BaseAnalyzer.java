@@ -33,29 +33,23 @@ import org.apache.lucene.util.Version;
  * @author fgiust
  * @version $Id$
  */
-public abstract class BaseAnalyzer extends Analyzer
-{
+public abstract class BaseAnalyzer extends Analyzer {
 
     @Override
-    public final TokenStream tokenStream(String fieldName, Reader reader)
-    {
+    public final TokenStream tokenStream(String fieldName, Reader reader) {
         StandardTokenizer tokenStream = tokenize(reader);
         return tokenFiltersChain(tokenStream);
     }
 
     @Override
-    public final TokenStream reusableTokenStream(String fieldName, Reader reader) throws IOException
-    {
+    public final TokenStream reusableTokenStream(String fieldName, Reader reader) throws IOException {
         SavedStreams streams = (SavedStreams) getPreviousTokenStream();
-        if (streams == null)
-        {
+        if (streams == null) {
             streams = new SavedStreams();
             setPreviousTokenStream(streams);
             streams.tokenStream = tokenize(reader);
             streams.filteredTokenStream = tokenFiltersChain(streams.tokenStream);
-        }
-        else
-        {
+        } else {
             streams.tokenStream.reset(reader);
         }
 
@@ -67,8 +61,7 @@ public abstract class BaseAnalyzer extends Analyzer
      * @param reader base reader
      * @return tokenizer
      */
-    protected StandardTokenizer tokenize(Reader reader)
-    {
+    protected StandardTokenizer tokenize(Reader reader) {
         return new StandardTokenizer(Version.LUCENE_30, reader);
     }
 
@@ -79,8 +72,7 @@ public abstract class BaseAnalyzer extends Analyzer
      */
     protected abstract TokenStream tokenFiltersChain(TokenStream tokenStream);
 
-    private static final class SavedStreams
-    {
+    private static final class SavedStreams {
 
         StandardTokenizer tokenStream;
 

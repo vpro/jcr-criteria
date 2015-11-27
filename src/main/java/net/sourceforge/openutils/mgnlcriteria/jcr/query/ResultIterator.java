@@ -28,11 +28,8 @@ import javax.jcr.RangeIterator;
  * @author fgiust
  * @version $Id$
  */
-public interface ResultIterator<T> extends RangeIterator, Iterable<T>
-{
+public interface ResultIterator<T> extends RangeIterator, Iterable<T> {
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     T next();
 }

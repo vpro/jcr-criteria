@@ -24,15 +24,13 @@ package net.sourceforge.openutils.mgnlcriteria.jcr.query;
  * @author fgrilli
  * @version $Id$
  */
-public class JCRQueryException extends RuntimeException
-{
+public class JCRQueryException extends RuntimeException {
 
     private static final long serialVersionUID = -8737641628360563743L;
 
     private String statement;
 
-    public JCRQueryException(String statement, Throwable cause)
-    {
+    public JCRQueryException(String statement, Throwable cause) {
         super("An error occurred while executing a query. Xpath query was "
             + statement
             + ". Exception message is "
@@ -40,8 +38,7 @@ public class JCRQueryException extends RuntimeException
         this.statement = statement;
     }
 
-    public String getStatement()
-    {
+    public String getStatement() {
         return statement;
     }
 

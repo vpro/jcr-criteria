@@ -27,8 +27,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
  * @author fgrilli
  * @version $Id$
  */
-public class JCRFunctionExpression extends BaseCriterion implements Criterion
-{
+public class JCRFunctionExpression extends BaseCriterion implements Criterion {
 
     private static final long serialVersionUID = -5570839091762158385L;
 
@@ -38,31 +37,28 @@ public class JCRFunctionExpression extends BaseCriterion implements Criterion
 
     protected final String function;
 
-    public JCRFunctionExpression(String propertyName, Object value, String function)
-    {
+    public JCRFunctionExpression(String propertyName, Object value, String function) {
         this.propertyName = propertyName;
         this.value = value;
         this.function = function;
     }
 
-    protected final String getFunction()
-    {
+    protected final String getFunction() {
         return function;
     }
 
-    public String toXPathString(Criteria criteria) throws JCRQueryException
-    {
+    @Override
+    public String toXPathString(Criteria criteria) throws JCRQueryException {
         StringBuilder fragment = new StringBuilder();
-        fragment.append(" (" + function + "(");
+        fragment.append(" (").append(function).append("(");
         fragment.append(propertyName);
-        fragment.append(", '" + value).append("') ) ");
+        fragment.append(", '").append(value).append("') ) ");
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return propertyName + " " + function + " " + value;
     }
 }

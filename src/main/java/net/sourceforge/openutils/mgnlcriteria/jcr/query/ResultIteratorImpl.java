@@ -31,75 +31,56 @@ import javax.jcr.query.RowIterator;
  * @author fgiust
  * @version $Id$
  */
-public abstract class ResultIteratorImpl<T> implements ResultIterator<T>
-{
+public abstract class ResultIteratorImpl<T> implements ResultIterator<T> {
 
     /**
      * The jcr RowIterator
      */
     protected RowIterator rowIterator;
 
-    /**
-     * @param rowIterator
-     */
-    public ResultIteratorImpl(RowIterator rowIterator)
-    {
+    public ResultIteratorImpl(RowIterator rowIterator) {
         this.rowIterator = rowIterator;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean hasNext()
-    {
+
+    @Override
+    public boolean hasNext() {
         return rowIterator.hasNext();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void remove()
-    {
+    @Override
+    public void remove() {
         rowIterator.remove();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void skip(long skipNum)
-    {
+    @Override
+    public void skip(long skipNum) {
         rowIterator.skip(skipNum);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public long getSize()
-    {
+
+    @Override
+    public long getSize() {
         return rowIterator.getSize();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public long getPosition()
-    {
+
+    @Override
+    public long getPosition() {
         return rowIterator.getPosition();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public T next()
-    {
+
+    @Override
+    public T next() {
         return wrap(rowIterator.nextRow());
     }
 
     /**
      * Adds foreach support.
      */
-    public Iterator<T> iterator()
-    {
+    @Override
+    public Iterator<T> iterator() {
         return this;
     }
 

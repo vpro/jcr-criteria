@@ -25,7 +25,6 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
 
 /**
  * @author fgrilli
- * @version $Id$
  */
 public class NotExpression extends BaseCriterion implements Criterion {
 

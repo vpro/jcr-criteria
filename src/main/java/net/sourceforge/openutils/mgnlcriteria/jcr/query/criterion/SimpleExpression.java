@@ -25,7 +25,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.xpath.utils.XPathTextUti
 
 import java.util.Calendar;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 
 /**

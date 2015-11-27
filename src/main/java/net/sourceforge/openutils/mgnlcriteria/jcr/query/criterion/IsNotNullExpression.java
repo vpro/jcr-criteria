@@ -25,31 +25,23 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
 
 /**
  * @author fgrilli
- * @version $Id$
  */
-public class IsNotNullExpression implements Criterion
-{
+public class IsNotNullExpression implements Criterion {
 
     private static final long serialVersionUID = 42L;
 
     private String nodeName;
 
-    public IsNotNullExpression(String nodeName)
-    {
+    public IsNotNullExpression(String nodeName){
         this.nodeName = nodeName;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return nodeName;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String toXPathString(Criteria criteria) throws JCRQueryException
-    {
+    @Override
+    public String toXPathString(Criteria criteria) throws JCRQueryException {
         return " " + nodeName + " ";
     }
 }

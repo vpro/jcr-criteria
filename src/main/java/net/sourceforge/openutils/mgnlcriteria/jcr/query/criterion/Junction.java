@@ -19,14 +19,14 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion;
 
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
-
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 
 /**
@@ -34,8 +34,7 @@ import org.apache.commons.lang.StringUtils;
  * @author Federico Grilli
  * @version $Id$
  */
-public class Junction implements Criterion
-{
+public class Junction implements Criterion {
 
     private static final long serialVersionUID = 4745761472724863693L;
 
@@ -43,8 +42,7 @@ public class Junction implements Criterion
 
     private final String op;
 
-    protected Junction(String op)
-    {
+    protected Junction(String op) {
         this.op = op;
     }
 
@@ -53,25 +51,19 @@ public class Junction implements Criterion
      * @param criterion Criterion to add
      * @return Junction
      */
-    public Junction add(Criterion criterion)
-    {
+    public Junction add(Criterion criterion) {
         criteria.add(criterion);
         return this;
     }
 
-    public String getOp()
-    {
+    public String getOp() {
         return op;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public String toXPathString(Criteria crit) throws JCRQueryException
-    {
+    @Override
+    public String toXPathString(Criteria crit) throws JCRQueryException {
 
-        if (criteria.size() == 0)
-        {
+        if (criteria.size() == 0) {
             return "";
         }
 
@@ -79,13 +71,10 @@ public class Junction implements Criterion
         Iterator<Criterion> iter = criteria.iterator();
 
         boolean isfirst = true;
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             String xPathString = (iter.next()).toXPathString(crit);
-            if (StringUtils.isNotBlank(xPathString))
-            {
-                if (!isfirst && StringUtils.isNotBlank(xPathString))
-                {
+            if (StringUtils.isNotBlank(xPathString)) {
+                if (!isfirst && StringUtils.isNotBlank(xPathString)) {
                     buffer.append(' ').append(op).append(" ");
                 }
                 buffer.append(xPathString);
@@ -96,20 +85,15 @@ public class Junction implements Criterion
         return buffer.append(')').toString();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return '(' + StringUtils.join(criteria.iterator(), ' ' + op + ' ') + ')';
     }
 
     /**
-     * @return true if this Criterion contains at least one expression, false otherwise
+     * @return false if this Criterion contains at least one expression, false otherwise
      */
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return criteria.isEmpty();
     }
 }

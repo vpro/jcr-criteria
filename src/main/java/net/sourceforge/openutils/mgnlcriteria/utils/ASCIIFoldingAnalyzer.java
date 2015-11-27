@@ -29,12 +29,10 @@ import org.apache.lucene.analysis.standard.StandardFilter;
  * @author molaschi
  * @version $Id$
  */
-public class ASCIIFoldingAnalyzer extends BaseAnalyzer
-{
+public class ASCIIFoldingAnalyzer extends BaseAnalyzer {
 
     @Override
-    protected TokenStream tokenFiltersChain(TokenStream tokenStream)
-    {
+    protected TokenStream tokenFiltersChain(TokenStream tokenStream) {
         TokenStream result = new StandardFilter(tokenStream);
         result = new LowerCaseFilter(result);
         result = new ASCIIFoldingFilter(result);

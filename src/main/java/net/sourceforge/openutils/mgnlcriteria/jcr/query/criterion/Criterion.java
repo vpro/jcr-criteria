@@ -19,10 +19,10 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion;
 
-import java.io.Serializable;
-
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
+
+import java.io.Serializable;
 
 
 /**
@@ -34,8 +34,7 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
  * @author Federico Grilli
  * @version $Id$
  */
-public interface Criterion extends Serializable
-{
+public interface Criterion extends Serializable {
 
     /**
      * The jcr primary type "@jcr:primaryType".

@@ -19,20 +19,13 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
-import info.magnolia.cms.security.AccessDeniedException;
-import info.magnolia.jcr.RuntimeRepositoryException;
-import info.magnolia.jcr.wrapper.DelegateNodeWrapper;
-import info.magnolia.jcr.wrapper.I18nNodeWrapper;
+
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 
 import java.lang.reflect.InvocationTargetException;
 
-import javax.jcr.Item;
-import javax.jcr.Node;
-import javax.jcr.RepositoryException;
-import javax.jcr.Value;
+import javax.jcr.*;
 import javax.jcr.query.Row;
-
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
@@ -43,67 +36,46 @@ import org.slf4j.LoggerFactory;
  * @author fgiust
  * @version $Id$
  */
-public class AdvancedResultItemImpl extends DelegateNodeWrapper implements AdvancedResultItem
-{
+public class AdvancedResultItemImpl extends DelegateNodeWrapper implements AdvancedResultItem {
 
     private final Row row;
 
-    /**
-     * Logger.
-     */
-    private static Logger log = LoggerFactory.getLogger(AdvancedResultItemImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AdvancedResultItemImpl.class);
 
     /**
-     * @param elem
-     * @param hierarchyManager
-     * @throws RepositoryException
-     * @throws AccessDeniedException
+
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      * @throws IllegalStateException
      * @throws IllegalArgumentException
      */
-    public AdvancedResultItemImpl(Row row, Item item) throws RepositoryException, AccessDeniedException
-    {
+    public AdvancedResultItemImpl(Row row, Item item) throws RepositoryException, AccessDeniedException {
         super(new I18nNodeWrapper((Node) item));
         this.row = row;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getExcerpt()
-    {
+    @Override
+    public String getExcerpt() {
 
         return getExcerpt(".");
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getExcerpt(String selector)
-    {
+    @Override
+    public String getExcerpt(String selector) {
 
         Value excerptValue;
-        try
-        {
+        try {
             excerptValue = row.getValue("rep:excerpt(" + selector + ")");
-        }
-        catch (RepositoryException e)
-        {
-            log.warn("Error getting excerpt for " + this.getHandle(), e);
+        } catch (RepositoryException e){
+            LOG.warn("Error getting excerpt for " + this.getHandle(), e);
             return null;
         }
 
-        if (excerptValue != null)
-        {
-            try
-            {
+        if (excerptValue != null) {
+            try {
                 return excerptValue.getString();
-            }
-            catch (RepositoryException e)
-            {
-                log.warn("Error getting excerpt for " + this.getHandle(), e);
+            } catch (RepositoryException e){
+                LOG.warn("Error getting excerpt for " + this.getHandle(), e);
                 return null;
             }
         }
@@ -111,91 +83,62 @@ public class AdvancedResultItemImpl extends DelegateNodeWrapper implements Advan
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public double getScore()
-    {
-        try
-        {
+    @Override
+    public double getScore() {
+        try {
             return (Double) PropertyUtils.getSimpleProperty(row, "score");
-        }
-        catch (IllegalAccessException e)
-        {
-            log.warn("Error getting score for {}", this.getHandle(), e);
-        }
-        catch (InvocationTargetException e)
-        {
-            log.warn("Error getting score for {}", this.getHandle(), e);
-        }
-        catch (NoSuchMethodException e)
-        {
-            log
+        } catch (IllegalAccessException | InvocationTargetException e){
+            LOG.warn("Error getting score for {}", this.getHandle(), e);
+        } catch (NoSuchMethodException e) {
+            LOG
                 .error("Unsupported version of jackrabbit detected, you need at least 1.6.x or a jcr 2.0 compliant version");
         }
 
         return 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public double getScore(String selector)
-    {
-        if (selector == null)
-        {
-            try
-            {
+    @Override
+    public double getScore(String selector) {
+        if (selector == null) {
+            try {
                 return row.getScore();
-            }
-            catch (RepositoryException e)
-            {
-                log.warn("unable to extract score from {}", row);
+            }catch (RepositoryException e) {
+                LOG.warn("unable to extract score from {}", row);
             }
         }
-        try
-        {
+        try {
             return row.getScore(selector);
-        }
-        catch (RepositoryException e)
-        {
-            log.warn("unable to extract score from {} using selector {}", row, selector);
+        } catch (RepositoryException e) {
+            LOG.warn("unable to extract score from {} using selector {}", row, selector);
         }
 
         return 0;
     }
 
-    public String getTitle()
-    {
-        try
-        {
-            if (hasProperty("title"))
-            {
+    @Override
+    public String getTitle() {
+        try {
+            if (hasProperty("title")) {
                 return getProperty("title").getString();
             }
-        }
-        catch (RepositoryException e)
-        {
-            throw new RuntimeRepositoryException(e);
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
         }
 
         return null;
     }
 
-    public String getHandle()
-    {
-        try
-        {
+    @Override
+    public String getHandle() {
+        try {
             return getPath();
-        }
-        catch (RepositoryException e)
-        {
-            throw new RuntimeRepositoryException(e);
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public Node getJCRNode()
-    {
+    @Override
+    public Node getJCRNode() {
         return this;
     }
 

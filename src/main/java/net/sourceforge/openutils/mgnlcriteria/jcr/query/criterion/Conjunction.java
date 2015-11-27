@@ -23,13 +23,11 @@ package net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion;
  * @author fgrilli
  * @version $Id$
  */
-public class Conjunction extends Junction
-{
+public class Conjunction extends Junction {
 
     private static final long serialVersionUID = 7590346442271897522L;
 
-    public Conjunction()
-    {
+    public Conjunction() {
         super("and");
     }
 }

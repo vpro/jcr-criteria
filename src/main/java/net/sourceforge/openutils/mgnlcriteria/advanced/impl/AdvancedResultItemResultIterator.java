@@ -19,16 +19,15 @@
 
 package net.sourceforge.openutils.mgnlcriteria.advanced.impl;
 
-import info.magnolia.cms.security.AccessDeniedException;
+
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIteratorImpl;
+import net.sourceforge.openutils.mgnlcriteria.utils.JcrCompatUtils;
 
 import javax.jcr.Item;
 import javax.jcr.RepositoryException;
 import javax.jcr.query.Row;
 import javax.jcr.query.RowIterator;
-
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIteratorImpl;
-import net.sourceforge.openutils.mgnlcriteria.utils.JcrCompatUtils;
 
 
 /**
@@ -36,42 +35,25 @@ import net.sourceforge.openutils.mgnlcriteria.utils.JcrCompatUtils;
  * @author fgiust
  * @version $Id$
  */
-public class AdvancedResultItemResultIterator extends ResultIteratorImpl<AdvancedResultItem>
-{
+public class AdvancedResultItemResultIterator extends ResultIteratorImpl<AdvancedResultItem> {
 
-    /**
-     * @param rowIterator
-     * @param hm
-     */
-    public AdvancedResultItemResultIterator(RowIterator rowIterator)
-    {
+    public AdvancedResultItemResultIterator(RowIterator rowIterator) {
         super(rowIterator);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected AdvancedResultItem wrap(Row row)
-    {
-        try
-        {
+    protected AdvancedResultItem wrap(Row row) {
+        try {
             Item jcrNode = JcrCompatUtils.getJCRNode(row);
-            if (jcrNode == null)
-            {
+            if (jcrNode == null) {
                 return null;
             }
 
             return new AdvancedResultItemImpl(row, jcrNode);
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
-        catch (AccessDeniedException e)
-        {
-            throw new RuntimeException(e);
-        }
-        catch (RepositoryException e)
-        {
-            throw new RuntimeException(e);
-        }
+
     }
 
 }

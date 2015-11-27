@@ -19,8 +19,6 @@
 
 package net.sourceforge.openutils.mgnlcriteria.jcr.query;
 
-import java.util.Map;
-
 import javax.jcr.Node;
 
 
@@ -29,8 +27,7 @@ import javax.jcr.Node;
  * @author fgiust
  * @version $Id$
  */
-public interface AdvancedResultItem extends Node
-{
+public interface AdvancedResultItem extends Node {
 
     /**
      * Returns the excerpt.

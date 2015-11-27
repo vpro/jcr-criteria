@@ -25,10 +25,8 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRQueryException;
 
 /**
  * @author fgrilli
- * @version $Id$
  */
-public class InExpression implements Criterion
-{
+public class InExpression implements Criterion  {
 
     private static final long serialVersionUID = -8445602953808764036L;
 
@@ -38,32 +36,28 @@ public class InExpression implements Criterion
 
     private boolean useContains;
 
-    public InExpression(String nodeName, String[] values, boolean useContains)
-    {
+    public InExpression(String nodeName, String[] values, boolean useContains) {
         this.nodeName = nodeName;
         this.values = values;
         this.useContains = useContains;
     }
 
-    public InExpression(String nodeName, String[] values)
-    {
+    public InExpression(String nodeName, String[] values) {
         this(nodeName, values, true);
     }
 
-    public String toXPathString(Criteria criteria) throws JCRQueryException
-    {
+    @Override
+    public String toXPathString(Criteria criteria) throws JCRQueryException {
         StringBuilder inClause = new StringBuilder("( ");
 
-        for (int i = 0; i < values.length; i++)
-        {
+        for (int i = 0; i < values.length; i++) {
             String predicate = useContains
                 ? Restrictions.contains(nodeName, values[i]).toXPathString(criteria)
                 : Restrictions.eq(nodeName, values[i]).toXPathString(criteria);
 
             inClause.append(predicate);
             // if this is not the last value, append an 'or'
-            if ((i + 1) != values.length)
-            {
+            if ((i + 1) != values.length) {
                 inClause.append(" or ");
             }
         }
