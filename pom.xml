@@ -100,6 +100,13 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.1</version>
+        <configuration>
+          <failOnError>false</failOnError>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -180,6 +187,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+
   </dependencies>
   <properties>
     <magnolia.version>5.4.2</magnolia.version>
