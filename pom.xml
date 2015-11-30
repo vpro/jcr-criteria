@@ -175,6 +175,7 @@
       <version>2.5</version>
       <scope>provided</scope>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
@@ -187,6 +188,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+    -->
 
   </dependencies>
   <properties>
