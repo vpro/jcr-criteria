@@ -24,7 +24,6 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
@@ -32,17 +31,15 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Criterion;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
 import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import javax.jcr.Node;
-
 import org.apache.commons.lang.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import javax.jcr.Node;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -56,9 +53,8 @@ import org.testng.annotations.Test;
     "/crit-bootstrap/users.system.anonymous.xml",
     "/crit-bootstrap/config.server.auditLogging.xml",
     "/crit-bootstrap/config.server.i18n.content.xml" }, security = true)
-@Ignore // "Should be fixed for mgnl 5"
-public class BasePathTest extends TestNgRepositoryTestcase
-{
+@Test(enabled = false) // "Should be fixed for mgnl 5"
+public class BasePathTest extends TestNgRepositoryTestcase {
 
     /**
      * {@inheritDoc}
@@ -92,8 +88,7 @@ public class BasePathTest extends TestNgRepositoryTestcase
      * @throws Exception
      */
     @Test
-    public void testNullBasePath() throws Exception
-    {
+    public void testNullBasePath() throws Exception {
         Collection<String> paths = searchPaths(null, "AdvancedCriteriaImpl");
         Assert.assertNotNull(paths);
         Assert.assertEquals(paths.size(), 3);
@@ -107,8 +102,7 @@ public class BasePathTest extends TestNgRepositoryTestcase
      * @throws Exception
      */
     @Test
-    public void testEmptyBasePath() throws Exception
-    {
+    public void testEmptyBasePath() throws Exception {
         Collection<String> paths = searchPaths(StringUtils.EMPTY, "AdvancedCriteriaImpl");
         Assert.assertNotNull(paths);
         Assert.assertEquals(paths.size(), 3);
@@ -122,8 +116,7 @@ public class BasePathTest extends TestNgRepositoryTestcase
      * @throws Exception
      */
     @Test
-    public void testSearchXpathBasePathWithSingleSlash() throws Exception
-    {
+    public void testSearchXpathBasePathWithSingleSlash() throws Exception {
         Collection<String> paths = searchPaths("//Criteria/AbstractCriteriaImpl/*", StringUtils.EMPTY);
         Assert.assertNotNull(paths);
         Assert.assertEquals(paths.size(), 2);
@@ -136,8 +129,7 @@ public class BasePathTest extends TestNgRepositoryTestcase
      * @throws Exception
      */
     @Test
-    public void testSearchXpathBasePathWithDoubleSlash() throws Exception
-    {
+    public void testSearchXpathBasePathWithDoubleSlash() throws Exception {
         Collection<String> paths = searchPaths("//Criteria/TranslatableCriteria//*", "AdvancedCriteriaImpl");
         Assert.assertNotNull(paths);
         Assert.assertEquals(paths.size(), 1);
@@ -149,8 +141,7 @@ public class BasePathTest extends TestNgRepositoryTestcase
      * @throws Exception
      */
     @Test
-    public void testSearchHandleBasePath() throws Exception
-    {
+    public void testSearchHandleBasePath() throws Exception {
         Collection<String> paths = searchPaths("/Criteria/TranslatableCriteria", "AdvancedCriteriaImpl");
         Assert.assertNotNull(paths);
         Assert.assertEquals(paths.size(), 1);
@@ -163,16 +154,14 @@ public class BasePathTest extends TestNgRepositoryTestcase
      * @throws Exception
      */
     @Test
-    public void testSearchHandleBasePathWithTrailingSlash() throws Exception
-    {
+    public void testSearchHandleBasePathWithTrailingSlash() throws Exception {
         Collection<String> paths = searchPaths("/Criteria/TranslatableCriteria/", "AdvancedCriteriaImpl");
         Assert.assertNotNull(paths);
         Assert.assertEquals(paths.size(), 1);
         Assert.assertTrue(paths.contains("/Criteria/TranslatableCriteria/AbstractCriteriaImpl/AdvancedCriteriaImpl"));
     }
 
-    private Collection<String> searchPaths(String basePath, String title)
-    {
+    private Collection<String> searchPaths(String basePath, String title) {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath(basePath);
         criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, MgnlNodeType.NT_PAGE));
