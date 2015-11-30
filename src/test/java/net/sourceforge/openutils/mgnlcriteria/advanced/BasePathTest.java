@@ -89,7 +89,7 @@ public class BasePathTest extends TestNgRepositoryTestcase {
      * Passing a null basePath should search the entire repository.
      * @throws Exception
      */
-    @Test
+    @Test(enabled = false)
     public void testNullBasePath() throws Exception {
         Collection<String> paths = searchPaths(null, "AdvancedCriteriaImpl");
         Assert.assertNotNull(paths);
@@ -103,7 +103,7 @@ public class BasePathTest extends TestNgRepositoryTestcase {
      * Passing an empty basePath should search the entire repository.
      * @throws Exception
      */
-    @Test
+    @Test(enabled = false)
     public void testEmptyBasePath() throws Exception {
         Collection<String> paths = searchPaths(StringUtils.EMPTY, "AdvancedCriteriaImpl");
         Assert.assertNotNull(paths);
@@ -117,7 +117,7 @@ public class BasePathTest extends TestNgRepositoryTestcase {
      * Passing an xpath query ending with /* as the basePath should search the children.
      * @throws Exception
      */
-    @Test
+    @Test(enabled = false)
     public void testSearchXpathBasePathWithSingleSlash() throws Exception {
         Collection<String> paths = searchPaths("//Criteria/AbstractCriteriaImpl/*", StringUtils.EMPTY);
         Assert.assertNotNull(paths);
@@ -130,7 +130,7 @@ public class BasePathTest extends TestNgRepositoryTestcase {
      * Passing an xpath query ending with //* as the basePath should search the descendants.
      * @throws Exception
      */
-    @Test
+    @Test(enabled = false)
     public void testSearchXpathBasePathWithDoubleSlash() throws Exception {
         Collection<String> paths = searchPaths("//Criteria/TranslatableCriteria//*", "AdvancedCriteriaImpl");
         Assert.assertNotNull(paths);
@@ -142,7 +142,7 @@ public class BasePathTest extends TestNgRepositoryTestcase {
      * Passing an handle as the basePath should search the descendants.
      * @throws Exception
      */
-    @Test
+    @Test(enabled = false)
     public void testSearchHandleBasePath() throws Exception {
         Collection<String> paths = searchPaths("/Criteria/TranslatableCriteria", "AdvancedCriteriaImpl");
         Assert.assertNotNull(paths);
@@ -155,7 +155,7 @@ public class BasePathTest extends TestNgRepositoryTestcase {
      * resulting xpath query does not end with ///*
      * @throws Exception
      */
-    @Test
+    @Test(enabled = false)
     public void testSearchHandleBasePathWithTrailingSlash() throws Exception {
         Collection<String> paths = searchPaths("/Criteria/TranslatableCriteria/", "AdvancedCriteriaImpl");
         Assert.assertNotNull(paths);
