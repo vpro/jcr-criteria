@@ -31,15 +31,17 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Criterion;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
 import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.jcr.Node;
+
 import org.apache.commons.lang.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import javax.jcr.Node;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 
 /**
