@@ -20,8 +20,10 @@
 package net.sourceforge.openutils.mgnlcriteria.advanced;
 
 import info.magnolia.cms.core.MgnlNodeType;
+import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
+import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
@@ -38,6 +40,7 @@ import javax.jcr.Node;
 
 import org.apache.commons.lang.StringUtils;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
@@ -53,8 +56,7 @@ import org.testng.annotations.Test;
     "/crit-bootstrap/config.server.auditLogging.xml",
     "/crit-bootstrap/config.server.i18n.content.xml" }, security = true)
 @Test(enabled = false) // "Should be fixed for mgnl 5"
-public class BasePathTest  {
-    /*extends TestNgRepositoryTestcase {
+public class BasePathTest extends TestNgRepositoryTestcase {
 
     @Override
     @BeforeClass
@@ -78,7 +80,7 @@ public class BasePathTest  {
         MgnlContext.getJCRSession(RepositoryConstants.WEBSITE).save();
 
     }
-*/
+
     /**
      * Passing a null basePath should search the entire repository.
      * @throws Exception

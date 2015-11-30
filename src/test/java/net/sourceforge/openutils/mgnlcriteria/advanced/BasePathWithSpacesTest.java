@@ -24,15 +24,14 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
-
-import javax.jcr.Node;
-
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Criterion;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
+
+import javax.jcr.Node;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -49,16 +48,12 @@ import org.testng.annotations.Test;
     "/crit-bootstrap/users.system.anonymous.xml",
     "/crit-bootstrap/config.server.auditLogging.xml",
     "/crit-bootstrap/config.server.i18n.content.xml" }, security = true)
-public class BasePathWithSpacesTest extends TestNgRepositoryTestcase
-{
+public class BasePathWithSpacesTest extends TestNgRepositoryTestcase {
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     @BeforeClass
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         super.setUp();
 
         // Nodes in this workspace:
@@ -68,12 +63,8 @@ public class BasePathWithSpacesTest extends TestNgRepositoryTestcase
 
     }
 
-    /**
-     * @throws Exception
-     */
-    @Test
-    public void test() throws Exception
-    {
+    @Test(enabled = false)
+    public void test() throws Exception {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("/Lorem ipsum dolor sit amet");
         criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, MgnlNodeType.NT_PAGE));
@@ -83,12 +74,9 @@ public class BasePathWithSpacesTest extends TestNgRepositoryTestcase
         Assert.assertEquals(items.next().getName(), "consectetur adipisici elit");
     }
 
-    /**
-     * @throws Exception
-     */
-    @Test
-    public void testWithParams() throws Exception
-    {
+
+    @Test(enabled = false)
+    public void testWithParams() throws Exception {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setWorkspace(RepositoryConstants.WEBSITE);
         criteria.setBasePath("//*[prop1='A' and prop2='B']/Lorem ipsum dolor sit amet");
         criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, MgnlNodeType.NT_PAGE));
