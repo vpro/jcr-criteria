@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mihxil/jcr-criteria.png?)](https://travis-ci.org/mihxil/jcr-criteria)
+
 # openutils-mgnlcriteria
 
 
