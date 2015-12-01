@@ -19,8 +19,8 @@
     <PersistenceManager class="org.apache.jackrabbit.core.persistence.bundle.BundleFsPersistenceManager">
       <param name="blobFSBlockSize" value="1" /><!-- store in memory -->
     </PersistenceManager>
-    <SearchIndex class="net.sourceforge.openutils.mgnlcriteria.jcr.query.lucene.AclSearchIndex">
-      <param name="analyzer" value="net.sourceforge.openutils.mgnlcriteria.utils.ASCIIFoldingAnalyzer" />
+    <SearchIndex class="nl.vpro.jcr.criteria.query.lucene.AclSearchIndex">
+      <param name="analyzer" value="nl.vpro.jcr.criteria.utils.ASCIIFoldingAnalyzer" />
       <param name="path" value="${rep.home}/indexes/${wsp.name}" />
       <param name="indexingConfiguration" value="${rep.home}/../../test-classes/crit-repository/indexing_configuration.xml" />
       <param name="supportHighlighting" value="true" />
@@ -48,8 +48,8 @@
     </PersistenceManager>
     <ISMLocking class="org.apache.jackrabbit.core.state.FineGrainedISMLocking" />
   </Versioning>
-  <SearchIndex class="net.sourceforge.openutils.mgnlcriteria.jcr.query.lucene.AclSearchIndex">
-    <param name="analyzer" value="net.sourceforge.openutils.mgnlcriteria.utils.ASCIIFoldingAnalyzer" />
+  <SearchIndex class="nl.vpro.jcr.criteria.query.lucene.AclSearchIndex">
+    <param name="analyzer" value="nl.vpro.jcr.criteria.utils.ASCIIFoldingAnalyzer" />
     <param name="path" value="${rep.home}/indexes/jcrsystem" />
     <param name="indexingConfiguration" value="${rep.home}/../../test-classes/crit-repository/indexing_configuration.xml" />
     <param name="supportHighlighting" value="true" />
