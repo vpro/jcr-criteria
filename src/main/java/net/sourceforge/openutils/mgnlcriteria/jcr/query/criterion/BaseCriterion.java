@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Base abstract criterion, just to share some useful fields/constants that should not end up in the interface.
  * @author fgiust
- * @version $Id$
  */
 public abstract class BaseCriterion implements Criterion {
 
@@ -38,6 +37,6 @@ public abstract class BaseCriterion implements Criterion {
     /**
      * Logger.
      */
-    protected Logger log = LoggerFactory.getLogger(getClass());
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
 }
