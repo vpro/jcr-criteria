@@ -1,11 +1,9 @@
 # openutils-mgnlcriteria
 
 
+This was branced from vpro/openutils-mgnlcriteria which was itself branched from 
+
 http://www.openmindlab.com/lab/products/mgnlcriteria.html
 
-Seems not to be supported any more. We branched it therefore.
+Here I was targeting to completely remove the Magnolia dependency and make a generic jrc-criteria implementation.
 
-Fixed (hopefully)
-=================
-
-- Works with Mangolia 5/ Jackrabit 2.8
