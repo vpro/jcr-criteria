@@ -24,6 +24,8 @@ import java.util.function.IntSupplier;
 import nl.vpro.jcr.criteria.query.criterion.Criterion;
 import nl.vpro.jcr.criteria.query.criterion.Order;
 
+import javax.jcr.Session;
+
 
 /**
  * <tt>Criteria</tt> is a simplified API for retrieving JCR Nodes by composing <tt>Criterion</tt> objects. This is a
@@ -155,12 +157,6 @@ public interface Criteria extends ExecutableQuery {
      */
     Criteria setSpellCheckString(String spellCheckString);
 
-    /**
-     * Sets the name of the workspace where the search will take place
-     * @param workspace the name of a workspace
-     * @return this (for method chaining)
-     */
-    Criteria setWorkspace(String workspace);
 
     /**
      * Returns the generated xpath expression
@@ -190,6 +186,5 @@ public interface Criteria extends ExecutableQuery {
      */
     Criteria setForcePagingWithDocumentOrder(boolean force);
 
-    IntSupplier getCountSupplier();
 
 }

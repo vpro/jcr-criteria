@@ -20,6 +20,7 @@
 package nl.vpro.jcr.criteria.query;
 
 import java.util.Iterator;
+import java.util.function.Function;
 
 import javax.jcr.query.Row;
 import javax.jcr.query.RowIterator;
@@ -29,17 +30,18 @@ import javax.jcr.query.RowIterator;
  * Wraps a RowIterator, requiring subclasses to adapt each Row to a specific type.
  * @param <T> type of results
  * @author fgiust
- * @version $Id$
- */
-public abstract class ResultIteratorImpl<T> implements ResultIterator<T> {
+  */
+public class ResultIteratorImpl<T> implements ResultIterator<T> {
 
     /**
      * The jcr RowIterator
      */
-    protected RowIterator rowIterator;
+    protected final RowIterator rowIterator;
+	protected final Function<Row, T> wrapper;
 
-    public ResultIteratorImpl(RowIterator rowIterator) {
+    public  ResultIteratorImpl(RowIterator rowIterator, Function<Row, T> wrapper) {
         this.rowIterator = rowIterator;
+		this.wrapper = wrapper;
     }
 
 
@@ -73,7 +75,7 @@ public abstract class ResultIteratorImpl<T> implements ResultIterator<T> {
 
     @Override
     public T next() {
-        return wrap(rowIterator.nextRow());
+        return wrapper.apply(rowIterator.nextRow());
     }
 
     /**
@@ -83,12 +85,5 @@ public abstract class ResultIteratorImpl<T> implements ResultIterator<T> {
     public Iterator<T> iterator() {
         return this;
     }
-
-    /**
-     * Transforms a Row instance, adapting it to a specific type.
-     * @param row the jcr Row to wrap
-     * @return a transformed version
-     */
-    protected abstract T wrap(Row row);
 
 }

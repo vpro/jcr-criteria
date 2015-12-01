@@ -19,18 +19,15 @@
 
 package nl.vpro.jcr.criteria.advanced.impl;
 
-import nl.vpro.jcr.criteria.jcr.query.*;
 import nl.vpro.jcr.criteria.query.*;
-import nl.vpro.jcr.criteria.utils.JcrCompatUtils;
-import net.sourceforge.openutils.mgnlcriteria.utils.ToBeanUtils;
 import org.apache.jackrabbit.api.query.JackrabbitQueryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jcr.Item;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 import javax.jcr.query.*;
+import java.util.function.Function;
 import java.util.function.IntSupplier;
 
 
@@ -172,8 +169,8 @@ public class AdvancedResultImpl implements AdvancedResult {
             // removing preceding records
             rows.skip(offset);
 
-            // removing folllowing records and alter getSize()
-            return new AccessibleResultItemResultIterator(rows) {
+            // removing following records and alter getSize()
+            return new ResultIteratorImpl<AdvancedResultItem>(rows, AdvancedResultItemImpl::new) {
 
                 @Override
                 public boolean hasNext() {
@@ -186,7 +183,7 @@ public class AdvancedResultImpl implements AdvancedResult {
             };
         }
 
-        return new AccessibleResultItemResultIterator(rows);
+        return new ResultIteratorImpl<>(rows, AdvancedResultItemImpl::new);
     }
 
 
@@ -229,22 +226,10 @@ public class AdvancedResultImpl implements AdvancedResult {
         return null;
     }
 
-    private <K> K wrap(Row row, final Class<K> theclass) {
-        try {
-            Item jcrNode = JcrCompatUtils.getJCRNode(row);
-            if (jcrNode == null) {
-                return null;
-            }
 
-            return (K) ToBeanUtils.toBean(new AdvancedResultItemImpl(row, jcrNode), true, theclass);
-        } catch (RepositoryException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 
     @Override
-    public <K> ResultIterator<K> getItems(final Class<K> theclass) {
+    public <K> ResultIterator<K> getItems(Function<Row, K> wrapper) {
         RowIterator rows;
         try {
             rows = jcrQueryResult.getRows();
@@ -259,7 +244,7 @@ public class AdvancedResultImpl implements AdvancedResult {
             rows.skip(offset);
 
             // removing following records and alter getSize()
-            return new ResultIteratorImpl<K>(rows)  {
+            return new ResultIteratorImpl<K>(rows, wrapper)  {
                 @Override
                 public boolean hasNext() {
                     return super.getPosition() - offset < getSize() && super.hasNext();
@@ -270,21 +255,11 @@ public class AdvancedResultImpl implements AdvancedResult {
                     return Math.min(super.getSize() - offset, itemsPerPage);
                 }
 
-                @Override
-                protected K wrap(Row row) {
-                    return AdvancedResultImpl.this.wrap(row, theclass);
-                }
-
             };
         }
 
-        return new ResultIteratorImpl<K>(rows)  {
+        return new ResultIteratorImpl<K>(rows, wrapper);
 
-            @Override
-            protected K wrap(Row row) {
-                return AdvancedResultImpl.this.wrap(row, theclass);
-            }
-        };
     }
 
 }

@@ -19,9 +19,11 @@
 
 package nl.vpro.jcr.criteria.query;
 
+import javax.jcr.Session;
+import java.util.function.IntSupplier;
+
 /**
  * @author fgiust
- * @version $Id$
  */
 public interface ExecutableQuery {
 
@@ -29,5 +31,8 @@ public interface ExecutableQuery {
      * Executes the query
      * @return the search result
      */
-    AdvancedResult execute();
+    AdvancedResult execute(Session session);
+
+	IntSupplier getCountSupplier(Session session);
+
 }

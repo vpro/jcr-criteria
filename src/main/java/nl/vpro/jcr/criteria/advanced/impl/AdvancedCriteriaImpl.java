@@ -21,11 +21,16 @@ package nl.vpro.jcr.criteria.advanced.impl;
 
 import nl.vpro.jcr.criteria.query.xpath.impl.AbstractCriteriaImpl;
 
+import javax.jcr.Session;
+
 
 /**
  * @author fgiust
- * @version $Id$
+ * @author Michiel Meeuwissen
  */
 public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
 
+	public AdvancedCriteriaImpl() {
+		super();
+	}
 }

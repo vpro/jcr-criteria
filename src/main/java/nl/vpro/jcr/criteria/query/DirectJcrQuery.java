@@ -23,6 +23,8 @@ import javax.jcr.Session;
 
 import nl.vpro.jcr.criteria.advanced.impl.QueryExecutorHelper;
 
+import java.util.function.IntSupplier;
+
 
 /**
  * @see JCRCriteriaFactory#createDirectJcrQuery(info.magnolia.cms.core.HierarchyManager, String, String)
@@ -30,8 +32,6 @@ import nl.vpro.jcr.criteria.advanced.impl.QueryExecutorHelper;
  * @version $Id$
  */
 public class DirectJcrQuery implements ExecutableQuery  {
-
-    private Session session;
 
     private String query;
 
@@ -43,12 +43,8 @@ public class DirectJcrQuery implements ExecutableQuery  {
 
     private int offset;
 
-    /**
-     * @param query
-     * @param language
-     */
-    public DirectJcrQuery(Session session, String query, String language) {
-        this.session = session;
+
+    public DirectJcrQuery(String query, String language) {
         this.query = query;
         this.language = language;
     }
@@ -97,7 +93,7 @@ public class DirectJcrQuery implements ExecutableQuery  {
     }
 
     @Override
-    public AdvancedResult execute() {
+    public AdvancedResult execute(Session session) {
 
         return QueryExecutorHelper.execute(
             query,
@@ -112,5 +108,10 @@ public class DirectJcrQuery implements ExecutableQuery  {
             spellCheckString,
             false);
     }
+
+	@Override
+	public IntSupplier getCountSupplier(Session session) {
+		throw new UnsupportedOperationException();
+	}
 
 }

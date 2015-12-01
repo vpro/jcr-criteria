@@ -29,7 +29,6 @@ import java.util.Collection;
 /**
  * Exposes the Criterion and Order entries of a Criteria instance.
  * @author fgiust
- * @version $Id$
  */
 public interface TranslatableCriteria extends Criteria {
 

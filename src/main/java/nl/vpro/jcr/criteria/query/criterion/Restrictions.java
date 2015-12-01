@@ -56,8 +56,7 @@ public final class Restrictions {
      * @param value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
      * @return Criterion
      */
-    public static SimpleExpression ne(String nodeName, Object value)
-    {
+    public static SimpleExpression ne(String nodeName, Object value) {
         return new SimpleExpression(nodeName, value, "!=");
     }
 
@@ -91,14 +90,12 @@ public final class Restrictions {
      * @param value - must be an instance of either {@link String} or {@link Number}.
      * @return Criterion
      */
-    public static JCRFunctionExpression like(String nodeName, Object value)
-    {
+    public static JCRFunctionExpression like(String nodeName, Object value) {
         return new LikeExpression(
             nodeName,
             XPathTextUtils.stringToJCRSearchExp(value.toString()),
             " jcr:like",
             MatchMode.ANYWHERE);
-
     }
 
     /**
@@ -131,8 +128,7 @@ public final class Restrictions {
      * @param matchMode - one of {@link MatchMode#START} or {@link MatchMode#END} or {@link MatchMode#ANYWHERE}
      * @return Criterion
      */
-    public static JCRFunctionExpression like(String nodeName, Object value, MatchMode matchMode)
-    {
+    public static JCRFunctionExpression like(String nodeName, Object value, MatchMode matchMode) {
         return new LikeExpression(
             nodeName,
             XPathTextUtils.stringToJCRSearchExp(value.toString()),
@@ -147,8 +143,7 @@ public final class Restrictions {
      * @param value - must be an instance of either {@link String} or {@link Number}.
      * @return Criterion
      */
-    public static JCRFunctionExpression contains(String nodeName, Object value)
-    {
+    public static JCRFunctionExpression contains(String nodeName, Object value) {
         return contains(nodeName, value, true);
     }
 
@@ -161,15 +156,11 @@ public final class Restrictions {
      * @param escape - if true, value will be escaped, avoiding JCRQueryException on query execution
      * @return Criterion
      */
-    public static JCRFunctionExpression contains(String nodeName, Object value, boolean escape)
-    {
+    public static JCRFunctionExpression contains(String nodeName, Object value, boolean escape) {
         String exp;
-        if (escape)
-        {
+        if (escape) {
             exp = XPathTextUtils.stringToJCRSearchExp(value.toString());
-        }
-        else
-        {
+        } else {
             exp = value.toString();
         }
         return new JCRFunctionExpression(nodeName, exp, " jcr:contains");
@@ -182,8 +173,7 @@ public final class Restrictions {
      * @param value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
      * @return Criterion
      */
-    public static SimpleExpression gt(String nodeName, Object value)
-    {
+    public static SimpleExpression gt(String nodeName, Object value) {
         return new SimpleExpression(nodeName, value, ">");
     }
 
@@ -194,8 +184,7 @@ public final class Restrictions {
      * @param value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
      * @return Criterion
      */
-    public static SimpleExpression lt(String nodeName, Object value)
-    {
+    public static SimpleExpression lt(String nodeName, Object value) {
         return new SimpleExpression(nodeName, value, "<");
     }
 
@@ -206,8 +195,7 @@ public final class Restrictions {
      * @param value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
      * @return Criterion
      */
-    public static SimpleExpression le(String nodeName, Object value)
-    {
+    public static SimpleExpression le(String nodeName, Object value) {
         return new SimpleExpression(nodeName, value, "<=");
     }
 
@@ -218,8 +206,7 @@ public final class Restrictions {
      * @param value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
      * @return Criterion
      */
-    public static SimpleExpression ge(String nodeName, Object value)
-    {
+    public static SimpleExpression ge(String nodeName, Object value) {
         return new SimpleExpression(nodeName, value, ">=");
     }
 
@@ -231,8 +218,7 @@ public final class Restrictions {
      * @param hi value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
      * @return Criterion
      */
-    public static Criterion between(String nodeName, Object lo, Object hi)
-    {
+    public static Criterion between(String nodeName, Object lo, Object hi) {
         return new BetweenExpression(nodeName, lo, hi);
     }
 
@@ -244,8 +230,7 @@ public final class Restrictions {
      * @param value date (time will be ignored)
      * @return Criterion
      */
-    public static Criterion eqDate(String nodeName, Calendar value)
-    {
+    public static Criterion eqDate(String nodeName, Calendar value) {
         return betweenDates(nodeName, value, value);
     }
 
@@ -258,8 +243,7 @@ public final class Restrictions {
      * @param hi higher date
      * @return Criterion
      */
-    public static Criterion betweenDates(String nodeName, Calendar lo, Calendar hi)
-    {
+    public static Criterion betweenDates(String nodeName, Calendar lo, Calendar hi) {
         return between(nodeName, getDayStart(lo), getDayEnd(hi));
     }
 
@@ -270,8 +254,7 @@ public final class Restrictions {
      * @param values - a String[]
      * @return Criterion
      */
-    public static Criterion in(String nodeName, String[] values)
-    {
+    public static Criterion in(String nodeName, String[] values) {
         return new InExpression(nodeName, values);
     }
 
@@ -365,21 +348,18 @@ public final class Restrictions {
      * Group expressions together in a single disjunction (A or B or C...)
      * @return Conjunction
      */
-    public static Disjunction disjunction()
-    {
+    public static Disjunction disjunction() {
         return new Disjunction();
     }
 
-    private static Calendar getDayStart(Calendar cal)
-    {
+    private static Calendar getDayStart(Calendar cal) {
         Calendar cal2 = Calendar.getInstance();
         cal2.clear();
         cal2.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         return cal2;
     }
 
-    private static Calendar getDayEnd(Calendar cal)
-    {
+    private static Calendar getDayEnd(Calendar cal) {
         Calendar cal2 = getDayStart(cal);
         cal2.add(Calendar.DAY_OF_YEAR, 1);
         cal2.add(Calendar.MILLISECOND, -1);

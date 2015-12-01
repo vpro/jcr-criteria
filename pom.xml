@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.sourceforge.openutils</groupId>
-  <artifactId>openutils-mgnlcriteria</artifactId>
-  <name>Criteria API for Magnolia CMS</name>
+  <groupId>nl.vpro.jcr</groupId>
+  <artifactId>jcr-utils</artifactId>
+  <name>Criteria API for JCR</name>
   <version>6.0-SNAPSHOT</version>
-  <inceptionYear>2009</inceptionYear>
+  <inceptionYear>2015</inceptionYear>
   <description>A Hibernate's Criteria-like API to programmatically generate JCR queries with Magnolia</description>
   <licenses>
     <license>
@@ -12,59 +12,14 @@
       <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
     </license>
   </licenses>
-  <url>http://www.openmindlab.com/lab/products/mgnlcriteria.html</url>
-  <issueManagement>
-    <system>jira</system>
-    <url>http://jira.openmindlab.com/browse/CRIT</url>
-  </issueManagement>
   <scm>
-    <connection>scm:git:git://git@github.com/vpro/openutils-mgnlcriteria.git</connection>
-    <developerConnection>scm:git:git@github.com:vpro/openutils-mgnlcriteria.git</developerConnection>
-    <url>https://github.com/vpro/openutils-mgnlcriteria</url>
+    <connection>scm:git:git://git@github.com/mihxil/jcr-criteria.git</connection>
+    <developerConnection>scm:git:git@github.com:mihxil/jcr-criteria.git</developerConnection>
+    <url>https://github.com/mihxil/jcr-criteria</url>
   </scm>
   <build>
     <defaultGoal>install</defaultGoal>
-    <resources>
-      <resource>
-        <filtering>false</filtering>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>**/*</include>
-        </includes>
-      </resource>
-      <resource>
-        <filtering>true</filtering>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>META-INF/magnolia/*</include>
-        </includes>
-      </resource>
-    </resources>
     <plugins>
-      <plugin>
-        <groupId>com.mycila.maven-license-plugin</groupId>
-        <artifactId>maven-license-plugin</artifactId>
-        <version>1.5.0</version>
-        <configuration>
-          <header>src/main/etc/header.txt</header>
-          <includes>
-            <include>src/**/*.java</include>
-          </includes>
-          <properties>
-            <year>${project.inceptionYear}-2013</year>
-            <name>${project.name}</name>
-            <description>${project.description}</description>
-            <url>${project.url}</url>
-          </properties>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -127,22 +82,10 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
       <version>6.0.1</version>
       <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
   <properties>

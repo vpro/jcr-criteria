@@ -19,31 +19,26 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
-import info.magnolia.repository.RepositoryConstants;
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
 /**
  * @author dschivo
- * @version $Id$
  */
-public class ConjunctionTest
-{
+public class ConjunctionTest {
 
     /**
      * @throws Exception
      */
     @Test
-    public void testImplicitConjunction() throws Exception
-    {
+    public void testImplicitConjunction() throws Exception {
         Criteria criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/")
             .add(Restrictions.eq("MetaData/@mgnl:template", "t-photogallery-sheet"))
             .add(Restrictions.isNotNull("@playlist"))
@@ -60,15 +55,13 @@ public class ConjunctionTest
      * @throws Exception
      */
     @Test
-    public void testExplicitConjunction() throws Exception
-    {
+    public void testExplicitConjunction() throws Exception  {
         Junction conjunction = Restrictions
             .conjunction()
             .add(Restrictions.eq("MetaData/@mgnl:template", "t-photogallery-sheet"))
             .add(Restrictions.isNotNull("@playlist"));
         Criteria criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(RepositoryConstants.WEBSITE)
             .setBasePath("/")
             .add(conjunction)
             .addOrder(Order.desc("@photogalleryDate"));

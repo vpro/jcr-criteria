@@ -19,23 +19,6 @@
 
 package nl.vpro.jcr.criteria.query.xpath.impl;
 
-import info.magnolia.context.MgnlContext;
-import info.magnolia.jcr.RuntimeRepositoryException;
-import info.magnolia.repository.RepositoryConstants;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.function.IntSupplier;
-
-import javax.jcr.RepositoryException;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import nl.vpro.jcr.criteria.advanced.impl.QueryExecutorHelper;
 import nl.vpro.jcr.criteria.query.AdvancedResult;
 import nl.vpro.jcr.criteria.query.Criteria;
@@ -46,20 +29,29 @@ import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.xpath.JCRMagnoliaCriteriaQueryTranslator;
 import nl.vpro.jcr.criteria.query.xpath.XPathSelect;
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.jcr.Session;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.function.IntSupplier;
 
 
 /**
  * A generic Criteria implementation.
  * @author fgrilli
- * @version $Id$
+ * @author Michiel Meeuwissen
  */
 public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     protected String path = Criterion.ALL_ELEMENTS;
-
-    protected Class< ? > classType;
 
     protected List<CriterionEntry> criterionEntries = new ArrayList<>();
 
@@ -71,13 +63,10 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     protected String spellCheckString;
 
-    protected String workspace = RepositoryConstants.WEBSITE;
-
     protected boolean forcePagingWithDocumentOrder;
 
     protected AbstractCriteriaImpl() {
-
-    }
+	}
 
     @Override
     public Collection<CriterionEntry> getCriterionEntries() {
@@ -173,13 +162,6 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     }
 
     @Override
-    public Criteria setWorkspace(String workspace) {
-        this.workspace = workspace;
-        return this;
-    }
-
-
-    @Override
     public Criteria setForcePagingWithDocumentOrder(boolean force) {
         this.forcePagingWithDocumentOrder = force;
         return this;
@@ -198,27 +180,24 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
 
     @Override
-    public AdvancedResult execute() {
+    public AdvancedResult execute(Session session) {
         @SuppressWarnings("deprecation")
         String language = javax.jcr.query.Query.XPATH;
         String stmt = toXpathExpression();
-        try {
-            return QueryExecutorHelper.execute(
-                stmt,
-                language,
-                getCountSupplier(),
-                MgnlContext.getJCRSession(workspace),
-                maxResults,
+		return QueryExecutorHelper.execute(
+				stmt,
+				language,
+				getCountSupplier(session),
+				session,
+				maxResults,
                 offset,
-                spellCheckString,
-                forcePagingWithDocumentOrder && this.orderEntries.isEmpty());
-        } catch (RepositoryException e) {
-            throw new RuntimeException(e);
-        }
+				spellCheckString,
+				forcePagingWithDocumentOrder && this.orderEntries.isEmpty());
+
     }
 
     @Override
-    public IntSupplier getCountSupplier() {
+    public IntSupplier getCountSupplier(Session session) {
         return () -> {
             long startTime = System.nanoTime();
             try {
@@ -228,10 +207,9 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
                 }
                 countCriteria.setBasePath(path);
                 countCriteria.setSpellCheckString(spellCheckString);
-                countCriteria.setWorkspace(workspace);
 
 
-                return countCriteria.execute().getTotalSize();
+                return countCriteria.execute(session).getTotalSize();
             } finally {
                 log.info("Total size was not available, determining it costed {} ms", TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS));
             }

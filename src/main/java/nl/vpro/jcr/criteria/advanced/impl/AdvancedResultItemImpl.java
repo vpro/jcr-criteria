@@ -27,36 +27,29 @@ import java.lang.reflect.InvocationTargetException;
 import javax.jcr.*;
 import javax.jcr.query.Row;
 
+import nl.vpro.jcr.criteria.utils.JcrNodeWrapper;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.jackrabbit.commons.AbstractNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 /**
  * @author fgiust
- * @version $Id$
+ * @author Michiel Meeuwisen
  */
-public class AdvancedResultItemImpl extends DelegateNodeWrapper implements AdvancedResultItem {
+public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedResultItem {
 
     private final Row row;
 
     private static final Logger LOG = LoggerFactory.getLogger(AdvancedResultItemImpl.class);
 
-    /**
-
-     * @throws InvocationTargetException
-     * @throws IllegalAccessException
-     * @throws IllegalStateException
-     * @throws IllegalArgumentException
-     */
-    public AdvancedResultItemImpl(Row row, Item item) throws RepositoryException, AccessDeniedException {
-        super(new I18nNodeWrapper((Node) item));
-        this.row = row;
+    public AdvancedResultItemImpl(Row row)  {
+		this.row = row;
     }
 
     @Override
     public String getExcerpt() {
-
         return getExcerpt(".");
     }
 
@@ -142,4 +135,9 @@ public class AdvancedResultItemImpl extends DelegateNodeWrapper implements Advan
         return this;
     }
 
+	@Override
+	protected Node getNode() throws RepositoryException {
+		return row.getNode();
+
+	}
 }

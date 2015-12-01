@@ -19,7 +19,9 @@
 
 package nl.vpro.jcr.criteria.query;
 
+import javax.jcr.query.Row;
 import java.util.Iterator;
+import java.util.function.Function;
 
 
 /**
@@ -77,10 +79,9 @@ public interface AdvancedResult  {
     /**
      * Gets an iterator over the results, transforming objects using content2bean while iterating
      * @param <K> destination class.
-     * @param theclass destination class.
-     * @return an iterator over the results
+	 * @return an iterator over the results
      */
-    <K> ResultIterator<K> getItems(Class<K> theclass);
+    <K> ResultIterator<K> getItems(Function<Row, K> wrapper);
 
     /**
      * Returns the fist result if available, null otherwise.
@@ -132,7 +133,7 @@ public interface AdvancedResult  {
         }
 
         @Override
-        public <K> ResultIterator<K> getItems(Class<K> theclass) {
+        public <K> ResultIterator<K> getItems(Function<Row, K> wrapper) {
             return null;
         }
     }

@@ -30,14 +30,11 @@ import org.testng.annotations.Test;
 
 /**
  * @author fgiust
- * @version $Id$
  */
-public class MagnoliaCriteriaTest
-{
+public class MagnoliaCriteriaTest {
 
     @Test
-    public void testSimple()
-    {
+    public void testSimple() {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("//site//*");
 
         Junction conjunction = Restrictions.conjunction();
@@ -53,8 +50,7 @@ public class MagnoliaCriteriaTest
     }
 
     @Test
-    public void testBooleanProperty()
-    {
+    public void testBooleanProperty() {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("//site//*");
 
         Junction conjunction = Restrictions.disjunction();
