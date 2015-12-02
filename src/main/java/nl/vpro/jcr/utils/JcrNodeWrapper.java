@@ -1,4 +1,4 @@
-package nl.vpro.jcr.criteria.utils;
+package nl.vpro.jcr.utils;
 
 import javax.jcr.*;
 import javax.jcr.lock.Lock;

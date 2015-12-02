@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nl.vpro.jcr.criteria.query.AdvancedResultItem;
-import nl.vpro.jcr.criteria.utils.JcrNodeWrapper;
+import nl.vpro.jcr.utils.JcrNodeWrapper;
 
 
 /**
