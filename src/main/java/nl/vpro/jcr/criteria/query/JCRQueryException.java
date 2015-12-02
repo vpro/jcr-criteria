@@ -22,7 +22,6 @@ package nl.vpro.jcr.criteria.query;
 /**
  * Runtime exception wrapper for jcr checked exceptions.
  * @author fgrilli
- * @version $Id$
  */
 public class JCRQueryException extends RuntimeException {
 

@@ -25,7 +25,6 @@ import javax.jcr.Node;
 /**
  * An extension of Content exposing additional informations obtained from a Row item of a QueryResult.
  * @author fgiust
- * @version $Id$
  */
 public interface AdvancedResultItem extends Node {
 

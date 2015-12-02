@@ -23,102 +23,103 @@ public abstract class JcrNodeWrapper implements Node {
 	protected abstract Node getNode() throws RepositoryException;
 
 	@Override
-	public Node addNode(String relPath) throws ItemExistsException, PathNotFoundException, VersionException, ConstraintViolationException, LockException, RepositoryException {
+	public Node addNode(String relPath) throws RepositoryException {
 		return getNode().addNode(relPath);
 	}
 
 	@Override
-	public Node addNode(String relPath, String primaryNodeTypeName) throws ItemExistsException, PathNotFoundException, NoSuchNodeTypeException, LockException, VersionException, ConstraintViolationException, RepositoryException {
+	public Node addNode(String relPath, String primaryNodeTypeName) throws RepositoryException {
 		return getNode().addNode(relPath, primaryNodeTypeName);
 	}
 
 	@Override
-	public void orderBefore(String srcChildRelPath, String destChildRelPath) throws UnsupportedRepositoryOperationException, VersionException, ConstraintViolationException, ItemNotFoundException, LockException, RepositoryException {
+	public void orderBefore(String srcChildRelPath, String destChildRelPath) throws RepositoryException {
 		getNode().orderBefore(srcChildRelPath, destChildRelPath);
 	}
 
 	@Override
-	public Property setProperty(String name, Value value) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, Value value) throws RepositoryException {
 		return getNode().setProperty(name, value);
 	}
 
 	@Override
-	public Property setProperty(String name, Value value, int type) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, Value value, int type) throws RepositoryException {
 		return getNode().setProperty(name, value, type);
 	}
 
 	@Override
-	public Property setProperty(String name, Value[] values) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, Value[] values) throws RepositoryException {
 		return getNode().setProperty(name, values);
 	}
 
 	@Override
-	public Property setProperty(String name, Value[] values, int type) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, Value[] values, int type) throws RepositoryException {
 		return getNode().setProperty(name, values, type);
 	}
 
 	@Override
-	public Property setProperty(String name, String[] values) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, String[] values) throws RepositoryException {
 		return getNode().setProperty(name, values);
 	}
 
 	@Override
-	public Property setProperty(String name, String[] values, int type) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, String[] values, int type) throws RepositoryException {
 		return getNode().setProperty(name, values, type);
 	}
 
 	@Override
-	public Property setProperty(String name, String value) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, String value) throws RepositoryException {
 		return getNode().setProperty(name, value);
 	}
 
 	@Override
-	public Property setProperty(String name, String value, int type) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, String value, int type) throws RepositoryException {
 		return getNode().setProperty(name, value, type);
 	}
 
 	@Override
-	public Property setProperty(String name, InputStream value) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+    @Deprecated
+    public Property setProperty(String name, InputStream value) throws RepositoryException {
 		return getNode().setProperty(name, value);
 	}
 
 	@Override
-	public Property setProperty(String name, Binary value) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, Binary value) throws RepositoryException {
 		return getNode().setProperty(name, value);
 	}
 
 	@Override
-	public Property setProperty(String name, boolean value) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, boolean value) throws RepositoryException {
 		return getNode().setProperty(name, value);
 	}
 
 	@Override
-	public Property setProperty(String name, double value) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, double value) throws RepositoryException {
 		return getNode().setProperty(name, value);
 	}
 
 	@Override
-	public Property setProperty(String name, BigDecimal value) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, BigDecimal value) throws RepositoryException {
 		return getNode().setProperty(name, value);
 	}
 
 	@Override
-	public Property setProperty(String name, long value) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, long value) throws RepositoryException {
 		return getNode().setProperty(name, value);
 	}
 
 	@Override
-	public Property setProperty(String name, Calendar value) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, Calendar value) throws RepositoryException {
 		return getNode().setProperty(name, value);
 	}
 
 	@Override
-	public Property setProperty(String name, Node value) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public Property setProperty(String name, Node value) throws RepositoryException {
 		return getNode().setProperty(name, value);
 	}
 
 	@Override
-	public Node getNode(String relPath) throws PathNotFoundException, RepositoryException {
+	public Node getNode(String relPath) throws RepositoryException {
 		return getNode().getNode(relPath);
 	}
 
@@ -138,7 +139,7 @@ public abstract class JcrNodeWrapper implements Node {
 	}
 
 	@Override
-	public Property getProperty(String relPath) throws PathNotFoundException, RepositoryException {
+	public Property getProperty(String relPath) throws RepositoryException {
 		return getNode().getProperty(relPath);
 	}
 
@@ -158,12 +159,13 @@ public abstract class JcrNodeWrapper implements Node {
 	}
 
 	@Override
-	public Item getPrimaryItem() throws ItemNotFoundException, RepositoryException {
+	public Item getPrimaryItem() throws RepositoryException {
 		return getNode().getPrimaryItem();
 	}
 
 	@Override
-	public String getUUID() throws UnsupportedRepositoryOperationException, RepositoryException {
+    @Deprecated
+    public String getUUID() throws RepositoryException {
 		return getNode().getUUID();
 	}
 
@@ -233,22 +235,22 @@ public abstract class JcrNodeWrapper implements Node {
 	}
 
 	@Override
-	public void setPrimaryType(String nodeTypeName) throws NoSuchNodeTypeException, VersionException, ConstraintViolationException, LockException, RepositoryException {
+	public void setPrimaryType(String nodeTypeName) throws RepositoryException {
 		getNode().setPrimaryType(nodeTypeName);
 	}
 
 	@Override
-	public void addMixin(String mixinName) throws NoSuchNodeTypeException, VersionException, ConstraintViolationException, LockException, RepositoryException {
+	public void addMixin(String mixinName) throws RepositoryException {
 		getNode().addMixin(mixinName);
 	}
 
 	@Override
-	public void removeMixin(String mixinName) throws NoSuchNodeTypeException, VersionException, ConstraintViolationException, LockException, RepositoryException {
+	public void removeMixin(String mixinName) throws RepositoryException {
 		getNode().removeMixin(mixinName);
 	}
 
 	@Override
-	public boolean canAddMixin(String mixinName) throws NoSuchNodeTypeException, RepositoryException {
+	public boolean canAddMixin(String mixinName) throws RepositoryException {
 		return getNode().canAddMixin(mixinName);
 	}
 
@@ -258,37 +260,42 @@ public abstract class JcrNodeWrapper implements Node {
 	}
 
 	@Override
-	public Version checkin() throws VersionException, UnsupportedRepositoryOperationException, InvalidItemStateException, LockException, RepositoryException {
+    @Deprecated
+    public Version checkin() throws RepositoryException {
 		return getNode().checkin();
 	}
 
 	@Override
-	public void checkout() throws UnsupportedRepositoryOperationException, LockException, ActivityViolationException, RepositoryException {
+    @Deprecated
+    public void checkout() throws RepositoryException {
 		getNode().checkout();
 	}
 
 	@Override
-	public void doneMerge(Version version) throws VersionException, InvalidItemStateException, UnsupportedRepositoryOperationException, RepositoryException {
+    @Deprecated
+    public void doneMerge(Version version) throws RepositoryException {
 		getNode().doneMerge(version);
 	}
 
 	@Override
-	public void cancelMerge(Version version) throws VersionException, InvalidItemStateException, UnsupportedRepositoryOperationException, RepositoryException {
+    @Deprecated
+    public void cancelMerge(Version version) throws RepositoryException {
 		getNode().cancelMerge(version);
 	}
 
 	@Override
-	public void update(String srcWorkspace) throws NoSuchWorkspaceException, AccessDeniedException, LockException, InvalidItemStateException, RepositoryException {
+	public void update(String srcWorkspace) throws RepositoryException {
 		getNode().update(srcWorkspace);
 	}
 
 	@Override
-	public NodeIterator merge(String srcWorkspace, boolean bestEffort) throws NoSuchWorkspaceException, AccessDeniedException, MergeException, LockException, InvalidItemStateException, RepositoryException {
+    @Deprecated
+    public NodeIterator merge(String srcWorkspace, boolean bestEffort) throws RepositoryException {
 		return getNode().merge(srcWorkspace, bestEffort);
 	}
 
 	@Override
-	public String getCorrespondingNodePath(String workspaceName) throws ItemNotFoundException, NoSuchWorkspaceException, AccessDeniedException, RepositoryException {
+	public String getCorrespondingNodePath(String workspaceName) throws RepositoryException {
 		return getNode().getCorrespondingNodePath(workspaceName);
 	}
 
@@ -298,12 +305,12 @@ public abstract class JcrNodeWrapper implements Node {
 	}
 
 	@Override
-	public void removeSharedSet() throws VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public void removeSharedSet() throws RepositoryException {
 		getNode().removeSharedSet();
 	}
 
 	@Override
-	public void removeShare() throws VersionException, LockException, ConstraintViolationException, RepositoryException {
+	public void removeShare() throws RepositoryException {
 		getNode().removeShare();
 	}
 
@@ -313,51 +320,61 @@ public abstract class JcrNodeWrapper implements Node {
 	}
 
 	@Override
-	public void restore(String versionName, boolean removeExisting) throws VersionException, ItemExistsException, UnsupportedRepositoryOperationException, LockException, InvalidItemStateException, RepositoryException {
+    @Deprecated
+    public void restore(String versionName, boolean removeExisting) throws RepositoryException {
 		getNode().restore(versionName, removeExisting);
 	}
 
 	@Override
-	public void restore(Version version, boolean removeExisting) throws VersionException, ItemExistsException, InvalidItemStateException, UnsupportedRepositoryOperationException, LockException, RepositoryException {
+    @Deprecated
+    public void restore(Version version, boolean removeExisting) throws RepositoryException {
 		getNode().restore(version, removeExisting);
 	}
 
 	@Override
-	public void restore(Version version, String relPath, boolean removeExisting) throws PathNotFoundException, ItemExistsException, VersionException, ConstraintViolationException, UnsupportedRepositoryOperationException, LockException, InvalidItemStateException, RepositoryException {
+    @Deprecated
+    public void restore(Version version, String relPath, boolean removeExisting) throws RepositoryException {
 		getNode().restore(version, relPath, removeExisting);
 	}
 
 	@Override
-	public void restoreByLabel(String versionLabel, boolean removeExisting) throws VersionException, ItemExistsException, UnsupportedRepositoryOperationException, LockException, InvalidItemStateException, RepositoryException {
+    @Deprecated
+	public void restoreByLabel(String versionLabel, boolean removeExisting) throws RepositoryException {
 		getNode().restoreByLabel(versionLabel, removeExisting);
 	}
 
 	@Override
-	public VersionHistory getVersionHistory() throws UnsupportedRepositoryOperationException, RepositoryException {
+    @Deprecated
+    public VersionHistory getVersionHistory() throws RepositoryException {
 		return getNode().getVersionHistory();
 	}
 
 	@Override
-	public Version getBaseVersion() throws UnsupportedRepositoryOperationException, RepositoryException {
+    @Deprecated
+	public Version getBaseVersion() throws RepositoryException {
 		return getNode().getBaseVersion();
 	}
 
 	@Override
-	public Lock lock(boolean isDeep, boolean isSessionScoped) throws UnsupportedRepositoryOperationException, LockException, AccessDeniedException, InvalidItemStateException, RepositoryException {
+    @Deprecated
+	public Lock lock(boolean isDeep, boolean isSessionScoped) throws RepositoryException {
 		return getNode().lock(isDeep, isSessionScoped);
 	}
 
 	@Override
-	public Lock getLock() throws UnsupportedRepositoryOperationException, LockException, AccessDeniedException, RepositoryException {
+    @Deprecated
+	public Lock getLock() throws RepositoryException {
 		return getNode().getLock();
 	}
 
 	@Override
-	public void unlock() throws UnsupportedRepositoryOperationException, LockException, AccessDeniedException, InvalidItemStateException, RepositoryException {
+    @Deprecated
+	public void unlock() throws RepositoryException {
 		getNode().unlock();
 	}
 
 	@Override
+    @Deprecated
 	public boolean holdsLock() throws RepositoryException {
 		return getNode().holdsLock();
 	}
@@ -368,12 +385,12 @@ public abstract class JcrNodeWrapper implements Node {
 	}
 
 	@Override
-	public void followLifecycleTransition(String transition) throws UnsupportedRepositoryOperationException, InvalidLifecycleTransitionException, RepositoryException {
+	public void followLifecycleTransition(String transition) throws RepositoryException {
 		getNode().followLifecycleTransition(transition);
 	}
 
 	@Override
-	public String[] getAllowedLifecycleTransistions() throws UnsupportedRepositoryOperationException, RepositoryException {
+	public String[] getAllowedLifecycleTransistions() throws RepositoryException {
 		return getNode().getAllowedLifecycleTransistions();
 	}
 
@@ -388,12 +405,12 @@ public abstract class JcrNodeWrapper implements Node {
 	}
 
 	@Override
-	public Item getAncestor(int depth) throws ItemNotFoundException, AccessDeniedException, RepositoryException {
+	public Item getAncestor(int depth) throws RepositoryException {
 		return getNode().getAncestor(depth);
 	}
 
 	@Override
-	public Node getParent() throws ItemNotFoundException, AccessDeniedException, RepositoryException {
+	public Node getParent() throws RepositoryException {
 		return getNode().getParent();
 	}
 
@@ -445,17 +462,18 @@ public abstract class JcrNodeWrapper implements Node {
 	}
 
 	@Override
-	public void save() throws AccessDeniedException, ItemExistsException, ConstraintViolationException, InvalidItemStateException, ReferentialIntegrityException, VersionException, LockException, NoSuchNodeTypeException, RepositoryException {
+    @Deprecated
+    public void save() throws RepositoryException {
 		getNode().save();
 	}
 
 	@Override
-	public void refresh(boolean keepChanges) throws InvalidItemStateException, RepositoryException {
+	public void refresh(boolean keepChanges) throws RepositoryException {
 		getNode().refresh(keepChanges);
 	}
 
 	@Override
-	public void remove() throws VersionException, LockException, ConstraintViolationException, AccessDeniedException, RepositoryException {
+	public void remove() throws RepositoryException {
 		getNode().remove();
 	}
 }

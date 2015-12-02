@@ -28,7 +28,6 @@ import java.util.function.Function;
  * The result of a jcr query. You can access to the actual result items using getItems(). This bean will also give you
  * information about the total number of available items, the current page number, the total number of pages.
  * @author fgiust
- * @version $Id$
  */
 public interface AdvancedResult  {
 
@@ -77,7 +76,7 @@ public interface AdvancedResult  {
     ResultIterator<AdvancedResultItem> getItems();
 
     /**
-     * Gets an iterator over the results, transforming objects using content2bean while iterating
+     * Gets an iterator over the results, transforming objects using the given function while iterating
      * @param <K> destination class.
 	 * @return an iterator over the results
      */
@@ -140,7 +139,6 @@ public interface AdvancedResult  {
 
     /**
      * @author fgiust
-     * @version $Id$
      */
     final class EmptyResultIterator implements ResultIterator<AdvancedResultItem> {
 

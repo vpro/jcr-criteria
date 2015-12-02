@@ -27,9 +27,7 @@ import java.util.function.IntSupplier;
 
 
 /**
- * @see JCRCriteriaFactory#createDirectJcrQuery(info.magnolia.cms.core.HierarchyManager, String, String)
  * @author fgiust
- * @version $Id$
  */
 public class DirectJcrQuery implements ExecutableQuery  {
 

@@ -27,7 +27,7 @@ import nl.vpro.jcr.criteria.advanced.impl.AdvancedCriteriaImpl;
  * @author fgrilli
  * @author fgiust
  * @author diego_schivo
- * @version $Id$
+ * @author Michiel Meeuwissen
  */
 public final class JCRCriteriaFactory {
 
