@@ -20,13 +20,15 @@
 package nl.vpro.jcr.criteria.advanced.impl;
 
 import nl.vpro.jcr.criteria.query.*;
-import org.apache.jackrabbit.api.query.JackrabbitQueryResult;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 import javax.jcr.query.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.function.Function;
 import java.util.function.IntSupplier;
 
@@ -124,8 +126,13 @@ public class AdvancedResultImpl implements AdvancedResult {
     public int getTotalSize() {
         if (totalResults == null) {
             int queryTotalSize = -1;
-            if (jcrQueryResult instanceof JackrabbitQueryResult) {
-                queryTotalSize = ((JackrabbitQueryResult) jcrQueryResult).getTotalSize();
+            try { // jcrQueryResult instanceof JackrabbitQueryResult) {
+                Method m = jcrQueryResult.getClass().getMethod("getTotalSize");
+                queryTotalSize = (int) m.invoke(jcrQueryResult);
+            } catch (InvocationTargetException | IllegalAccessException e) {
+                LOG.error(e.getMessage(), e);
+            } catch (NoSuchMethodException e) {
+
             }
             if (queryTotalSize == -1 && (itemsPerPage == 0 || applyLocalPaging)) {
                 try {

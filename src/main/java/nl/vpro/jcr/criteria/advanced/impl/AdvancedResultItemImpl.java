@@ -20,18 +20,16 @@
 package nl.vpro.jcr.criteria.advanced.impl;
 
 
-import nl.vpro.jcr.criteria.query.AdvancedResultItem;
-
-import java.lang.reflect.InvocationTargetException;
-
-import javax.jcr.*;
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
+import javax.jcr.Value;
 import javax.jcr.query.Row;
 
-import nl.vpro.jcr.criteria.utils.JcrNodeWrapper;
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.jackrabbit.commons.AbstractNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import nl.vpro.jcr.criteria.query.AdvancedResultItem;
+import nl.vpro.jcr.criteria.utils.JcrNodeWrapper;
 
 
 /**
@@ -79,14 +77,10 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
     @Override
     public double getScore() {
         try {
-            return (Double) PropertyUtils.getSimpleProperty(row, "score");
-        } catch (IllegalAccessException | InvocationTargetException e){
-            LOG.warn("Error getting score for {}", this.getHandle(), e);
-        } catch (NoSuchMethodException e) {
-            LOG
-                .error("Unsupported version of jackrabbit detected, you need at least 1.6.x or a jcr 2.0 compliant version");
+            return row.getScore();
+        } catch (RepositoryException e) {
+            LOG.error(e.getMessage(), e);
         }
-
         return 0;
     }
 
