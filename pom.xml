@@ -1,103 +1,82 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.sourceforge.openutils</groupId>
-  <artifactId>openutils-mgnlcriteria</artifactId>
-  <name>Criteria API for Magnolia CMS</name>
-  <version>6.0.1-SNAPSHOT</version>
-  <inceptionYear>2009</inceptionYear>
-  <description>A Hibernate's Criteria-like API to programmatically generate JCR queries with Magnolia</description>
+
+  <groupId>nl.vpro</groupId>
+  <artifactId>jcr-criteria</artifactId>
+  <name>Criteria API for JCR</name>
+  <version>1.0-SNAPSHOT</version>
+  <inceptionYear>2015</inceptionYear>
+  <description>A Hibernate's Criteria-like API to programmatically generate JCR queries</description>
+  <url>https://github.com/vpro/jcr-criteria</url>
+
   <licenses>
     <license>
       <name>GPLv3</name>
       <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
     </license>
   </licenses>
-  <url>http://www.openmindlab.com/lab/products/mgnlcriteria.html</url>
-  <issueManagement>
-    <system>jira</system>
-    <url>http://jira.openmindlab.com/browse/CRIT</url>
-  </issueManagement>
+
+  <developers>
+    <developer>
+      <id>mihxil</id>
+      <name>Michiel Meeuwissen</name>
+      <email>michiel.meeuwissen+github@gmail.com</email>
+      <url>http://www.meeuw.org</url>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+      <timezone>Europe/Amsterdam</timezone>
+    </developer>
+  </developers>
+
   <scm>
-    <connection>scm:git:git://git@github.com/vpro/openutils-mgnlcriteria.git</connection>
-    <developerConnection>scm:git:git@github.com:vpro/openutils-mgnlcriteria.git</developerConnection>
-    <url>https://github.com/vpro/openutils-mgnlcriteria</url>
+    <connection>scm:git:git://git@github.com/vpro/jcr-criteria.git</connection>
+    <developerConnection>scm:git:git@github.com:vpro/jcr-criteria.git</developerConnection>
+    <url>https://github.com/vpro/jcr-criteria</url>
     <tag>HEAD</tag>
   </scm>
+
+
   <build>
     <defaultGoal>install</defaultGoal>
-    <resources>
-      <resource>
-        <filtering>false</filtering>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>**/*</include>
-        </includes>
-      </resource>
-      <resource>
-        <filtering>true</filtering>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>META-INF/magnolia/*</include>
-        </includes>
-      </resource>
-    </resources>
     <plugins>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>bundle</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <descriptors>
-            <descriptor>${basedir}/src/main/assembly/assembly-bundle.xml</descriptor>
-          </descriptors>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila.maven-license-plugin</groupId>
-        <artifactId>maven-license-plugin</artifactId>
-        <version>1.5.0</version>
-        <configuration>
-          <header>src/main/etc/header.txt</header>
-          <includes>
-            <include>src/**/*.java</include>
-          </includes>
-          <properties>
-            <year>${project.inceptionYear}-2013</year>
-            <name>${project.name}</name>
-            <description>${project.description}</description>
-            <url>${project.url}</url>
-          </properties>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.5</version>
         <configuration>
           <useManifestOnlyJar>false</useManifestOnlyJar>
-          <!-- <forkMode>always</forkMode>-->
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.0</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <ProjectVersion>${project.version}</ProjectVersion>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.2</version>
+        <configuration>
+          <branchName>${project.version}</branchName>
+          <tagNameFormat>@{project.version}</tagNameFormat>
         </configuration>
       </plugin>
       <plugin>
@@ -111,34 +90,9 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>info.magnolia</groupId>
-      <artifactId>magnolia-core</artifactId>
-      <version>${magnolia.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>cglib</groupId>
-      <artifactId>cglib-nodep</artifactId>
-      <version>2.2</version>
-    </dependency>
-    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.5</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>1.7.5</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
-      <version>1.7.5</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.4</version>
+      <version>${slf4j.version}</version>
     </dependency>
     <dependency>
       <groupId>javax.jcr</groupId>
@@ -146,34 +100,9 @@
       <version>${jcr.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.jackrabbit</groupId>
-      <artifactId>jackrabbit-core</artifactId>
-      <version>${jackrabbit.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>info.magnolia</groupId>
-      <artifactId>magnolia-core</artifactId>
-      <classifier>tests</classifier>
-      <version>${magnolia.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>net.sourceforge.openutils</groupId>
-      <artifactId>openutils-mgnltests</artifactId>
-      <version>5.0.10</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
-      <scope>provided</scope>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.1</version>
     </dependency>
     <!--
     <dependency>
@@ -181,32 +110,87 @@
       <artifactId>testng</artifactId>
       <version>6.0.1</version>
       <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     -->
 
   </dependencies>
+
   <properties>
-    <magnolia.version>5.4.2</magnolia.version>
-    <jackrabbit.version>2.8.0</jackrabbit.version><!-- doesn't work properly with jackrabbit > 2.6.1 -->
     <jcr.version>2.0</jcr.version>
+    <slf4j.version>1.7.13</slf4j.version>
   </properties>
-  <!-- test running maven with -Djcr.version=2.0 -Djackrabbit.version=2.0.0 -Djcr.version=2.0 -Djackrabbit.version=2.1.0 -->
+
+
+  <profiles>
+    <profile>
+      <id>deploy</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.5</version>
+            <extensions>true</extensions>
+            <configuration>
+              <serverId>ossrh</serverId>
+              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.4</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.10.3</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
   <distributionManagement>
-    <repository>
-      <id>nexus</id>
-      <name>Nexus releases</name>
-      <url>http://nexus.vpro.nl/content/repositories/releases</url>
-    </repository>
     <snapshotRepository>
-      <id>nexus</id>
-      <name>Nexus snapshots</name>
-      <url>http://nexus.vpro.nl/content/repositories/snapshots</url>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
+    <repository>
+      <id>ossrh-release</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
   </distributionManagement>
+
 </project>

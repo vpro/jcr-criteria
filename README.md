@@ -1,11 +1,13 @@
+[![Build Status](https://travis-ci.org/mihxil/jcr-criteria.svg?)](https://travis-ci.org/mihxil/jcr-criteria)
+
 # openutils-mgnlcriteria
 
 
+This was branced from vpro/openutils-mgnlcriteria which was itself branched from 
+
 http://www.openmindlab.com/lab/products/mgnlcriteria.html
 
-Seems not to be supported any more. We branched it therefore.
+Here I was targeting to completely remove the Magnolia dependency and make a generic jrc-criteria implementation.
 
-Fixed (hopefully)
-=================
+Download from: https://oss.sonatype.org/content/repositories/snapshots/org/meeuw/jcr-criteria/
 
-- Works with Mangolia 5/ Jackrabit 2.8
