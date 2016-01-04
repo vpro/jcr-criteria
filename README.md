@@ -20,7 +20,7 @@ Criteria criteria = JCRCriteriaFactory.createCriteria()
             .setPaging(1, 1)
             .addOrder(Order.ascending(field))
             .add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, NodeTypes.Page.NAME))
-            .add(new InCriterion("@" + NodeTypes.Renderable.TEMPLATE, templates))
+            .add(Restrictions.in("@" + NodeTypes.Renderable.TEMPLATE, templates))
             .add(Restrictions.gt(field, begin));
 
 
