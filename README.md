@@ -45,7 +45,7 @@ The Magnolia dependency is completely removed and this is now a generic jrc-crit
 Download  the most recent jar from: https://oss.sonatype.org/content/repositories/snapshots/nl/vpro/jcr-criteria/
 
 Or you can add this to your pom.xml
-```
+```xml
 <dependency>
     <groupId>nl.vpro</groupId>
     <artifactId>jcr-criteria</artifactId>
