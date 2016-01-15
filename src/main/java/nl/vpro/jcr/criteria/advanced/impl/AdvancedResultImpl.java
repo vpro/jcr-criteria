@@ -35,7 +35,6 @@ import java.util.function.IntSupplier;
 
 /**
  * @author fgiust
- * @version $Id$
  */
 public class AdvancedResultImpl implements AdvancedResult {
 

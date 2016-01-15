@@ -211,7 +211,12 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
                 return countCriteria.execute(session).getTotalSize();
             } finally {
-                log.info("Total size was not available, determining it costed {} ms", TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS));
+                long duration = TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
+                if (duration > 50) {
+                    log.info("Total size was not available, determining it took {} ms", duration);
+                } else {
+                    log.debug("Total size was not available, determining it took {} ms", duration);
+                }
             }
         };
     }
