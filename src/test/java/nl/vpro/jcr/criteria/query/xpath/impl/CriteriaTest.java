@@ -22,16 +22,17 @@ package nl.vpro.jcr.criteria.query.xpath.impl;
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
 import nl.vpro.jcr.criteria.query.criterion.Junction;
+import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.criterion.Restrictions;
-
-import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
 
 
 /**
  * @author fgiust
  */
-public class MagnoliaCriteriaTest {
+public class CriteriaTest {
 
     @Test
     public void testSimple() {
@@ -43,7 +44,7 @@ public class MagnoliaCriteriaTest {
         conjunction.add(Restrictions.eq("@anotherproperty", "anothertest"));
 
         String xpathExpression = criteria.toXpathExpression();
-        Assert.assertEquals(
+        assertEquals(
             "//site//*[(( (@property='test')  and  (@anotherproperty='anothertest') ) )] ",
             xpathExpression);
 
@@ -59,7 +60,7 @@ public class MagnoliaCriteriaTest {
         conjunction.add(Restrictions.eq("@anotherproperty", Boolean.TRUE));
 
         String xpathExpression = criteria.toXpathExpression();
-        Assert.assertEquals(
+        assertEquals(
             "//site//*[(( ((@property=false) or not(@property )) or  (@anotherproperty=true) ) )] ",
             xpathExpression);
 
@@ -79,8 +80,7 @@ public class MagnoliaCriteriaTest {
         criteria.add(conjunction);
 
         String xpathExpression = criteria.toXpathExpression();
-        Assert.assertEquals("//site//*[( (@property='test')  )] ", xpathExpression);
-
+        assertEquals("//site//*[( (@property='test')  )] ", xpathExpression);
     }
 
     /**
@@ -93,7 +93,7 @@ public class MagnoliaCriteriaTest {
         criteria.add(Restrictions.eq("@property", "test"));
         String xpathExpression = criteria.toXpathExpression();
 
-        Assert.assertEquals(xpathExpression, "//one/two/_x0033_three/fo_x002c_ur//*[( (@property='test')  )] ");
+        assertEquals(xpathExpression, "//one/two/_x0033_three/fo_x002c_ur//*[( (@property='test')  )] ");
     }
 
     /**
@@ -106,7 +106,7 @@ public class MagnoliaCriteriaTest {
         criteria.add(Restrictions.eq("@property", "test"));
         String xpathExpression = criteria.toXpathExpression();
 
-        Assert.assertEquals(
+        assertEquals(
             xpathExpression,
             "//path/with_x0028_paren_x002c_thesis_x0029_/test//*[( (@property='test')  )] ");
     }
@@ -121,7 +121,7 @@ public class MagnoliaCriteriaTest {
         criteria.add(Restrictions.eq("@property", "test"));
         String xpathExpression = criteria.toXpathExpression();
 
-        Assert.assertEquals(xpathExpression, "/jcr:root///element(* , mgnl:media)[( (@property='test')  )] ");
+        assertEquals(xpathExpression, "/jcr:root///element(* , mgnl:media)[( (@property='test')  )] ");
     }
 
     /**
@@ -134,6 +134,40 @@ public class MagnoliaCriteriaTest {
         criteria.add(Restrictions.eq("@property", "test"));
         String xpathExpression = criteria.toXpathExpression();
 
-        Assert.assertEquals(xpathExpression, "/jcr:root//*[@jcr:uuid='xxxx-xxxx']//*[( (@property='test')  )] ");
+        assertEquals(xpathExpression, "/jcr:root//*[@jcr:uuid='xxxx-xxxx']//*[( (@property='test')  )] ");
+    }
+
+    @Test
+    public void testEquals() {
+        Criteria criteria1 = JCRCriteriaFactory.createCriteria()
+                .setBasePath("//site//*")
+                .setPaging(10, 5)
+                .add(Restrictions.eq("@property", "test"))
+                .addOrder(Order.desc("@date"));
+
+        Criteria criteria2 = JCRCriteriaFactory.createCriteria()
+                .setBasePath("//site//*")
+                .setPaging(10, 5)
+                .add(Restrictions.eq("@property", "test"))
+                .addOrder(Order.desc("@date"));
+
+        assertEquals(criteria1, criteria2);
+    }
+
+    @Test
+    public void testHashCode() {
+        Criteria criteria1 = JCRCriteriaFactory.createCriteria()
+                .setBasePath("//site//*")
+                .setPaging(10, 5)
+                .add(Restrictions.eq("@property", "test"))
+                .addOrder(Order.desc("@date"));
+
+        Criteria criteria2 = JCRCriteriaFactory.createCriteria()
+                .setBasePath("//site//*")
+                .setPaging(10, 5)
+                .add(Restrictions.eq("@property", "test"))
+                .addOrder(Order.desc("@date"));
+
+        assertEquals(criteria1.hashCode(), criteria2.hashCode());
     }
 }

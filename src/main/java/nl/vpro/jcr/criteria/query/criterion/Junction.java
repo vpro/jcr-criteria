@@ -38,7 +38,7 @@ public class Junction implements Criterion {
 
     private static final long serialVersionUID = 4745761472724863693L;
 
-    private final List<Criterion> criteria = new ArrayList<Criterion>();
+    private final List<Criterion> criteria = new ArrayList<>();
 
     private final String op;
 
@@ -95,5 +95,24 @@ public class Junction implements Criterion {
      */
     public boolean isEmpty() {
         return criteria.isEmpty();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Junction junction = (Junction) o;
+
+        if (criteria != null ? !criteria.equals(junction.criteria) : junction.criteria != null) return false;
+        return op != null ? op.equals(junction.op) : junction.op == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = criteria != null ? criteria.hashCode() : 0;
+        result = 31 * result + (op != null ? op.hashCode() : 0);
+        return result;
     }
 }

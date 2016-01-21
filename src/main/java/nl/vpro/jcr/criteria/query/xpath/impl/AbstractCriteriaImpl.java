@@ -41,7 +41,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.IntSupplier;
 
-
 /**
  * A generic Criteria implementation.
  * @author fgrilli
@@ -73,7 +72,6 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         return Collections.unmodifiableCollection(criterionEntries);
     }
 
-
     @Override
     public Collection<OrderEntry> getOrderEntries() {
         return Collections.unmodifiableCollection(orderEntries);
@@ -97,7 +95,6 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         orderEntries.add(new OrderEntry(Order.desc("@jcr:score"), this));
         return this;
     }
-
 
     @Override
     public Criteria setBasePath(String path) {
@@ -125,7 +122,6 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         return offset;
     }
 
-
     @Override
     public Criteria setFirstResult(int firstResult) {
         this.offset = firstResult;
@@ -140,7 +136,6 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         return maxResults;
     }
 
-
     @Override
     public Criteria setMaxResults(int maxResults) {
         this.maxResults = maxResults;
@@ -153,7 +148,6 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         this.offset = (Math.max(pageNumberStartingFromOne, 1) - 1) * maxResults;
         return this;
     }
-
 
     @Override
     public Criteria setSpellCheckString(String spellCheckString) {
@@ -174,10 +168,8 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         statement.setRoot(XPathTextUtils.encodeDigitsInPath(this.path));
         statement.setPredicate(translator.getPredicate());
         statement.setOrderByClause(translator.getOrderBy());
-        String stmt = statement.toStatementString();
-        return stmt;
+        return statement.toStatementString();
     }
-
 
     @Override
     public AdvancedResult execute(Session session) {
@@ -221,4 +213,33 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         };
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AbstractCriteriaImpl that = (AbstractCriteriaImpl) o;
+
+        if (maxResults != that.maxResults) return false;
+        if (offset != that.offset) return false;
+        if (forcePagingWithDocumentOrder != that.forcePagingWithDocumentOrder) return false;
+        if (path != null ? !path.equals(that.path) : that.path != null) return false;
+        if (criterionEntries != null ? !criterionEntries.equals(that.criterionEntries) : that.criterionEntries != null)
+            return false;
+        if (orderEntries != null ? !orderEntries.equals(that.orderEntries) : that.orderEntries != null) return false;
+        return spellCheckString != null ? spellCheckString.equals(that.spellCheckString) : that.spellCheckString == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = path != null ? path.hashCode() : 0;
+        result = 31 * result + (criterionEntries != null ? criterionEntries.hashCode() : 0);
+        result = 31 * result + (orderEntries != null ? orderEntries.hashCode() : 0);
+        result = 31 * result + maxResults;
+        result = 31 * result + offset;
+        result = 31 * result + (spellCheckString != null ? spellCheckString.hashCode() : 0);
+        result = 31 * result + (forcePagingWithDocumentOrder ? 1 : 0);
+        return result;
+    }
 }

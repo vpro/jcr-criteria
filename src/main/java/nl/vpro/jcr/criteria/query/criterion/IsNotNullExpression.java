@@ -22,7 +22,6 @@ package nl.vpro.jcr.criteria.query.criterion;
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
 
-
 /**
  * @author fgrilli
  */
@@ -40,8 +39,25 @@ public class IsNotNullExpression implements Criterion {
     public String toString() {
         return nodeName;
     }
+
     @Override
     public String toXPathString(Criteria criteria) throws JCRQueryException {
         return " " + nodeName + " ";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        IsNotNullExpression that = (IsNotNullExpression) o;
+
+        return nodeName != null ? nodeName.equals(that.nodeName) : that.nodeName == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return nodeName != null ? nodeName.hashCode() : 0;
     }
 }

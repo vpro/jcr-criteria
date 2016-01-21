@@ -69,6 +69,22 @@ public interface TranslatableCriteria extends Criteria {
         public String toString() {
             return criterion.toString();
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            CriterionEntry that = (CriterionEntry) o;
+
+            return criterion != null ? criterion.equals(that.criterion) : that.criterion == null;
+
+        }
+
+        @Override
+        public int hashCode() {
+            return criterion != null ? criterion.hashCode() : 0;
+        }
     }
 
     final class OrderEntry implements Serializable {
@@ -95,6 +111,22 @@ public interface TranslatableCriteria extends Criteria {
         @Override
         public String toString() {
             return order.toString();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            OrderEntry that = (OrderEntry) o;
+
+            return order != null ? order.equals(that.order) : that.order == null;
+
+        }
+
+        @Override
+        public int hashCode() {
+            return order != null ? order.hashCode() : 0;
         }
     }
 }

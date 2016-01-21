@@ -48,4 +48,20 @@ public class IsNullExpression extends BaseCriterion implements Criterion {
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        IsNullExpression that = (IsNullExpression) o;
+
+        return nodeName != null ? nodeName.equals(that.nodeName) : that.nodeName == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return nodeName != null ? nodeName.hashCode() : 0;
+    }
 }

@@ -49,4 +49,20 @@ public class LikeExpression extends JCRFunctionExpression {
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LikeExpression that = (LikeExpression) o;
+
+        return matchMode != null ? matchMode.equals(that.matchMode) : that.matchMode == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return matchMode != null ? matchMode.hashCode() : 0;
+    }
 }

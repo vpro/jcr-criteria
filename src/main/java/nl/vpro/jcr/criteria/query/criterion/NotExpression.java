@@ -48,4 +48,20 @@ public class NotExpression extends BaseCriterion implements Criterion {
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        NotExpression that = (NotExpression) o;
+
+        return expression != null ? expression.equals(that.expression) : that.expression == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return expression != null ? expression.hashCode() : 0;
+    }
 }
