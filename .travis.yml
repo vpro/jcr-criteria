@@ -2,7 +2,7 @@ language: java
 env:
  global:
   - SONATYPE_USERNAME=mihxil
-  - secure: Xe9cNQJI3b8zfcQxTCXOKefowBCQQ30k/bs9LYk5CwrUuU7Y2Kcs7+NZpWLmnNHblfPT9QBUwyrL8sy/Vw4toWNQMXcktSJllzKVSdeo7bo7bg83sGKXahx1HERE8poTdSmp58uUSTM/YgYARftOBA/puCl/2xBNMNOQtLGBPYA=
+  - secure: "fsMUg51Uba0CCa2I0IuBl8DHA0FhXBi1oIq2ehtdgQ1IF19TvGzbtpkDUmMasxW0L3fZB3XU98QhuZ5W4bQbLRc5Qm1GTudBE1tY40v0VZkkSrQiEMUzi3/3xJeoNXLbVcYjAV19tImpk0j4k1Dm5CF3QdQ4B7OJS+Q+E/JNB2o="
 
 jdk:
 - oraclejdk8
@@ -12,4 +12,4 @@ sudo: false
 script: mvn clean test install
 
 after_success:
-- mvn deploy --settings travis-settings.xml -DskipTests=true -B
+- mvn -Pdeploy deploy --settings travis-settings.xml -DskipTests=true -Dgpg.skip=true  -B
