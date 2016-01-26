@@ -114,6 +114,11 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         return this;
     }
 
+    @Override
+    public String getBasePath() {
+        return path;
+    }
+
     /**
      * Returns the firstResult.
      * @return the firstResult

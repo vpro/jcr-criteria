@@ -143,6 +143,8 @@ public interface Criteria extends ExecutableQuery {
      */
     Criteria setBasePath(String path);
 
+    String getBasePath();
+
     /**
      * @param itemsPerPage maximum number of results per page (i.e. page size)
      * @param pageNumberStartingFromOne page number to retrieve (1, 2, 3, ...)
