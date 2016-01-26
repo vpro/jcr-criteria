@@ -25,7 +25,6 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * A simple XPATH <tt>SELECT</tt> statement
  * @author Federico Grilli
- * @version $Id$
  */
 public class XPathSelect {
 

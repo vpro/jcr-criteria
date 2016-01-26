@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
  * A utility class to escape xpath strings
  * @author fgiust
  * @author fgrilli
- * @version $Id$
  */
 public final class XPathTextUtils {
 
@@ -117,70 +116,40 @@ public final class XPathTextUtils {
         boolean xpathWithFunction = false;
 
         // TODO maybe a more robust check is needed
-        for (int i = 0; i < path.length(); ++i)
-        {
+        for (int i = 0; i < path.length(); ++i) {
             char ch = path.charAt(i);
 
-            if (i > 0 && path.charAt(i - 1) == '/' && Character.isDigit(ch))
-            {
-                encodedPath.append("_x" + StringUtils.leftPad(Integer.toHexString(ch), 4, '0') + "_");
-            }
-            else if (i > 0 && path.charAt(i - 1) == '/' && ch == '-')
-            {
+            if (i > 0 && path.charAt(i - 1) == '/' && Character.isDigit(ch)) {
+                encodedPath.append("_x").append(StringUtils.leftPad(Integer.toHexString(ch), 4, '0')).append("_");
+            } else if (i > 0 && path.charAt(i - 1) == '/' && ch == '-') {
                 encodedPath.append("_x002d_");
-            }
-            else if (inXpathCondition <= 0 && ch == ' ')
-            {
+            } else if (inXpathCondition <= 0 && ch == ' ') {
                 encodedPath.append("_x0020_");
-            }
-            else if (inXpathCondition <= 0 && ch == ',')
-            {
+            } else if (inXpathCondition <= 0 && ch == ',') {
                 encodedPath.append("_x002c_");
-            }
-            // CRIT-53
-            else if (inXpathCondition <= 0 && ch == '\u00b0')
-            {
+            } else if (inXpathCondition <= 0 && ch == '\u00b0') { // CRIT-53
                 encodedPath.append("_x00b0_");
-            }
-            // CRIT-54
-            else if (inXpathCondition <= 0 && ch == '$')
-            {
+            } else if (inXpathCondition <= 0 && ch == '$') { // CRIT-54
                 encodedPath.append("_x0024_");
-            }
-            else
-            {
-
-                if (ch == '[')
-                {
+            } else {
+                if (ch == '[') {
                     inXpathCondition++;
-                }
-                else if (ch == '(')
-                {
+                } else if (ch == '(') {
                     // "(" is the beginning of an expression only when used with the element() function
-                    if (StringUtils.endsWith(StringUtils.substring(path, 0, i), "element"))
-                    {
+                    if (StringUtils.endsWith(StringUtils.substring(path, 0, i), "element")) {
                         inXpathCondition++;
                         xpathWithFunction = true;
-                    }
-                    else if (inXpathCondition == 0)
-                    {
+                    } else if (inXpathCondition == 0) {
                         encodedPath.append("_x0028_");
                         continue;
                     }
-                }
-                else if (inXpathCondition > 0 && ch == ']')
-                {
+                } else if (inXpathCondition > 0 && ch == ']') {
                     inXpathCondition--;
-                }
-                else if (ch == ')')
-                {
-                    if (inXpathCondition > 0 && xpathWithFunction)
-                    {
+                } else if (ch == ')') {
+                    if (inXpathCondition > 0 && xpathWithFunction) {
                         inXpathCondition--;
                         xpathWithFunction = false;
-                    }
-                    else if (inXpathCondition == 0)
-                    {
+                    } else if (inXpathCondition == 0) {
                         encodedPath.append("_x0029_");
                         continue;
                     }
@@ -197,10 +166,8 @@ public final class XPathTextUtils {
      * @param date input calendar
      * @return XSD formatted date
      */
-    public static String toXsdDate(Calendar date)
-    {
-        if (date == null)
-        {
+    public static String toXsdDate(Calendar date) {
+        if (date == null) {
             return null;
         }
 
