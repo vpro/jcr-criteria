@@ -108,7 +108,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
                 this.path = Criterion.ALL_ELEMENTS;
             } else {
                 // the handle already starts with a single '/', so prepend another one
-                this.path = "/" + StringUtils.defaultString(StringUtils.removeEnd(path, "/")) + "//*";
+                this.path = "/jcr:root" + StringUtils.defaultString(StringUtils.removeEnd(path, "/")) + "//*";
             }
         }
         return this;

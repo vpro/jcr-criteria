@@ -35,8 +35,29 @@ import static org.testng.Assert.assertEquals;
 public class CriteriaTest {
 
     @Test
+    public void testWithAbsoluteNodePath() {
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/site");
+        String xpathExpression = criteria.toXpathExpression();
+        assertEquals(xpathExpression, "/jcr:root/site//*");
+    }
+
+    @Test
+    public void testXPathEscaping() {
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/3voor12/nieuws");
+        String xpathExpression = criteria.toXpathExpression();
+        assertEquals(xpathExpression, "/jcr:root/_x0033_voor12/nieuws//*");
+    }
+
+    @Test
+    public void testWithXPathExpression() {
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/jcr:root/site//*");
+        String xpathExpression = criteria.toXpathExpression();
+        assertEquals(xpathExpression, "/jcr:root/site//*");
+    }
+
+    @Test
     public void testSimple() {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("//site//*");
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/site");
 
         Junction conjunction = Restrictions.conjunction();
         criteria.add(conjunction);
@@ -44,15 +65,12 @@ public class CriteriaTest {
         conjunction.add(Restrictions.eq("@anotherproperty", "anothertest"));
 
         String xpathExpression = criteria.toXpathExpression();
-        assertEquals(
-            "//site//*[(( (@property='test')  and  (@anotherproperty='anothertest') ) )] ",
-            xpathExpression);
-
+        assertEquals(xpathExpression, "/jcr:root/site//*[(( (@property='test')  and  (@anotherproperty='anothertest') ) )] ");
     }
 
     @Test
     public void testBooleanProperty() {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("//site//*");
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/jcr:root/site//*");
 
         Junction conjunction = Restrictions.disjunction();
         criteria.add(conjunction);
@@ -60,10 +78,7 @@ public class CriteriaTest {
         conjunction.add(Restrictions.eq("@anotherproperty", Boolean.TRUE));
 
         String xpathExpression = criteria.toXpathExpression();
-        assertEquals(
-            "//site//*[(( ((@property=false) or not(@property )) or  (@anotherproperty=true) ) )] ",
-            xpathExpression);
-
+        assertEquals(xpathExpression, "/jcr:root/site//*[(( ((@property=false) or not(@property )) or  (@anotherproperty=true) ) )] ");
     }
 
     /**
@@ -72,7 +87,7 @@ public class CriteriaTest {
     @Test
     public void testEmptyConjuntion()
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("//site//*");
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/jcr:root/site//*");
 
         criteria.add(Restrictions.eq("@property", "test"));
 
@@ -80,7 +95,7 @@ public class CriteriaTest {
         criteria.add(conjunction);
 
         String xpathExpression = criteria.toXpathExpression();
-        assertEquals("//site//*[( (@property='test')  )] ", xpathExpression);
+        assertEquals(xpathExpression, "/jcr:root/site//*[( (@property='test')  )] ");
     }
 
     /**
@@ -93,7 +108,7 @@ public class CriteriaTest {
         criteria.add(Restrictions.eq("@property", "test"));
         String xpathExpression = criteria.toXpathExpression();
 
-        assertEquals(xpathExpression, "//one/two/_x0033_three/fo_x002c_ur//*[( (@property='test')  )] ");
+        assertEquals(xpathExpression, "/jcr:root/one/two/_x0033_three/fo_x002c_ur//*[( (@property='test')  )] ");
     }
 
     /**
@@ -105,10 +120,7 @@ public class CriteriaTest {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/path/with(paren,thesis)/test");
         criteria.add(Restrictions.eq("@property", "test"));
         String xpathExpression = criteria.toXpathExpression();
-
-        assertEquals(
-            xpathExpression,
-            "//path/with_x0028_paren_x002c_thesis_x0029_/test//*[( (@property='test')  )] ");
+        assertEquals(xpathExpression, "/jcr:root/path/with_x0028_paren_x002c_thesis_x0029_/test//*[( (@property='test')  )] ");
     }
 
     /**
@@ -140,13 +152,13 @@ public class CriteriaTest {
     @Test
     public void testEquals() {
         Criteria criteria1 = JCRCriteriaFactory.createCriteria()
-                .setBasePath("//site//*")
+                .setBasePath("/jcr:root/site//*")
                 .setPaging(10, 5)
                 .add(Restrictions.eq("@property", "test"))
                 .addOrder(Order.desc("@date"));
 
         Criteria criteria2 = JCRCriteriaFactory.createCriteria()
-                .setBasePath("//site//*")
+                .setBasePath("/jcr:root/site//*")
                 .setPaging(10, 5)
                 .add(Restrictions.eq("@property", "test"))
                 .addOrder(Order.desc("@date"));
@@ -157,13 +169,13 @@ public class CriteriaTest {
     @Test
     public void testHashCode() {
         Criteria criteria1 = JCRCriteriaFactory.createCriteria()
-                .setBasePath("//site//*")
+                .setBasePath("/jcr:root/site//*")
                 .setPaging(10, 5)
                 .add(Restrictions.eq("@property", "test"))
                 .addOrder(Order.desc("@date"));
 
         Criteria criteria2 = JCRCriteriaFactory.createCriteria()
-                .setBasePath("//site//*")
+                .setBasePath("/jcr:root/site//*")
                 .setPaging(10, 5)
                 .add(Restrictions.eq("@property", "test"))
                 .addOrder(Order.desc("@date"));
