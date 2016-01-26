@@ -138,7 +138,7 @@ public interface Criteria extends ExecutableQuery {
 
     /**
      * Sets the base path of the query, i.e. the branch in the repository tree where the search will take place
-     * @param path the handle of a node, or a xpath query prefix in the form //handle/of/a/node//*
+     * @param path the /handle/of/a/node, or a xpath query prefix in the form /jcr:root/handle/of/a/node//*
      * @return this (for method chaining)
      */
     Criteria setBasePath(String path);
