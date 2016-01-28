@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import nl.vpro.jcr.criteria.query.criterion.Criterion;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.slf4j.Logger;
@@ -210,4 +211,19 @@ public final class XPathTextUtils {
         return StringUtils.substring(xsdDate, 0, length - 2) + ":" + StringUtils.substring(xsdDate, length - 2, length);
     }
 
+    public static String toXPath(String path) {
+        if (!isValidNodePath(path)) {
+            throw new IllegalArgumentException("Path " + path + " is not a valid JCR node path");
+        }
+
+        if (path.equals("/")) {
+            return Criterion.ALL_ELEMENTS;
+        }
+
+        return encodeDigitsInPath(Criterion.JCR_ROOT + StringUtils.removeEnd(path, "/") + "//*");
+    }
+
+    private static boolean isValidNodePath(String path) {
+        return path != null && path.startsWith("/") && !path.contains("//") && !path.contains("*");
+    }
 }

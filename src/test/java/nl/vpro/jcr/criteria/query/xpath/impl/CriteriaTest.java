@@ -49,13 +49,6 @@ public class CriteriaTest {
     }
 
     @Test
-    public void testWithXPathExpression() {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/jcr:root/site//*");
-        String xpathExpression = criteria.toXpathExpression();
-        assertEquals(xpathExpression, "/jcr:root/site//*");
-    }
-
-    @Test
     public void testSimple() {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/site");
 
@@ -70,7 +63,7 @@ public class CriteriaTest {
 
     @Test
     public void testBooleanProperty() {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/jcr:root/site//*");
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/site");
 
         Junction conjunction = Restrictions.disjunction();
         criteria.add(conjunction);
@@ -87,7 +80,7 @@ public class CriteriaTest {
     @Test
     public void testEmptyConjuntion()
     {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/jcr:root/site//*");
+        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/site");
 
         criteria.add(Restrictions.eq("@property", "test"));
 
@@ -121,32 +114,6 @@ public class CriteriaTest {
         criteria.add(Restrictions.eq("@property", "test"));
         String xpathExpression = criteria.toXpathExpression();
         assertEquals(xpathExpression, "/jcr:root/path/with_x0028_paren_x002c_thesis_x0029_/test//*[( (@property='test')  )] ");
-    }
-
-    /**
-     * Test for CRIT-40
-     */
-    @Test
-    public void testDontEscapeExpressions()
-    {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/jcr:root///element(* , mgnl:media)");
-        criteria.add(Restrictions.eq("@property", "test"));
-        String xpathExpression = criteria.toXpathExpression();
-
-        assertEquals(xpathExpression, "/jcr:root///element(* , mgnl:media)[( (@property='test')  )] ");
-    }
-
-    /**
-     * Test for CRIT-40
-     */
-    @Test
-    public void testDontEscapeExpressions2()
-    {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/jcr:root//*[@jcr:uuid='xxxx-xxxx']//*");
-        criteria.add(Restrictions.eq("@property", "test"));
-        String xpathExpression = criteria.toXpathExpression();
-
-        assertEquals(xpathExpression, "/jcr:root//*[@jcr:uuid='xxxx-xxxx']//*[( (@property='test')  )] ");
     }
 
     @Test

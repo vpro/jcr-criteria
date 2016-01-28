@@ -98,19 +98,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     @Override
     public Criteria setBasePath(String path) {
-        // check if the specified path is already an xpath query
-        if (StringUtils.contains(path, "*")) {
-            this.path = path;
-        } else {
-            // convert the node handle to a xpath query
-            if (StringUtils.isEmpty(StringUtils.remove(path, '/'))) {
-                // root node
-                this.path = Criterion.ALL_ELEMENTS;
-            } else {
-                // the handle already starts with a single '/', so prepend another one
-                this.path = "/jcr:root" + StringUtils.defaultString(StringUtils.removeEnd(path, "/")) + "//*";
-            }
-        }
+        this.path = path;
         return this;
     }
 
@@ -170,7 +158,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     public String toXpathExpression() {
         JCRMagnoliaCriteriaQueryTranslator translator = new JCRMagnoliaCriteriaQueryTranslator(this);
         XPathSelect statement = new XPathSelect();
-        statement.setRoot(XPathTextUtils.encodeDigitsInPath(this.path));
+        statement.setRoot(XPathTextUtils.toXPath(path));
         statement.setPredicate(translator.getPredicate());
         statement.setOrderByClause(translator.getOrderBy());
         return statement.toStatementString();
