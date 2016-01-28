@@ -27,7 +27,6 @@ import nl.vpro.jcr.criteria.query.xpath.impl.AbstractCriteriaImpl;
  * @author Michiel Meeuwissen
  */
 public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
-
 	public AdvancedCriteriaImpl() {
 		super();
 	}
