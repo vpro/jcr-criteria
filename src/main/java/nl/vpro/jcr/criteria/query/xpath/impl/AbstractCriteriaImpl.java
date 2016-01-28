@@ -98,6 +98,9 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     @Override
     public Criteria setBasePath(String path) {
+        if (!XPathTextUtils.isValidNodePath(path)) {
+            throw new IllegalArgumentException("Path " + path + " is not a valid node path");
+        }
         this.path = path;
         return this;
     }

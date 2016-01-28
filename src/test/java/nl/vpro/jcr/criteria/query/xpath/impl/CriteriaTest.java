@@ -104,28 +104,21 @@ public class CriteriaTest {
         assertEquals(xpathExpression, "/jcr:root/one/two/_x0033_three/fo_x002c_ur//*[( (@property='test')  )] ");
     }
 
-    /**
-     * Test for CRIT-40
-     */
-    @Test
-    public void testDontEscapeBasePathWithParenthesis()
-    {
-        Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/path/with(paren,thesis)/test");
-        criteria.add(Restrictions.eq("@property", "test"));
-        String xpathExpression = criteria.toXpathExpression();
-        assertEquals(xpathExpression, "/jcr:root/path/with_x0028_paren_x002c_thesis_x0029_/test//*[( (@property='test')  )] ");
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testBasePathShouldBeValidNodePath() {
+        JCRCriteriaFactory.createCriteria().setBasePath("//site//*");
     }
 
     @Test
     public void testEquals() {
         Criteria criteria1 = JCRCriteriaFactory.createCriteria()
-                .setBasePath("/jcr:root/site//*")
+                .setBasePath("/site")
                 .setPaging(10, 5)
                 .add(Restrictions.eq("@property", "test"))
                 .addOrder(Order.desc("@date"));
 
         Criteria criteria2 = JCRCriteriaFactory.createCriteria()
-                .setBasePath("/jcr:root/site//*")
+                .setBasePath("/site")
                 .setPaging(10, 5)
                 .add(Restrictions.eq("@property", "test"))
                 .addOrder(Order.desc("@date"));
@@ -136,13 +129,13 @@ public class CriteriaTest {
     @Test
     public void testHashCode() {
         Criteria criteria1 = JCRCriteriaFactory.createCriteria()
-                .setBasePath("/jcr:root/site//*")
+                .setBasePath("/site")
                 .setPaging(10, 5)
                 .add(Restrictions.eq("@property", "test"))
                 .addOrder(Order.desc("@date"));
 
         Criteria criteria2 = JCRCriteriaFactory.createCriteria()
-                .setBasePath("/jcr:root/site//*")
+                .setBasePath("/site")
                 .setPaging(10, 5)
                 .add(Restrictions.eq("@property", "test"))
                 .addOrder(Order.desc("@date"));

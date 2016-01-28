@@ -190,7 +190,7 @@ public final class XPathTextUtils {
         return encodeDigitsInPath(Criterion.JCR_ROOT + StringUtils.removeEnd(path, "/") + "//*");
     }
 
-    private static boolean isValidNodePath(String path) {
-        return path != null && path.startsWith("/") && !path.contains("//") && !path.contains("*");
+    public static boolean isValidNodePath(String path) {
+        return path != null && path.startsWith("/") && !path.contains("//") && !path.contains("*") && !path.contains("(") && !path.contains(")");
     }
 }
