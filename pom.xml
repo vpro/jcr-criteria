@@ -4,7 +4,7 @@
   <groupId>nl.vpro</groupId>
   <artifactId>jcr-criteria</artifactId>
   <name>Criteria API for JCR</name>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.2-SNAPSHOT</version>
   <inceptionYear>2015</inceptionYear>
   <description>A Hibernate's Criteria-like API to programmatically generate JCR queries</description>
   <url>https://github.com/vpro/jcr-criteria</url>
@@ -112,6 +112,12 @@
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
       <version>6.0.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
       <scope>test</scope>
     </dependency>
 

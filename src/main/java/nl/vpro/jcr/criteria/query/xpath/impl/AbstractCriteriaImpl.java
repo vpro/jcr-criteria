@@ -19,6 +19,18 @@
 
 package nl.vpro.jcr.criteria.query.xpath.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.function.IntSupplier;
+
+import javax.jcr.Session;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import nl.vpro.jcr.criteria.advanced.impl.QueryExecutorHelper;
 import nl.vpro.jcr.criteria.query.AdvancedResult;
 import nl.vpro.jcr.criteria.query.Criteria;
@@ -29,17 +41,6 @@ import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.xpath.JCRMagnoliaCriteriaQueryTranslator;
 import nl.vpro.jcr.criteria.query.xpath.XPathSelect;
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.jcr.Session;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.function.IntSupplier;
 
 /**
  * A generic Criteria implementation.
@@ -237,5 +238,10 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         result = 31 * result + (spellCheckString != null ? spellCheckString.hashCode() : 0);
         result = 31 * result + (forcePagingWithDocumentOrder ? 1 : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "criteria" + criterionEntries + (orderEntries.isEmpty() ? "" : " order by " + orderEntries);
     }
 }

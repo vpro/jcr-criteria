@@ -19,18 +19,19 @@
 
 package nl.vpro.jcr.criteria.advanced.impl;
 
-import nl.vpro.jcr.criteria.query.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.jcr.RepositoryException;
-import javax.jcr.Value;
-import javax.jcr.query.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.Function;
 import java.util.function.IntSupplier;
+
+import javax.jcr.RepositoryException;
+import javax.jcr.Value;
+import javax.jcr.query.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import nl.vpro.jcr.criteria.query.*;
 
 
 /**

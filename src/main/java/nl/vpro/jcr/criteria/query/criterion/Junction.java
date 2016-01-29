@@ -19,14 +19,14 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
-import nl.vpro.jcr.criteria.query.Criteria;
-import nl.vpro.jcr.criteria.query.JCRQueryException;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+
+import nl.vpro.jcr.criteria.query.Criteria;
+import nl.vpro.jcr.criteria.query.JCRQueryException;
 
 
 /**

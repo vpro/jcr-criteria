@@ -37,7 +37,7 @@ public class IsNotNullExpression implements Criterion {
 
     @Override
     public String toString() {
-        return nodeName;
+        return nodeName + " not null";
     }
 
     @Override
