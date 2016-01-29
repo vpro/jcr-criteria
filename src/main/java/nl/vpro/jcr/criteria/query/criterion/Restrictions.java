@@ -19,10 +19,10 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
-import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
-
 import java.util.Calendar;
 import java.util.Collection;
+
+import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 
 
 /**
@@ -266,8 +266,7 @@ public final class Restrictions {
      * @return Criterion
      */
 
-    public static Criterion in(String nodeName, Collection<String> values)
-    {
+    public static Criterion in(String nodeName, Collection<String> values) {
         return new InExpression(nodeName, values.toArray(new String[values.size()]));
     }
 
@@ -277,8 +276,7 @@ public final class Restrictions {
      * attribute it must be preceded by the '@'character (eg. @nt:somenode)
      * @return Criterion
      */
-    public static Criterion isNull(String nodeName)
-    {
+    public static Criterion isNull(String nodeName) {
         return new IsNullExpression(nodeName);
     }
 
@@ -288,8 +286,7 @@ public final class Restrictions {
      * attribute it must be preceded by the '@'character (eg. @nt:somenode)
      * @return Criterion
      */
-    public static Criterion isNotNull(String nodeName)
-    {
+    public static Criterion isNotNull(String nodeName) {
         return new IsNotNullExpression(nodeName);
     }
 
@@ -299,8 +296,7 @@ public final class Restrictions {
      * @param rhs right expression
      * @return Criterion
      */
-    public static LogicalExpression and(Criterion lhs, Criterion rhs)
-    {
+    public static LogicalExpression and(Criterion lhs, Criterion rhs) {
         return new LogicalExpression(lhs, rhs, "and");
     }
 
@@ -310,8 +306,7 @@ public final class Restrictions {
      * @param rhs right expression
      * @return Criterion
      */
-    public static LogicalExpression or(Criterion lhs, Criterion rhs)
-    {
+    public static LogicalExpression or(Criterion lhs, Criterion rhs) {
         return new LogicalExpression(lhs, rhs, "or");
     }
 
@@ -320,8 +315,7 @@ public final class Restrictions {
      * @param expression to be negated
      * @return Criterion
      */
-    public static Criterion not(Criterion expression)
-    {
+    public static Criterion not(Criterion expression) {
         return new NotExpression(expression);
     }
 
@@ -330,8 +324,7 @@ public final class Restrictions {
      * @param nodetypes - list of accepted nodetypes.
      * @return Criterion
      */
-    public static Criterion hasNodeType(String... nodetypes)
-    {
+    public static Criterion hasNodeType(String... nodetypes) {
         return new InExpression("@jcr:primaryType", nodetypes, false);
     }
 
@@ -339,8 +332,7 @@ public final class Restrictions {
      * Group expressions together in a single conjunction (A and B and C...)
      * @return Conjunction
      */
-    public static Conjunction conjunction()
-    {
+    public static Conjunction conjunction() {
         return new Conjunction();
     }
 

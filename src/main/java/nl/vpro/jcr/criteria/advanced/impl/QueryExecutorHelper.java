@@ -19,10 +19,6 @@
 
 package nl.vpro.jcr.criteria.advanced.impl;
 
-import nl.vpro.jcr.criteria.query.Criteria;
-import nl.vpro.jcr.criteria.query.JCRQueryException;
-import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
-
 import java.util.function.IntSupplier;
 
 import javax.jcr.RepositoryException;
@@ -33,11 +29,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import nl.vpro.jcr.criteria.query.Criteria;
+import nl.vpro.jcr.criteria.query.JCRQueryException;
+import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
+
 
 /**
  * Warning, provisional class, users should not use this directly.
  * @author fgiust
- * @version $Id$
  */
 public final class QueryExecutorHelper {
 
@@ -106,7 +105,7 @@ public final class QueryExecutorHelper {
      * @param stmt the statement of the jcr query
      * @param language the language of the jcr query
      * @param jcrSession the Session
-     * @param maxResults maximun number of results to retrieve
+     * @param maxResults maximum number of results to retrieve
      * @param offset the index of the first result to retrieve (0, 1, 2, ...)
      * @param spellCheckString the input string used for spell checking
      * @param forcePagingWithDocumentOrder see {@link Criteria#setForcePagingWithDocumentOrder(boolean)}
@@ -128,7 +127,7 @@ public final class QueryExecutorHelper {
             jcrQueryManager = jcrSession.getWorkspace().getQueryManager();
 
             @SuppressWarnings("deprecation")
-            Query query = jcrQueryManager.createQuery(stmt, language);
+            final Query query = jcrQueryManager.createQuery(stmt, language);
 
 
             if (!forcePagingWithDocumentOrder) {
