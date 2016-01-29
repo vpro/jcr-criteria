@@ -4,7 +4,7 @@
   <groupId>nl.vpro</groupId>
   <artifactId>jcr-criteria</artifactId>
   <name>Criteria API for JCR</name>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.1-SNAPSHOT</version>
   <inceptionYear>2015</inceptionYear>
   <description>A Hibernate's Criteria-like API to programmatically generate JCR queries</description>
   <url>https://github.com/vpro/jcr-criteria</url>
