@@ -49,6 +49,6 @@ Or you can add this to your pom.xml
 <dependency>
     <groupId>nl.vpro</groupId>
     <artifactId>jcr-criteria</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
 </dependency>
 ```
