@@ -19,10 +19,10 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import java.util.Arrays;
+
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
-
-import java.util.Arrays;
 
 
 /**
@@ -86,5 +86,10 @@ public class InExpression implements Criterion  {
         result = 31 * result + Arrays.hashCode(values);
         result = 31 * result + (useContains ? 1 : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return nodeName + "in " + Arrays.asList(values);
     }
 }
