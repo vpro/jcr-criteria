@@ -29,7 +29,10 @@
       <timezone>Europe/Amsterdam</timezone>
     </developer>
   </developers>
-
+  <ciManagement>
+    <system>Travis CI</system>
+    <url>https://travis-ci.org/vpro/jcr-criteria</url>
+  </ciManagement>
   <scm>
     <connection>scm:git:git://git@github.com/vpro/jcr-criteria.git</connection>
     <developerConnection>scm:git:git@github.com:vpro/jcr-criteria.git</developerConnection>
