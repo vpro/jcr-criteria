@@ -31,37 +31,30 @@ import nl.vpro.jcr.criteria.query.TranslatableCriteria.OrderEntry;
 
 /**
  * @author Federico Grilli
- * @version $Id$
  */
 public class JCRMagnoliaCriteriaQueryTranslator {
 
     private final TranslatableCriteria criteria;
 
-    public JCRMagnoliaCriteriaQueryTranslator(final TranslatableCriteria criteria) throws JCRQueryException
-    {
+    public JCRMagnoliaCriteriaQueryTranslator(final TranslatableCriteria criteria) throws JCRQueryException {
 
         this.criteria = criteria;
     }
 
-    public Criteria getRootCriteria()
-    {
+    public Criteria getRootCriteria() {
         return criteria;
     }
 
-    public String getPredicate()
-    {
+    public String getPredicate() {
         StringBuilder condition = new StringBuilder(30);
 
         boolean isfirst = true;
 
-        for (CriterionEntry entry : criteria.getCriterionEntries())
-        {
+        for (CriterionEntry entry : criteria.getCriterionEntries()) {
             String xpathString = entry.getCriterion().toXPathString(entry.getCriteria());
 
-            if (StringUtils.isNotBlank(xpathString))
-            {
-                if (!isfirst && StringUtils.isNotBlank(xpathString))
-                {
+            if (StringUtils.isNotBlank(xpathString)) {
+                if (!isfirst && StringUtils.isNotBlank(xpathString)) {
                     condition.append(" and ");
                 }
 
@@ -73,14 +66,11 @@ public class JCRMagnoliaCriteriaQueryTranslator {
         return condition.toString();
     }
 
-    public String getOrderBy()
-    {
+    public String getOrderBy() {
         StringBuilder orderBy = new StringBuilder(30);
 
-        for (OrderEntry oe : criteria.getOrderEntries())
-        {
-            if (orderBy.length() > 0)
-            {
+        for (OrderEntry oe : criteria.getOrderEntries()) {
+            if (orderBy.length() > 0) {
                 orderBy.append(", ");
             }
             orderBy.append(oe.getOrder().toXPathString(oe.getCriteria()));

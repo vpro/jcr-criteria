@@ -22,6 +22,8 @@ package nl.vpro.jcr.criteria.query.criterion;
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
 
+import java.util.Arrays;
+
 
 /**
  * @author fgrilli
@@ -63,5 +65,26 @@ public class InExpression implements Criterion  {
         }
         inClause.append(") ");
         return inClause.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        InExpression that = (InExpression) o;
+
+        if (useContains != that.useContains) return false;
+        if (nodeName != null ? !nodeName.equals(that.nodeName) : that.nodeName != null) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(values, that.values);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = nodeName != null ? nodeName.hashCode() : 0;
+        result = 31 * result + Arrays.hashCode(values);
+        result = 31 * result + (useContains ? 1 : 0);
+        return result;
     }
 }

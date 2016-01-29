@@ -60,4 +60,6 @@ public class JCRFunctionExpression extends BaseCriterion implements Criterion {
     public String toString() {
         return propertyName + " " + function + " " + value;
     }
+
+
 }

@@ -59,4 +59,24 @@ public class LogicalExpression extends BaseCriterion implements Criterion {
     public String toString() {
         return lhs.toString() + ' ' + getOp() + ' ' + rhs.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LogicalExpression that = (LogicalExpression) o;
+
+        if (lhs != null ? !lhs.equals(that.lhs) : that.lhs != null) return false;
+        if (rhs != null ? !rhs.equals(that.rhs) : that.rhs != null) return false;
+        return op != null ? op.equals(that.op) : that.op == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = lhs != null ? lhs.hashCode() : 0;
+        result = 31 * result + (rhs != null ? rhs.hashCode() : 0);
+        result = 31 * result + (op != null ? op.hashCode() : 0);
+        return result;
+    }
 }

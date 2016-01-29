@@ -31,9 +31,9 @@ import java.util.function.IntSupplier;
  */
 public class DirectJcrQuery implements ExecutableQuery  {
 
-    private String query;
+    private final String query;
 
-    private String language;
+    private final String language;
 
     private String spellCheckString;
 

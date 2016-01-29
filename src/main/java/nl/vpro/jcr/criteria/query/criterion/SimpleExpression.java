@@ -27,7 +27,6 @@ import java.util.Calendar;
 
 import org.apache.commons.lang3.StringUtils;
 
-
 /**
  * superclass for "simple" comparisons (with XPATH binary operators)
  * @author Federico Grilli
@@ -98,5 +97,25 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
         }
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SimpleExpression that = (SimpleExpression) o;
+
+        if (propertyName != null ? !propertyName.equals(that.propertyName) : that.propertyName != null) return false;
+        if (value != null ? !value.equals(that.value) : that.value != null) return false;
+        return op != null ? op.equals(that.op) : that.op == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = propertyName != null ? propertyName.hashCode() : 0;
+        result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (op != null ? op.hashCode() : 0);
+        return result;
     }
 }

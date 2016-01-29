@@ -74,4 +74,25 @@ public class BetweenExpression extends BaseCriterion implements Criterion {
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BetweenExpression that = (BetweenExpression) o;
+
+        if (propertyName != null ? !propertyName.equals(that.propertyName) : that.propertyName != null) return false;
+        if (lo != null ? !lo.equals(that.lo) : that.lo != null) return false;
+        return hi != null ? hi.equals(that.hi) : that.hi == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = propertyName != null ? propertyName.hashCode() : 0;
+        result = 31 * result + (lo != null ? lo.hashCode() : 0);
+        result = 31 * result + (hi != null ? hi.hashCode() : 0);
+        return result;
+    }
 }

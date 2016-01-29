@@ -28,7 +28,6 @@ import java.util.function.IntSupplier;
 
 import javax.jcr.Session;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +41,6 @@ import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.xpath.JCRMagnoliaCriteriaQueryTranslator;
 import nl.vpro.jcr.criteria.query.xpath.XPathSelect;
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
-
 
 /**
  * A generic Criteria implementation.
@@ -75,7 +73,6 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         return Collections.unmodifiableCollection(criterionEntries);
     }
 
-
     @Override
     public Collection<OrderEntry> getOrderEntries() {
         return Collections.unmodifiableCollection(orderEntries);
@@ -100,23 +97,18 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         return this;
     }
 
-
     @Override
     public Criteria setBasePath(String path) {
-        // check if the specified path is already an xpath query
-        if (StringUtils.contains(path, "*")) {
-            this.path = path;
-        } else {
-            // convert the node handle to a xpath query
-            if (StringUtils.isEmpty(StringUtils.remove(path, '/'))) {
-                // root node
-                this.path = Criterion.ALL_ELEMENTS;
-            } else {
-                // the handle already starts with a single '/', so prepend another one
-                this.path = "/" + StringUtils.defaultString(StringUtils.removeEnd(path, "/")) + "//*";
-            }
+        if (!XPathTextUtils.isValidNodePath(path)) {
+            throw new IllegalArgumentException("Path " + path + " is not a valid node path");
         }
+        this.path = path;
         return this;
+    }
+
+    @Override
+    public String getBasePath() {
+        return path;
     }
 
     /**
@@ -126,7 +118,6 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     public int getFirstResult() {
         return offset;
     }
-
 
     @Override
     public Criteria setFirstResult(int firstResult) {
@@ -142,7 +133,6 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         return maxResults;
     }
 
-
     @Override
     public Criteria setMaxResults(int maxResults) {
         this.maxResults = maxResults;
@@ -155,7 +145,6 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         this.offset = (Math.max(pageNumberStartingFromOne, 1) - 1) * maxResults;
         return this;
     }
-
 
     @Override
     public Criteria setSpellCheckString(String spellCheckString) {
@@ -173,13 +162,11 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     public String toXpathExpression() {
         JCRMagnoliaCriteriaQueryTranslator translator = new JCRMagnoliaCriteriaQueryTranslator(this);
         XPathSelect statement = new XPathSelect();
-        statement.setRoot(XPathTextUtils.encodeDigitsInPath(this.path));
+        statement.setRoot(XPathTextUtils.toXPath(path));
         statement.setPredicate(translator.getPredicate());
         statement.setOrderByClause(translator.getOrderBy());
-        String stmt = statement.toStatementString();
-        return stmt;
+        return statement.toStatementString();
     }
-
 
     @Override
     public AdvancedResult execute(Session session) {
@@ -213,14 +200,48 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
                 return countCriteria.execute(session).getTotalSize();
             } finally {
-                log.info("Total size was not available, determining it costed {} ms", TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS));
+                long duration = TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
+                if (duration > 50) {
+                    log.info("Total size was not available, determining it took {} ms", duration);
+                } else {
+                    log.debug("Total size was not available, determining it took {} ms", duration);
+                }
             }
         };
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AbstractCriteriaImpl that = (AbstractCriteriaImpl) o;
+
+        if (maxResults != that.maxResults) return false;
+        if (offset != that.offset) return false;
+        if (forcePagingWithDocumentOrder != that.forcePagingWithDocumentOrder) return false;
+        if (path != null ? !path.equals(that.path) : that.path != null) return false;
+        if (criterionEntries != null ? !criterionEntries.equals(that.criterionEntries) : that.criterionEntries != null)
+            return false;
+        if (orderEntries != null ? !orderEntries.equals(that.orderEntries) : that.orderEntries != null) return false;
+        return spellCheckString != null ? spellCheckString.equals(that.spellCheckString) : that.spellCheckString == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = path != null ? path.hashCode() : 0;
+        result = 31 * result + (criterionEntries != null ? criterionEntries.hashCode() : 0);
+        result = 31 * result + (orderEntries != null ? orderEntries.hashCode() : 0);
+        result = 31 * result + maxResults;
+        result = 31 * result + offset;
+        result = 31 * result + (spellCheckString != null ? spellCheckString.hashCode() : 0);
+        result = 31 * result + (forcePagingWithDocumentOrder ? 1 : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "criteria" + criterionEntries + (orderEntries.isEmpty() ? "" : " order by " + orderEntries);
     }
-
 }
