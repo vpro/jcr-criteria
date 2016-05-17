@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/vpro/jcr-criteria.svg?)](https://travis-ci.org/vpro/jcr-criteria)
 
-# JCR-criteria
+# jcr-criteria
 
 This is a way to create and execute JCR queries using Java code, using an interface which was inspired by the Criteria API as used by Hibernate/JPA.
 
