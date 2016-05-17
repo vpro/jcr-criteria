@@ -2,7 +2,21 @@
 
 # jcr-criteria
 
-This is a way to create and execute JCR queries using Java code, using an interface which was inspired by the Criteria API as used by Hibernate/JPA.
+This is a way to create and execute JCR queries using Java code, using an interface which was inspired by the Criteria API as used by Hibernate/JPA. This code is based on the [Criteria API for Magnolia CMS](http://www.openmindlab.com/lab/products/mgnlcriteria.html) (openutils-mgnlcriteria) module which was developed by Openmind.
+
+In constrast to `openutils-mgnlcriteria` there is no dependency on any Magnolia CMS code in `jcr-criteria`, so this is a generic JCR Criteria API implementation. It can still be used with Magnolia CMS, but should work with other JCR-based projects as well.
+
+## Usage
+
+You can download the most recent jar from https://oss.sonatype.org/content/repositories/snapshots/nl/vpro/jcr-criteria/ or you can add this to your `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>nl.vpro</groupId>
+    <artifactId>jcr-criteria</artifactId>
+    <version>1.1</version>
+</dependency>
+```
 
 Example:
 
@@ -27,22 +41,4 @@ Criteria criteria = JCRCriteriaFactory.createCriteria()
  AdvancedResult ar = criteria.execute(MgnlContext.getJCRSession(RepositoryConstants.WEBSITE));
  LOG.debug("JCR query : " + criteria.toXpathExpression());
  AdvancedResultItem item = ar.getFirstResult();
-```
-
-## History
-
-This code is based on the [Criteria API for Magnolia CMS](http://www.openmindlab.com/lab/products/mgnlcriteria.html) (openutils-mgnlcriteria) module which was developed by Openmind.
-
-In constrast to `openutils-mgnlcriteria` there is no dependency on any Magnolia CMS code in `jcr-criteria`, so this is a generic JCR Criteria API implementation. It can still be used with Magnolia CMS, but should work with other JCR-based projects as well.
-
-## Installation
-
-You can download the most recent jar from https://oss.sonatype.org/content/repositories/snapshots/nl/vpro/jcr-criteria/ or you can add this to your `pom.xml`:
-
-```xml
-<dependency>
-    <groupId>nl.vpro</groupId>
-    <artifactId>jcr-criteria</artifactId>
-    <version>1.1</version>
-</dependency>
 ```
