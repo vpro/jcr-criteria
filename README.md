@@ -2,9 +2,10 @@
 
 # JCR-criteria
 
-This is a way to create JCR-queries, using an interface which was inspired by the criteria api.
+This is a way to create and execute JCR queries using Java code, using an interface which was inspired by the Criteria API as used by Hibernate/JPA.
 
-For example
+Example:
+
 ```java
 import nl.vpro.jcr.criteria.query.AdvancedResult;
 import nl.vpro.jcr.criteria.query.AdvancedResultItem;
@@ -23,28 +24,21 @@ Criteria criteria = JCRCriteriaFactory.createCriteria()
             .add(Restrictions.in("@" + NodeTypes.Renderable.TEMPLATE, templates))
             .add(Restrictions.gt(field, begin));
 
-
  AdvancedResult ar = criteria.execute(MgnlContext.getJCRSession(RepositoryConstants.WEBSITE));
  LOG.debug("JCR query : " + criteria.toXpathExpression());
  AdvancedResultItem item = ar.getFirstResult();
 ```
 
+## History
 
+This code is based on the [Criteria API for Magnolia CMS](http://www.openmindlab.com/lab/products/mgnlcriteria.html) (openutils-mgnlcriteria) module which was developed by Openmind.
 
-## openutils-mgnlcriteria
-
-
-This was branched from  
-
-http://www.openmindlab.com/lab/products/mgnlcriteria.html
-
-The Magnolia dependency is completely removed and this is now a generic jrc-criteria implementation.
-
+In constrast to `openutils-mgnlcriteria` there is no dependency on any Magnolia CMS code in `jcr-criteria`, so this is a generic JCR Criteria API implementation. It can still be used with Magnolia CMS, but should work with other JCR-based projects as well.
 
 ## Installation
-Download  the most recent jar from: https://oss.sonatype.org/content/repositories/snapshots/nl/vpro/jcr-criteria/
 
-Or you can add this to your pom.xml
+You can download the most recent jar from https://oss.sonatype.org/content/repositories/snapshots/nl/vpro/jcr-criteria/ or you can add this to your `pom.xml`:
+
 ```xml
 <dependency>
     <groupId>nl.vpro</groupId>
