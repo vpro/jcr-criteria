@@ -4,7 +4,7 @@
 
 This is a way to create and execute JCR queries using Java code, using an interface which was inspired by the Criteria API as used by Hibernate/JPA. This code is based on the [Criteria API for Magnolia CMS](http://www.openmindlab.com/lab/products/mgnlcriteria.html) (openutils-mgnlcriteria) module which was developed by Openmind.
 
-In constrast to `openutils-mgnlcriteria` there is no dependency on any Magnolia CMS code in `jcr-criteria`, so this is a generic JCR Criteria API implementation. It can still be used with Magnolia CMS, but should work with other JCR-based projects as well.
+In contrast to `openutils-mgnlcriteria` there is no dependency on any Magnolia CMS code in `jcr-criteria`, so this is a generic JCR Criteria API implementation. It can still be used with Magnolia CMS, but should work with other JCR-based projects as well.
 
 ## Usage
 
