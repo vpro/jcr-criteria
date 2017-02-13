@@ -1,36 +1,24 @@
 /**
- *
  * Criteria API for Magnolia CMS (http://www.openmindlab.com/lab/products/mgnlcriteria.html)
  * Copyright(C) 2009-2013, Openmind S.r.l. http://www.openmindonline.it
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package nl.vpro.jcr.criteria.query.xpath.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.function.IntSupplier;
-
-import javax.jcr.Session;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import nl.vpro.jcr.criteria.advanced.impl.AdvancedResultImpl;
 import nl.vpro.jcr.criteria.advanced.impl.QueryExecutorHelper;
 import nl.vpro.jcr.criteria.query.AdvancedResult;
 import nl.vpro.jcr.criteria.query.Criteria;
@@ -41,9 +29,20 @@ import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.xpath.JCRMagnoliaCriteriaQueryTranslator;
 import nl.vpro.jcr.criteria.query.xpath.XPathSelect;
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.jcr.Session;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.function.IntSupplier;
 
 /**
  * A generic Criteria implementation.
+ *
  * @author fgrilli
  * @author Michiel Meeuwissen
  */
@@ -66,7 +65,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     protected boolean forcePagingWithDocumentOrder;
 
     protected AbstractCriteriaImpl() {
-	}
+    }
 
     @Override
     public Collection<CriterionEntry> getCriterionEntries() {
@@ -173,19 +172,19 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         @SuppressWarnings("deprecation")
         String language = javax.jcr.query.Query.XPATH;
         String stmt = toXpathExpression();
-		return QueryExecutorHelper.execute(
-				stmt,
-				language,
-				getCountSupplier(session),
-				session,
-				maxResults,
-                offset,
-				spellCheckString,
-				forcePagingWithDocumentOrder && this.orderEntries.isEmpty());
-
+        return QueryExecutorHelper.execute(
+            stmt,
+            language,
+            getCountSupplier(session),
+            session,
+            maxResults,
+            offset,
+            spellCheckString,
+            forcePagingWithDocumentOrder && this.orderEntries.isEmpty());
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public IntSupplier getCountSupplier(Session session) {
         return () -> {
             long startTime = System.nanoTime();
@@ -197,8 +196,18 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
                 countCriteria.setBasePath(path);
                 countCriteria.setSpellCheckString(spellCheckString);
 
+                String stmt = countCriteria.toXpathExpression();
+                final AdvancedResultImpl result = QueryExecutorHelper.execute(
+                    stmt,
+                    javax.jcr.query.Query.XPATH,
+                    () -> -1,
+                    session,
+                    0,
+                    0,
+                    spellCheckString,
+                    forcePagingWithDocumentOrder && this.orderEntries.isEmpty());
 
-                return countCriteria.execute(session).getTotalSize();
+                return result.getTotalSize();
             } finally {
                 long duration = TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
                 if (duration > 50) {
