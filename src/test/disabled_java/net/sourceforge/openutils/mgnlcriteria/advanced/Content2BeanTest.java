@@ -27,9 +27,6 @@ import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
-
-import javax.jcr.Node;
-
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
@@ -37,6 +34,8 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
 import net.sourceforge.openutils.mgnlcriteria.tests.CriteriaTestUtils;
+
+import javax.jcr.Node;
 
 import org.apache.commons.lang.StringUtils;
 import org.testng.Assert;

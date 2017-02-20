@@ -23,16 +23,6 @@ import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.repository.RepositoryConstants;
-
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
-import javax.jcr.Node;
-
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
@@ -40,6 +30,11 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Disjunction;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
+
+import java.io.StringWriter;
+import java.util.*;
+
+import javax.jcr.Node;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;

@@ -20,13 +20,12 @@
 package nl.vpro.jcr.criteria.advanced.impl;
 
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 import javax.jcr.query.Row;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import nl.vpro.jcr.criteria.query.AdvancedResultItem;
 import nl.vpro.jcr.utils.JcrNodeWrapper;
@@ -36,11 +35,10 @@ import nl.vpro.jcr.utils.JcrNodeWrapper;
  * @author fgiust
  * @author Michiel Meeuwisen
  */
+@Slf4j
 public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedResultItem {
 
     private final Row row;
-
-    private static final Logger LOG = LoggerFactory.getLogger(AdvancedResultItemImpl.class);
 
     public AdvancedResultItemImpl(Row row)  {
 		this.row = row;
@@ -58,7 +56,7 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
         try {
             excerptValue = row.getValue("rep:excerpt(" + selector + ")");
         } catch (RepositoryException e){
-            LOG.warn("Error getting excerpt for " + this.getHandle(), e);
+            log.warn("Error getting excerpt for " + this.getHandle(), e);
             return null;
         }
 
@@ -66,7 +64,7 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
             try {
                 return excerptValue.getString();
             } catch (RepositoryException e){
-                LOG.warn("Error getting excerpt for " + this.getHandle(), e);
+                log.warn("Error getting excerpt for " + this.getHandle(), e);
                 return null;
             }
         }
@@ -79,7 +77,7 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
         try {
             return row.getScore();
         } catch (RepositoryException e) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return 0;
     }
@@ -90,13 +88,13 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
             try {
                 return row.getScore();
             }catch (RepositoryException e) {
-                LOG.warn("unable to extract score from {}", row);
+                log.warn("unable to extract score from {}", row);
             }
         }
         try {
             return row.getScore(selector);
         } catch (RepositoryException e) {
-            LOG.warn("unable to extract score from {} using selector {}", row, selector);
+            log.warn("unable to extract score from {} using selector {}", row, selector);
         }
 
         return 0;
@@ -132,6 +130,9 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
 	@Override
 	protected Node getNode() throws RepositoryException {
 		return row.getNode();
-
 	}
+	@Override
+    public String toString() {
+        return "row:" + getHandle() + " " + getTitle();
+    }
 }

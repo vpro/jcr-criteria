@@ -19,6 +19,9 @@
 
 package nl.vpro.jcr.criteria.advanced.impl;
 
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.Function;
@@ -28,18 +31,15 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 import javax.jcr.query.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import nl.vpro.jcr.criteria.query.*;
 
 
 /**
  * @author fgiust
  */
+@Slf4j
+@ToString
 public class AdvancedResultImpl implements AdvancedResult {
-
-    private static final Logger LOG = LoggerFactory.getLogger(AdvancedResultImpl.class);
 
     private final QueryResult jcrQueryResult;
     private final IntSupplier queryCounter;
@@ -124,13 +124,13 @@ public class AdvancedResultImpl implements AdvancedResult {
 
     @Override
     public int getTotalSize() {
-        if (totalResults == null) {
+        if (! totalSizeDetermined()) {
             int queryTotalSize = -1;
             try { // jcrQueryResult instanceof JackrabbitQueryResult) {
                 Method m = jcrQueryResult.getClass().getMethod("getTotalSize");
                 queryTotalSize = (int) m.invoke(jcrQueryResult);
             } catch (InvocationTargetException | IllegalAccessException e) {
-                LOG.error(e.getMessage(), e);
+                log.error(e.getMessage(), e);
             } catch (NoSuchMethodException e) {
 
             }
@@ -150,6 +150,10 @@ public class AdvancedResultImpl implements AdvancedResult {
             }
         }
         return totalResults;
+    }
+
+    boolean totalSizeDetermined() {
+        return totalResults != null;
     }
 
     @Override
@@ -213,10 +217,10 @@ public class AdvancedResultImpl implements AdvancedResult {
                     spellCheckerSuggestion = v.getString();
                 }
             } catch (InvalidQueryException e) {
-                LOG.warn("Error getting excerpt using " + spellCheckerQuery.getStatement(), e);
+                log.warn("Error getting excerpt using " + spellCheckerQuery.getStatement(), e);
                 return null;
             } catch (RepositoryException e) {
-                LOG.warn("Error getting excerpt using " + spellCheckerQuery.getStatement(), e);
+                log.warn("Error getting excerpt using " + spellCheckerQuery.getStatement(), e);
                 return null;
             }
 
