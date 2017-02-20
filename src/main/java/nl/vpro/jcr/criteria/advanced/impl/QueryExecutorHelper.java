@@ -1,4 +1,4 @@
-/**
+/*
  *
  * Criteria API for Magnolia CMS (http://www.openmindlab.com/lab/products/mgnlcriteria.html)
  * Copyright(C) 2009-2013, Openmind S.r.l. http://www.openmindonline.it
@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.advanced.impl;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.function.IntSupplier;
 
 import javax.jcr.RepositoryException;
@@ -26,8 +28,6 @@ import javax.jcr.Session;
 import javax.jcr.query.Query;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
@@ -38,9 +38,8 @@ import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
  * Warning, provisional class, users should not use this directly.
  * @author fgiust
  */
+@Slf4j
 public final class QueryExecutorHelper {
-
-    private static final Logger LOG = LoggerFactory.getLogger(QueryExecutorHelper.class);
 
     private static ThreadLocal<Boolean> executing = new ThreadLocal<Boolean>() {
         @Override
@@ -171,7 +170,7 @@ public final class QueryExecutorHelper {
             }
         } catch (RepositoryException e) {
             JCRQueryException jqe = new JCRQueryException(stmt, e);
-            LOG.error(jqe.getMessage());
+            log.error(jqe.getMessage());
             throw jqe;
         }
 

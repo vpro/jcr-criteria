@@ -1,4 +1,4 @@
-/**
+/*
  *
  * Criteria API for Magnolia CMS (http://www.openmindlab.com/lab/products/mgnlcriteria.html)
  * Copyright(C) 2009-2013, Openmind S.r.l. http://www.openmindonline.it

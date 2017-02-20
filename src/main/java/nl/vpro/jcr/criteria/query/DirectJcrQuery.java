@@ -1,4 +1,4 @@
-/**
+/*
  *
  * Criteria API for Magnolia CMS (http://www.openmindlab.com/lab/products/mgnlcriteria.html)
  * Copyright(C) 2009-2013, Openmind S.r.l. http://www.openmindonline.it
@@ -19,11 +19,11 @@
 
 package nl.vpro.jcr.criteria.query;
 
+import java.util.function.IntSupplier;
+
 import javax.jcr.Session;
 
 import nl.vpro.jcr.criteria.advanced.impl.QueryExecutorHelper;
-
-import java.util.function.IntSupplier;
 
 
 /**
