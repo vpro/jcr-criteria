@@ -102,12 +102,15 @@ public final class Restrictions {
             MatchMode.ANYWHERE);
     }
 
+    public static String attr(String attName) {
+        return Criterion.ATTRIBUTE_SELECTOR + attName;
+    }
     public static JCRFunctionExpression attrLike(String attName, Object value) {
-        return like(Criterion.ATTRIBUTE_SELECTOR + attName, value);
+        return like(attr(attName), value);
     }
 
     public static JCRFunctionExpression attrLike(String attName, Object value, MatchMode matchMode) {
-        return like(Criterion.ATTRIBUTE_SELECTOR + attName, value, matchMode);
+        return like(attr(attName), value, matchMode);
     }
 
     /**
