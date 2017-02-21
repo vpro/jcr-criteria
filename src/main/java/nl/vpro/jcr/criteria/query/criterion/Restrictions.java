@@ -50,7 +50,7 @@ public final class Restrictions {
     }
 
     public static SimpleExpression attrEq(String attName, Object value) {
-        return eq(Criterion.ATTRIBUTE_SELECTOR + attName, value);
+        return eq(attr(attName), value);
     }
 
     /**

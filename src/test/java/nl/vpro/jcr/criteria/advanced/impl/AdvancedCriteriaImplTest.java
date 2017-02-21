@@ -1,10 +1,16 @@
 package nl.vpro.jcr.criteria.advanced.impl;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
 import javax.jcr.*;
 
 import org.apache.jackrabbit.core.TransientRepository;
-import org.apache.jackrabbit.core.config.RepositoryConfig;
+import org.apache.jackrabbit.core.fs.local.FileUtil;
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
@@ -25,14 +31,25 @@ import static org.testng.AssertJUnit.*;
 
 public class AdvancedCriteriaImplTest {
     Repository repository;
-
+    Path tempDirectory;
+    Path tempFile;
 
     @BeforeSuite
-    public void setup() throws RepositoryException {
-        TransientRepository tr = new TransientRepository(RepositoryConfig.create(getClass().getResourceAsStream("repository.xml"), "bla"));
+    public void setup() throws RepositoryException, IOException {
+        // Using jackrabbit memory only seems to be impossible. Sad...
+
+        tempDirectory = Files.createTempDirectory("criteriatest");
+        tempFile = Files.createTempFile("repository", ".xml");
+        Files.copy(getClass().getResourceAsStream("/repository.xml"), tempFile, StandardCopyOption.REPLACE_EXISTING);
+        FileUtil.delete(tempDirectory.toFile());
+        TransientRepository tr = new TransientRepository(tempFile.toFile(), tempDirectory.toFile());
 
         repository = tr;
-        System.out.println(repository);
+    }
+    @AfterSuite
+    public void shutdown() throws IOException {
+        Files.delete(tempDirectory);
+        Files.delete(tempFile);
     }
     @Test
     public void testToString() throws Exception {
@@ -55,9 +72,9 @@ public class AdvancedCriteriaImplTest {
             Node hello = root.addNode("hello");
             hello.setProperty("a", "a1");
             Node hello2 = root.addNode("hello2");
-            hello2.setProperty("a", "a2");
+            hello2.setProperty("a", "b");
             Node goodbye = root.addNode("bye");
-            goodbye.setProperty("a", "a3");
+            goodbye.setProperty("a", "a2");
             session.save();
         }
         {
@@ -75,7 +92,7 @@ public class AdvancedCriteriaImplTest {
                 System.out.println(item);
             }
             assertFalse(result.totalSizeDetermined());
-            assertEquals(3, result.getTotalSize());
+            assertEquals(2, result.getTotalSize());
             assertTrue(result.totalSizeDetermined());
         }
     }

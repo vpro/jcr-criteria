@@ -118,7 +118,7 @@
             persistence manager
         -->
         <FileSystem class="org.apache.jackrabbit.core.fs.mem.MemoryFileSystem">
-            <param name="path" value="${rep.home}/version" />
+
         </FileSystem>
 
         <!--
