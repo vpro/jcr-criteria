@@ -216,9 +216,6 @@ public class AdvancedResultImpl implements AdvancedResult {
                 } else {
                     spellCheckerSuggestion = v.getString();
                 }
-            } catch (InvalidQueryException e) {
-                log.warn("Error getting excerpt using " + spellCheckerQuery.getStatement(), e);
-                return null;
             } catch (RepositoryException e) {
                 log.warn("Error getting excerpt using " + spellCheckerQuery.getStatement(), e);
                 return null;

@@ -7,8 +7,14 @@
       <param name="ConversionPattern" value="%-5p %c.%M(%C{1}.java:%L)   %m%n" />
     </layout>
   </appender>
+  <logger name="org">
+    <level value="ERROR"/>
+  </logger>
+  <logger name="nl">
+    <level value="DEBUG"/>
+  </logger>
   <root>
-    <level value="INFO" />
+    <level value="INFO"/>
     <appender-ref ref="test-appender" />
   </root>
 </log4j:configuration>

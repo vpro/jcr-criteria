@@ -49,6 +49,10 @@ public final class Restrictions {
         return new SimpleExpression(nodeName, value, "=");
     }
 
+    public static SimpleExpression attrEq(String attName, Object value) {
+        return eq(Criterion.ATTRIBUTE_SELECTOR + attName, value);
+    }
+
     /**
      * Apply a "not equal" constraint to the named node
      * @param nodeName - String a qualified (eg. nt:somenode) or unqualified (eg. somenode) node name. When a node is an
@@ -96,6 +100,14 @@ public final class Restrictions {
             XPathTextUtils.stringToJCRSearchExp(value.toString()),
             " jcr:like",
             MatchMode.ANYWHERE);
+    }
+
+    public static JCRFunctionExpression attrLike(String attName, Object value) {
+        return like(Criterion.ATTRIBUTE_SELECTOR + attName, value);
+    }
+
+    public static JCRFunctionExpression attrLike(String attName, Object value, MatchMode matchMode) {
+        return like(Criterion.ATTRIBUTE_SELECTOR + attName, value, matchMode);
     }
 
     /**

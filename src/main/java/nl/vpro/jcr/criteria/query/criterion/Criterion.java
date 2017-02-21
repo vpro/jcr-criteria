@@ -19,10 +19,10 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import java.io.Serializable;
+
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
-
-import java.io.Serializable;
 
 
 /**
@@ -32,7 +32,6 @@ import java.io.Serializable;
  * @see Restrictions
  * @see Criteria
  * @author Federico Grilli
- * @version $Id$
  */
 public interface Criterion extends Serializable {
 

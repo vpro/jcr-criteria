@@ -2,7 +2,8 @@ package nl.vpro.jcr.criteria.advanced.impl;
 
 import javax.jcr.*;
 
-import org.apache.jackrabbit.commons.JcrUtils;
+import org.apache.jackrabbit.core.TransientRepository;
+import org.apache.jackrabbit.core.config.RepositoryConfig;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
@@ -10,12 +11,11 @@ import org.testng.annotations.Test;
 import nl.vpro.jcr.criteria.query.AdvancedResultItem;
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
+import nl.vpro.jcr.criteria.query.criterion.MatchMode;
 import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.criterion.Restrictions;
 
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertFalse;
-import static org.testng.AssertJUnit.assertTrue;
+import static org.testng.AssertJUnit.*;
 
 
 /**
@@ -29,7 +29,10 @@ public class AdvancedCriteriaImplTest {
 
     @BeforeSuite
     public void setup() throws RepositoryException {
-        repository = JcrUtils.getRepository();
+        TransientRepository tr = new TransientRepository(RepositoryConfig.create(getClass().getResourceAsStream("repository.xml"), "bla"));
+
+        repository = tr;
+        System.out.println(repository);
     }
     @Test
     public void testToString() throws Exception {
@@ -45,20 +48,25 @@ public class AdvancedCriteriaImplTest {
     }
 
     @Test
-    public void testList() throws RepositoryException {
+    public void testExecute() throws RepositoryException {
         {
             Session session = getSession();
             Node root = session.getRootNode();
             Node hello = root.addNode("hello");
-            hello.setProperty("a", "a");
+            hello.setProperty("a", "a1");
+            Node hello2 = root.addNode("hello2");
+            hello2.setProperty("a", "a2");
+            Node goodbye = root.addNode("bye");
+            goodbye.setProperty("a", "a3");
             session.save();
         }
         {
             Criteria criteria =
                 JCRCriteriaFactory.createCriteria()
                     .setBasePath("/")
-                    .add(Restrictions.eq("hello/@a", "a"))
-                    .addOrderByScore()
+                    .add(Restrictions.attrLike("a", "a", MatchMode.START))
+                //.add(Restrictions.like("hello/jcr:name", "a"))
+                    //.addOrderByScore()
                 ;
 
 
@@ -67,7 +75,7 @@ public class AdvancedCriteriaImplTest {
                 System.out.println(item);
             }
             assertFalse(result.totalSizeDetermined());
-            assertEquals(1, result.getTotalSize());
+            assertEquals(3, result.getTotalSize());
             assertTrue(result.totalSizeDetermined());
         }
     }
