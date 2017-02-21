@@ -1,5 +1,7 @@
 package nl.vpro.jcr.criteria.advanced.impl;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,9 +12,7 @@ import javax.jcr.*;
 import org.apache.jackrabbit.core.TransientRepository;
 import org.apache.jackrabbit.core.fs.local.FileUtil;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import nl.vpro.jcr.criteria.query.AdvancedResultItem;
 import nl.vpro.jcr.criteria.query.Criteria;
@@ -29,12 +29,13 @@ import static org.testng.AssertJUnit.*;
  * @since 1.1
  */
 
+@Slf4j
 public class AdvancedCriteriaImplTest {
     Repository repository;
     Path tempDirectory;
     Path tempFile;
 
-    @BeforeSuite
+    @BeforeTest
     public void setup() throws RepositoryException, IOException {
         // Using jackrabbit memory only seems to be impossible. Sad...
 
@@ -42,14 +43,16 @@ public class AdvancedCriteriaImplTest {
         tempFile = Files.createTempFile("repository", ".xml");
         Files.copy(getClass().getResourceAsStream("/repository.xml"), tempFile, StandardCopyOption.REPLACE_EXISTING);
         FileUtil.delete(tempDirectory.toFile());
-        TransientRepository tr = new TransientRepository(tempFile.toFile(), tempDirectory.toFile());
-
-        repository = tr;
+        repository = new TransientRepository(tempFile.toFile(), tempDirectory.toFile());;
     }
-    @AfterSuite
+    @AfterTest
     public void shutdown() throws IOException {
-        Files.delete(tempDirectory);
-        Files.delete(tempFile);
+        try {
+            Files.delete(tempDirectory);
+            Files.delete(tempFile);
+        } catch (IOException ioe) {
+            log.warn(ioe.getMessage());
+        }
     }
     @Test
     public void testToString() throws Exception {
