@@ -9,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 
 import javax.jcr.*;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.jackrabbit.core.TransientRepository;
 import org.apache.jackrabbit.core.fs.local.FileUtil;
 import org.testng.Assert;
@@ -48,11 +49,12 @@ public class AdvancedCriteriaImplTest {
     @AfterTest
     public void shutdown() throws IOException {
         try {
-            Files.delete(tempDirectory);
-            Files.delete(tempFile);
+            FileUtils.deleteDirectory(tempDirectory.toFile());
+            Files.deleteIfExists(tempFile);
         } catch (IOException ioe) {
-            log.warn(ioe.getMessage());
+            log.warn(ioe.getMessage(), ioe);
         }
+        System.out.println("Removed " + tempDirectory + " and " + tempFile);
     }
     @Test
     public void testToString() throws Exception {
