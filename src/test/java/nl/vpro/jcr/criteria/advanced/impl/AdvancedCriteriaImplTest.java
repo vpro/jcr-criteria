@@ -2,6 +2,7 @@ package nl.vpro.jcr.criteria.advanced.impl;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,7 +14,9 @@ import org.apache.commons.io.FileUtils;
 import org.apache.jackrabbit.core.TransientRepository;
 import org.apache.jackrabbit.core.fs.local.FileUtil;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 import nl.vpro.jcr.criteria.query.AdvancedResultItem;
 import nl.vpro.jcr.criteria.query.Criteria;
@@ -41,6 +44,7 @@ public class AdvancedCriteriaImplTest {
         // Using jackrabbit memory only seems to be impossible. Sad...
 
         tempDirectory = Files.createTempDirectory("criteriatest");
+        System.setProperty("derby.stream.error.file", new File(tempDirectory.toFile(), "derby.log").toString());
         tempFile = Files.createTempFile("repository", ".xml");
         Files.copy(getClass().getResourceAsStream("/repository.xml"), tempFile, StandardCopyOption.REPLACE_EXISTING);
         FileUtil.delete(tempDirectory.toFile());
