@@ -1,8 +1,8 @@
 language: java
 env:
  global:
-  - SONATYPE_USERNAME=mihxil
-  - secure: "fsMUg51Uba0CCa2I0IuBl8DHA0FhXBi1oIq2ehtdgQ1IF19TvGzbtpkDUmMasxW0L3fZB3XU98QhuZ5W4bQbLRc5Qm1GTudBE1tY40v0VZkkSrQiEMUzi3/3xJeoNXLbVcYjAV19tImpk0j4k1Dm5CF3QdQ4B7OJS+Q+E/JNB2o="
+  - SONATYPE_USERNAME=vpro
+   secure: "ehlL6uKGfIWjHyuuWHvojxRfwwO0QfNls7YRp1P2j5K8j0Lsv0n30nJIBxrduy2SkZeWxqBI8k5eq+k5Ue0+GZ3ypX4LOXx3aJ9FSNF/ck7z0z4Xejf09z1IKqSy/f4MXVrAXw7aJ/a9h+QFH06WZfKUpg2mAfeh8oX/emmh4OQ="
 
 jdk:
 - oraclejdk8
