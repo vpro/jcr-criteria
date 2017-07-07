@@ -2,7 +2,7 @@ language: java
 env:
  global:
   - SONATYPE_USERNAME=vpro
-   secure: "ehlL6uKGfIWjHyuuWHvojxRfwwO0QfNls7YRp1P2j5K8j0Lsv0n30nJIBxrduy2SkZeWxqBI8k5eq+k5Ue0+GZ3ypX4LOXx3aJ9FSNF/ck7z0z4Xejf09z1IKqSy/f4MXVrAXw7aJ/a9h+QFH06WZfKUpg2mAfeh8oX/emmh4OQ="
+  - secure: "ehlL6uKGfIWjHyuuWHvojxRfwwO0QfNls7YRp1P2j5K8j0Lsv0n30nJIBxrduy2SkZeWxqBI8k5eq+k5Ue0+GZ3ypX4LOXx3aJ9FSNF/ck7z0z4Xejf09z1IKqSy/f4MXVrAXw7aJ/a9h+QFH06WZfKUpg2mAfeh8oX/emmh4OQ="
 
 jdk:
 - oraclejdk8
