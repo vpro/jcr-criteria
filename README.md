@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/vpro/jcr-criteria.svg?)](https://travis-ci.org/vpro/jcr-criteria)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/nl.vpro/jcr-criteria/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/nl.vpro/jcr-criteria)
+[![Maven Central](https://img.shields.io/maven-central/v/nl.vpro/jcr-criteria.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22nl.vpro%22%20AND%20a:%22jcr-criteria%22)
 
 # jcr-criteria
 
