@@ -107,12 +107,12 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.1</version>
+      <version>3.8.1</version>
     </dependency>
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>6.0.1</version>
+      <version>6.14.3</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -124,12 +124,12 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.16.22</version>
+      <version>1.18.4</version>
     </dependency>
     <dependency>
       <groupId>org.apache.jackrabbit</groupId>
       <artifactId>jackrabbit-core</artifactId>
-      <version>2.16.1</version>
+      <version>2.19.0</version>
       <scope>test</scope>
     </dependency>
 
