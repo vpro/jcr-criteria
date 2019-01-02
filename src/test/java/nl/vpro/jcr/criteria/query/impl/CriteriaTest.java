@@ -17,14 +17,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.vpro.jcr.criteria.query.xpath.impl;
+package nl.vpro.jcr.criteria.query.impl;
+
+import org.testng.annotations.Test;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
 import nl.vpro.jcr.criteria.query.criterion.Junction;
 import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.criterion.Restrictions;
-import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 

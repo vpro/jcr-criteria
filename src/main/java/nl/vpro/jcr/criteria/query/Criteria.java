@@ -19,6 +19,10 @@
 
 package nl.vpro.jcr.criteria.query;
 
+import lombok.SneakyThrows;
+
+import javax.jcr.Node;
+
 import nl.vpro.jcr.criteria.query.criterion.Criterion;
 import nl.vpro.jcr.criteria.query.criterion.Order;
 
@@ -139,6 +143,11 @@ public interface Criteria extends ExecutableQuery {
      */
     Criteria setBasePath(String path);
 
+    @SneakyThrows
+    default Criteria setBase(Node node) {
+        return setBasePath(node.getPath());
+    }
+
     String getBasePath();
 
     /**
@@ -160,7 +169,11 @@ public interface Criteria extends ExecutableQuery {
      * Returns the generated xpath expression
      * @return the generated xpath expression
      */
+    @Deprecated
     String toXpathExpression();
+
+    String toSql2();
+
 
     /**
      * <p>

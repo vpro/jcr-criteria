@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.vpro.jcr.criteria.query.xpath.impl;
+package nl.vpro.jcr.criteria.query.impl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -158,6 +158,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     }
 
     @Override
+    @Deprecated
     public String toXpathExpression() {
         JCRMagnoliaCriteriaQueryTranslator translator = new JCRMagnoliaCriteriaQueryTranslator(this);
         XPathSelect statement = new XPathSelect();
@@ -166,6 +167,14 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         statement.setOrderByClause(translator.getOrderBy());
         return statement.toStatementString();
     }
+
+
+
+    @Override
+    public String toSql2() {
+        throw new UnsupportedOperationException();
+    }
+
 
     @Override
     public AdvancedResult execute(Session session) {
