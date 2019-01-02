@@ -19,9 +19,11 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import nl.vpro.jcr.criteria.query.Criteria;
+import nl.vpro.jcr.criteria.query.sql2.AndCondition;
+
 /**
  * @author fgrilli
- * @version $Id$
  */
 public class Conjunction extends Junction {
 
@@ -30,4 +32,16 @@ public class Conjunction extends Junction {
     public Conjunction() {
         super("and");
     }
+
+
+    @Override
+    public AndCondition toSQLCondition(Criteria c) {
+        AndCondition result = new AndCondition();
+        for (Criterion clause : criteria) {
+            result.getClauses().add(clause.toSQLCondition(c));
+        }
+        return result;
+    }
+
+
 }

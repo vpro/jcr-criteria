@@ -19,18 +19,17 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
-import nl.vpro.jcr.criteria.query.Criteria;
-import nl.vpro.jcr.criteria.query.JCRQueryException;
-import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
-
 import java.util.Calendar;
 
 import org.apache.commons.lang3.StringUtils;
 
+import nl.vpro.jcr.criteria.query.Criteria;
+import nl.vpro.jcr.criteria.query.JCRQueryException;
+import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
+
 /**
  * superclass for "simple" comparisons (with XPATH binary operators)
  * @author Federico Grilli
- * @version $Id$
  */
 public class SimpleExpression extends BaseCriterion implements Criterion {
 

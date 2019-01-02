@@ -38,9 +38,9 @@ public class Junction implements Criterion {
 
     private static final long serialVersionUID = 4745761472724863693L;
 
-    private final List<Criterion> criteria = new ArrayList<>();
+    final List<Criterion> criteria = new ArrayList<>();
 
-    private final String op;
+    final String op;
 
     protected Junction(String op) {
         this.op = op;
@@ -84,6 +84,7 @@ public class Junction implements Criterion {
         }
         return buffer.append(')').toString();
     }
+
 
     @Override
     public String toString() {
