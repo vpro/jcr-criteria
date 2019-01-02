@@ -33,8 +33,6 @@ public class DirectJcrQuery implements ExecutableQuery  {
 
     private final String query;
 
-    private final String language;
-
     private String spellCheckString;
 
     private int maxResults;
@@ -42,9 +40,8 @@ public class DirectJcrQuery implements ExecutableQuery  {
     private int offset;
 
 
-    public DirectJcrQuery(String query, String language) {
+    public DirectJcrQuery(String query) {
         this.query = query;
-        this.language = language;
     }
 
     /**
@@ -91,7 +88,7 @@ public class DirectJcrQuery implements ExecutableQuery  {
     }
 
     @Override
-    public AdvancedResult execute(Session session) {
+    public AdvancedResult execute(Session session, String language) {
 
         return QueryExecutorHelper.execute(
             query,
@@ -108,7 +105,7 @@ public class DirectJcrQuery implements ExecutableQuery  {
     }
 
 	@Override
-	public IntSupplier getCountSupplier(Session session) {
+	public IntSupplier getCountSupplier(Session session, String language) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -33,13 +33,14 @@ import static org.testng.Assert.assertEquals;
 /**
  * @author fgiust
  */
+@SuppressWarnings("deprecation")
 public class CriteriaTest {
 
     @Test
     public void testWithAbsoluteNodePath() {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/site");
-        String xpathExpression = criteria.toXpathExpression();
-        assertEquals(xpathExpression, "/jcr:root/site//*");
+        assertEquals(criteria.toXpathExpression(), "/jcr:root/site//*");
+        assertEquals(criteria.toSql2Expression(), "select * from [nt:base] where ISPARENT('/site')");
     }
 
     @Test
@@ -79,8 +80,7 @@ public class CriteriaTest {
      * Test for CRIT-3
      */
     @Test
-    public void testEmptyConjuntion()
-    {
+    public void testEmptyConjuntion() {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/site");
 
         criteria.add(Restrictions.eq("@property", "test"));
@@ -96,8 +96,7 @@ public class CriteriaTest {
      * Test for CRIT-37
      */
     @Test
-    public void testEscapeComma()
-    {
+    public void testEscapeComma() {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/one/two/3three/fo,ur/");
         criteria.add(Restrictions.eq("@property", "test"));
         String xpathExpression = criteria.toXpathExpression();

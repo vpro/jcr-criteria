@@ -22,6 +22,7 @@ package nl.vpro.jcr.criteria.query;
 import lombok.SneakyThrows;
 
 import javax.jcr.Node;
+import javax.jcr.query.Query;
 
 import nl.vpro.jcr.criteria.query.criterion.Criterion;
 import nl.vpro.jcr.criteria.query.criterion.Order;
@@ -172,8 +173,18 @@ public interface Criteria extends ExecutableQuery {
     @Deprecated
     String toXpathExpression();
 
-    String toSql2();
+    String toSql2Expression();
 
+    default String toExpression(String language) {
+        switch(language) {
+            case Query.XPATH:
+                return toXpathExpression();
+            case Query.JCR_SQL2:
+                return toSql2Expression();
+            default:
+                throw new UnsupportedOperationException("Unsupported language " + language);
+        }
+    }
 
     /**
      * <p>

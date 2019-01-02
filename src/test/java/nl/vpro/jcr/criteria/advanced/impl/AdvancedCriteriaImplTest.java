@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 import javax.jcr.*;
+import javax.jcr.query.Query;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.jackrabbit.core.TransientRepository;
@@ -74,7 +75,14 @@ public class AdvancedCriteriaImplTest {
     }
 
     @Test
-    public void testExecute() throws RepositoryException {
+    public void testExecuteXPath() throws RepositoryException {
+        testExecute(Query.XPATH);
+    }
+    @Test
+    public void testExecuteSQL2() throws RepositoryException {
+        testExecute(Query.JCR_SQL2);
+    }
+    protected void testExecute(String language) throws RepositoryException {
         {
             Session session = getSession();
             Node root = session.getRootNode();
@@ -96,7 +104,7 @@ public class AdvancedCriteriaImplTest {
                 ;
 
 
-            AdvancedResultImpl result = (AdvancedResultImpl) criteria.execute(getSession());
+            AdvancedResultImpl result = (AdvancedResultImpl) criteria.execute(getSession(), language);
             for (AdvancedResultItem item : result.getItems()) {
                 System.out.println(item);
             }

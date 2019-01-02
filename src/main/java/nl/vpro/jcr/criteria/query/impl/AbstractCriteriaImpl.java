@@ -37,6 +37,7 @@ import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
 import nl.vpro.jcr.criteria.query.TranslatableCriteria;
 import nl.vpro.jcr.criteria.query.criterion.Criterion;
 import nl.vpro.jcr.criteria.query.criterion.Order;
+import nl.vpro.jcr.criteria.query.sql2.Select;
 import nl.vpro.jcr.criteria.query.xpath.JCRMagnoliaCriteriaQueryTranslator;
 import nl.vpro.jcr.criteria.query.xpath.XPathSelect;
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
@@ -171,20 +172,20 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
 
     @Override
-    public String toSql2() {
-        throw new UnsupportedOperationException();
+    public String toSql2Expression() {
+        return Select.from(this).toSql2();
     }
 
 
+
+
     @Override
-    public AdvancedResult execute(Session session) {
-        @SuppressWarnings("deprecation")
-        String language = javax.jcr.query.Query.XPATH;
-        String stmt = toXpathExpression();
+    public AdvancedResult execute(Session session, String language) {
+        String stmt = toExpression(language);
         return QueryExecutorHelper.execute(
             stmt,
             language,
-            getCountSupplier(session),
+            getCountSupplier(session, language),
             session,
             maxResults,
             offset,
@@ -193,8 +194,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public IntSupplier getCountSupplier(Session session) {
+    public IntSupplier getCountSupplier(Session session, String language) {
         return () -> {
             long startTime = System.nanoTime();
             try {
@@ -205,10 +205,10 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
                 countCriteria.setBasePath(path);
                 countCriteria.setSpellCheckString(spellCheckString);
 
-                String stmt = countCriteria.toXpathExpression();
+                String stmt = countCriteria.toExpression(language);
                 final AdvancedResultImpl result = QueryExecutorHelper.execute(
                     stmt,
-                    javax.jcr.query.Query.XPATH,
+                    language,
                     () -> -1,
                     session,
                     0,

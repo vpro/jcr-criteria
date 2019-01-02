@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.Getter;
+
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
 
@@ -31,8 +33,10 @@ public class Order extends BaseCriterion implements Criterion {
 
     private static final long serialVersionUID = -1228583450961430360L;
 
+    @Getter
     private boolean ascending;
 
+    @Getter
     private String nodeName;
 
     /**
@@ -44,6 +48,7 @@ public class Order extends BaseCriterion implements Criterion {
     }
 
     @Override
+    @Deprecated
     public String toXPathString(Criteria criteria) throws JCRQueryException {
         StringBuilder fragment = new StringBuilder(" ");
         fragment.append(nodeName);

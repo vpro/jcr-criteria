@@ -23,6 +23,7 @@ import java.io.Serializable;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
+import nl.vpro.jcr.criteria.query.sql2.Condition;
 
 
 /**
@@ -76,6 +77,11 @@ public interface Criterion extends Serializable {
      * @return converted XPATH expression
      * @throws JCRQueryException if there is a problem converting the input criteria to a valid xpath expression
      */
+    @Deprecated
     String toXPathString(Criteria criteria) throws JCRQueryException;
+
+    default Condition toSQLCondition(Criteria criteria) {
+        throw new UnsupportedOperationException("" + getClass());
+    }
 
 }

@@ -125,7 +125,6 @@ public final class QueryExecutorHelper {
         try {
             jcrQueryManager = jcrSession.getWorkspace().getQueryManager();
 
-            @SuppressWarnings("deprecation")
             final Query query = jcrQueryManager.createQuery(stmt, language);
 
 
