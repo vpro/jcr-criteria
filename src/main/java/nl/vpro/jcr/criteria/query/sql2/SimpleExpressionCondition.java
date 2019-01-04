@@ -20,8 +20,9 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
     abstract String getValue();
 
     @Override
-    public String toSql2() {
-        return field.toSql2() + " " + op.getXpath() + " " + getValue();
+    public void toSql2(StringBuilder builder) {
+        field.toSql2(builder);
+        builder.append(" ").append(op.getXpath()).append(" ").append(getValue());
     }
 
     public static SimpleExpressionCondition<?> of(Field field, SimpleExpression.Op op, Object v) {

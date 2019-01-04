@@ -14,7 +14,7 @@ public class IsChild implements Condition {
 
     String path;
     @Override
-    public String toSql2() {
-        return "ISCHILDNODE(a, '" + path + "')";
+    public void toSql2(StringBuilder builder) {
+        builder.append("ISCHILDNODE(a, '").append(path).append("')");
     }
 }

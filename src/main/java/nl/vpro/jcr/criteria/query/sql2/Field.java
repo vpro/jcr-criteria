@@ -26,8 +26,8 @@ public class Field {
         return field;
     }
 
-    public String toSql2() {
-        return name;
+    public void toSql2(StringBuilder builder) {
+        builder.append("[").append(name).append("]");
     }
 
 }

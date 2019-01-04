@@ -3,8 +3,8 @@ package nl.vpro.jcr.criteria.query.sql2;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Michiel Meeuwissen
@@ -17,8 +17,14 @@ public class AndCondition implements Condition {
 
 
     @Override
-    public String toSql2() {
-        return clauses.stream().map(Condition::toSql2).collect(Collectors.joining(" AND "));
+    public void toSql2(StringBuilder builder) {
+        Iterator<Condition> i = clauses.iterator();
+        while(i.hasNext()) {
+            i.next().toSql2(builder);
+            if (i.hasNext()) {
+                builder.append(" AND ");
+            }
+        }
     }
 
     public boolean hasClauses() {

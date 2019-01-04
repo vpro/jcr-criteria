@@ -14,8 +14,9 @@ public class LikeCondition implements  Condition {
     }
 
     @Override
-    public String toSql2() {
-        return field.toSql2() + " LIKE '" + value + "'";
+    public void toSql2(StringBuilder builder) {
+        field.toSql2(builder);
+        builder.append(" LIKE '").append(value).append("'");
 
     }
 }

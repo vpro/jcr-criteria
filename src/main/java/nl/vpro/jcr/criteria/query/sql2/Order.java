@@ -16,8 +16,9 @@ public class Order {
     final OrderDirection direction;
 
 
-    public String toSql2() {
-        return field.toSql2() + " " + direction.name();
+    public void toSql2(StringBuilder builder) {
+        field.toSql2(builder);
+        builder.append(" ").append(direction.name());
     }
 
 }

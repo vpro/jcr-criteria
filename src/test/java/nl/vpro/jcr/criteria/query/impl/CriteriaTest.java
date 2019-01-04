@@ -56,11 +56,11 @@ public class CriteriaTest {
 
         Junction conjunction = Restrictions.conjunction();
         criteria.add(conjunction);
-        conjunction.add(Restrictions.eq("@property", "test"));
-        conjunction.add(Restrictions.eq("@anotherproperty", "anothertest"));
+        conjunction.add(Restrictions.attrEq("property", "test"));
+        conjunction.add(Restrictions.attrEq("anotherproperty", "anothertest"));
 
         assertEquals(criteria.toXpathExpression(), "/jcr:root/site//*[(( (@property='test')  and  (@anotherproperty='anothertest') ) )] ");
-        assertEquals(criteria.toSql2Expression(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/site') AND property = 'test' AND anotherproperty = 'anothertest'");
+        assertEquals(criteria.toSql2Expression(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/site') AND [property] = 'test' AND [anotherproperty] = 'anothertest'");
     }
 
     @Test

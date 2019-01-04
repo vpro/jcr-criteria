@@ -30,7 +30,7 @@ import javax.jcr.query.Row;
  * information about the total number of available items, the current page number, the total number of pages.
  * @author fgiust
  */
-public interface AdvancedResult  {
+public interface AdvancedResult extends Iterable<AdvancedResultItem> {
 
     /**
      * An empty result.
@@ -88,6 +88,11 @@ public interface AdvancedResult  {
      * @return the fist result if available, null otherwise.
      */
     AdvancedResultItem getFirstResult();
+
+    @Override
+    default Iterator<AdvancedResultItem> iterator() {
+        return getItems().iterator();
+    }
 
     /**
      * @author fgiust
