@@ -99,7 +99,7 @@ public class AdvancedResultImpl implements AdvancedResult {
         String statement,
         Query spellCheckerQuery,
         boolean applyLocalPaging,
-        int offset) throws RepositoryException {
+        int offset) {
         this.jcrQueryResult = jcrQueryResult;
         this.queryCounter = queryCounter;
         this.itemsPerPage = itemsPerPage;

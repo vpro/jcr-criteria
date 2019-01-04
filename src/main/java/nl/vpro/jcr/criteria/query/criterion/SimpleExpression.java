@@ -19,12 +19,17 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.Getter;
+
 import java.util.Calendar;
 
 import org.apache.commons.lang3.StringUtils;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
+import nl.vpro.jcr.criteria.query.sql2.Condition;
+import nl.vpro.jcr.criteria.query.sql2.Field;
+import nl.vpro.jcr.criteria.query.sql2.SimpleExpressionCondition;
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 
 /**
@@ -39,9 +44,29 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
 
     private final Object value;
 
-    private final String op;
+    public enum Op {
+        eq("="),
+        ne("!="),
+        lt("<"),
+        le("<="),
+        gt(">"),
+        ge(">=");
 
-    protected SimpleExpression(String propertyName, Object value, String op) {
+        @Getter
+        private final String xpath;
+
+        Op(String xpath) {
+            this.xpath = xpath;
+        }
+        @Override
+        public String toString() {
+            return this.xpath;
+        }
+    }
+
+    private final Op op;
+
+    protected SimpleExpression(String propertyName, Object value, Op op) {
         this.propertyName = propertyName;
         this.value = value;
         this.op = op;
@@ -52,7 +77,7 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
         return propertyName + getOp() + value;
     }
 
-    protected final String getOp() {
+    protected final Op getOp() {
         return op;
     }
 
@@ -72,7 +97,7 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
             fragment.append(value).append(") ");
         } else if (value instanceof Character) {
             fragment.append(propertyName).append(getOp());
-            fragment.append("'").append(Character.toString((Character) value)).append("') ");
+            fragment.append("'").append(value).append("') ");
         } else if (value instanceof Boolean) {
             if ((Boolean) value) {
                 fragment.append(propertyName).append(getOp());
@@ -96,6 +121,11 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
         }
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
+    }
+
+    @Override
+    public Condition toSQLCondition(Criteria criteria) throws JCRQueryException {
+        return SimpleExpressionCondition.of(Field.of(propertyName), op, value);
     }
 
     @Override

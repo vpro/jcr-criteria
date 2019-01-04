@@ -33,10 +33,9 @@ import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
 public class ConjunctionTest {
 
     /**
-     * @throws Exception
      */
     @Test
-    public void testImplicitConjunction() throws Exception {
+    public void testImplicitConjunction() {
         Criteria criteria = JCRCriteriaFactory
             .createCriteria()
             .setBasePath("/")
@@ -52,10 +51,9 @@ public class ConjunctionTest {
     }
 
     /**
-     * @throws Exception
      */
     @Test
-    public void testExplicitConjunction() throws Exception  {
+    public void testExplicitConjunction() {
         Junction conjunction = Restrictions
             .conjunction()
             .add(Restrictions.eq("MetaData/@mgnl:template", "t-photogallery-sheet"))

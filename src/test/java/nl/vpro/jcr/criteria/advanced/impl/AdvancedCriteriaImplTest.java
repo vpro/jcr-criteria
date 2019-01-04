@@ -41,7 +41,7 @@ public class AdvancedCriteriaImplTest {
     Path tempFile;
 
     @BeforeTest
-    public void setup() throws RepositoryException, IOException {
+    public void setup() throws IOException {
         // Using jackrabbit memory only seems to be impossible. Sad...
 
         tempDirectory = Files.createTempDirectory("criteriatest");
@@ -52,7 +52,7 @@ public class AdvancedCriteriaImplTest {
         repository = new TransientRepository(tempFile.toFile(), tempDirectory.toFile());;
     }
     @AfterTest
-    public void shutdown() throws IOException {
+    public void shutdown() {
         try {
             FileUtils.deleteDirectory(tempDirectory.toFile());
             Files.deleteIfExists(tempFile);
@@ -62,7 +62,7 @@ public class AdvancedCriteriaImplTest {
         System.out.println("Removed " + tempDirectory + " and " + tempFile);
     }
     @Test
-    public void testToString() throws Exception {
+    public void testToString() {
         Criteria criteria = JCRCriteriaFactory
             .createCriteria()
             .setBasePath("/")

@@ -22,6 +22,7 @@ package nl.vpro.jcr.criteria.query.criterion;
 import java.util.Calendar;
 import java.util.Collection;
 
+import nl.vpro.jcr.criteria.query.criterion.SimpleExpression.Op;
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 
 
@@ -46,7 +47,7 @@ public final class Restrictions {
      * @return Criterion
      */
     public static SimpleExpression eq(String nodeName, Object value) {
-        return new SimpleExpression(nodeName, value, "=");
+        return new SimpleExpression(nodeName, value, Op.eq);
     }
 
     public static SimpleExpression attrEq(String attName, Object value) {
@@ -61,7 +62,7 @@ public final class Restrictions {
      * @return Criterion
      */
     public static SimpleExpression ne(String nodeName, Object value) {
-        return new SimpleExpression(nodeName, value, "!=");
+        return new SimpleExpression(nodeName, value, Op.ne);
     }
 
     /**
@@ -189,7 +190,7 @@ public final class Restrictions {
      * @return Criterion
      */
     public static SimpleExpression gt(String nodeName, Object value) {
-        return new SimpleExpression(nodeName, value, ">");
+        return new SimpleExpression(nodeName, value, Op.gt);
     }
 
     /**
@@ -200,7 +201,7 @@ public final class Restrictions {
      * @return Criterion
      */
     public static SimpleExpression lt(String nodeName, Object value) {
-        return new SimpleExpression(nodeName, value, "<");
+        return new SimpleExpression(nodeName, value, Op.lt);
     }
 
     /**
@@ -211,7 +212,7 @@ public final class Restrictions {
      * @return Criterion
      */
     public static SimpleExpression le(String nodeName, Object value) {
-        return new SimpleExpression(nodeName, value, "<=");
+        return new SimpleExpression(nodeName, value, Op.le);
     }
 
     /**
@@ -222,7 +223,7 @@ public final class Restrictions {
      * @return Criterion
      */
     public static SimpleExpression ge(String nodeName, Object value) {
-        return new SimpleExpression(nodeName, value, ">=");
+        return new SimpleExpression(nodeName, value, Op.ge);
     }
 
     /**
@@ -282,7 +283,7 @@ public final class Restrictions {
      */
 
     public static Criterion in(String nodeName, Collection<String> values) {
-        return new InExpression(nodeName, values.toArray(new String[values.size()]));
+        return new InExpression(nodeName, values.toArray(new String[0]));
     }
 
     /**
