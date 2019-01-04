@@ -19,7 +19,7 @@
 
 package nl.vpro.jcr.criteria.query;
 
-import java.util.function.IntSupplier;
+import java.util.function.LongSupplier;
 
 import javax.jcr.Session;
 
@@ -105,7 +105,7 @@ public class DirectJcrQuery implements ExecutableQuery  {
     }
 
 	@Override
-	public IntSupplier getCountSupplier(Session session, String language) {
+	public LongSupplier getCountSupplier(Session session, String language) {
 		throw new UnsupportedOperationException();
 	}
 

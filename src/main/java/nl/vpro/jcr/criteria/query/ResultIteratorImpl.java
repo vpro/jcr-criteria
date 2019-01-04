@@ -22,6 +22,7 @@ package nl.vpro.jcr.criteria.query;
 import java.util.Iterator;
 import java.util.function.Function;
 
+import javax.annotation.Nonnull;
 import javax.jcr.query.Row;
 import javax.jcr.query.RowIterator;
 
@@ -39,7 +40,7 @@ public class ResultIteratorImpl<T> implements ResultIterator<T> {
     protected final RowIterator rowIterator;
 	protected final Function<Row, T> wrapper;
 
-    public  ResultIteratorImpl(RowIterator rowIterator, Function<Row, T> wrapper) {
+    public  ResultIteratorImpl(@Nonnull RowIterator rowIterator, @Nonnull Function<Row, T> wrapper) {
         this.rowIterator = rowIterator;
 		this.wrapper = wrapper;
     }

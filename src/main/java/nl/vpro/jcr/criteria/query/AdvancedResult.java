@@ -19,9 +19,10 @@
 
 package nl.vpro.jcr.criteria.query;
 
-import javax.jcr.query.Row;
 import java.util.Iterator;
 import java.util.function.Function;
+
+import javax.jcr.query.Row;
 
 
 /**
@@ -54,7 +55,7 @@ public interface AdvancedResult  {
      * "order by @jcr:score") if you need to get the total size.
      * @return the total number of results that would be retrieved without pagination.
      */
-    int getTotalSize();
+    long getTotalSize();
 
     /**
      * Gets the total number of pages
@@ -97,8 +98,8 @@ public interface AdvancedResult  {
         private ResultIterator<AdvancedResultItem> iterator = new EmptyResultIterator();
 
         @Override
-        public int getTotalSize() {
-            return 0;
+        public long getTotalSize() {
+            return 0L;
         }
 
         @Override

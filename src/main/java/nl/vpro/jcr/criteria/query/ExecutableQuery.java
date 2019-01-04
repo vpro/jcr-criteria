@@ -19,7 +19,7 @@
 
 package nl.vpro.jcr.criteria.query;
 
-import java.util.function.IntSupplier;
+import java.util.function.LongSupplier;
 
 import javax.jcr.Session;
 import javax.jcr.query.Query;
@@ -40,11 +40,11 @@ public interface ExecutableQuery {
 
     AdvancedResult execute(Session session, String language);
 
-	default IntSupplier getCountSupplier(Session session) {
+	default LongSupplier getCountSupplier(Session session) {
         return getCountSupplier(session, Query.XPATH);
     }
 
-    IntSupplier getCountSupplier(Session session, String language);
+    LongSupplier getCountSupplier(Session session, String language);
 
 
 }

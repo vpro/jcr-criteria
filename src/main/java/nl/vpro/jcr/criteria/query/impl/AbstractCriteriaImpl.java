@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.function.IntSupplier;
+import java.util.function.LongSupplier;
 
 import javax.jcr.Session;
 
@@ -194,7 +194,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     }
 
     @Override
-    public IntSupplier getCountSupplier(Session session, String language) {
+    public LongSupplier getCountSupplier(Session session, String language) {
         return () -> {
             long startTime = System.nanoTime();
             try {
@@ -216,7 +216,8 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
                     spellCheckString,
                     forcePagingWithDocumentOrder && this.orderEntries.isEmpty());
 
-                return result.getTotalSize();
+                long totalSize = result.getTotalSize();
+                return totalSize;
             } finally {
                 long duration = TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
                 if (duration > 50) {

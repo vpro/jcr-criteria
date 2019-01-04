@@ -47,7 +47,7 @@ public class CriteriaTest {
     public void testXPathEscaping() {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/3voor12/nieuws");
         assertEquals( criteria.toXpathExpression(), "/jcr:root/_x0033_voor12/nieuws//*");
-        assertEquals( criteria.toSql2Expression(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/3voor12/nieuws");
+        assertEquals( criteria.toSql2Expression(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/3voor12/nieuws')");
     }
 
     @Test
@@ -60,7 +60,7 @@ public class CriteriaTest {
         conjunction.add(Restrictions.eq("@anotherproperty", "anothertest"));
 
         assertEquals(criteria.toXpathExpression(), "/jcr:root/site//*[(( (@property='test')  and  (@anotherproperty='anothertest') ) )] ");
-        assertEquals(criteria.toSql2Expression(), "/jcr:root/site//*[(( (@property='test')  and  (@anotherproperty='anothertest') ) )] ");
+        assertEquals(criteria.toSql2Expression(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/site') AND property = 'test' AND anotherproperty = 'anothertest'");
     }
 
     @Test
@@ -69,8 +69,8 @@ public class CriteriaTest {
 
         Junction conjunction = Restrictions.disjunction();
         criteria.add(conjunction);
-        conjunction.add(Restrictions.eq("@property", Boolean.FALSE));
-        conjunction.add(Restrictions.eq("@anotherproperty", Boolean.TRUE));
+        conjunction.add(Restrictions.attrEq("property", Boolean.FALSE));
+        conjunction.add(Restrictions.attrEq("anotherproperty", Boolean.TRUE));
 
         String xpathExpression = criteria.toXpathExpression();
         assertEquals(xpathExpression, "/jcr:root/site//*[(( ((@property=false) or not(@property )) or  (@anotherproperty=true) ) )] ");

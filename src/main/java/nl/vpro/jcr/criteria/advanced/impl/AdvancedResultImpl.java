@@ -25,11 +25,14 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.Function;
-import java.util.function.IntSupplier;
+import java.util.function.LongSupplier;
 
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
-import javax.jcr.query.*;
+import javax.jcr.query.Query;
+import javax.jcr.query.QueryResult;
+import javax.jcr.query.Row;
+import javax.jcr.query.RowIterator;
 
 import nl.vpro.jcr.criteria.query.*;
 
@@ -42,7 +45,10 @@ import nl.vpro.jcr.criteria.query.*;
 public class AdvancedResultImpl implements AdvancedResult {
 
     private final QueryResult jcrQueryResult;
-    private final IntSupplier queryCounter;
+
+    private RowIterator rowIterator;
+
+    private final LongSupplier queryCounter;
 
     private final int itemsPerPage;
 
@@ -59,12 +65,12 @@ public class AdvancedResultImpl implements AdvancedResult {
 
     private int offset;
 
-    private Integer totalResults;
+    private Long totalResults;
 
 
     AdvancedResultImpl(
         QueryResult jcrQueryResult,
-        IntSupplier queryCounter,
+        LongSupplier queryCounter,
         int itemsPerPage,
         int pageNumberStartingFromOne,
         String statement,
@@ -77,7 +83,7 @@ public class AdvancedResultImpl implements AdvancedResult {
      */
     AdvancedResultImpl(
         QueryResult jcrQueryResult,
-        IntSupplier queryCounter,
+        LongSupplier queryCounter,
         int itemsPerPage,
         int pageNumberStartingFromOne,
         String statement,
@@ -93,7 +99,7 @@ public class AdvancedResultImpl implements AdvancedResult {
      */
     AdvancedResultImpl(
         QueryResult jcrQueryResult,
-        IntSupplier queryCounter,
+        LongSupplier queryCounter,
         int itemsPerPage,
         int pageNumberStartingFromOne,
         String statement,
@@ -123,30 +129,28 @@ public class AdvancedResultImpl implements AdvancedResult {
 
 
     @Override
-    public int getTotalSize() {
+    public long getTotalSize() {
         if (! totalSizeDetermined()) {
-            int queryTotalSize = -1;
+            long queryTotalSize = -1;
             try { // jcrQueryResult instanceof JackrabbitQueryResult) {
                 Method m = jcrQueryResult.getClass().getMethod("getTotalSize");
                 queryTotalSize = (int) m.invoke(jcrQueryResult);
             } catch (InvocationTargetException | IllegalAccessException e) {
                 log.error(e.getMessage(), e);
             } catch (NoSuchMethodException e) {
-
+                log.debug(e.getMessage());
             }
             if (queryTotalSize == -1 && (itemsPerPage == 0 || applyLocalPaging)) {
-                try {
-                    totalResults = (int) jcrQueryResult.getNodes().getSize();
-                } catch (RepositoryException e) {
-                    // ignore, the standard total size will be returned
+                totalResults = getRowIterator().getSize();
+            } else {
+                if (queryTotalSize == -1) {
+                    totalResults = queryCounter.getAsLong();
+                } else {
+                    totalResults = queryTotalSize;
                 }
             }
-
-            if (queryTotalSize == -1) {
-                totalResults = queryCounter.getAsInt();
-            } else {
-                totalResults = queryTotalSize;
-
+            if (totalResults < 0) {
+                log.warn("Total results could not be determined");
             }
         }
         return totalResults;
@@ -164,24 +168,16 @@ public class AdvancedResultImpl implements AdvancedResult {
     @Override
     public ResultIterator<AdvancedResultItem> getItems() {
 
-        RowIterator rows;
-        try {
-            rows = jcrQueryResult.getRows();
-        } catch (RepositoryException e) {
-            throw new JCRQueryException(statement, e);
-        }
-
         if ((applyLocalPaging && (itemsPerPage > 0 || offset > 0))) {
 
             if (offset == 0) {
                 offset = (Math.max(pageNumberStartingFromOne, 1) - 1) * itemsPerPage;
             }
-
             // removing preceding records
-            rows.skip(offset);
+            getRowIterator().skip(offset);
 
             // removing following records and alter getSize()
-            return new ResultIteratorImpl<AdvancedResultItem>(rows, AdvancedResultItemImpl::new) {
+            return new ResultIteratorImpl<AdvancedResultItem>(rowIterator, AdvancedResultItemImpl::new) {
 
                 @Override
                 public boolean hasNext() {
@@ -194,9 +190,19 @@ public class AdvancedResultImpl implements AdvancedResult {
             };
         }
 
-        return new ResultIteratorImpl<>(rows, AdvancedResultItemImpl::new);
+        return new ResultIteratorImpl<>(getRowIterator(), AdvancedResultItemImpl::new);
     }
 
+    protected RowIterator getRowIterator() {
+        if (rowIterator == null) {
+            try {
+                rowIterator = jcrQueryResult.getRows();
+            } catch (RepositoryException e) {
+                throw new JCRQueryException(statement, e);
+            }
+        }
+        return rowIterator;
+    }
 
     @Override
     public String getSpellCheckerSuggestion() {
