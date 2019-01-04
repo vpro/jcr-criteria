@@ -32,6 +32,7 @@ import static org.testng.Assert.assertEquals;
 
 /**
  * @author fgiust
+ * @author Michiel Meeuwissen
  */
 @SuppressWarnings("deprecation")
 public class CriteriaTest {

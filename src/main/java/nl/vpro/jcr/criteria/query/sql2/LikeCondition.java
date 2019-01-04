@@ -2,11 +2,11 @@ package nl.vpro.jcr.criteria.query.sql2;
 
 /**
  * @author Michiel Meeuwissen
- * @since ...
+ * @since 1.3
  */
 public class LikeCondition implements  Condition {
-    Field field;
-    String value;
+    final Field field;
+    final String value;
 
     public LikeCondition(String propertyName, String toMatchString) {
         this.field = Field.of(propertyName);

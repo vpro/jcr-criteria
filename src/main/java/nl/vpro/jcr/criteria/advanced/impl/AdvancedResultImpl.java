@@ -132,6 +132,7 @@ public class AdvancedResultImpl implements AdvancedResult {
             } catch (InvocationTargetException | IllegalAccessException e) {
                 log.error(e.getMessage(), e);
             } catch (NoSuchMethodException e) {
+                log.debug("No such method {}", e.getMessage(), e);
 
             }
             if (queryTotalSize == -1 && (itemsPerPage == 0 || applyLocalPaging)) {
