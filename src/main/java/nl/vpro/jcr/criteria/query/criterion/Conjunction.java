@@ -19,8 +19,8 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
-import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.sql2.AndCondition;
+import nl.vpro.jcr.criteria.query.sql2.BooleanCondition;
 
 /**
  * @author fgrilli
@@ -35,13 +35,8 @@ public class Conjunction extends Junction {
 
 
     @Override
-    public AndCondition toSQLCondition(Criteria c) {
-        AndCondition result = new AndCondition();
-        for (Criterion clause : criteria) {
-            result.getClauses().add(clause.toSQLCondition(c));
-        }
-        return result;
+    BooleanCondition createCondition() {
+        return new AndCondition();
+
     }
-
-
 }

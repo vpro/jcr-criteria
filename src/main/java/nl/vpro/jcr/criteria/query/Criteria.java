@@ -19,10 +19,13 @@
 
 package nl.vpro.jcr.criteria.query;
 
+import lombok.Getter;
 import lombok.SneakyThrows;
 
 import javax.jcr.Node;
 import javax.jcr.query.Query;
+
+import org.slf4j.LoggerFactory;
 
 import nl.vpro.jcr.criteria.query.criterion.Criterion;
 import nl.vpro.jcr.criteria.query.criterion.Order;
@@ -171,16 +174,31 @@ public interface Criteria extends ExecutableQuery {
      * @return the generated xpath expression
      */
     @Deprecated
-    String toXpathExpression();
+    Expression toXpathExpression();
 
-    String toSql2Expression();
+    Expression toSql2Expression();
 
-    default String toExpression(String language) {
+    default Expression toExpression() {
+        return toExpression("");
+    }
+
+    default Expression toExpression(String language) {
+        if (language == null) {
+            language = "";
+        }
         switch(language) {
             case Query.XPATH:
                 return toXpathExpression();
             case Query.JCR_SQL2:
                 return toSql2Expression();
+            case "":
+                try {
+                    return toSql2Expression();
+                } catch (UnsupportedOperationException use) {
+                    LoggerFactory.getLogger(getClass()).info(use.getMessage());
+                    return toXpathExpression();
+
+                }
             default:
                 throw new UnsupportedOperationException("Unsupported language " + language);
         }
@@ -207,6 +225,18 @@ public interface Criteria extends ExecutableQuery {
      * @return this (for method chaining)
      */
     Criteria setForcePagingWithDocumentOrder(boolean force);
+
+
+    @Getter
+    class Expression {
+        final String language;
+        final String statement;
+
+        public Expression(String language, String statement) {
+            this.language = language;
+            this.statement = statement;
+        }
+    }
 
 
 }

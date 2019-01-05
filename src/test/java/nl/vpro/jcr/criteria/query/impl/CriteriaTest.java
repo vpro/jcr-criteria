@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.query.impl;
 
+import javax.jcr.query.Query;
+
 import org.testng.annotations.Test;
 
 import nl.vpro.jcr.criteria.query.Criteria;
@@ -39,15 +41,17 @@ public class CriteriaTest {
     @Test
     public void testWithAbsoluteNodePath() {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/site");
-        assertEquals(criteria.toXpathExpression(), "/jcr:root/site//*");
-        assertEquals(criteria.toSql2Expression(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/site')");
+        assertEquals(criteria.toXpathExpression().getStatement(), "/jcr:root/site//*");
+        assertEquals(criteria.toSql2Expression().getStatement(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/site')");
+        assertEquals(criteria.toExpression().getLanguage(), Query.JCR_SQL2);
+
     }
 
     @Test
     public void testXPathEscaping() {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/3voor12/nieuws");
-        assertEquals( criteria.toXpathExpression(), "/jcr:root/_x0033_voor12/nieuws//*");
-        assertEquals( criteria.toSql2Expression(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/3voor12/nieuws')");
+        assertEquals( criteria.toXpathExpression().getStatement(), "/jcr:root/_x0033_voor12/nieuws//*");
+        assertEquals( criteria.toSql2Expression().getStatement(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/3voor12/nieuws')");
     }
 
     @Test
@@ -59,8 +63,8 @@ public class CriteriaTest {
         conjunction.add(Restrictions.attrEq("property", "test"));
         conjunction.add(Restrictions.attrEq("anotherproperty", "anothertest"));
 
-        assertEquals(criteria.toXpathExpression(), "/jcr:root/site//*[(( (@property='test')  and  (@anotherproperty='anothertest') ) )] ");
-        assertEquals(criteria.toSql2Expression(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/site') AND [property] = 'test' AND [anotherproperty] = 'anothertest'");
+        assertEquals(criteria.toXpathExpression().getStatement(), "/jcr:root/site//*[(( (@property='test')  and  (@anotherproperty='anothertest') ) )] ");
+        assertEquals(criteria.toSql2Expression().getStatement(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/site') AND [property] = 'test' AND [anotherproperty] = 'anothertest'");
     }
 
     @Test
@@ -72,15 +76,16 @@ public class CriteriaTest {
         conjunction.add(Restrictions.attrEq("property", Boolean.FALSE));
         conjunction.add(Restrictions.attrEq("anotherproperty", Boolean.TRUE));
 
-        String xpathExpression = criteria.toXpathExpression();
-        assertEquals(xpathExpression, "/jcr:root/site//*[(( ((@property=false) or not(@property )) or  (@anotherproperty=true) ) )] ");
+        assertEquals(criteria.toXpathExpression().getStatement(), "/jcr:root/site//*[(( ((@property=false) or not(@property )) or  (@anotherproperty=true) ) )] ");
+
+        assertEquals(criteria.toExpression().getStatement(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/site') AND [property] = false OR [anotherproperty] = true");
     }
 
     /**
      * Test for CRIT-3
      */
     @Test
-    public void testEmptyConjuntion() {
+    public void testEmptyConjunction() {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/site");
 
         criteria.add(Restrictions.eq("@property", "test"));
@@ -88,7 +93,7 @@ public class CriteriaTest {
         Junction conjunction = Restrictions.conjunction();
         criteria.add(conjunction);
 
-        String xpathExpression = criteria.toXpathExpression();
+        String xpathExpression = criteria.toXpathExpression().getStatement();
         assertEquals(xpathExpression, "/jcr:root/site//*[( (@property='test')  )] ");
     }
 
@@ -99,7 +104,7 @@ public class CriteriaTest {
     public void testEscapeComma() {
         Criteria criteria = JCRCriteriaFactory.createCriteria().setBasePath("/one/two/3three/fo,ur/");
         criteria.add(Restrictions.eq("@property", "test"));
-        String xpathExpression = criteria.toXpathExpression();
+        String xpathExpression = criteria.toXpathExpression().getStatement();
 
         assertEquals(xpathExpression, "/jcr:root/one/two/_x0033_three/fo_x002c_ur//*[( (@property='test')  )] ");
     }

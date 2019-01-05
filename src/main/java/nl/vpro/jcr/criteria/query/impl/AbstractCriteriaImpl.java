@@ -18,6 +18,7 @@
 
 package nl.vpro.jcr.criteria.query.impl;
 
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.LongSupplier;
 
 import javax.jcr.Session;
+import javax.jcr.query.Query;
 
 import nl.vpro.jcr.criteria.advanced.impl.AdvancedResultImpl;
 import nl.vpro.jcr.criteria.advanced.impl.QueryExecutorHelper;
@@ -49,12 +51,14 @@ import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
  * @author Michiel Meeuwissen
  */
 @Slf4j
+@AllArgsConstructor
 public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     protected String path = Criterion.ALL_ELEMENTS;
 
     protected List<CriterionEntry> criterionEntries = new ArrayList<>();
 
+    @Singular
     protected List<OrderEntry> orderEntries = new ArrayList<>();
 
     protected int maxResults;
@@ -64,6 +68,10 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     protected String spellCheckString;
 
     protected boolean forcePagingWithDocumentOrder;
+
+    @Getter
+    @Setter
+    protected String language = null;
 
     protected AbstractCriteriaImpl() {
     }
@@ -160,32 +168,31 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     @Override
     @Deprecated
-    public String toXpathExpression() {
+    public Expression toXpathExpression() {
         JCRMagnoliaCriteriaQueryTranslator translator = new JCRMagnoliaCriteriaQueryTranslator(this);
         XPathSelect statement = new XPathSelect();
         statement.setRoot(XPathTextUtils.toXPath(path));
         statement.setPredicate(translator.getPredicate());
         statement.setOrderByClause(translator.getOrderBy());
-        return statement.toStatementString();
+        return new Expression(Query.XPATH, statement.toStatementString());
     }
 
 
 
     @Override
-    public String toSql2Expression() {
-        return Select.from(this).toSql2();
+    public Expression toSql2Expression() {
+        return new Expression(Query.JCR_SQL2, Select.from(this).toSql2());
     }
 
 
 
 
     @Override
-    public AdvancedResult execute(Session session, String language) {
-        String stmt = toExpression(language);
+    public AdvancedResult execute(Session session) {
+        Expression expr = toExpression(language);
         return QueryExecutorHelper.execute(
-            stmt,
-            language,
-            getCountSupplier(session, language),
+            expr,
+            getCountSupplier(session),
             session,
             maxResults,
             offset,
@@ -194,7 +201,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     }
 
     @Override
-    public LongSupplier getCountSupplier(Session session, String language) {
+    public LongSupplier getCountSupplier(Session session) {
         return () -> {
             long startTime = System.nanoTime();
             try {
@@ -205,10 +212,9 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
                 countCriteria.setBasePath(path);
                 countCriteria.setSpellCheckString(spellCheckString);
 
-                String stmt = countCriteria.toExpression(language);
+                Expression expr = countCriteria.toExpression(language);
                 final AdvancedResultImpl result = QueryExecutorHelper.execute(
-                    stmt,
-                    language,
+                    expr,
                     () -> -1,
                     session,
                     0,
@@ -263,4 +269,5 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     public String toString() {
         return "criteria" + criterionEntries + (orderEntries.isEmpty() ? "" : " order by " + orderEntries);
     }
+
 }

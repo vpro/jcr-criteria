@@ -19,9 +19,11 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import nl.vpro.jcr.criteria.query.sql2.BooleanCondition;
+import nl.vpro.jcr.criteria.query.sql2.OrCondition;
+
 /**
  * @author Federico Grilli
- * @version $Id$
  */
 public class Disjunction extends Junction {
 
@@ -29,5 +31,11 @@ public class Disjunction extends Junction {
 
     protected Disjunction() {
         super("or");
+    }
+
+    @Override
+    BooleanCondition createCondition() {
+        return new OrCondition();
+
     }
 }

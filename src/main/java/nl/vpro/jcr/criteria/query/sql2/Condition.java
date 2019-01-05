@@ -6,7 +6,7 @@ package nl.vpro.jcr.criteria.query.sql2;
  */
 public interface Condition {
 
-    void toSql2(StringBuilder builder);
+    boolean toSql2(StringBuilder builder);
 
 
 }

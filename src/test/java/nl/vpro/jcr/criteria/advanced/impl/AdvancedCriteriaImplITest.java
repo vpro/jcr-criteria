@@ -1,5 +1,6 @@
 package nl.vpro.jcr.criteria.advanced.impl;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -16,14 +17,15 @@ import org.apache.jackrabbit.core.TransientRepository;
 import org.apache.jackrabbit.core.fs.local.FileUtil;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import nl.vpro.jcr.criteria.query.AdvancedResultItem;
 import nl.vpro.jcr.criteria.query.Criteria;
-import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
 import nl.vpro.jcr.criteria.query.criterion.MatchMode;
 import nl.vpro.jcr.criteria.query.criterion.Restrictions;
 
+import static nl.vpro.jcr.criteria.query.JCRCriteriaFactory.builder;
 import static org.testng.AssertJUnit.*;
 
 
@@ -34,12 +36,24 @@ import static org.testng.AssertJUnit.*;
 
 @Slf4j
 public class AdvancedCriteriaImplITest {
+
+
+   @DataProvider(name = "language")
+   public static Object[][] language() {
+      return new Object[][] {{Query.XPATH}, {Query.JCR_SQL2}, {""}};
+   }
+
+
     Repository repository;
     Path tempDirectory;
     Path tempFile;
+    Session session;
+    Node root;
+
+
 
     @BeforeMethod
-    public void setup() throws IOException {
+    public void setup() throws IOException, RepositoryException {
         // Using jackrabbit memory only seems to be impossible. Sad...
         tempDirectory = Files.createTempDirectory("criteriatest");
         System.setProperty("derby.stream.error.file", new File(tempDirectory.toFile(), "derby.log").toString());
@@ -47,6 +61,8 @@ public class AdvancedCriteriaImplITest {
         Files.copy(getClass().getResourceAsStream("/repository.xml"), tempFile, StandardCopyOption.REPLACE_EXISTING);
         FileUtil.delete(tempDirectory.toFile());
         repository = new TransientRepository(tempFile.toFile(), tempDirectory.toFile());;
+        session = getSession();
+        root = session.getRootNode();
     }
     @AfterMethod
     public void shutdown() {
@@ -60,18 +76,9 @@ public class AdvancedCriteriaImplITest {
     }
 
 
-    @Test
-    public void testExecuteXPath() throws RepositoryException {
-        testExecute(Query.XPATH);
-    }
-    @Test
-    public void testExecuteSQL2() throws RepositoryException {
-        testExecute(Query.JCR_SQL2);
-    }
-    protected void testExecute(String language) throws RepositoryException {
+    @Test(dataProvider = "language")
+    public void start(String language) throws RepositoryException {
         {
-            Session session = getSession();
-            Node root = session.getRootNode();
             Node hello = root.addNode("hello");
             hello.setProperty("a", "a1");
             Node hello2 = root.addNode("hello2");
@@ -82,22 +89,88 @@ public class AdvancedCriteriaImplITest {
         }
         {
             Criteria criteria =
-                JCRCriteriaFactory.createCriteria()
-                    .setBasePath("/")
+                builder()
+                    .language(language)
+                    .path("/")
                     .add(Restrictions.attrLike("a", "a", MatchMode.START))
-                //.add(Restrictions.like("hello/jcr:name", "a"))
-                    //.addOrderByScore()
+                    .build()
+                ;
+            check(criteria, 2);
+        }
+    }
+
+    @Test(dataProvider = "language")
+    public void booleanMatch(String language) throws RepositoryException {
+        {
+            Node hello = root.addNode("hello");
+            hello.setProperty("a", Boolean.TRUE);
+            Node hello2 = root.addNode("hello2");
+            hello2.setProperty("a", Boolean.FALSE);
+            Node goodbye = root.addNode("bye");
+            goodbye.setProperty("a", Boolean.TRUE);
+            Node goodbye2 = root.addNode("bye2");
+            session.save();
+        }
+        {
+            check(
+                builder()
+                    .language(language)
+                    .path("/")
+                    .add(Restrictions.attrEq("a", Boolean.TRUE)),
+                2);
+
+                ;
+            check(builder().language(language)
+                    .path("/")
+                    .add(Restrictions.attrEq("a", Boolean.FALSE)),
+                1);
+        }
+    }
+
+    @Test(dataProvider = "language")
+    public void isNull(String language) throws RepositoryException {
+        {
+            Node hello = root.addNode("hello");
+            hello.setProperty("a", Boolean.TRUE);
+            Node hello2 = root.addNode("hello2");
+            hello2.setProperty("a", Boolean.FALSE);
+            Node goodbye = root.addNode("bye");
+            goodbye.setProperty("a", Boolean.TRUE);
+            Node goodbye2 = root.addNode("bye2");
+            session.save();
+        }
+        {
+            check(builder().language(language)
+
+                    .add(Restrictions.hasNodeType("nt:unstructured"))
+                    .add(Restrictions.isNotNull("a")),
+                3);
+            check(
+                builder()
+                    .language(language)
+                    .path("/")
+                    .add(Restrictions.hasNodeType("nt:unstructured"))
+                    .add(Restrictions.isNull("a")),
+                1);
+
                 ;
 
-
-            AdvancedResultImpl result = (AdvancedResultImpl) criteria.execute(getSession(), language);
-            for (AdvancedResultItem item : result.getItems()) {
-                System.out.println(item);
-            }
-            assertFalse(result.totalSizeDetermined());
-            assertEquals(2, result.getTotalSize());
-            assertTrue(result.totalSizeDetermined());
         }
+    }
+
+    void check(AdvancedCriteriaImpl.Builder builder, int expectedSize) {
+        check(builder.build(), expectedSize);
+    }
+    @SneakyThrows
+    void check(Criteria criteria, int expectedSize) {
+        AdvancedResultImpl result = (AdvancedResultImpl) criteria.execute(session);
+        for (AdvancedResultItem item : result) {
+            log.info("{} {}", item.getJCRNode().getPrimaryNodeType().getName(), item);
+        }
+        assertFalse(result.totalSizeDetermined());
+        assertEquals(expectedSize, result.getTotalSize());
+        assertTrue(result.totalSizeDetermined());
+
     }
 
     Session getSession() throws RepositoryException {

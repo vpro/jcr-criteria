@@ -20,16 +20,19 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
     abstract String getValue();
 
     @Override
-    public void toSql2(StringBuilder builder) {
+    public boolean toSql2(StringBuilder builder) {
         field.toSql2(builder);
         builder.append(" ").append(op.getXpath()).append(" ").append(getValue());
+        return true;
     }
 
     public static SimpleExpressionCondition<?> of(Field field, SimpleExpression.Op op, Object v) {
         if (v instanceof String) {
             return new StringSimpleExpressionCondition(field, op, (String) v);
+        } else if (v instanceof Boolean){
+            return new BooleanSimpleExpressionCondition(field, op, (Boolean) v);
         } else {
-            throw new IllegalArgumentException("Unrecognized " + v);
+            throw new IllegalArgumentException("Unrecognized " + v.getClass() + " " + v);
         }
     }
 }

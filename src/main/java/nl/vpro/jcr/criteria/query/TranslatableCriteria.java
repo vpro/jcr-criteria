@@ -19,11 +19,13 @@
 
 package nl.vpro.jcr.criteria.query;
 
-import nl.vpro.jcr.criteria.query.criterion.Criterion;
-import nl.vpro.jcr.criteria.query.criterion.Order;
+import lombok.Getter;
 
 import java.io.Serializable;
 import java.util.Collection;
+
+import nl.vpro.jcr.criteria.query.criterion.Criterion;
+import nl.vpro.jcr.criteria.query.criterion.Order;
 
 
 /**
@@ -48,23 +50,16 @@ public interface TranslatableCriteria extends Criteria {
 
         private static final long serialVersionUID = 1L;
 
+        @Getter
         private final Criterion criterion;
 
+        @Getter
         private final Criteria criteria;
 
         public CriterionEntry(Criterion criterion, Criteria criteria) {
             this.criteria = criteria;
             this.criterion = criterion;
         }
-
-        public Criterion getCriterion() {
-            return criterion;
-        }
-
-        public Criteria getCriteria() {
-            return criteria;
-        }
-
         @Override
         public String toString() {
             return criterion.toString();
@@ -91,8 +86,10 @@ public interface TranslatableCriteria extends Criteria {
 
         private static final long serialVersionUID = 1L;
 
+        @Getter
         private final Order order;
 
+        @Getter
         private final Criteria criteria;
 
         public OrderEntry(Order order, Criteria criteria) {
@@ -100,13 +97,6 @@ public interface TranslatableCriteria extends Criteria {
             this.order = order;
         }
 
-        public Order getOrder() {
-            return order;
-        }
-
-        public Criteria getCriteria() {
-            return criteria;
-        }
 
         @Override
         public String toString() {

@@ -29,9 +29,9 @@ import nl.vpro.jcr.criteria.advanced.impl.QueryExecutorHelper;
 /**
  * @author fgiust
  */
-public class DirectJcrQuery implements ExecutableQuery  {
+class DirectJcrQuery implements ExecutableQuery  {
 
-    private final String query;
+    private final Criteria.Expression expression;
 
     private String spellCheckString;
 
@@ -40,8 +40,8 @@ public class DirectJcrQuery implements ExecutableQuery  {
     private int offset;
 
 
-    public DirectJcrQuery(String query) {
-        this.query = query;
+    public DirectJcrQuery(Criteria.Expression expression) {
+        this.expression = expression;
     }
 
     /**
@@ -88,11 +88,10 @@ public class DirectJcrQuery implements ExecutableQuery  {
     }
 
     @Override
-    public AdvancedResult execute(Session session, String language) {
+    public AdvancedResult execute(Session session) {
 
         return QueryExecutorHelper.execute(
-            query,
-            language,
+            expression,
             () -> {
                 throw new UnsupportedOperationException();
 
@@ -105,7 +104,7 @@ public class DirectJcrQuery implements ExecutableQuery  {
     }
 
 	@Override
-	public LongSupplier getCountSupplier(Session session, String language) {
+	public LongSupplier getCountSupplier(Session session) {
 		throw new UnsupportedOperationException();
 	}
 

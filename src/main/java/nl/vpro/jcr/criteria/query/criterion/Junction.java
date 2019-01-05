@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,19 +29,20 @@ import org.apache.commons.lang3.StringUtils;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
+import nl.vpro.jcr.criteria.query.sql2.BooleanCondition;
 
 
 /**
  * A sequence of a logical expressions combined by some associative logical operator
  * @author Federico Grilli
- * @version $Id$
  */
-public class Junction implements Criterion {
+public abstract class Junction implements Criterion {
 
     private static final long serialVersionUID = 4745761472724863693L;
 
     final List<Criterion> criteria = new ArrayList<>();
 
+    @Getter
     final String op;
 
     protected Junction(String op) {
@@ -54,10 +57,6 @@ public class Junction implements Criterion {
     public Junction add(Criterion criterion) {
         criteria.add(criterion);
         return this;
-    }
-
-    public String getOp() {
-        return op;
     }
 
     @Override
@@ -87,6 +86,18 @@ public class Junction implements Criterion {
 
 
     @Override
+    public BooleanCondition toSQLCondition(Criteria c) {
+        BooleanCondition result = createCondition();
+        for (Criterion clause : criteria) {
+            result.getClauses().add(clause.toSQLCondition(c));
+        }
+        return result;
+    }
+
+    abstract BooleanCondition createCondition();
+
+
+    @Override
     public String toString() {
         return '(' + StringUtils.join(criteria.iterator(), ' ' + op + ' ') + ')';
     }
@@ -105,14 +116,14 @@ public class Junction implements Criterion {
 
         Junction junction = (Junction) o;
 
-        if (criteria != null ? !criteria.equals(junction.criteria) : junction.criteria != null) return false;
+        if (!criteria.equals(junction.criteria)) return false;
         return op != null ? op.equals(junction.op) : junction.op == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = criteria != null ? criteria.hashCode() : 0;
+        int result = criteria.hashCode();
         result = 31 * result + (op != null ? op.hashCode() : 0);
         return result;
     }

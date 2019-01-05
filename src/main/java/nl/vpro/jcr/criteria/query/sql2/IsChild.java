@@ -10,11 +10,15 @@ import lombok.Data;
  */
 @AllArgsConstructor
 @Data
-public class IsChild implements Condition {
+class IsChild implements Condition {
 
     String path;
     @Override
-    public void toSql2(StringBuilder builder) {
-        builder.append("ISCHILDNODE(a, '").append(path).append("')");
+    public boolean toSql2(StringBuilder builder) {
+        if (path != null && ! "/".equals(path)) {
+            builder.append("ISCHILDNODE(a, '").append(path).append("')");
+            return true;
+        }
+        return false;
     }
 }
