@@ -41,12 +41,7 @@ import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 @Slf4j
 public final class QueryExecutorHelper {
 
-    private static ThreadLocal<Boolean> executing = new ThreadLocal<Boolean>() {
-        @Override
-        protected Boolean initialValue() {
-            return Boolean.FALSE;
-        }
-    };
+    private static ThreadLocal<Boolean> executing = ThreadLocal.withInitial(() -> Boolean.FALSE);
 
     private QueryExecutorHelper() {
         // don't instantiate
@@ -65,7 +60,7 @@ public final class QueryExecutorHelper {
         Criteria.Expression expression,
         LongSupplier queryCounter,
         Session jcrSession,
-        int maxResults,
+        Integer maxResults,
         int offset,
         String spellCheckString) {
         return execute(expression, queryCounter, jcrSession, maxResults, offset, spellCheckString, false);
@@ -74,7 +69,7 @@ public final class QueryExecutorHelper {
     public static AdvancedResultImpl execute(
         Criteria.Expression expression,
         Session jcrSession,
-        int maxResults,
+        Integer maxResults,
         int offset,
         String spellCheckString) {
 
@@ -84,7 +79,7 @@ public final class QueryExecutorHelper {
     public static AdvancedResultImpl execute(
         Criteria.Expression expression,
         Session jcrSession,
-        int maxResults,
+        Integer maxResults,
         int offset,
         String spellCheckString,
         boolean forcePagingWithDocumentOrder
@@ -109,7 +104,7 @@ public final class QueryExecutorHelper {
         Criteria.Expression expr,
         LongSupplier queryCounter,
         Session jcrSession,
-        int maxResults,
+        Integer maxResults,
         int offset,
         String spellCheckString,
         boolean forcePagingWithDocumentOrder) {
@@ -123,7 +118,7 @@ public final class QueryExecutorHelper {
 
 
             if (!forcePagingWithDocumentOrder) {
-                if (maxResults > 0) {
+                if (maxResults != null && maxResults > 0) {
                     query.setLimit(maxResults);
                 }
 
@@ -133,7 +128,7 @@ public final class QueryExecutorHelper {
             }
 
             int pageNumberStartingFromOne = 1;
-            if (maxResults > 0 && offset > maxResults - 1) {
+            if (maxResults != null && maxResults > 0 && offset > maxResults - 1) {
                 pageNumberStartingFromOne = (offset / maxResults) + 1;
             }
 
@@ -169,6 +164,13 @@ public final class QueryExecutorHelper {
         }
 
     }
+
+    public static AdvancedResultImpl execute(
+        Criteria.Expression expr,
+        Session jcrSession) {
+        return execute(expr, null, jcrSession, null, 0, null, true);
+    }
+
 
     /**
      * Indicates if this helper class is executing a query

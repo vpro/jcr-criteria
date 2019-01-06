@@ -18,7 +18,10 @@
 
 package nl.vpro.jcr.criteria.query.impl;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -51,16 +54,22 @@ import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
  * @author Michiel Meeuwissen
  */
 @Slf4j
+@EqualsAndHashCode(doNotUseGetters = true)
 @AllArgsConstructor
 public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
-    protected String path = Criterion.ALL_ELEMENTS;
+    @Getter
+    protected String basePath = Criterion.ALL_ELEMENTS;
+
+    @Getter
+    @Setter
+    protected String type;
 
     protected List<CriterionEntry> criterionEntries = new ArrayList<>();
 
-    @Singular
     protected List<OrderEntry> orderEntries = new ArrayList<>();
 
+    @Getter
     protected int maxResults;
 
     protected int offset;
@@ -69,6 +78,9 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     protected boolean forcePagingWithDocumentOrder;
 
+    /**
+     * Language to produce queries in (Supported are {@link Query#XPATH}, {@link Query#JCR_SQL2} and <code>null</code>, which means to prefer SQL2, but fall back to XPATH)
+     */
     @Getter
     @Setter
     protected String language = null;
@@ -110,14 +122,10 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         if (!XPathTextUtils.isValidNodePath(path)) {
             throw new IllegalArgumentException("Path " + path + " is not a valid node path");
         }
-        this.path = path;
+        this.basePath = path;
         return this;
     }
 
-    @Override
-    public String getBasePath() {
-        return path;
-    }
 
     /**
      * Returns the firstResult.
@@ -133,13 +141,6 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         return this;
     }
 
-    /**
-     * Returns the maxResults.
-     * @return the maxResults
-     */
-    public int getMaxResults() {
-        return maxResults;
-    }
 
     @Override
     public Criteria setMaxResults(int maxResults) {
@@ -171,17 +172,20 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     public Expression toXpathExpression() {
         JCRMagnoliaCriteriaQueryTranslator translator = new JCRMagnoliaCriteriaQueryTranslator(this);
         XPathSelect statement = new XPathSelect();
-        statement.setRoot(XPathTextUtils.toXPath(path));
+        statement.setType(type);
+        if (! Criterion.ALL_ELEMENTS.equals(basePath) && basePath != null) {
+            statement.setRoot(XPathTextUtils.toXPath(basePath));
+        }
         statement.setPredicate(translator.getPredicate());
         statement.setOrderByClause(translator.getOrderBy());
-        return new Expression(Query.XPATH, statement.toStatementString());
+        return Expression.xpath(statement.toStatementString());
     }
 
 
 
     @Override
     public Expression toSql2Expression() {
-        return new Expression(Query.JCR_SQL2, Select.from(this).toSql2());
+        return Expression.sql2(Select.from(this).toSql2());
     }
 
 
@@ -209,7 +213,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
                 for (CriterionEntry c : getCriterionEntries()) {
                     countCriteria.add(c.getCriterion());
                 }
-                countCriteria.setBasePath(path);
+                countCriteria.setBasePath(basePath);
                 countCriteria.setSpellCheckString(spellCheckString);
 
                 Expression expr = countCriteria.toExpression(language);
@@ -235,39 +239,10 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         };
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        AbstractCriteriaImpl that = (AbstractCriteriaImpl) o;
-
-        if (maxResults != that.maxResults) return false;
-        if (offset != that.offset) return false;
-        if (forcePagingWithDocumentOrder != that.forcePagingWithDocumentOrder) return false;
-        if (path != null ? !path.equals(that.path) : that.path != null) return false;
-        if (criterionEntries != null ? !criterionEntries.equals(that.criterionEntries) : that.criterionEntries != null)
-            return false;
-        if (orderEntries != null ? !orderEntries.equals(that.orderEntries) : that.orderEntries != null) return false;
-        return spellCheckString != null ? spellCheckString.equals(that.spellCheckString) : that.spellCheckString == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = path != null ? path.hashCode() : 0;
-        result = 31 * result + (criterionEntries != null ? criterionEntries.hashCode() : 0);
-        result = 31 * result + (orderEntries != null ? orderEntries.hashCode() : 0);
-        result = 31 * result + maxResults;
-        result = 31 * result + offset;
-        result = 31 * result + (spellCheckString != null ? spellCheckString.hashCode() : 0);
-        result = 31 * result + (forcePagingWithDocumentOrder ? 1 : 0);
-        return result;
-    }
 
     @Override
     public String toString() {
-        return "criteria" + criterionEntries + (orderEntries.isEmpty() ? "" : " order by " + orderEntries);
+        return "criteria" + (type != null ? " " + type : "") + "" + criterionEntries + (orderEntries.isEmpty() ? "" : " order by " + orderEntries);
     }
 
 }

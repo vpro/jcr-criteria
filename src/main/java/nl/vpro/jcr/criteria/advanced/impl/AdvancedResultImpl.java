@@ -50,7 +50,7 @@ public class AdvancedResultImpl implements AdvancedResult {
 
     private final LongSupplier queryCounter;
 
-    private final int itemsPerPage;
+    private final Integer  itemsPerPage;
 
     private final int pageNumberStartingFromOne;
 
@@ -100,7 +100,7 @@ public class AdvancedResultImpl implements AdvancedResult {
     AdvancedResultImpl(
         QueryResult jcrQueryResult,
         LongSupplier queryCounter,
-        int itemsPerPage,
+        Integer itemsPerPage,
         int pageNumberStartingFromOne,
         String statement,
         Query spellCheckerQuery,
@@ -117,7 +117,7 @@ public class AdvancedResultImpl implements AdvancedResult {
     }
 
     @Override
-    public int getItemsPerPage() {
+    public Integer getItemsPerPage() {
         return itemsPerPage;
     }
 
@@ -168,7 +168,7 @@ public class AdvancedResultImpl implements AdvancedResult {
     @Override
     public ResultIterator<AdvancedResultItem> getItems() {
 
-        if ((applyLocalPaging && (itemsPerPage > 0 || offset > 0))) {
+        if ((applyLocalPaging && ((itemsPerPage != null && itemsPerPage > 0) || offset > 0))) {
 
             if (offset == 0) {
                 offset = (Math.max(pageNumberStartingFromOne, 1) - 1) * itemsPerPage;
@@ -185,7 +185,7 @@ public class AdvancedResultImpl implements AdvancedResult {
                 }
                 @Override
                 public long getSize() {
-                    return Math.min(super.getSize() - offset, itemsPerPage == 0 ? super.getSize() : itemsPerPage);
+                    return Math.min(super.getSize() - offset, itemsPerPage == null || itemsPerPage == 0 ? super.getSize() : itemsPerPage);
                 }
             };
         }

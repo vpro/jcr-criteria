@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * @author Michiel Meeuwissen
- * @since 1.3
+ * @since 2.0
  */
 @Data
 @lombok.AllArgsConstructor

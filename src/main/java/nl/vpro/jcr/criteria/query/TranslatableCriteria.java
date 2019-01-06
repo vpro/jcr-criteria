@@ -34,6 +34,8 @@ import nl.vpro.jcr.criteria.query.criterion.Order;
  */
 public interface TranslatableCriteria extends Criteria {
 
+    String getType();
+
     /**
      * Gets the Order entries of this Criteria instance.
      * @return a collection of Order entries

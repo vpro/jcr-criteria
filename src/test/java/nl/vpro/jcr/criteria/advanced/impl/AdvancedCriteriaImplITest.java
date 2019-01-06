@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 import javax.jcr.*;
+import javax.jcr.nodetype.NodeType;
 import javax.jcr.query.Query;
 
 import org.apache.commons.io.FileUtils;
@@ -91,7 +92,7 @@ public class AdvancedCriteriaImplITest {
             Criteria criteria =
                 builder()
                     .language(language)
-                    .path("/")
+                    .basePath("/")
                     .add(Restrictions.attrLike("a", "a", MatchMode.START))
                     .build()
                 ;
@@ -115,13 +116,13 @@ public class AdvancedCriteriaImplITest {
             check(
                 builder()
                     .language(language)
-                    .path("/")
+                    .basePath("/")
                     .add(Restrictions.attrEq("a", Boolean.TRUE)),
                 2);
 
                 ;
             check(builder().language(language)
-                    .path("/")
+                    .basePath("/")
                     .add(Restrictions.attrEq("a", Boolean.FALSE)),
                 1);
         }
@@ -141,17 +142,15 @@ public class AdvancedCriteriaImplITest {
         }
         {
             check(builder().language(language)
-
-                    .add(Restrictions.hasNodeType("nt:unstructured"))
-                    .add(Restrictions.isNotNull("a")),
+                    .type(NodeType.NT_UNSTRUCTURED)
+                    .add(Restrictions.isNotNull("@a")),
                 3);
             check(
                 builder()
                     .language(language)
-                    .path("/")
-                    .add(Restrictions.hasNodeType("nt:unstructured"))
-                    .add(Restrictions.isNull("a")),
-                1);
+                    .type(NodeType.NT_UNSTRUCTURED)
+                    .add(Restrictions.isNull("@a")),
+                2); // goodbye and root
 
                 ;
 

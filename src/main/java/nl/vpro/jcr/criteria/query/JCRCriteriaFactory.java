@@ -44,6 +44,9 @@ public final class JCRCriteriaFactory {
     }
 
 
+    /**
+     * @since 2.0
+     */
     public static AdvancedCriteriaImpl.Builder builder() {
         return AdvancedCriteriaImpl.builder();
     }

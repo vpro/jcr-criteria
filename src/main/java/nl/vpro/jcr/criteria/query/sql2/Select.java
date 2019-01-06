@@ -11,7 +11,7 @@ import nl.vpro.jcr.criteria.query.impl.AbstractCriteriaImpl;
 
 /**
  * @author Michiel Meeuwissen
- * @since 1.3
+ * @since 2.0
  */
 @Data
 public class Select {
@@ -44,6 +44,9 @@ public class Select {
         Select select = new Select();
         if (criteria.getBasePath() != null) {
             select.condition.clauses.add(new IsChild(criteria.getBasePath()));
+        }
+        if (criteria.getType() != null) {
+            select.type = criteria.getType();
         }
         for (TranslatableCriteria.CriterionEntry e : criteria.getCriterionEntries()) {
             select.condition.clauses.add(e.getCriterion().toSQLCondition(criteria));

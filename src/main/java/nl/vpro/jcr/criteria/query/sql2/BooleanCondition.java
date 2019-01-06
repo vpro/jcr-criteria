@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author Michiel Meeuwissen
- * @since 1.3
+ * @since 2.0
  */
 public abstract class BooleanCondition implements Condition {
 

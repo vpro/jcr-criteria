@@ -39,9 +39,9 @@ public interface AdvancedResult extends Iterable<AdvancedResultItem> {
 
     /**
      * Gets the maximum number of results per page
-     * @return the maximum number of results per page
+     * @return the maximum number of results per page or <code>null</code> if not defined
      */
-    int getItemsPerPage();
+    Integer getItemsPerPage();
 
     /**
      * Gets the page number (1, 2, 3...)
@@ -96,7 +96,6 @@ public interface AdvancedResult extends Iterable<AdvancedResultItem> {
 
     /**
      * @author fgiust
-     * @version $Id$
      */
     class EmptyResult implements AdvancedResult {
 
@@ -118,8 +117,8 @@ public interface AdvancedResult extends Iterable<AdvancedResultItem> {
         }
 
         @Override
-        public int getItemsPerPage() {
-            return 0;
+        public Integer getItemsPerPage() {
+            return null;
         }
 
         @Override

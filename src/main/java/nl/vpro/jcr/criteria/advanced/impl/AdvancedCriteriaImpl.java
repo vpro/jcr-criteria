@@ -19,6 +19,7 @@
 
 package nl.vpro.jcr.criteria.advanced.impl;
 
+import lombok.EqualsAndHashCode;
 import lombok.Singular;
 
 import java.util.List;
@@ -34,6 +35,7 @@ import nl.vpro.jcr.criteria.query.impl.AbstractCriteriaImpl;
  * @author Michiel Meeuwissen
  */
 
+@EqualsAndHashCode(callSuper = true)
 public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
 
 
@@ -43,7 +45,8 @@ public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
 
 	@lombok.Builder(builderClassName = "Builder")
 	private AdvancedCriteriaImpl(
-		String path,
+		String basePath,
+		String type,
 		@Singular
 		List<Criterion> criterions,
 		@Singular
@@ -54,7 +57,8 @@ public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
 		boolean forcePagingWithDocumentOrder,
 		String language) {
 		super(
-			path == null ? Criterion.ALL_ELEMENTS : path,
+			basePath == null ? Criterion.ALL_ELEMENTS : basePath,
+			type,
 			null, null,
 			maxResults, offset, spellCheckString, forcePagingWithDocumentOrder, language);
 		this.criterionEntries = criterions.stream().map(c -> new CriterionEntry(c, this)).collect(Collectors.toList());

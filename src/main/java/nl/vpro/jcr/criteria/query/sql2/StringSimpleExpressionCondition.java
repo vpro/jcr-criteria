@@ -4,7 +4,7 @@ import nl.vpro.jcr.criteria.query.criterion.SimpleExpression;
 
 /**
  * @author Michiel Meeuwissen
- * @since 1.3
+ * @since 2.0
  */
 public class StringSimpleExpressionCondition  extends SimpleExpressionCondition<String> {
 

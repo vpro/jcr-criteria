@@ -232,10 +232,17 @@ public interface Criteria extends ExecutableQuery {
         final String language;
         final String statement;
 
-        public Expression(String language, String statement) {
+        private Expression(String language, String statement) {
             this.language = language;
             this.statement = statement;
         }
+        public static Expression xpath(String statement) {
+            return new Expression(Query.XPATH, statement);
+        }
+        public static Expression sql2(String statement) {
+            return new Expression(Query.JCR_SQL2, statement);
+        }
+
     }
 
 

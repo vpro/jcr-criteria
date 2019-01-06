@@ -6,7 +6,7 @@ import nl.vpro.jcr.criteria.query.criterion.Criterion;
 
 /**
  * @author Michiel Meeuwissen
- * @since 1.3
+ * @since 2.0
  */
 @Data
 public class Field {
