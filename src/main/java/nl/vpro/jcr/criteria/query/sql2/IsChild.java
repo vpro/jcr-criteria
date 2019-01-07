@@ -4,17 +4,23 @@ package nl.vpro.jcr.criteria.query.sql2;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import nl.vpro.jcr.criteria.query.criterion.Criterion;
+
 /**
  * @author Michiel Meeuwissen
- * @since 1.3
+ * @since 2.0
  */
 @AllArgsConstructor
 @Data
-public class IsChild implements Condition {
+class IsChild implements Condition {
 
     String path;
     @Override
-    public String toSql2() {
-        return "ISCHILDNODE(a, '" + path + "')";
+    public boolean toSql2(StringBuilder builder) {
+        if (path != null && ! "/".equals(path) && ! Criterion.ALL_ELEMENTS.equals(path)) {
+            builder.append("ISCHILDNODE(a, '").append(path).append("')");
+            return true;
+        }
+        return false;
     }
 }

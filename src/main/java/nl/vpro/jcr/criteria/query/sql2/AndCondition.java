@@ -1,27 +1,14 @@
 package nl.vpro.jcr.criteria.query.sql2;
 
-import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * @author Michiel Meeuwissen
- * @since 1.3
+ * @since 2.0
  */
-@Data
-public class AndCondition implements Condition {
-
-    final List<Condition> clauses = new ArrayList<>();
-
+public class AndCondition extends BooleanCondition {
 
     @Override
-    public String toSql2() {
-        return clauses.stream().map(Condition::toSql2).collect(Collectors.joining(" AND "));
+    String getBooleanOperator() {
+        return " AND ";
     }
 
-    public boolean hasClauses() {
-        return ! clauses.isEmpty();
-    }
 }

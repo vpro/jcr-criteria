@@ -6,14 +6,14 @@ import nl.vpro.jcr.criteria.query.criterion.SimpleExpression;
  * @author Michiel Meeuwissen
  * @since 2.0
  */
-public class StringSimpleExpressionCondition  extends SimpleExpressionCondition<String> {
+public class BooleanSimpleExpressionCondition extends SimpleExpressionCondition<Boolean> {
 
-    public StringSimpleExpressionCondition(Field field, SimpleExpression.Op op, String value) {
+    public BooleanSimpleExpressionCondition(Field field, SimpleExpression.Op op, Boolean value) {
         super(field, op, value);
     }
 
     @Override
     String getValue() {
-        return "'" + value + "'";
+        return value.toString();
     }
 }

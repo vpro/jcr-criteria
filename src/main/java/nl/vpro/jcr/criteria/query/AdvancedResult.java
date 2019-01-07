@@ -19,9 +19,10 @@
 
 package nl.vpro.jcr.criteria.query;
 
-import javax.jcr.query.Row;
 import java.util.Iterator;
 import java.util.function.Function;
+
+import javax.jcr.query.Row;
 
 
 /**
@@ -29,7 +30,7 @@ import java.util.function.Function;
  * information about the total number of available items, the current page number, the total number of pages.
  * @author fgiust
  */
-public interface AdvancedResult  {
+public interface AdvancedResult extends Iterable<AdvancedResultItem> {
 
     /**
      * An empty result.
@@ -38,9 +39,9 @@ public interface AdvancedResult  {
 
     /**
      * Gets the maximum number of results per page
-     * @return the maximum number of results per page
+     * @return the maximum number of results per page or <code>null</code> if not defined
      */
-    int getItemsPerPage();
+    Integer getItemsPerPage();
 
     /**
      * Gets the page number (1, 2, 3...)
@@ -54,7 +55,7 @@ public interface AdvancedResult  {
      * "order by @jcr:score") if you need to get the total size.
      * @return the total number of results that would be retrieved without pagination.
      */
-    int getTotalSize();
+    long getTotalSize();
 
     /**
      * Gets the total number of pages
@@ -88,17 +89,21 @@ public interface AdvancedResult  {
      */
     AdvancedResultItem getFirstResult();
 
+    @Override
+    default Iterator<AdvancedResultItem> iterator() {
+        return getItems().iterator();
+    }
+
     /**
      * @author fgiust
-     * @version $Id$
      */
     class EmptyResult implements AdvancedResult {
 
         private ResultIterator<AdvancedResultItem> iterator = new EmptyResultIterator();
 
         @Override
-        public int getTotalSize() {
-            return 0;
+        public long getTotalSize() {
+            return 0L;
         }
 
         @Override
@@ -112,8 +117,8 @@ public interface AdvancedResult  {
         }
 
         @Override
-        public int getItemsPerPage() {
-            return 0;
+        public Integer getItemsPerPage() {
+            return null;
         }
 
         @Override

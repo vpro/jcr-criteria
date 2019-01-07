@@ -81,7 +81,7 @@ public interface Criterion extends Serializable {
     String toXPathString(Criteria criteria) throws JCRQueryException;
 
     default Condition toSQLCondition(Criteria criteria) {
-        throw new UnsupportedOperationException("" + getClass());
+        throw new UnsupportedOperationException("" + getClass().getName() + " does net yet support SQL2");
     }
 
 }

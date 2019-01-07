@@ -39,9 +39,16 @@ public final class JCRCriteriaFactory {
      * returned.
      * @return an AdvancedCriteriaImpl
      */
-    public static Criteria createCriteria() {
+    public static AdvancedCriteriaImpl createCriteria() {
         return new AdvancedCriteriaImpl();
     }
 
+
+    /**
+     * @since 2.0
+     */
+    public static AdvancedCriteriaImpl.Builder builder() {
+        return AdvancedCriteriaImpl.builder();
+    }
 
 }

@@ -2,11 +2,11 @@ package nl.vpro.jcr.criteria.query.sql2;
 
 /**
  * @author Michiel Meeuwissen
- * @since 1.3
+ * @since 2.0
  */
 public interface Condition {
 
-    String toSql2();
+    boolean toSql2(StringBuilder builder);
 
 
 }

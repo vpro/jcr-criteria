@@ -19,6 +19,14 @@
 
 package nl.vpro.jcr.criteria.advanced.impl;
 
+import lombok.EqualsAndHashCode;
+import lombok.Singular;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import nl.vpro.jcr.criteria.query.criterion.Criterion;
+import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.impl.AbstractCriteriaImpl;
 
 
@@ -26,8 +34,46 @@ import nl.vpro.jcr.criteria.query.impl.AbstractCriteriaImpl;
  * @author fgiust
  * @author Michiel Meeuwissen
  */
+
+@EqualsAndHashCode(callSuper = true)
 public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
+
+
 	public AdvancedCriteriaImpl() {
 		super();
+	}
+
+	@lombok.Builder(builderClassName = "Builder")
+	private AdvancedCriteriaImpl(
+		String basePath,
+		String type,
+		@Singular
+		List<Criterion> criterions,
+		@Singular
+		List<Order> orders,
+		int maxResults,
+		int offset,
+		String spellCheckString,
+		boolean forcePagingWithDocumentOrder,
+		String language) {
+		super(
+			basePath == null ? Criterion.ALL_ELEMENTS : basePath,
+			type,
+			null, null,
+			maxResults, offset, spellCheckString, forcePagingWithDocumentOrder, language);
+		this.criterionEntries = criterions.stream().map(c -> new CriterionEntry(c, this)).collect(Collectors.toList());
+		this.orderEntries = orders.stream().map(o -> new OrderEntry(o, this)).collect(Collectors.toList());
+
+	}
+
+	public static class Builder {
+
+		public Builder add(Criterion criterion) {
+			return criterion(criterion);
+		}
+		public Builder add(Order order) {
+			return order(order);
+		}
+
 	}
 }

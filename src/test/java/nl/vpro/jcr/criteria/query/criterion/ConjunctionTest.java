@@ -46,7 +46,7 @@ public class ConjunctionTest {
         String expectedStmt = "//*"
             + "[((MetaData/@mgnl:template='t-photogallery-sheet') and @playlist)]"
             + " order by @photogalleryDate descending";
-        String actualStmt = criteria.toXpathExpression();
+        String actualStmt = criteria.toXpathExpression().getStatement();
         Assert.assertEquals(StringUtils.remove(actualStmt, ' '), StringUtils.remove(expectedStmt, ' '));
     }
 
@@ -67,7 +67,7 @@ public class ConjunctionTest {
         String expectedStmt = "//*"
             + "[(((MetaData/@mgnl:template='t-photogallery-sheet') and @playlist))]"
             + " order by @photogalleryDate descending";
-        String actualStmt = criteria.toXpathExpression();
+        String actualStmt = criteria.toXpathExpression().getStatement();
         Assert.assertEquals(StringUtils.remove(actualStmt, ' '), StringUtils.remove(expectedStmt, ' '));
     }
 

@@ -20,6 +20,9 @@
 package nl.vpro.jcr.criteria.query.xpath;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -27,6 +30,10 @@ import org.apache.commons.lang3.StringUtils;
  * @author Federico Grilli
  */
 public class XPathSelect {
+
+    @Getter
+    @Setter
+    private String type;
 
     private String root;
 
@@ -42,7 +49,17 @@ public class XPathSelect {
     public String toStatementString() {
         StringBuilder buf = new StringBuilder(guesstimatedBufferSize);
 
-        buf.append(root);
+        if (type != null) {
+            buf.append("element(");
+        }
+        if (root == null) {
+            buf.append("*");
+        } else {
+            buf.append(root);
+        }
+        if (type != null) {
+            buf.append(", ").append(type.replace("{http://www.jcp.org/jcr/nt/1.0}", "nt:")).append(")");
+        }
 
         if (StringUtils.isNotEmpty(predicate)) {
             buf.append("[(").append(predicate).append(" )] ");

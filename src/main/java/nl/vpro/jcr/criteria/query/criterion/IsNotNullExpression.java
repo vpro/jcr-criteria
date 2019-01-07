@@ -21,6 +21,7 @@ package nl.vpro.jcr.criteria.query.criterion;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
+import nl.vpro.jcr.criteria.query.sql2.NotNullCondition;
 
 /**
  * @author fgrilli
@@ -44,6 +45,12 @@ public class IsNotNullExpression implements Criterion {
     public String toXPathString(Criteria criteria) throws JCRQueryException {
         return " " + nodeName + " ";
     }
+
+    @Override
+    public NotNullCondition toSQLCondition(Criteria criteria) {
+        return new NotNullCondition(nodeName);
+    }
+
 
     @Override
     public boolean equals(Object o) {

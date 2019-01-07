@@ -28,7 +28,6 @@ import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 
 /**
  * @author fgrilli
- * @version $Id$
  */
 public class BetweenExpression extends BaseCriterion implements Criterion {
 

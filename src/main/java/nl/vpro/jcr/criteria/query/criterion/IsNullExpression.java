@@ -21,6 +21,7 @@ package nl.vpro.jcr.criteria.query.criterion;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
+import nl.vpro.jcr.criteria.query.sql2.NullCondition;
 
 
 /**
@@ -47,6 +48,10 @@ public class IsNullExpression extends BaseCriterion implements Criterion {
         fragment.append(" not(").append(nodeName).append(") ");
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
+    }
+    @Override
+    public NullCondition toSQLCondition(Criteria criteria) {
+        return new NullCondition(nodeName);
     }
 
     @Override
