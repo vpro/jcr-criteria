@@ -1,6 +1,6 @@
 package nl.vpro.jcr.criteria.query.sql2;
 
-import nl.vpro.jcr.criteria.query.criterion.SimpleExpression;
+import nl.vpro.jcr.criteria.query.criterion.Op;
 
 /**
  * @author Michiel Meeuwissen
@@ -8,7 +8,7 @@ import nl.vpro.jcr.criteria.query.criterion.SimpleExpression;
  */
 public class StringSimpleExpressionCondition  extends SimpleExpressionCondition<String> {
 
-    public StringSimpleExpressionCondition(Field field, SimpleExpression.Op op, String value) {
+    public StringSimpleExpressionCondition(Field field, Op op, String value) {
         super(field, op, value);
     }
 

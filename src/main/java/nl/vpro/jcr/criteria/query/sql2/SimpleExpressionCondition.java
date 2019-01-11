@@ -1,6 +1,6 @@
 package nl.vpro.jcr.criteria.query.sql2;
 
-import nl.vpro.jcr.criteria.query.criterion.SimpleExpression;
+import nl.vpro.jcr.criteria.query.criterion.Op;
 
 /**
  * @author Michiel Meeuwissen
@@ -8,10 +8,10 @@ import nl.vpro.jcr.criteria.query.criterion.SimpleExpression;
  */
 public abstract class SimpleExpressionCondition<T> implements  Condition {
     final Field field;
-    final SimpleExpression.Op op;
+    final Op op;
     final T value;
 
-    protected SimpleExpressionCondition(Field field, SimpleExpression.Op op, T value) {
+    protected SimpleExpressionCondition(Field field, Op op, T value) {
         this.field = field;
         this.op = op;
         this.value = value;
@@ -26,7 +26,7 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
         return true;
     }
 
-    public static SimpleExpressionCondition<?> of(Field field, SimpleExpression.Op op, Object v) {
+    public static SimpleExpressionCondition<?> of(Field field, Op op, Object v) {
         if (v instanceof String) {
             return new StringSimpleExpressionCondition(field, op, (String) v);
         } else if (v instanceof Boolean){

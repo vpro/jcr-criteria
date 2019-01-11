@@ -22,7 +22,6 @@ package nl.vpro.jcr.criteria.query.criterion;
 import java.util.Calendar;
 import java.util.Collection;
 
-import nl.vpro.jcr.criteria.query.criterion.SimpleExpression.Op;
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 
 
@@ -52,6 +51,15 @@ public final class Restrictions {
 
     public static SimpleExpression attrEq(String attName, Object value) {
         return eq(attr(attName), value);
+    }
+
+    public static SimpleExpression op(Op op, String nodeName, Object value) {
+        return new SimpleExpression(nodeName, value, op);
+    }
+
+
+    public static SimpleExpression attrOp(Op op, String attrName, Object value) {
+        return new SimpleExpression(attr(attrName), value, op);
     }
 
     /**

@@ -19,8 +19,6 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
-import lombok.Getter;
-
 import java.util.Calendar;
 
 import org.apache.commons.lang3.StringUtils;
@@ -44,32 +42,15 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
 
     private final Object value;
 
-    public enum Op {
-        eq("="),
-        ne("!="),
-        lt("<"),
-        le("<="),
-        gt(">"),
-        ge(">=");
-
-        @Getter
-        private final String xpath;
-
-        Op(String xpath) {
-            this.xpath = xpath;
-        }
-        @Override
-        public String toString() {
-            return this.xpath;
-        }
-    }
-
     private final Op op;
 
     protected SimpleExpression(String propertyName, Object value, Op op) {
         this.propertyName = propertyName;
         this.value = value;
         this.op = op;
+        if (this.op.getXpath() == null) {
+            throw new IllegalArgumentException("" + op + " cannot be used for " + this);
+        }
     }
 
     @Override
