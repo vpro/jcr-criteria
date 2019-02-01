@@ -8,9 +8,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 import javax.jcr.*;
 import javax.jcr.nodetype.NodeType;
+import javax.jcr.nodetype.NodeTypeManager;
+import javax.jcr.nodetype.NodeTypeTemplate;
+import javax.jcr.nodetype.PropertyDefinitionTemplate;
 import javax.jcr.query.Query;
 
 import org.apache.commons.io.FileUtils;
@@ -23,11 +29,16 @@ import org.testng.annotations.Test;
 
 import nl.vpro.jcr.criteria.query.AdvancedResultItem;
 import nl.vpro.jcr.criteria.query.Criteria;
+import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
+import nl.vpro.jcr.criteria.query.criterion.Disjunction;
 import nl.vpro.jcr.criteria.query.criterion.MatchMode;
+import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.criterion.Restrictions;
 
 import static nl.vpro.jcr.criteria.query.JCRCriteriaFactory.builder;
-import static org.testng.AssertJUnit.*;
+import static org.testng.Assert.assertTrue;
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertFalse;
 
 
 /**
@@ -64,6 +75,30 @@ public class AdvancedCriteriaImplITest {
         repository = new TransientRepository(tempFile.toFile(), tempDirectory.toFile());;
         session = getSession();
         root = session.getRootNode();
+        { // define a
+            NodeTypeManager nodeTypeManager = session.getWorkspace().getNodeTypeManager();
+            NodeTypeTemplate a  = nodeTypeManager.createNodeTypeTemplate();
+            a.setName("a");
+            PropertyDefinitionTemplate media  = nodeTypeManager.createPropertyDefinitionTemplate();
+            media.setName("media");
+            media.setRequiredType(PropertyType.STRING);
+            a.getPropertyDefinitionTemplates().add(media);
+            a.setQueryable(true);
+            nodeTypeManager.registerNodeType(a, true);
+        }
+        { // define b
+
+            NodeTypeManager nodeTypeManager = session.getWorkspace().getNodeTypeManager();
+            NodeTypeTemplate b  = nodeTypeManager.createNodeTypeTemplate();
+            b.setName("b");
+            PropertyDefinitionTemplate media  = nodeTypeManager.createPropertyDefinitionTemplate();
+            media.setName("media");
+            media.setRequiredType(PropertyType.STRING);
+            b.getPropertyDefinitionTemplates().add(media);
+            b.setQueryable(true);
+            nodeTypeManager.registerNodeType(b, true);
+        }
+
     }
     @AfterMethod
     public void shutdown() {
@@ -160,6 +195,42 @@ public class AdvancedCriteriaImplITest {
                 ;
 
         }
+    }
+
+    @Test(dataProvider = "language")
+    public void someUseCase(String language) throws RepositoryException {
+        {
+            Node node1 = root.addNode("node1");
+            node1.setProperty("media", "ce297ce9-aaa5-43d5-be44-41045e782708");
+            node1.setPrimaryType("a");
+            session.save();
+        }
+
+        String basepath = "/jcr:root/*";
+
+        Criteria criteria = JCRCriteriaFactory
+            .createCriteria()
+            .setBasePath(basepath)
+            .addOrder(Order.desc("@jcr:score"));
+
+
+        List<String> nt= Arrays.asList("a", "b");
+        Disjunction nodetypes = Restrictions.disjunction();
+        for (String string : nt) {
+            nodetypes.add(Restrictions.eq("@jcr:primaryType", string));
+        }
+        criteria.add(nodetypes);
+
+        Disjunction properties = Restrictions.disjunction();
+        List<String> prop = Arrays.asList("media", "group");
+        UUID uuid = UUID.fromString("ce297ce9-aaa5-43d5-be44-41045e782708");
+        for (String string : prop) {
+            properties.add(Restrictions.contains(string, uuid));
+        }
+        criteria.add(properties);
+
+        check(criteria, 1);
+
     }
 
     void check(AdvancedCriteriaImpl.Builder builder, int expectedSize) {
