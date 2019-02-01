@@ -21,6 +21,7 @@ package nl.vpro.jcr.criteria.query.criterion;
 
 import lombok.SneakyThrows;
 
+
 import java.util.Calendar;
 import java.util.Collection;
 
@@ -373,7 +374,7 @@ public final class Restrictions {
      * @return Criterion
      */
     public static Criterion hasNodeType(String... nodetypes) {
-        return new InExpression("@jcr:primaryType", nodetypes, false);
+        return new InExpression(attr("jcr:primaryType"), nodetypes, false);
     }
 
     /**
