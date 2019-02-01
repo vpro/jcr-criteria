@@ -43,7 +43,7 @@ public class IsNotNullExpression implements Criterion {
 
     @Override
     public String toXPathString(Criteria criteria) throws JCRQueryException {
-        return " " + nodeName + " ";
+        return nodeName;
     }
 
     @Override

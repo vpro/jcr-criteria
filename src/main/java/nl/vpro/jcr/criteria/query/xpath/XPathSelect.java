@@ -51,10 +51,14 @@ public class XPathSelect {
         String r = root == null ? "//*" : root;
 
 
-        buf.append("//");
 
         if (r.startsWith("//")) {
             r = r.substring(2);
+            buf.append("//");
+        } else if (r.startsWith("/")) {
+            r = r.substring(1);
+            buf.append('/');
+
         }
 
         if (type != null) {
@@ -70,13 +74,13 @@ public class XPathSelect {
         }
 
         if (StringUtils.isNotEmpty(predicate)) {
-            buf.append("[(")
+            buf.append("[")
                 .append(predicate)
-                .append(" )] ");
+                .append("]");
         }
 
         if (StringUtils.isNotEmpty(orderByClause)) {
-            buf.append(" order by ").append(orderByClause);
+            buf.append("order by").append(orderByClause);
         }
 
         return buf.toString();

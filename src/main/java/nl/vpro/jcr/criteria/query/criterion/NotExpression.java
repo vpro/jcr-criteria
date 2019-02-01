@@ -21,6 +21,8 @@ package nl.vpro.jcr.criteria.query.criterion;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
+import nl.vpro.jcr.criteria.query.sql2.Condition;
+import nl.vpro.jcr.criteria.query.sql2.NotCondition;
 
 
 /**
@@ -43,10 +45,15 @@ public class NotExpression extends BaseCriterion implements Criterion {
 
     @Override
     public String toXPathString(Criteria criteria) throws JCRQueryException {
-        StringBuilder fragment = new StringBuilder(" not(");
-        fragment.append(expression.toXPathString(criteria)).append(") ");
+        StringBuilder fragment = new StringBuilder("not(");
+        fragment.append(expression.toXPathString(criteria))
+            .append(')');
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
+    }
+    @Override
+    public Condition toSQLCondition(Criteria criteria) {
+        return new NotCondition(expression.toSQLCondition(criteria));
     }
 
     @Override

@@ -66,7 +66,10 @@ public abstract class Junction implements Criterion {
             return "";
         }
 
-        StringBuilder buffer = new StringBuilder().append('(');
+        StringBuilder buffer = new StringBuilder();
+        if (criteria.size() > 1) {
+            buffer.append('(');
+        }
         Iterator<Criterion> iter = criteria.iterator();
 
         boolean isfirst = true;
@@ -74,14 +77,17 @@ public abstract class Junction implements Criterion {
             String xPathString = (iter.next()).toXPathString(crit);
             if (StringUtils.isNotBlank(xPathString)) {
                 if (!isfirst && StringUtils.isNotBlank(xPathString)) {
-                    buffer.append(' ').append(op).append(" ");
+                    buffer.append(' ').append(op).append(' ');
                 }
                 buffer.append(xPathString);
                 isfirst = false;
             }
 
         }
-        return buffer.append(')').toString();
+        if (criteria.size() > 1) {
+            buffer.append(')');
+        }
+        return buffer.toString();
     }
 
 

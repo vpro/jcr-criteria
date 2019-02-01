@@ -45,7 +45,7 @@ public class IsNullExpression extends BaseCriterion implements Criterion {
     @Override
     public String toXPathString(Criteria criteria) throws JCRQueryException {
         StringBuilder fragment = new StringBuilder();
-        fragment.append(" not(").append(nodeName).append(") ");
+        fragment.append(" not(").append(nodeName).append(")");
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
     }

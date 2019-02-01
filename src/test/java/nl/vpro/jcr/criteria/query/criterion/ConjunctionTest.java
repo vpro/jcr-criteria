@@ -19,7 +19,6 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
-import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -43,11 +42,9 @@ public class ConjunctionTest {
             .add(Restrictions.isNotNull("@playlist"))
             .addOrder(Order.desc("@photogalleryDate"));
 
-        String expectedStmt = "//*"
-            + "[((MetaData/@mgnl:template='t-photogallery-sheet') and @playlist)]"
-            + " order by @photogalleryDate descending";
+        String expectedStmt = "//*[MetaData/@mgnl:template='t-photogallery-sheet and @playlist] order by @photogalleryDate descending";
         String actualStmt = criteria.toXpathExpression().getStatement();
-        Assert.assertEquals(StringUtils.remove(actualStmt, ' '), StringUtils.remove(expectedStmt, ' '));
+        Assert.assertEquals(actualStmt, expectedStmt);
     }
 
     /**
@@ -64,11 +61,9 @@ public class ConjunctionTest {
             .add(conjunction)
             .addOrder(Order.desc("@photogalleryDate"));
 
-        String expectedStmt = "//*"
-            + "[(((MetaData/@mgnl:template='t-photogallery-sheet') and @playlist))]"
-            + " order by @photogalleryDate descending";
+        String expectedStmt = "//*[(MetaData/@mgnl:template='t-photogallery-sheet and @playlist)] order by @photogalleryDate descending";
         String actualStmt = criteria.toXpathExpression().getStatement();
-        Assert.assertEquals(StringUtils.remove(actualStmt, ' '), StringUtils.remove(expectedStmt, ' '));
+        Assert.assertEquals(actualStmt, expectedStmt);
     }
 
 }

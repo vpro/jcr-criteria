@@ -64,7 +64,7 @@ public class CriteriaTest {
         conjunction.add(Restrictions.attrEq("property", "test"));
         conjunction.add(Restrictions.attrEq("anotherproperty", "anothertest"));
 
-        assertEquals(criteria.toXpathExpression().getStatement(), "/jcr:root/site//*[(( (@property='test')  and  (@anotherproperty='anothertest') ) )] ");
+        assertEquals(criteria.toXpathExpression().getStatement(), "/jcr:root/site//*[(@property='test and @anotherproperty='anothertest)]");
         assertEquals(criteria.toSql2Expression().getStatement(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/site') AND [property] = 'test' AND [anotherproperty] = 'anothertest'");
     }
 
@@ -74,12 +74,13 @@ public class CriteriaTest {
 
         Junction conjunction = Restrictions.disjunction();
         criteria.add(conjunction);
-        conjunction.add(Restrictions.attrEq("property", Boolean.FALSE));
+        //conjunction.add(Restrictions.attrEq("property", Boolean.FALSE));
+        conjunction.add(Restrictions.isFalsy("property")); // TODO Docuemnt that this has change backwards incompatible
         conjunction.add(Restrictions.attrEq("anotherproperty", Boolean.TRUE));
 
-        assertEquals(criteria.toXpathExpression().getStatement(), "/jcr:root/site//*[(( ((@property=false) or not(@property )) or  (@anotherproperty=true) ) )] ");
+        assertEquals(criteria.toXpathExpression().getStatement(), "/jcr:root/site//*[((property='false' OR not(property)) or @anotherproperty='true')]");
 
-        assertEquals(criteria.toExpression().getStatement(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/site') AND [property] = false OR [anotherproperty] = true");
+        assertEquals(criteria.toSql2Expression().getStatement(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/site') AND [property] = false OR not ([property] IS NOT NULL) OR [anotherproperty] = true");
     }
 
     /**
@@ -95,7 +96,7 @@ public class CriteriaTest {
         criteria.add(conjunction);
 
         String xpathExpression = criteria.toXpathExpression().getStatement();
-        assertEquals(xpathExpression, "/jcr:root/site//*[( (@property='test')  )] ");
+        assertEquals(xpathExpression, "/jcr:root/site//*[@property='test]");
     }
 
     /**
@@ -107,7 +108,7 @@ public class CriteriaTest {
         criteria.add(Restrictions.eq("@property", "test"));
         String xpathExpression = criteria.toXpathExpression().getStatement();
 
-        assertEquals(xpathExpression, "/jcr:root/one/two/_x0033_three/fo_x002c_ur//*[( (@property='test')  )] ");
+        assertEquals(xpathExpression, "/jcr:root/one/two/_x0033_three/fo_x002c_ur//*[@property='test]");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

@@ -31,6 +31,8 @@ import nl.vpro.jcr.criteria.query.sql2.OrCondition;
 
 /**
  * Superclass of binary logical expressions
+ *
+ * TODO This seems to be exactly equals to {@link Conjunction} / {@link Disjunction}
  * @author Federico Grilli
   */
 public class LogicalExpression extends BaseCriterion implements Criterion {
@@ -58,7 +60,7 @@ public class LogicalExpression extends BaseCriterion implements Criterion {
             boolean needsOp = false;
             for (Criterion clause : clauses) {
                 if (needsOp) {
-                    fragment.append(' ').append(getOp());
+                    fragment.append(' ').append(getOp()).append(' ');
                 }
                 needsOp = true;
                 fragment.append(clause.toXPathString(criteria));

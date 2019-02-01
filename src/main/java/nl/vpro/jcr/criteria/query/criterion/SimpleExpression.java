@@ -99,7 +99,6 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
         } else if (value instanceof Calendar) {
             fragment.append(propertyName).append(getOp());
             Calendar cal = (Calendar) value;
-
             fragment.append(XS_DATETIME_FUNCTION + "('").append(XPathTextUtils.toXsdDate(cal)).append("')'");
         } else if (value != null) {
             fragment.append(propertyName).append(getOp());
