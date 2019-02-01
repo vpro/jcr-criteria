@@ -75,7 +75,7 @@ public class CriteriaTest {
         Junction conjunction = Restrictions.disjunction();
         criteria.add(conjunction);
         //conjunction.add(Restrictions.attrEq("property", Boolean.FALSE));
-        conjunction.add(Restrictions.isFalsy("property")); // TODO Docuemnt that this has change backwards incompatible
+        conjunction.add(Restrictions.isFalsy("property"));
         conjunction.add(Restrictions.attrEq("anotherproperty", Boolean.TRUE));
 
         assertEquals(criteria.toXpathExpression().getStatement(), "/jcr:root/site//*[((property='false' or not(property)) or @anotherproperty='true')]");
