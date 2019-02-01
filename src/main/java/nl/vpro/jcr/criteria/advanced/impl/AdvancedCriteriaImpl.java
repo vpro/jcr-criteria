@@ -29,6 +29,8 @@ import nl.vpro.jcr.criteria.query.criterion.Criterion;
 import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.impl.AbstractCriteriaImpl;
 
+import static javax.jcr.nodetype.NodeType.NT_UNSTRUCTURED;
+
 
 /**
  * @author fgiust
@@ -74,6 +76,18 @@ public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
 		public Builder add(Order order) {
 			return order(order);
 		}
+
+		public Builder fromUnstructured() {
+			return type(NT_UNSTRUCTURED);
+		}
+
+		public Builder asc(String field){
+			return order(Order.asc(field));
+		}
+		public Builder desc(String field){
+			return order(Order.desc(field));
+		}
+
 
 	}
 }
