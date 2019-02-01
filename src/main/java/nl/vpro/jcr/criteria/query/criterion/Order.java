@@ -77,6 +77,13 @@ public class Order extends BaseCriterion implements Criterion {
         return new Order(propertyName, false);
     }
 
+    /**
+     * @since 2.0
+     */
+    public static Order score() {
+        return Order.desc("@jcr:score");
+    }
+
     @Override
     public String toString() {
         return nodeName + ' ' + (ascending ? "ascending" : "descending");
