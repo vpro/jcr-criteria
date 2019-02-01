@@ -3,6 +3,7 @@ package nl.vpro.jcr.criteria.query.sql2;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,6 +15,10 @@ public abstract class BooleanCondition implements Condition {
 
     @Getter
     final List<Condition> clauses = new ArrayList<>();
+
+    protected BooleanCondition(Condition... clauses) {
+        this.clauses.addAll(Arrays.asList(clauses));
+    }
 
     abstract String getBooleanOperator();
 

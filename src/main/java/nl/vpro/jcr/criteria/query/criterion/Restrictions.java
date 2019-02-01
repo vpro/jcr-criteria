@@ -19,8 +19,12 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.SneakyThrows;
+
 import java.util.Calendar;
 import java.util.Collection;
+
+import javax.jcr.Node;
 
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 
@@ -52,6 +56,26 @@ public final class Restrictions {
     public static SimpleExpression attrEq(String attName, Object value) {
         return eq(attr(attName), value);
     }
+
+
+    public static Criterion has(String attName) {
+        return new IsNotNullExpression(attName);
+    }
+
+    public static SimpleExpression isTrue(String attName) {
+        return eq(attr(attName), Boolean.TRUE);
+    }
+
+
+    public static Criterion isFalsy(String name) {
+        return or(eq(name, Boolean.FALSE), not(has(name)));
+    }
+
+
+    public static Criterion attrIsFalsy(String name) {
+        return isFalsy(attr(name));
+    }
+
 
     public static SimpleExpression op(Op op, String nodeName, Object value) {
         return new SimpleExpression(nodeName, value, op);
@@ -316,22 +340,19 @@ public final class Restrictions {
 
     /**
      * Return the conjuction of two expressions
-     * @param lhs left expression
-     * @param rhs right expression
      * @return Criterion
      */
-    public static LogicalExpression and(Criterion lhs, Criterion rhs) {
-        return new LogicalExpression(lhs, rhs, "and");
+    public static LogicalExpression and(Criterion... clauses) {
+        return new LogicalExpression(LogicalExpression.BoolOp.AND, clauses);
     }
 
     /**
      * Return the disjuction of two expressions
-     * @param lhs left expression
-     * @param rhs right expression
+
      * @return Criterion
      */
-    public static LogicalExpression or(Criterion lhs, Criterion rhs) {
-        return new LogicalExpression(lhs, rhs, "or");
+    public static LogicalExpression or(Criterion... clauses) {
+        return new LogicalExpression(LogicalExpression.BoolOp.OR, clauses);
     }
 
     /**
@@ -381,4 +402,15 @@ public final class Restrictions {
         cal2.add(Calendar.MILLISECOND, -1);
         return cal2;
     }
+
+    @SneakyThrows
+    public static Criterion isDescendant(Node issueNode) {
+        return new IsDescendantOf(issueNode.getPath());
+    }
+
+    @SneakyThrows
+    public static Criterion isChild(Node issueNode) {
+        return new IsChildOf(issueNode.getPath());
+    }
+
 }

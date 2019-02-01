@@ -135,6 +135,7 @@ public final class QueryExecutorHelper {
             Query spellCheckerQuery = null;
 
             if (StringUtils.isNotBlank(spellCheckString)) {
+                // TODO implement for SQL2
                 spellCheckerQuery = jcrQueryManager.createQuery(
                     "/jcr:root[rep:spellcheck('"
                         + XPathTextUtils.stringToJCRSearchExp(spellCheckString)

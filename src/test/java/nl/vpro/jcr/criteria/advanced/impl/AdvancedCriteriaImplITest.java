@@ -112,19 +112,25 @@ public class AdvancedCriteriaImplITest {
             Node goodbye2 = root.addNode("bye2");
             session.save();
         }
+
+        AdvancedResultImpl xpath = directXpath("//element(*, nt:unstructured)[@a='true']");
+
+        log.info("{}", xpath.getItems());
         {
             check(
                 builder()
                     .language(language)
+                    .type(NodeType.NT_UNSTRUCTURED)
                     .basePath("/")
                     .add(Restrictions.attrEq("a", Boolean.TRUE)),
                 2);
 
                 ;
             check(builder().language(language)
+                    .type(NodeType.NT_UNSTRUCTURED)
                     .basePath("/")
-                    .add(Restrictions.attrEq("a", Boolean.FALSE)),
-                1);
+                    .add(Restrictions.attrIsFalsy("a")),
+                2); // hello2, byte2
         }
     }
 
@@ -150,7 +156,7 @@ public class AdvancedCriteriaImplITest {
                     .language(language)
                     .type(NodeType.NT_UNSTRUCTURED)
                     .add(Restrictions.isNull("@a")),
-                2); // goodbye and root
+                1); // goodbye
 
                 ;
 
@@ -169,6 +175,22 @@ public class AdvancedCriteriaImplITest {
         assertFalse(result.totalSizeDetermined());
         assertEquals(expectedSize, result.getTotalSize());
         assertTrue(result.totalSizeDetermined());
+
+    }
+
+
+    AdvancedResultImpl directXpath(String expression) {
+        return QueryExecutorHelper.execute(
+            Criteria.Expression.xpath(expression),
+            () -> {
+                throw new UnsupportedOperationException();
+
+            },
+            session,
+            null,
+            0,
+            null,
+            false);
 
     }
 

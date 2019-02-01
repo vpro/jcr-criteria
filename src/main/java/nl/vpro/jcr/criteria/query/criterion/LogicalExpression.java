@@ -19,8 +19,14 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
+import nl.vpro.jcr.criteria.query.sql2.AndCondition;
+import nl.vpro.jcr.criteria.query.sql2.Condition;
+import nl.vpro.jcr.criteria.query.sql2.OrCondition;
 
 
 /**
@@ -31,33 +37,57 @@ public class LogicalExpression extends BaseCriterion implements Criterion {
 
     private static final long serialVersionUID = 4524284746715983618L;
 
-    private final Criterion lhs;
+    private final Criterion[] clauses;
+    private final BoolOp op;
 
-    private final Criterion rhs;
-
-    private final String op;
-
-    protected LogicalExpression(Criterion lhs, Criterion rhs, String op) {
-        this.lhs = lhs;
-        this.rhs = rhs;
+    protected LogicalExpression(BoolOp op, Criterion... clauses) {
+        this.clauses = clauses;
         this.op = op;
     }
 
     @Override
     public String toXPathString(Criteria criteria) throws JCRQueryException {
 
-        String fragment = '(' + lhs.toXPathString(criteria) + ' ' + getOp() + ' ' + rhs.toXPathString(criteria) + ')';
-        log.debug("xpathString is {} ", fragment);
-        return fragment;
+        StringBuilder fragment = new StringBuilder();
+        if (clauses.length == 0) {
+
+        } else if (clauses.length == 1) {
+            fragment.append(clauses[0].toXPathString(criteria));
+        } else {
+            fragment.append('(');
+            boolean needsOp = false;
+            for (Criterion clause : clauses) {
+                if (needsOp) {
+                    fragment.append(' ').append(getOp());
+                }
+                needsOp = true;
+                fragment.append(clause.toXPathString(criteria));
+            }
+            fragment.append(')');
+        }
+        log.debug("xpathString is {} ", fragment.toString());
+        return fragment.toString();
     }
 
-    public String getOp() {
+    @Override
+    public Condition toSQLCondition(Criteria criteria) {
+        switch(op) {
+            case OR:
+                return new OrCondition(Arrays.stream(clauses).map(c -> c.toSQLCondition(criteria)).toArray(Condition[]::new));
+            case AND:
+                return new AndCondition(Arrays.stream(clauses).map(c -> c.toSQLCondition(criteria)).toArray(Condition[]::new));
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    public BoolOp getOp() {
         return op;
     }
 
     @Override
     public String toString() {
-        return lhs.toString() + ' ' + getOp() + ' ' + rhs.toString();
+        return Arrays.stream(clauses).map(Object::toString).collect(Collectors.joining(" " + getOp() + " "));
     }
 
     @Override
@@ -67,16 +97,20 @@ public class LogicalExpression extends BaseCriterion implements Criterion {
 
         LogicalExpression that = (LogicalExpression) o;
 
-        if (lhs != null ? !lhs.equals(that.lhs) : that.lhs != null) return false;
-        if (rhs != null ? !rhs.equals(that.rhs) : that.rhs != null) return false;
-        return op != null ? op.equals(that.op) : that.op == null;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(clauses, that.clauses)) return false;
+        return op == that.op;
     }
 
     @Override
     public int hashCode() {
-        int result = lhs != null ? lhs.hashCode() : 0;
-        result = 31 * result + (rhs != null ? rhs.hashCode() : 0);
-        result = 31 * result + (op != null ? op.hashCode() : 0);
+        int result = Arrays.hashCode(clauses);
+        result = 31 * result + op.hashCode();
         return result;
+    }
+
+    enum BoolOp {
+        AND,
+        OR
     }
 }

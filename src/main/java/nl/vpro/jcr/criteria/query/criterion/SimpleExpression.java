@@ -65,40 +65,46 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
     @Override
     public String toXPathString(Criteria criteria) throws JCRQueryException {
         StringBuilder fragment = new StringBuilder();
-        fragment.append(" (");
-
         if (value instanceof String) {
             fragment.append(propertyName).append(getOp());
             // Generally, if you enclose values in single quotes, you just need to replace any literal single quote
             // character with '' (two consecutive single quote characters).
             String escValue = StringUtils.replace((String) value, "'", "''");
-            fragment.append("'").append(escValue).append("') ");
+            fragment.append("'")
+                .append(escValue);
         } else if (value instanceof Number) {
             fragment.append(propertyName).append(getOp());
-            fragment.append(value).append(") ");
+            fragment.append(value);
         } else if (value instanceof Character) {
             fragment.append(propertyName).append(getOp());
-            fragment.append("'").append(value).append("') ");
+            fragment.append("'").append(value).append("'");
         } else if (value instanceof Boolean) {
-            if ((Boolean) value) {
-                fragment.append(propertyName).append(getOp());
-                fragment.append(value).append(") ");
+            boolean boolValue = (boolean) value;
+            switch(getOp()) {
+                case ne:
+                    boolValue = ! boolValue;
+                    break;
+                case eq:
+                    break;
+                default:
+                    throw new IllegalArgumentException();
+            }
+            if (boolValue) {
+                fragment.append(propertyName)
+                    .append("='true'");
             } else {
-                // false should also match a missing boolean property
-                fragment.append("(");
-                fragment.append(propertyName).append(getOp());
-
-                fragment.append(value).append(") or not(").append(propertyName).append(" ))");
+                fragment.append(propertyName)
+                    .append("='false'");
             }
         } else if (value instanceof Calendar) {
             fragment.append(propertyName).append(getOp());
             Calendar cal = (Calendar) value;
 
-            fragment.append(XS_DATETIME_FUNCTION + "('").append(XPathTextUtils.toXsdDate(cal)).append("')) ");
+            fragment.append(XS_DATETIME_FUNCTION + "('").append(XPathTextUtils.toXsdDate(cal)).append("')'");
         } else if (value != null) {
             fragment.append(propertyName).append(getOp());
             // just use the toString() of the given object
-            fragment.append("'").append(value).append("') ");
+            fragment.append("'").append(value);
         }
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();

@@ -48,21 +48,31 @@ public class XPathSelect {
      */
     public String toStatementString() {
         StringBuilder buf = new StringBuilder(guesstimatedBufferSize);
+        String r = root == null ? "//*" : root;
+
+
+        buf.append("//");
+
+        if (r.startsWith("//")) {
+            r = r.substring(2);
+        }
 
         if (type != null) {
             buf.append("element(");
         }
-        if (root == null) {
-            buf.append("*");
-        } else {
-            buf.append(root);
-        }
+        buf.append(r);
+
         if (type != null) {
-            buf.append(", ").append(type.replace("{http://www.jcp.org/jcr/nt/1.0}", "nt:")).append(")");
+            buf
+                .append(", ")
+                .append(type.replace("{http://www.jcp.org/jcr/nt/1.0}", "nt:"))
+                .append(")");
         }
 
         if (StringUtils.isNotEmpty(predicate)) {
-            buf.append("[(").append(predicate).append(" )] ");
+            buf.append("[(")
+                .append(predicate)
+                .append(" )] ");
         }
 
         if (StringUtils.isNotEmpty(orderByClause)) {
