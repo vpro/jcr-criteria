@@ -46,7 +46,8 @@ public class NotExpression extends BaseCriterion implements Criterion {
     @Override
     public String toXPathString(Criteria criteria) throws JCRQueryException {
         StringBuilder fragment = new StringBuilder("not(");
-        fragment.append(expression.toXPathString(criteria))
+        fragment
+            .append(expression.toXPathString(criteria))
             .append(')');
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();

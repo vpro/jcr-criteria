@@ -50,7 +50,7 @@ public class Order extends BaseCriterion implements Criterion {
     @Override
     @Deprecated
     public String toXPathString(Criteria criteria) throws JCRQueryException {
-        StringBuilder fragment = new StringBuilder(" ");
+        StringBuilder fragment = new StringBuilder();
         fragment.append(nodeName);
         fragment.append(ascending ? " ascending" : " descending");
 

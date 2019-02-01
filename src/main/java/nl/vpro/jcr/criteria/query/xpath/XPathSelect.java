@@ -80,7 +80,7 @@ public class XPathSelect {
         }
 
         if (StringUtils.isNotEmpty(orderByClause)) {
-            buf.append("order by").append(orderByClause);
+            buf.append(" order by ").append(orderByClause);
         }
 
         return buf.toString();

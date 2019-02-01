@@ -29,8 +29,8 @@ public class Disjunction extends Junction {
 
     private static final long serialVersionUID = 1573336261639362776L;
 
-    protected Disjunction() {
-        super("or");
+    protected Disjunction(boolean outer, Criterion... clauses) {
+        super("or", outer, clauses);
     }
 
     @Override

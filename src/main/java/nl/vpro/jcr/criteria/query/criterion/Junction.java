@@ -19,9 +19,12 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,11 +45,17 @@ public abstract class Junction implements Criterion {
 
     final List<Criterion> criteria = new ArrayList<>();
 
-    @Getter
+    @Getter(AccessLevel.PACKAGE)
     final String op;
 
-    protected Junction(String op) {
+    @Getter @Setter
+
+    boolean outer;
+
+    protected Junction(String op, boolean outer, Criterion... clauses) {
         this.op = op;
+        this.outer = outer;
+        criteria.addAll(Arrays.asList(clauses));
     }
 
     /**
@@ -74,9 +83,10 @@ public abstract class Junction implements Criterion {
 
         boolean isfirst = true;
         while (iter.hasNext()) {
-            String xPathString = (iter.next()).toXPathString(crit);
+            Criterion next = iter.next();
+            String xPathString = next.toXPathString(crit);
             if (StringUtils.isNotBlank(xPathString)) {
-                if (!isfirst && StringUtils.isNotBlank(xPathString)) {
+                if (!isfirst) {
                     buffer.append(' ').append(op).append(' ');
                 }
                 buffer.append(xPathString);

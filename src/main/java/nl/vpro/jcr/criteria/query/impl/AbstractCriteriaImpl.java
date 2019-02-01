@@ -41,6 +41,7 @@ import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
 import nl.vpro.jcr.criteria.query.TranslatableCriteria;
 import nl.vpro.jcr.criteria.query.criterion.Criterion;
+import nl.vpro.jcr.criteria.query.criterion.Junction;
 import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.sql2.Select;
 import nl.vpro.jcr.criteria.query.xpath.JCRMagnoliaCriteriaQueryTranslator;
@@ -101,6 +102,9 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     @Override
     public Criteria add(Criterion criterion) {
+        if (criterion instanceof Junction) {
+            ((Junction) criterion).setOuter(false);
+        }
         criterionEntries.add(new CriterionEntry(criterion, this));
         return this;
     }

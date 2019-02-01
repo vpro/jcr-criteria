@@ -78,9 +78,9 @@ public class CriteriaTest {
         conjunction.add(Restrictions.isFalsy("property")); // TODO Docuemnt that this has change backwards incompatible
         conjunction.add(Restrictions.attrEq("anotherproperty", Boolean.TRUE));
 
-        assertEquals(criteria.toXpathExpression().getStatement(), "/jcr:root/site//*[((property='false' OR not(property)) or @anotherproperty='true')]");
+        assertEquals(criteria.toXpathExpression().getStatement(), "/jcr:root/site//*[((property='false' or not(property)) or @anotherproperty='true')]");
 
-        assertEquals(criteria.toSql2Expression().getStatement(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/site') AND [property] = false OR not ([property] IS NOT NULL) OR [anotherproperty] = true");
+        assertEquals(criteria.toSql2Expression().getStatement(), "SELECT * from [nt:base] as a WHERE ISCHILDNODE(a, '/site') AND [property] = false OR [property] IS NULL OR [anotherproperty] = true");
     }
 
     /**

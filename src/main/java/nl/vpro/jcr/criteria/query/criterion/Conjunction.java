@@ -29,8 +29,8 @@ public class Conjunction extends Junction {
 
     private static final long serialVersionUID = 7590346442271897522L;
 
-    public Conjunction() {
-        super("and");
+    public Conjunction(boolean outer, Criterion... clauses) {
+        super("and", outer, clauses);
     }
 
 

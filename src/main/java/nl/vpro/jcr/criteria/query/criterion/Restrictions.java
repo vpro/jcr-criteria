@@ -61,6 +61,9 @@ public final class Restrictions {
     public static Criterion has(String attName) {
         return new IsNotNullExpression(attName);
     }
+    public static Criterion hasnt(String attName) {
+        return new IsNullExpression(attName);
+    }
 
     public static SimpleExpression isTrue(String attName) {
         return eq(attr(attName), Boolean.TRUE);
@@ -68,7 +71,7 @@ public final class Restrictions {
 
 
     public static Criterion isFalsy(String name) {
-        return or(eq(name, Boolean.FALSE), not(has(name)));
+        return or(eq(name, Boolean.FALSE), hasnt(name));
     }
 
 
@@ -342,8 +345,8 @@ public final class Restrictions {
      * Return the conjuction of two expressions
      * @return Criterion
      */
-    public static LogicalExpression and(Criterion... clauses) {
-        return new LogicalExpression(LogicalExpression.BoolOp.AND, clauses);
+    public static Conjunction and(Criterion... clauses) {
+        return new Conjunction(true, clauses);
     }
 
     /**
@@ -351,8 +354,8 @@ public final class Restrictions {
 
      * @return Criterion
      */
-    public static LogicalExpression or(Criterion... clauses) {
-        return new LogicalExpression(LogicalExpression.BoolOp.OR, clauses);
+    public static Disjunction or(Criterion... clauses) {
+        return new Disjunction(true, clauses);
     }
 
     /**
@@ -376,17 +379,19 @@ public final class Restrictions {
     /**
      * Group expressions together in a single conjunction (A and B and C...)
      * @return Conjunction
+     * @deprecated {@link #and(Criterion...)}
      */
     public static Conjunction conjunction() {
-        return new Conjunction();
+        return new Conjunction(true);
     }
 
     /**
      * Group expressions together in a single disjunction (A or B or C...)
+     * @deprecated {@link #or(Criterion...)}
      * @return Conjunction
      */
     public static Disjunction disjunction() {
-        return new Disjunction();
+        return new Disjunction(true);
     }
 
     private static Calendar getDayStart(Calendar cal) {

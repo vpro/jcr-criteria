@@ -113,9 +113,8 @@ public class AdvancedCriteriaImplITest {
             session.save();
         }
 
-        AdvancedResultImpl xpath = directXpath("//element(*, nt:unstructured)[@a='true']");
 
-        log.info("{}", xpath.getItems());
+
         {
             check(
                 builder()
@@ -130,7 +129,7 @@ public class AdvancedCriteriaImplITest {
                     .type(NodeType.NT_UNSTRUCTURED)
                     .basePath("/")
                     .add(Restrictions.attrIsFalsy("a")),
-                2); // hello2, byte2
+                3); // hello2, byte2, root
         }
     }
 
@@ -156,7 +155,7 @@ public class AdvancedCriteriaImplITest {
                     .language(language)
                     .type(NodeType.NT_UNSTRUCTURED)
                     .add(Restrictions.isNull("@a")),
-                1); // goodbye
+                2); // goodbye and root
 
                 ;
 
@@ -170,7 +169,8 @@ public class AdvancedCriteriaImplITest {
     void check(Criteria criteria, int expectedSize) {
         AdvancedResultImpl result = (AdvancedResultImpl) criteria.execute(session);
         for (AdvancedResultItem item : result) {
-            log.info("{} {}", item.getJCRNode().getPrimaryNodeType().getName(), item);
+            boolean isUnstructured = item.getJCRNode().isNodeType(NodeType.NT_UNSTRUCTURED);
+            log.info("{} {} (is unstructured: {})", item.getJCRNode().getPrimaryNodeType().getName(), item, isUnstructured);
         }
         assertFalse(result.totalSizeDetermined());
         assertEquals(expectedSize, result.getTotalSize());
