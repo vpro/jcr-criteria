@@ -45,7 +45,7 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
         } else if (v instanceof Calendar) {
             return new StringSimpleExpressionCondition(field, op, v.toString());
         } else if (v instanceof LocalDateTime) {
-            return new StringSimpleExpressionCondition(field, op, v.toString());
+            return new CastFromStringSimpleExpressionCondition("date", field, op, v.toString());
         } else {
             throw new UnsupportedOperationException("Unrecognized " + v.getClass() + " " + v);
         }
