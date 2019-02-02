@@ -41,53 +41,53 @@ import static javax.jcr.nodetype.NodeType.NT_UNSTRUCTURED;
 public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
 
 
-	public AdvancedCriteriaImpl() {
-		super();
-	}
+    public AdvancedCriteriaImpl() {
+        super();
+    }
 
-	@lombok.Builder(builderClassName = "Builder")
-	private AdvancedCriteriaImpl(
-		String basePath,
-		String type,
-		@Singular
-		List<Criterion> criterions,
-		@Singular
-		List<Order> orders,
-		int maxResults,
-		int offset,
-		String spellCheckString,
-		boolean forcePagingWithDocumentOrder,
-		String language) {
-		super(
-			basePath == null ? Criterion.ALL_ELEMENTS : basePath,
-			type,
-			null, null,
-			maxResults, offset, spellCheckString, forcePagingWithDocumentOrder, language);
-		this.criterionEntries = criterions.stream().map(c -> new CriterionEntry(c, this)).collect(Collectors.toList());
-		this.orderEntries = orders.stream().map(o -> new OrderEntry(o, this)).collect(Collectors.toList());
+    @lombok.Builder(builderClassName = "Builder")
+    private AdvancedCriteriaImpl(
+        String basePath,
+        String type,
+        @Singular
+        List<Criterion> criterions,
+        @Singular
+        List<Order> orders,
+        int maxResults,
+        int offset,
+        String spellCheckString,
+        boolean forcePagingWithDocumentOrder,
+        String language) {
+        super(
+            basePath == null ? Criterion.ALL_ELEMENTS : basePath,
+            type,
+            null, null,
+            maxResults, offset, spellCheckString, forcePagingWithDocumentOrder, language);
+        this.criterionEntries = criterions.stream().map(c -> new CriterionEntry(c, this)).collect(Collectors.toList());
+        this.orderEntries = orders.stream().map(o -> new OrderEntry(o, this)).collect(Collectors.toList());
 
-	}
+    }
 
-	public static class Builder {
+    public static class Builder {
 
-		public Builder add(Criterion criterion) {
-			return criterion(criterion);
-		}
-		public Builder add(Order order) {
-			return order(order);
-		}
+        public Builder add(Criterion criterion) {
+            return criterion(criterion);
+        }
+        public Builder add(Order order) {
+            return order(order);
+        }
 
-		public Builder fromUnstructured() {
-			return type(NT_UNSTRUCTURED);
-		}
+        public Builder fromUnstructured() {
+            return type(NT_UNSTRUCTURED);
+        }
 
-		public Builder asc(String field){
-			return order(Order.asc(field));
-		}
-		public Builder desc(String field){
-			return order(Order.desc(field));
-		}
+        public Builder asc(String field){
+            return order(Order.asc(field));
+        }
+        public Builder desc(String field){
+            return order(Order.desc(field));
+        }
 
 
-	}
+    }
 }

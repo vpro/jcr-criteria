@@ -35,7 +35,7 @@ public interface ExecutableQuery {
     AdvancedResult execute(Session session);
 
 
-	LongSupplier getCountSupplier(Session session);
+    LongSupplier getCountSupplier(Session session);
 
 
 }

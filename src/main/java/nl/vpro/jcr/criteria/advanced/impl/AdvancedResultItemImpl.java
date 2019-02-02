@@ -41,7 +41,7 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
     private final Row row;
 
     public AdvancedResultItemImpl(Row row)  {
-		this.row = row;
+        this.row = row;
     }
 
     @Override
@@ -127,11 +127,11 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
         return this;
     }
 
-	@Override
-	protected Node getNode() throws RepositoryException {
-		return row.getNode();
-	}
-	@Override
+    @Override
+    protected Node getNode() throws RepositoryException {
+        return row.getNode();
+    }
+    @Override
     public String toString() {
         return "row:" + getHandle() + " " + getTitle();
     }

@@ -79,7 +79,7 @@ public interface AdvancedResult extends Iterable<AdvancedResultItem> {
     /**
      * Gets an iterator over the results, transforming objects using the given function while iterating
      * @param <K> destination class.
-	 * @return an iterator over the results
+     * @return an iterator over the results
      */
     <K> ResultIterator<K> getItems(Function<Row, K> wrapper);
 

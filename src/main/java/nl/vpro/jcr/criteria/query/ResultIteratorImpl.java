@@ -38,11 +38,11 @@ public class ResultIteratorImpl<T> implements ResultIterator<T> {
      * The jcr RowIterator
      */
     protected final RowIterator rowIterator;
-	protected final Function<Row, T> wrapper;
+    protected final Function<Row, T> wrapper;
 
     public  ResultIteratorImpl(@Nonnull RowIterator rowIterator, @Nonnull Function<Row, T> wrapper) {
         this.rowIterator = rowIterator;
-		this.wrapper = wrapper;
+        this.wrapper = wrapper;
     }
 
 

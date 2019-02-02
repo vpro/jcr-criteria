@@ -103,9 +103,9 @@ class DirectJcrQuery implements ExecutableQuery  {
             false);
     }
 
-	@Override
-	public LongSupplier getCountSupplier(Session session) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public LongSupplier getCountSupplier(Session session) {
+        throw new UnsupportedOperationException();
+    }
 
 }
