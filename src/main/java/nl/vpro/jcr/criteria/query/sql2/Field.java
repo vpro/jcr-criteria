@@ -11,7 +11,7 @@ import nl.vpro.jcr.criteria.query.criterion.Criterion;
 @Data
 public class Field {
 
-    private  String name;
+    private String name;
 
     private boolean attribute;
 

@@ -78,8 +78,14 @@ public interface Criterion extends Serializable {
      * @throws JCRQueryException if there is a problem converting the input criteria to a valid xpath expression
      */
     @Deprecated
-    String toXPathString(Criteria criteria) throws JCRQueryException;
+    default String toXPathString(Criteria criteria) throws JCRQueryException {
+        throw new UnsupportedOperationException("" + getClass().getName() + " does net support XPATH");
 
+    }
+
+    /**
+     * @since 2.0
+     */
     default Condition toSQLCondition(Criteria criteria) {
         throw new UnsupportedOperationException("" + getClass().getName() + " does net yet support SQL2");
     }

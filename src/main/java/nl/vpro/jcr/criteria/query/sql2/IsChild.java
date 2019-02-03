@@ -12,7 +12,7 @@ import nl.vpro.jcr.criteria.query.criterion.Criterion;
  */
 @AllArgsConstructor
 @Data
-class IsChild implements Condition {
+public class IsChild implements Condition {
 
     String path;
     @Override

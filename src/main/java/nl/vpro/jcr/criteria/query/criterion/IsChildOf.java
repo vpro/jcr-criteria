@@ -1,12 +1,12 @@
 package nl.vpro.jcr.criteria.query.criterion;
 
 import nl.vpro.jcr.criteria.query.Criteria;
-import nl.vpro.jcr.criteria.query.JCRQueryException;
 import nl.vpro.jcr.criteria.query.sql2.Condition;
+import nl.vpro.jcr.criteria.query.sql2.IsChild;
 
 /**
  * @author Michiel Meeuwissen
- * @since ...
+ * @since 2.0
  */
 public class IsChildOf extends BaseCriterion implements Criterion {
 
@@ -18,14 +18,8 @@ public class IsChildOf extends BaseCriterion implements Criterion {
 
     }
 
-    @Override
-    public String toXPathString(Criteria criteria) throws JCRQueryException {
-        return null;
-
-    }
-
      @Override
      public  Condition toSQLCondition(Criteria criteria) {
-        throw new UnsupportedOperationException("" + getClass().getName() + " does net yet support SQL2");
+         return new IsChild(path);
     }
 }

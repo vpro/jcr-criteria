@@ -1,7 +1,6 @@
 package nl.vpro.jcr.criteria.query.criterion;
 
 import nl.vpro.jcr.criteria.query.Criteria;
-import nl.vpro.jcr.criteria.query.JCRQueryException;
 import nl.vpro.jcr.criteria.query.sql2.Condition;
 import nl.vpro.jcr.criteria.query.sql2.IsDescendant;
 
@@ -19,11 +18,6 @@ public class IsDescendantOf extends BaseCriterion implements Criterion {
 
     }
 
-    @Override
-    public String toXPathString(Criteria criteria) throws JCRQueryException {
-        return null;
-
-    }
 
      @Override
      public  Condition toSQLCondition(Criteria criteria) {

@@ -49,9 +49,12 @@ public class JCRFunctionExpression extends BaseCriterion implements Criterion {
     @Override
     public String toXPathString(Criteria criteria) throws JCRQueryException {
         StringBuilder fragment = new StringBuilder();
-        fragment.append(" (").append(function).append("(");
-        fragment.append(propertyName);
-        fragment.append(", '").append(value).append("') ) ");
+        fragment.append(" (")
+            .append(function).append("(")
+            .append(propertyName)
+            .append(", '")
+            .append(value)
+            .append("') ) ");
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
     }
