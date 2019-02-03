@@ -1,9 +1,10 @@
 package nl.vpro.jcr.criteria.query.sql2;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
 
 import nl.vpro.jcr.criteria.query.criterion.Op;
 
@@ -13,7 +14,6 @@ import nl.vpro.jcr.criteria.query.criterion.Op;
  */
 public abstract class SimpleExpressionCondition<T> implements  Condition {
 
-    private static final Set<Class<?>> TO_STRINGABLES = new HashSet<>();
 
     final Field field;
     final Op op;
@@ -26,7 +26,11 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
         this.value = value;
     }
 
+
+
     abstract String getValue();
+
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ISO_DATE_TIME;
 
     @Override
     public boolean toSql2(StringBuilder builder) {
@@ -44,8 +48,10 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
             return new NumberSimpleExpressionCondition(field, op, (Number) v);
         } else if (v instanceof Calendar) {
             return new StringSimpleExpressionCondition(field, op, v.toString());
+        } else if (v instanceof LocalDate) {
+            return new CastFromStringSimpleExpressionCondition("date", field, op, ((LocalDate) v).atStartOfDay().atOffset(ZoneOffset.UTC).format(FORMAT));
         } else if (v instanceof LocalDateTime) {
-            return new CastFromStringSimpleExpressionCondition("date", field, op, v.toString());
+            return new CastFromStringSimpleExpressionCondition("date", field, op, ((LocalDateTime) v).atOffset(ZoneOffset.UTC).format(FORMAT));
         } else {
             throw new UnsupportedOperationException("Unrecognized " + v.getClass() + " " + v);
         }

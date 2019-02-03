@@ -3,7 +3,10 @@ package nl.vpro.jcr.criteria.advanced.impl;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +33,7 @@ import nl.vpro.jcr.criteria.query.criterion.Restrictions;
 
 import static nl.vpro.jcr.criteria.CriteriaTestUtils.*;
 import static nl.vpro.jcr.criteria.query.JCRCriteriaFactory.builder;
+import static nl.vpro.jcr.criteria.query.criterion.Restrictions.attr;
 import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertFalse;
@@ -63,10 +67,24 @@ public class AdvancedCriteriaImplITest {
             NodeTypeManager nodeTypeManager = session.getWorkspace().getNodeTypeManager();
             NodeTypeTemplate a  = nodeTypeManager.createNodeTypeTemplate();
             a.setName("a");
-            PropertyDefinitionTemplate media  = nodeTypeManager.createPropertyDefinitionTemplate();
-            media.setName("media");
-            media.setRequiredType(PropertyType.STRING);
-            a.getPropertyDefinitionTemplates().add(media);
+            {
+                PropertyDefinitionTemplate media  = nodeTypeManager.createPropertyDefinitionTemplate();
+                media.setName("media");
+                media.setRequiredType(PropertyType.STRING);
+                a.getPropertyDefinitionTemplates().add(media);
+            }
+            {
+                PropertyDefinitionTemplate longType   = nodeTypeManager.createPropertyDefinitionTemplate();
+                longType.setName("long");
+                longType.setRequiredType(PropertyType.LONG);
+                a.getPropertyDefinitionTemplates().add(longType);
+            }
+            {
+                PropertyDefinitionTemplate dateType   = nodeTypeManager.createPropertyDefinitionTemplate();
+                dateType.setName("date");
+                dateType.setRequiredType(PropertyType.DATE);
+                a.getPropertyDefinitionTemplates().add(dateType);
+            }
             a.setQueryable(true);
             nodeTypeManager.registerNodeType(a, true);
         }
@@ -171,6 +189,55 @@ public class AdvancedCriteriaImplITest {
                 2); // goodbye and root
 
                 ;
+
+        }
+    }
+
+    @Test(dataProvider = "language")
+    public void betweenLong(String language) throws RepositoryException {
+        {
+            for (long i = 0; i < 10; i++) {
+                Node n = root.addNode("n" + i);
+                n.setPrimaryType("a");
+                n.setProperty("long", i);
+            }
+
+            session.save();
+        }
+        {
+            check(builder().language(language)
+                    .type("a")
+                    .asc(attr("long"))
+                    .add(Restrictions.between(attr("long"), 4, 8)),
+                5); // 4, 5, 6, 7, 9
+        }
+    }
+
+    @Test(dataProvider = "language")
+    public void betweenDates(String language) throws RepositoryException {
+        {
+            for (long i = 0; i < 10; i++) {
+                Node n = root.addNode("n" + i);
+                LocalDateTime dateTime = LocalDate.of(2019, 1, 1).plusDays(i).atStartOfDay();
+                n.setPrimaryType("a");
+                Calendar calendar = Calendar.getInstance();
+                calendar.clear();
+                calendar.set(dateTime.getYear(), dateTime.getMonthValue()-1, dateTime.getDayOfMonth(),
+                    dateTime.getHour(), dateTime.getMinute(), dateTime.getSecond());
+                n.setProperty("date", calendar);
+            }
+
+            session.save();
+        }
+        {
+            check(builder().language(language)
+                    .type("a")
+                    .asc(attr("date"))
+                    .add(
+                        Restrictions.between(attr("date"),
+                            LocalDate.of(2019, 1, 5),
+                            LocalDate.of(2019, 1, 8))
+                    ), 5);
 
         }
     }

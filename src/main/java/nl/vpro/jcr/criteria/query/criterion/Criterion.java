@@ -76,6 +76,7 @@ public interface Criterion extends Serializable {
      * @param criteria input criteria
      * @return converted XPATH expression
      * @throws JCRQueryException if there is a problem converting the input criteria to a valid xpath expression
+     * @deprecated Since {@link javax.jcr.query.Query#XPATH} is deprecated, this is too.
      */
     @Deprecated
     default String toXPathString(Criteria criteria) throws JCRQueryException {

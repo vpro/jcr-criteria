@@ -23,6 +23,10 @@ import java.util.Calendar;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
+import nl.vpro.jcr.criteria.query.sql2.AndCondition;
+import nl.vpro.jcr.criteria.query.sql2.Condition;
+import nl.vpro.jcr.criteria.query.sql2.Field;
+import nl.vpro.jcr.criteria.query.sql2.SimpleExpressionCondition;
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 
 
@@ -72,6 +76,14 @@ public class BetweenExpression extends BaseCriterion implements Criterion {
         fragment.append(")");
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
+    }
+
+    @Override
+    public Condition toSQLCondition(Criteria criteria) {
+        return new AndCondition(
+            SimpleExpressionCondition.of(Field.of(propertyName), Op.ge, lo),
+            SimpleExpressionCondition.of(Field.of(propertyName), Op.le, hi)
+        );
     }
 
     @Override
