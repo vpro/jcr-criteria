@@ -35,11 +35,11 @@ public class BetweenExpression extends BaseCriterion implements Criterion {
 
     private final String propertyName;
 
-    private final Object lo;
+    private final Comparable<?> lo;
 
-    private final Object hi;
+    private final Comparable<?> hi;
 
-    protected BetweenExpression(String propertyName, Object lo, Object hi) {
+    protected BetweenExpression(String propertyName, Comparable<?> lo, Comparable<?> hi) {
         this.propertyName = propertyName;
         this.lo = lo;
         this.hi = hi;

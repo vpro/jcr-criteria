@@ -17,38 +17,80 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.sourceforge.openutils.mgnlcriteria.tests;
+package nl.vpro.jcr.criteria;
 
-import info.magnolia.cms.core.MgnlNodeType;
-import info.magnolia.jcr.util.NodeUtil;
-import info.magnolia.jcr.util.PropertyUtil;
-import info.magnolia.repository.RepositoryConstants;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.ResultIterator;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Disjunction;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
 
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.File;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
-import javax.jcr.Node;
+import javax.jcr.*;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.jackrabbit.core.TransientRepository;
+import org.apache.jackrabbit.core.fs.local.FileUtil;
 import org.testng.Assert;
+
+import nl.vpro.jcr.criteria.query.AdvancedResult;
+import nl.vpro.jcr.criteria.query.Criteria;
+import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
+import nl.vpro.jcr.criteria.query.ResultIterator;
+import nl.vpro.jcr.criteria.query.criterion.Disjunction;
+import nl.vpro.jcr.criteria.query.criterion.Order;
+import nl.vpro.jcr.criteria.query.criterion.Restrictions;
 
 
 /**
  * Utility methods used in unit tests.
  * @author fgiust
- * @version $Id$
  */
-public class CriteriaTestUtils
-{
+@Slf4j
+public class CriteriaTestUtils {
+
+    static Repository repository;
+    static Path tempDirectory;
+    static Path tempFile;
+    public static Session session;
+    public static Node root;
+
+
+    @SneakyThrows
+    public static void setup() {
+         // Using jackrabbit memory only seems to be impossible. Sad...
+        tempDirectory = Files.createTempDirectory("criteriatest");
+        System.setProperty("derby.stream.error.file", new File(tempDirectory.toFile(), "derby.log").toString());
+        tempFile = Files.createTempFile("repository", ".xml");
+        Files.copy(CriteriaTestUtils.class.getResourceAsStream("/repository.xml"), tempFile, StandardCopyOption.REPLACE_EXISTING);
+        FileUtil.delete(tempDirectory.toFile());
+        repository = new TransientRepository(tempFile.toFile(), tempDirectory.toFile());;
+        session = getSession();
+        root = session.getRootNode();
+    }
+
+    public static  void shutdown() {
+        try {
+            FileUtils.deleteDirectory(tempDirectory.toFile());
+            Files.deleteIfExists(tempFile);
+        } catch (IOException ioe) {
+            log.warn(ioe.getMessage(), ioe);
+        }
+        log.info("Removed " + tempDirectory + " and " + tempFile);
+    }
+
+    public static Session getSession() throws RepositoryException {
+        return repository.login(new SimpleCredentials("admin", "admin".toCharArray()));
+    }
+
 
     public static void assertNumOfResults(int expected, Collection<Node> result, String search)
     {
@@ -138,9 +180,8 @@ public class CriteriaTestUtils
         return writer.toString();
     }
 
-    public static AdvancedResult search(String searchText, int page, int itemsPerPage)
-    {
-        return search(searchText, StringUtils.EMPTY, RepositoryConstants.WEBSITE, false, page, itemsPerPage);
+    public static AdvancedResult search(String searchText, int page, int itemsPerPage) {
+        return search(searchText, StringUtils.EMPTY, "WEBSITE", false, page, itemsPerPage);
     }
 
     public static AdvancedResult search(String searchText, String path, String repository, boolean titleOnly, int page,
@@ -175,7 +216,7 @@ public class CriteriaTestUtils
             criteria.setFirstResult((page - 1) * itemsPerPage);
         }
 
-        return criteria.execute();
+        return criteria.execute(session);
     }
 
     /**
@@ -187,9 +228,8 @@ public class CriteriaTestUtils
     {
         Criteria criteria = JCRCriteriaFactory
             .createCriteria()
-            .setWorkspace(repo)
             .addOrder(Order.desc("@jcr:score"))
-            .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_PAGE));
+            .add(Restrictions.eq("@jcr:primaryType", "nt:page"));
 
         if (startnode != null)
         {
@@ -208,18 +248,18 @@ public class CriteriaTestUtils
         return list;
     }
 
-    public static String title(Node item)
-    {
-        return PropertyUtil.getString(item, "title");
+    @SneakyThrows
+    public static String title(Node item) {
+        return item.getProperty("title").getString();
     }
 
-    public static String name(Node item)
-    {
-        return NodeUtil.getName(item);
+    @SneakyThrows
+    public static String name(Node item) {
+        return item.getName();
     }
 
-    public static String path(Node item)
-    {
-        return NodeUtil.getPathIfPossible(item);
+    @SneakyThrows
+    public static String path(Node item) {
+        return item.getPath();
     }
 }

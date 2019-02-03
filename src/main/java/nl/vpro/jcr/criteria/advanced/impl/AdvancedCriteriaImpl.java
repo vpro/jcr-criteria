@@ -68,6 +68,9 @@ public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
 
     }
 
+    /**
+     * @since 2.0
+     */
     public static class Builder {
 
         public Builder add(Criterion criterion) {

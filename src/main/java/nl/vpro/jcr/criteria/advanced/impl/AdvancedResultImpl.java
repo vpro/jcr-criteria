@@ -88,7 +88,7 @@ public class AdvancedResultImpl implements AdvancedResult {
         int pageNumberStartingFromOne,
         String statement,
         Query spellCheckerQuery,
-        boolean applyLocalPaging) throws RepositoryException {
+        boolean applyLocalPaging) {
         this(jcrQueryResult, queryCounter, itemsPerPage, pageNumberStartingFromOne, statement, spellCheckerQuery, applyLocalPaging, 0);
     }
 

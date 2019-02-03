@@ -21,11 +21,15 @@ package nl.vpro.jcr.criteria.query.criterion;
 
 import lombok.SneakyThrows;
 
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.UUID;
 
+import javax.annotation.Nonnull;
 import javax.jcr.Node;
+import javax.validation.constraints.Size;
 
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 
@@ -34,8 +38,12 @@ import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
  * The <tt>criterion</tt> package may be used by applications as a framework for building new kinds of
  * <tt>Criterion</tt>. However, it is intended that most applications will simply use the built-in criterion types via
  * the static factory methods of this class.
+ *
+ * Since 2.0 most methods do not expect generic {@link Object} any more but only types that are actually supported.
+ *
  * @author fgiust
  * @author Federico Grilli
+ * @author Michiel Meeuwissen
  */
 public final class Restrictions {
 
@@ -46,47 +54,162 @@ public final class Restrictions {
     /**
      * Apply an "equal" constraint to the named node
      * @param nodeName - String a qualified (eg. nt:somenode) or unqualified (eg. somenode) node name. When a node is an
-     * attribute it must be preceded by the '@'character (eg. @nt:somenode)
+     * attribute it must be preceded by the '@'character (eg. @nt:somenode), you
      * @param value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
      * @return Criterion
      */
-    public static SimpleExpression eq(String nodeName, Object value) {
+    @Nonnull
+    public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull CharSequence value) {
         return new SimpleExpression(nodeName, value, Op.eq);
     }
 
-    public static SimpleExpression attrEq(String attName, Object value) {
+
+    /**
+     * See {@link #eq(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull UUID value) {
+        return new SimpleExpression(nodeName, value.toString(), Op.eq);
+    }
+
+    /**
+     * See {@link #eq(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull Number value) {
+        return new SimpleExpression(nodeName, value, Op.eq);
+    }
+    /**
+     * See {@link #eq(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull Calendar value) {
+        return new SimpleExpression(nodeName, value, Op.eq);
+    }
+    /**
+     * See {@link #eq(String, CharSequence)}
+     */
+     @Nonnull
+    public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull Boolean value) {
+        return new SimpleExpression(nodeName, value, Op.eq);
+    }
+
+    /**
+     * See {@link #eq(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull LocalDateTime value) {
+        return new SimpleExpression(nodeName, value, Op.eq);
+    }
+
+    /**
+     * See {@link #eq(String, CharSequence)}, but wraps {@link #attr} arround the first argument.
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression attrEq(@Nonnull String attName, @Nonnull CharSequence value) {
+        return eq(attr(attName), value);
+    }
+    /**
+     * See {@link #attrEq(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression attrEq(@Nonnull String attName, @Nonnull Number value) {
+        return eq(attr(attName), value);
+    }
+    /**
+     * See {@link #attrEq(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression attrEq(@Nonnull String attName, @Nonnull Boolean value) {
+        return eq(attr(attName), value);
+    }
+    /**
+     * See {@link #attrEq(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression attrEq(@Nonnull String attName, @Nonnull Calendar value) {
+        return eq(attr(attName), value);
+    }
+    /**
+     * See {@link #attrEq(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression attrEq(@Nonnull String attName, @Nonnull LocalDateTime value) {
         return eq(attr(attName), value);
     }
 
 
-    public static Criterion has(String attName) {
-        return new IsNotNullExpression(attName);
+    /**
+     * Synonym to {@link #isNotNull(String)} (String)}
+     */
+    @Nonnull
+    public static Criterion has(@Nonnull String name) {
+        return new IsNotNullExpression(name);
     }
-    public static Criterion hasnt(String attName) {
-        return new IsNullExpression(attName);
+    /**
+     * Synonym to {@link #isNull(String)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static Criterion hasnt(@Nonnull String name) {
+        return new IsNullExpression(name);
     }
 
-    public static SimpleExpression isTrue(String attName) {
-        return eq(attr(attName), Boolean.TRUE);
+
+    /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression isTrue(@Nonnull String name) {
+        return eq(name, Boolean.TRUE);
+    }
+
+    /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression attrIsTrue(@Nonnull String name) {
+        return eq(attr(name), Boolean.TRUE);
     }
 
 
-    public static Criterion isFalsy(String name) {
+    /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static Criterion isFalsy(@Nonnull String name) {
         return or(eq(name, Boolean.FALSE), hasnt(name));
     }
 
-
-    public static Criterion attrIsFalsy(String name) {
+     /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static Criterion attrIsFalsy(@Nonnull String name) {
         return isFalsy(attr(name));
     }
 
 
-    public static SimpleExpression op(Op op, String nodeName, Object value) {
+    /**
+     * Creates a generic expression, with an {@link Op} parameter and an {@link Object} value.
+     * @since 2.0
+     */
+    public static SimpleExpression op(@Nonnull Op op, @Nonnull String nodeName, @Nonnull Object value) {
         return new SimpleExpression(nodeName, value, op);
     }
 
-
-    public static SimpleExpression attrOp(Op op, String attrName, Object value) {
+    /**
+     * Creates a generic expression, with an {@link Op} parameter and an {@link Object} value.
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression attrOp(@Nonnull Op op, @Nonnull String attrName, @Nonnull Object value) {
         return new SimpleExpression(attr(attrName), value, op);
     }
 
@@ -94,13 +217,40 @@ public final class Restrictions {
      * Apply a "not equal" constraint to the named node
      * @param nodeName - String a qualified (eg. nt:somenode) or unqualified (eg. somenode) node name. When a node is an
      * attribute it must be preceded by the '@'character (eg. @nt:somenode)
-     * @param value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
      * @return Criterion
      */
-    public static SimpleExpression ne(String nodeName, Object value) {
+    @Nonnull
+    public static SimpleExpression ne(@Nonnull String nodeName, @Nonnull CharSequence value) {
         return new SimpleExpression(nodeName, value, Op.ne);
     }
-
+    /**
+     * See {@link #ne(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression ne(@Nonnull String nodeName, @Nonnull Number value) {
+        return new SimpleExpression(nodeName, value, Op.ne);
+    }
+    /**
+     * See {@link #ne(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression ne(@Nonnull String nodeName, @Nonnull Calendar value) {
+        return new SimpleExpression(nodeName, value, Op.ne);
+    }
+    /**
+     * See {@link #ne(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression ne(@Nonnull String nodeName, @Nonnull LocalDateTime value) {
+        return new SimpleExpression(nodeName, value, Op.ne);
+    }
+    /**
+     * See {@link #ne(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression ne(@Nonnull String nodeName, @Nonnull Boolean value) {
+        return new SimpleExpression(nodeName, value, Op.ne);
+    }
     /**
      * Apply a "like" constraint of type {@link MatchMode#ANYWHERE} to the named node <br>
      * <br>
@@ -128,10 +278,10 @@ public final class Restrictions {
      * </em>
      * @param nodeName - String a qualified (eg. nt:somenode) or unqualified (eg. somenode) node name. When a node is an
      * attribute it must be preceded by the '@'character (eg. @nt:somenode)
-     * @param value - must be an instance of either {@link String} or {@link Number}.
      * @return Criterion
      */
-    public static JCRFunctionExpression like(String nodeName, Object value) {
+    @Nonnull
+    public static JCRFunctionExpression like(@Nonnull String nodeName, @Nonnull CharSequence value) {
         return new LikeExpression(
             nodeName,
             XPathTextUtils.stringToJCRSearchExp(value.toString()),
@@ -139,14 +289,28 @@ public final class Restrictions {
             MatchMode.ANYWHERE);
     }
 
-    public static String attr(String attName) {
+    /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static String attr(@Nonnull String attName) {
         return Criterion.ATTRIBUTE_SELECTOR + attName;
     }
-    public static JCRFunctionExpression attrLike(String attName, Object value) {
+
+    /**
+     * See {@link #like(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static JCRFunctionExpression attrLike(@Nonnull String attName, @Nonnull CharSequence value) {
         return like(attr(attName), value);
     }
 
-    public static JCRFunctionExpression attrLike(String attName, Object value, MatchMode matchMode) {
+    /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static JCRFunctionExpression attrLike(@Nonnull String attName, @Nonnull CharSequence value, @Nonnull MatchMode matchMode) {
         return like(attr(attName), value, matchMode);
     }
 
@@ -176,11 +340,11 @@ public final class Restrictions {
      * </em>
      * @param nodeName - String a qualified (eg. nt:somenode) or unqualified (eg. somenode) node name. When a node is an
      * attribute it must be preceded by the '@'character (eg. @nt:somenode)
-     * @param value - must be an instance of either {@link String} or {@link Number}.
      * @param matchMode - one of {@link MatchMode#START} or {@link MatchMode#END} or {@link MatchMode#ANYWHERE}
      * @return Criterion
      */
-    public static JCRFunctionExpression like(String nodeName, Object value, MatchMode matchMode) {
+    @Nonnull
+    public static JCRFunctionExpression like(@Nonnull String nodeName, @Nonnull CharSequence value, @Nonnull MatchMode matchMode) {
         return new LikeExpression(
             nodeName,
             XPathTextUtils.stringToJCRSearchExp(value.toString()),
@@ -188,14 +352,16 @@ public final class Restrictions {
             matchMode);
     }
 
+
+
     /**
      * Apply a "contains" constraint to the named node. The value parameter will be escaped.
      * @param nodeName - String a qualified (eg. nt:somenode) or unqualified (eg. somenode) node name. When a node is an
      * attribute it must be preceded by the '@'character (eg. @nt:somenode)
-     * @param value - must be an instance of either {@link String} or {@link Number}.
      * @return Criterion
      */
-    public static JCRFunctionExpression contains(String nodeName, Object value) {
+    @Nonnull
+    public static JCRFunctionExpression contains(@Nonnull String nodeName, @Nonnull CharSequence value) {
         return contains(nodeName, value, true);
     }
 
@@ -204,11 +370,11 @@ public final class Restrictions {
      * the search-engine syntax enabled (you are sure that the search-expression is always syntactically correct).
      * @param nodeName - String a qualified (eg. nt:somenode) or unqualified (eg. somenode) node name. When a node is an
      * attribute it must be preceded by the '@'character (eg. @nt:somenode)
-     * @param value - must be an instance of either {@link String} or {@link Number}.
      * @param escape - if true, value will be escaped, avoiding JCRQueryException on query execution
      * @return Criterion
      */
-    public static JCRFunctionExpression contains(String nodeName, Object value, boolean escape) {
+    @Nonnull
+    public static JCRFunctionExpression contains(@Nonnull  String nodeName, @Nonnull  CharSequence value, boolean escape) {
         String exp;
         if (escape) {
             exp = XPathTextUtils.stringToJCRSearchExp(value.toString());
@@ -219,24 +385,93 @@ public final class Restrictions {
     }
 
     /**
+     * See {@link #contains(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static JCRFunctionExpression contains(@Nonnull  String nodeName, @Nonnull  Number value) {
+        return new JCRFunctionExpression(nodeName, value, " jcr:contains");
+    }
+    /**
+     * See {@link #contains(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static JCRFunctionExpression contains(@Nonnull  String nodeName, @Nonnull  UUID value) {
+         String exp = value.toString();
+        return new JCRFunctionExpression(nodeName, exp, " jcr:contains");
+    }
+
+    /**
      * Apply a "greater than" constraint to the named node
      * @param nodeName - String a qualified (eg. nt:somenode) or unqualified (eg. somenode) node name. When a node is an
      * attribute it must be preceded by the '@'character (eg. @nt:somenode)
-     * @param value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
      * @return Criterion
      */
-    public static SimpleExpression gt(String nodeName, Object value) {
+    @Nonnull
+    public static SimpleExpression gt(@Nonnull String nodeName, @Nonnull CharSequence value) {
+        return new SimpleExpression(nodeName, value, Op.gt);
+    }
+    /**
+     * See {@link #gt(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression gt(@Nonnull String nodeName, @Nonnull Number value) {
         return new SimpleExpression(nodeName, value, Op.gt);
     }
 
     /**
+     * See {@link #gt(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression gt(@Nonnull String nodeName, @Nonnull Calendar value) {
+        return new SimpleExpression(nodeName, value, Op.gt);
+    }
+
+    /**
+     * See {@link #gt(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression gt(@Nonnull String nodeName, @Nonnull LocalDateTime value) {
+        return new SimpleExpression(nodeName, value, Op.gt);
+    }
+
+
+
+    /**
      * Apply a "less than" constraint to the named node
      * @param nodeName - String a qualified (eg. nt:somenode) or unqualified (eg. somenode) node name. When a node is an
-     * attribute it must be preceded by the '@'character (eg. @nt:somenode)
-     * @param value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
+     * attribute it must be preceded by the '@'character (eg. @nt:somenode). This can be done via {@link #attr}.
      * @return Criterion
      */
-    public static SimpleExpression lt(String nodeName, Object value) {
+    @Nonnull
+    public static SimpleExpression lt(@Nonnull String nodeName, @Nonnull CharSequence value) {
+        return new SimpleExpression(nodeName, value, Op.lt);
+    }
+
+    /**
+     * See {@link #lt(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression lt(@Nonnull String nodeName, @Nonnull Number value) {
+        return new SimpleExpression(nodeName, value, Op.lt);
+    }
+
+    /**
+     * See {@link #lt(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression lt(@Nonnull String nodeName, @Nonnull Calendar value) {
+        return new SimpleExpression(nodeName, value, Op.lt);
+    }
+
+    /**
+     * See {@link #lt(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression lt(@Nonnull String nodeName, @Nonnull  LocalDateTime value) {
         return new SimpleExpression(nodeName, value, Op.lt);
     }
 
@@ -244,10 +479,32 @@ public final class Restrictions {
      * Apply a "less than or equal" constraint to the named node
      * @param nodeName - String a qualified (eg. nt:somenode) or unqualified (eg. somenode) node name. When a node is an
      * attribute it must be preceded by the '@'character (eg. @nt:somenode)
-     * @param value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
      * @return Criterion
      */
-    public static SimpleExpression le(String nodeName, Object value) {
+    @Nonnull
+    public static SimpleExpression le(@Nonnull String nodeName, @Nonnull CharSequence value) {
+        return new SimpleExpression(nodeName, value, Op.le);
+    }
+
+    /**
+     * See {@link #le(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression le(@Nonnull String nodeName, @Nonnull Number value) {
+        return new SimpleExpression(nodeName, value, Op.le);
+    }
+    /**
+     * See {@link #le(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression le(@Nonnull String nodeName, @Nonnull Calendar value) {
+        return new SimpleExpression(nodeName, value, Op.le);
+    }
+    /**
+     * See {@link #le(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression le(@Nonnull String nodeName, @Nonnull LocalDateTime value) {
         return new SimpleExpression(nodeName, value, Op.le);
     }
 
@@ -255,10 +512,22 @@ public final class Restrictions {
      * Apply a "greater than or equal" constraint to the named node
      * @param nodeName - String a qualified (eg. nt:somenode) or unqualified (eg. somenode) node name. When a node is an
      * attribute it must be preceded by the '@'character (eg. @nt:somenode)
-     * @param value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
      * @return Criterion
      */
-    public static SimpleExpression ge(String nodeName, Object value) {
+    @Nonnull
+    public static SimpleExpression ge(@Nonnull String nodeName, @Nonnull CharSequence value) {
+        return new SimpleExpression(nodeName, value, Op.ge);
+    }
+    @Nonnull
+    public static SimpleExpression ge(String nodeName, Number value) {
+        return new SimpleExpression(nodeName, value, Op.ge);
+    }
+    @Nonnull
+    public static SimpleExpression ge(String nodeName, Calendar value) {
+        return new SimpleExpression(nodeName, value, Op.ge);
+    }
+    @Nonnull
+    public static SimpleExpression ge(String nodeName, LocalDateTime value) {
         return new SimpleExpression(nodeName, value, Op.ge);
     }
 
@@ -270,9 +539,27 @@ public final class Restrictions {
      * @param hi value - must be an instance of either {@link String} or {@link Number} or {@link Calendar}.
      * @return Criterion
      */
-    public static Criterion between(String nodeName, Object lo, Object hi) {
+    @Nonnull
+    public static Criterion between(String nodeName, CharSequence lo, CharSequence hi) {
+        return new BetweenExpression(nodeName, lo.toString(), hi.toString());
+    }
+    @Nonnull
+    public static Criterion between(String nodeName, Number lo, Number hi) {
+        return new BetweenExpression(nodeName, (Comparable) lo, (Comparable) hi);
+    }
+    @Nonnull
+    public static Criterion between(String nodeName, Calendar lo, Calendar hi) {
         return new BetweenExpression(nodeName, lo, hi);
     }
+    @Nonnull
+    public static Criterion between(String nodeName, LocalDateTime lo, LocalDateTime hi) {
+        return new BetweenExpression(nodeName, lo, hi);
+    }
+    @Nonnull
+    public static Criterion between(String nodeName, LocalDate lo, LocalDate hi) {
+        return new BetweenExpression(nodeName, lo, hi);
+    }
+
 
     /**
      * Adds a date contraint: the input date must be included in the given date, excluding time (between 00:00 and 23:59
@@ -282,8 +569,13 @@ public final class Restrictions {
      * @param value date (time will be ignored)
      * @return Criterion
      */
+    @Nonnull
     public static Criterion eqDate(String nodeName, Calendar value) {
         return betweenDates(nodeName, value, value);
+    }
+    @Nonnull
+    public static Criterion eqDate(String nodeName, LocalDate value) {
+        return between(nodeName, value, value);
     }
 
     /**
@@ -295,6 +587,7 @@ public final class Restrictions {
      * @param hi higher date
      * @return Criterion
      */
+    @Nonnull
     public static Criterion betweenDates(String nodeName, Calendar lo, Calendar hi) {
         return between(nodeName, getDayStart(lo), getDayEnd(hi));
     }
@@ -306,6 +599,7 @@ public final class Restrictions {
      * @param values - a String[]
      * @return Criterion
      */
+    @Nonnull
     public static Criterion in(String nodeName, String[] values) {
         return new InExpression(nodeName, values);
     }
@@ -317,7 +611,7 @@ public final class Restrictions {
      * @param values - a collection of {@link String}
      * @return Criterion
      */
-
+    @Nonnull
     public static Criterion in(String nodeName, Collection<String> values) {
         return new InExpression(nodeName, values.toArray(new String[0]));
     }
@@ -328,6 +622,7 @@ public final class Restrictions {
      * attribute it must be preceded by the '@'character (eg. @nt:somenode)
      * @return Criterion
      */
+    @Nonnull
     public static Criterion isNull(String nodeName) {
         return new IsNullExpression(nodeName);
     }
@@ -338,15 +633,17 @@ public final class Restrictions {
      * attribute it must be preceded by the '@'character (eg. @nt:somenode)
      * @return Criterion
      */
+    @Nonnull
     public static Criterion isNotNull(String nodeName) {
         return new IsNotNullExpression(nodeName);
     }
 
     /**
-     * Return the conjuction of two expressions
+     * Return the conjuction of two or more expressions
      * @return Criterion
      */
-    public static Conjunction and(Criterion... clauses) {
+    @Nonnull
+    public static Conjunction and(@Size(min = 2) Criterion... clauses) {
         return new Conjunction(true, clauses);
     }
 
@@ -355,6 +652,7 @@ public final class Restrictions {
 
      * @return Criterion
      */
+    @Nonnull
     public static Disjunction or(Criterion... clauses) {
         return new Disjunction(true, clauses);
     }
@@ -364,6 +662,7 @@ public final class Restrictions {
      * @param expression to be negated
      * @return Criterion
      */
+    @Nonnull
     public static Criterion not(Criterion expression) {
         return new NotExpression(expression);
     }
@@ -373,8 +672,9 @@ public final class Restrictions {
      * @param nodetypes - list of accepted nodetypes.
      * @return Criterion
      */
+    @Nonnull
     public static Criterion hasNodeType(String... nodetypes) {
-        return new InExpression(attr("jcr:primaryType"), nodetypes, false);
+        return new InExpression(Criterion.JCR_PRIMARYTYPE, nodetypes, false);
     }
 
     /**
@@ -382,6 +682,8 @@ public final class Restrictions {
      * @return Conjunction
      * @deprecated {@link #and(Criterion...)}
      */
+    @Nonnull
+    @Deprecated
     public static Conjunction conjunction() {
         return new Conjunction(true);
     }
@@ -391,6 +693,8 @@ public final class Restrictions {
      * @deprecated {@link #or(Criterion...)}
      * @return Conjunction
      */
+    @Nonnull
+    @Deprecated
     public static Disjunction disjunction() {
         return new Disjunction(true);
     }
@@ -409,11 +713,18 @@ public final class Restrictions {
         return cal2;
     }
 
+    /**
+     * @since 2.0
+     */
     @SneakyThrows
     public static Criterion isDescendant(Node issueNode) {
         return new IsDescendantOf(issueNode.getPath());
     }
 
+
+    /**
+     * @since 2.0
+     */
     @SneakyThrows
     public static Criterion isChild(Node issueNode) {
         return new IsChildOf(issueNode.getPath());

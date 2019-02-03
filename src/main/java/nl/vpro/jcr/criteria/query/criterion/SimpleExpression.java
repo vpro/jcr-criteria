@@ -21,6 +21,8 @@ package nl.vpro.jcr.criteria.query.criterion;
 
 import java.util.Calendar;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.lang3.StringUtils;
 
 import nl.vpro.jcr.criteria.query.Criteria;
@@ -44,7 +46,7 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
 
     private final Op op;
 
-    protected SimpleExpression(String propertyName, Object value, Op op) {
+    protected SimpleExpression(@Nonnull String propertyName, @Nonnull Object value, @Nonnull Op op) {
         this.propertyName = propertyName;
         this.value = value;
         this.op = op;

@@ -3,27 +3,23 @@ package nl.vpro.jcr.criteria.advanced.impl;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import javax.jcr.*;
+import javax.jcr.Node;
+import javax.jcr.PropertyType;
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.jcr.nodetype.NodeType;
 import javax.jcr.nodetype.NodeTypeManager;
 import javax.jcr.nodetype.NodeTypeTemplate;
 import javax.jcr.nodetype.PropertyDefinitionTemplate;
 import javax.jcr.query.Query;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.jackrabbit.core.TransientRepository;
-import org.apache.jackrabbit.core.fs.local.FileUtil;
 import org.testng.annotations.*;
 
+import nl.vpro.jcr.criteria.CriteriaTestUtils;
 import nl.vpro.jcr.criteria.query.AdvancedResultItem;
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
@@ -32,6 +28,7 @@ import nl.vpro.jcr.criteria.query.criterion.MatchMode;
 import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.criterion.Restrictions;
 
+import static nl.vpro.jcr.criteria.CriteriaTestUtils.*;
 import static nl.vpro.jcr.criteria.query.JCRCriteriaFactory.builder;
 import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertEquals;
@@ -53,25 +50,15 @@ public class AdvancedCriteriaImplITest {
    }
 
 
-    Repository repository;
-    Path tempDirectory;
-    Path tempFile;
-    Session session;
-    Node root;
+
 
 
 
     @BeforeMethod
-    public void setup() throws IOException, RepositoryException {
-        // Using jackrabbit memory only seems to be impossible. Sad...
-        tempDirectory = Files.createTempDirectory("criteriatest");
-        System.setProperty("derby.stream.error.file", new File(tempDirectory.toFile(), "derby.log").toString());
-        tempFile = Files.createTempFile("repository", ".xml");
-        Files.copy(getClass().getResourceAsStream("/repository.xml"), tempFile, StandardCopyOption.REPLACE_EXISTING);
-        FileUtil.delete(tempDirectory.toFile());
-        repository = new TransientRepository(tempFile.toFile(), tempDirectory.toFile());;
-        session = getSession();
-        root = session.getRootNode();
+    public void setup() throws RepositoryException {
+        CriteriaTestUtils.setup();
+        Session session = getSession();
+
         { // define a
             NodeTypeManager nodeTypeManager = session.getWorkspace().getNodeTypeManager();
             NodeTypeTemplate a  = nodeTypeManager.createNodeTypeTemplate();
@@ -99,13 +86,7 @@ public class AdvancedCriteriaImplITest {
     }
     @AfterMethod
     public void shutdown() {
-        try {
-            FileUtils.deleteDirectory(tempDirectory.toFile());
-            Files.deleteIfExists(tempFile);
-        } catch (IOException ioe) {
-            log.warn(ioe.getMessage(), ioe);
-        }
-        log.info("Removed " + tempDirectory + " and " + tempFile);
+       CriteriaTestUtils.shutdown();
     }
 
 
@@ -261,10 +242,6 @@ public class AdvancedCriteriaImplITest {
             null,
             false);
 
-    }
-
-    Session getSession() throws RepositoryException {
-        return repository.login(new SimpleCredentials("admin", "admin".toCharArray()));
     }
 
 
