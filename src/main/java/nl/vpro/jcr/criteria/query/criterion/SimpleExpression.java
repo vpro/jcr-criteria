@@ -117,7 +117,7 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
 
     @Override
     public Condition toSQLCondition(Criteria criteria) throws JCRQueryException {
-        return SimpleExpressionCondition.of(Field.of(propertyName), op, value);
+        return SimpleExpressionCondition.of(Field.of(propertyName), op, value, criteria.getZoneId());
     }
 
 }

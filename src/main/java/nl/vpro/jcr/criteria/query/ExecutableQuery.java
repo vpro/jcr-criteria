@@ -19,6 +19,7 @@
 
 package nl.vpro.jcr.criteria.query;
 
+import java.time.ZoneId;
 import java.util.Optional;
 import java.util.function.LongSupplier;
 
@@ -50,6 +51,10 @@ public interface ExecutableQuery {
 
 
     LongSupplier getCountSupplier(Session session);
+
+    default ZoneId getZoneId() {
+        return ZoneId.systemDefault();
+    }
 
 
 }

@@ -24,6 +24,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -86,6 +87,11 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     @Getter
     @Setter
     protected String language = null;
+
+    @Getter
+    @Setter
+    private ZoneId zoneId;
+
 
     protected AbstractCriteriaImpl() {
     }

@@ -2,12 +2,13 @@ package nl.vpro.jcr.criteria.query.sql2;
 
 import lombok.SneakyThrows;
 
+import java.time.ZoneId;
 import java.util.Calendar;
 
 import org.apache.jackrabbit.value.ValueFactoryImpl;
 
 import nl.vpro.jcr.criteria.query.criterion.Op;
-import nl.vpro.jcr.criteria.query.utils.Utils;
+import nl.vpro.jcr.utils.Utils;
 
 /**
  * @author Michiel Meeuwissen
@@ -27,7 +28,6 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
         this.value = value;
     }
 
-
     abstract String getValue();
 
 
@@ -39,8 +39,8 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
     }
 
     @SneakyThrows
-    public static SimpleExpressionCondition<?> of(Field field, Op op, Object v) {
-        v = Utils.toCalendarIfPossible(v);
+    public static SimpleExpressionCondition<?> of(Field field, Op op, Object v, ZoneId zoneId) {
+        v = Utils.toCalendarIfPossible(v, zoneId);
         if (v instanceof CharSequence) {
             return new StringSimpleExpressionCondition(field, op, v.toString());
         } else if (v instanceof Boolean) {

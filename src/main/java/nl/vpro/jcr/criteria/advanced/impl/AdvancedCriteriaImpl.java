@@ -22,6 +22,7 @@ package nl.vpro.jcr.criteria.advanced.impl;
 import lombok.EqualsAndHashCode;
 import lombok.Singular;
 
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,7 @@ import static javax.jcr.nodetype.NodeType.NT_UNSTRUCTURED;
 public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
 
 
+
     public AdvancedCriteriaImpl() {
         super();
     }
@@ -57,12 +59,14 @@ public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
         int offset,
         String spellCheckString,
         boolean forcePagingWithDocumentOrder,
-        String language) {
+        String language,
+        ZoneId zoneId) {
         super(
             basePath == null ? Criterion.ALL_ELEMENTS : basePath,
             type,
             null, null,
-            maxResults, offset, spellCheckString, forcePagingWithDocumentOrder, language);
+            maxResults, offset, spellCheckString, forcePagingWithDocumentOrder, language,
+            zoneId == null ? ZoneId.systemDefault() : zoneId);
         this.criterionEntries = criterions.stream().map(c -> new CriterionEntry(c, this)).collect(Collectors.toList());
         this.orderEntries = orders.stream().map(o -> new OrderEntry(o, this)).collect(Collectors.toList());
 
