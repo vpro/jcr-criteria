@@ -19,6 +19,7 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import nl.vpro.jcr.criteria.query.Criteria;
@@ -29,6 +30,7 @@ import nl.vpro.jcr.criteria.query.JCRQueryException;
  * Represents an order imposed upon a <tt>Criteria</tt> result set
  * @author Federico Grilli
  */
+@EqualsAndHashCode(callSuper = true)
 public class Order extends BaseCriterion implements Criterion {
 
     private static final long serialVersionUID = -1228583450961430360L;
@@ -89,22 +91,4 @@ public class Order extends BaseCriterion implements Criterion {
         return nodeName + ' ' + (ascending ? "ascending" : "descending");
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Order order = (Order) o;
-
-        if (ascending != order.ascending) return false;
-        return nodeName != null ? nodeName.equals(order.nodeName) : order.nodeName == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (ascending ? 1 : 0);
-        result = 31 * result + (nodeName != null ? nodeName.hashCode() : 0);
-        return result;
-    }
 }

@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.EqualsAndHashCode;
+
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
 import nl.vpro.jcr.criteria.query.sql2.Condition;
@@ -28,6 +30,7 @@ import nl.vpro.jcr.criteria.query.sql2.LikeCondition;
 /**
  * @author fgrilli
  */
+@EqualsAndHashCode(callSuper = true)
 public class LikeExpression extends JCRFunctionExpression {
 
     private static final long serialVersionUID = 1810624472706401714L;
@@ -57,19 +60,5 @@ public class LikeExpression extends JCRFunctionExpression {
         return new LikeCondition(propertyName, matchMode.toMatchString(value.toString()));
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        LikeExpression that = (LikeExpression) o;
-
-        return matchMode != null ? matchMode.equals(that.matchMode) : that.matchMode == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        return matchMode != null ? matchMode.hashCode() : 0;
-    }
 }

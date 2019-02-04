@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.EqualsAndHashCode;
+
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
 import nl.vpro.jcr.criteria.query.sql2.NullCondition;
@@ -27,6 +29,7 @@ import nl.vpro.jcr.criteria.query.sql2.NullCondition;
 /**
  * @author fgrilli
  */
+@EqualsAndHashCode(callSuper = true)
 public class IsNullExpression extends BaseCriterion implements Criterion {
 
     private static final long serialVersionUID = -1600960388638847909L;
@@ -54,19 +57,5 @@ public class IsNullExpression extends BaseCriterion implements Criterion {
         return new NullCondition(nodeName);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        IsNullExpression that = (IsNullExpression) o;
-
-        return nodeName != null ? nodeName.equals(that.nodeName) : that.nodeName == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        return nodeName != null ? nodeName.hashCode() : 0;
-    }
 }

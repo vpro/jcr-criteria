@@ -20,6 +20,7 @@
 package nl.vpro.jcr.criteria.query.criterion;
 
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,6 +40,7 @@ import nl.vpro.jcr.criteria.query.sql2.BooleanCondition;
  * A sequence of a logical expressions combined by some associative logical operator
  * @author Federico Grilli
  */
+@EqualsAndHashCode
 public abstract class Junction implements Criterion {
 
     private static final long serialVersionUID = 4745761472724863693L;
@@ -125,22 +127,4 @@ public abstract class Junction implements Criterion {
         return criteria.isEmpty();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Junction junction = (Junction) o;
-
-        if (!criteria.equals(junction.criteria)) return false;
-        return op != null ? op.equals(junction.op) : junction.op == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = criteria.hashCode();
-        result = 31 * result + (op != null ? op.hashCode() : 0);
-        return result;
-    }
 }

@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.EqualsAndHashCode;
+
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
 import nl.vpro.jcr.criteria.query.sql2.Condition;
@@ -28,6 +30,7 @@ import nl.vpro.jcr.criteria.query.sql2.NotCondition;
 /**
  * @author fgrilli
  */
+@EqualsAndHashCode(callSuper = true)
 public class NotExpression extends BaseCriterion implements Criterion {
 
     private static final long serialVersionUID = -5057676844499041929L;
@@ -57,19 +60,4 @@ public class NotExpression extends BaseCriterion implements Criterion {
         return new NotCondition(expression.toSQLCondition(criteria));
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        NotExpression that = (NotExpression) o;
-
-        return expression != null ? expression.equals(that.expression) : that.expression == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        return expression != null ? expression.hashCode() : 0;
-    }
 }

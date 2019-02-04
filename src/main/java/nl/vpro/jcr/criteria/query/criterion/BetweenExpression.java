@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.EqualsAndHashCode;
+
 import java.util.Calendar;
 
 import nl.vpro.jcr.criteria.query.Criteria;
@@ -35,6 +37,7 @@ import static nl.vpro.jcr.criteria.query.utils.Utils.toCalendarIfPossible;
 /**
  * @author fgrilli
  */
+@EqualsAndHashCode(callSuper = true)
 public class BetweenExpression extends BaseCriterion implements Criterion {
 
     private static final long serialVersionUID = 6686395240415024541L;
@@ -91,24 +94,4 @@ public class BetweenExpression extends BaseCriterion implements Criterion {
         );
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        BetweenExpression that = (BetweenExpression) o;
-
-        if (propertyName != null ? !propertyName.equals(that.propertyName) : that.propertyName != null) return false;
-        if (lo != null ? !lo.equals(that.lo) : that.lo != null) return false;
-        return hi != null ? hi.equals(that.hi) : that.hi == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = propertyName != null ? propertyName.hashCode() : 0;
-        result = 31 * result + (lo != null ? lo.hashCode() : 0);
-        result = 31 * result + (hi != null ? hi.hashCode() : 0);
-        return result;
-    }
 }

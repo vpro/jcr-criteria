@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.EqualsAndHashCode;
+
 import java.util.Calendar;
 
 import javax.annotation.Nonnull;
@@ -36,6 +38,7 @@ import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
  * superclass for "simple" comparisons (with XPATH binary operators)
  * @author Federico Grilli
  */
+@EqualsAndHashCode(callSuper = true)
 public class SimpleExpression extends BaseCriterion implements Criterion {
 
     private static final long serialVersionUID = -1104419394978535803L;
@@ -116,23 +119,4 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
         return SimpleExpressionCondition.of(Field.of(propertyName), op, value);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SimpleExpression that = (SimpleExpression) o;
-
-        if (propertyName != null ? !propertyName.equals(that.propertyName) : that.propertyName != null) return false;
-        if (value != null ? !value.equals(that.value) : that.value != null) return false;
-        return op != null ? op.equals(that.op) : that.op == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = propertyName != null ? propertyName.hashCode() : 0;
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        result = 31 * result + (op != null ? op.hashCode() : 0);
-        return result;
-    }
 }

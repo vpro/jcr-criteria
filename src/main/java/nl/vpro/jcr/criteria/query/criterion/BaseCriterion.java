@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.EqualsAndHashCode;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * Base abstract criterion, just to share some useful fields/constants that should not end up in the interface.
  * @author fgiust
  */
+@EqualsAndHashCode(exclude = "log")
 public abstract class BaseCriterion implements Criterion {
 
     /**

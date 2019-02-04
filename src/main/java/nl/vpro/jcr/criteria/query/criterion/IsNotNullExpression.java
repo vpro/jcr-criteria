@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.EqualsAndHashCode;
+
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
 import nl.vpro.jcr.criteria.query.sql2.NotNullCondition;
@@ -26,6 +28,7 @@ import nl.vpro.jcr.criteria.query.sql2.NotNullCondition;
 /**
  * @author fgrilli
  */
+@EqualsAndHashCode
 public class IsNotNullExpression implements Criterion {
 
     private static final long serialVersionUID = 42L;
@@ -51,20 +54,4 @@ public class IsNotNullExpression implements Criterion {
         return new NotNullCondition(nodeName);
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        IsNotNullExpression that = (IsNotNullExpression) o;
-
-        return nodeName != null ? nodeName.equals(that.nodeName) : that.nodeName == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        return nodeName != null ? nodeName.hashCode() : 0;
-    }
 }

@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.EqualsAndHashCode;
+
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
 
@@ -26,6 +28,7 @@ import nl.vpro.jcr.criteria.query.JCRQueryException;
 /**
  * @author fgrilli
  */
+@EqualsAndHashCode(callSuper = true)
 public class JCRFunctionExpression extends BaseCriterion implements Criterion {
 
     private static final long serialVersionUID = -5570839091762158385L;
