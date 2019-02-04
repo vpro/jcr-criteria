@@ -29,6 +29,8 @@ import nl.vpro.jcr.criteria.query.sql2.Field;
 import nl.vpro.jcr.criteria.query.sql2.SimpleExpressionCondition;
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 
+import static nl.vpro.jcr.criteria.query.utils.Utils.toCalendarIfPossible;
+
 
 /**
  * @author fgrilli
@@ -59,23 +61,26 @@ public class BetweenExpression extends BaseCriterion implements Criterion {
         StringBuilder fragment = new StringBuilder();
         fragment.append(" (").append(propertyName).append(" >= ");
 
-        if (lo instanceof String && hi instanceof String) {
-            fragment.append("'").append(lo).append("' and ").append(propertyName).append(" <= '").append(hi).append("'");
-        } else if (lo instanceof Number && hi instanceof Number) {
-            fragment.append(lo).append(" and ").append(propertyName).append(" <= ").append(hi);
-        } else if (lo instanceof Calendar && hi instanceof Calendar) {
-            Calendar cal = (Calendar) lo;
-            Calendar cal2 = (Calendar) hi;
-
-            fragment.append(XS_DATETIME_FUNCTION + "('").append(XPathTextUtils.toXsdDate(cal)).append("')  and ").append(propertyName).append(" <= ").append(XS_DATETIME_FUNCTION).append("('").append(XPathTextUtils.toXsdDate(cal2)).append("') ");
+        Object v1 = toCalendarIfPossible(lo);
+        Object v2 = toCalendarIfPossible(hi);
+        if (v1 instanceof CharSequence && v2 instanceof CharSequence) {
+            fragment.append("'").append(v1).append("' and ").append(propertyName).append(" <= '").append(v2).append("'");
+        } else if (v1 instanceof Number && v2 instanceof Number) {
+            fragment.append(v1).append(" and ").append(propertyName).append(" <= ").append(v2);
+        } else if (v1 instanceof Calendar && v2  instanceof Calendar) {
+            Calendar cal1 = (Calendar) v1;
+            Calendar cal2 = (Calendar) v2;
+            toXPathString(fragment, cal1, cal2);
         } else {
-            String msg = "values provided are not of the accepted types String, Number, Calendar";
-            log.error(msg);
-            throw new IllegalArgumentException(msg);
+            throw new IllegalArgumentException("values provided are not of the accepted types String, Number, Calendar (they are  " + lo.getClass() + ", " + hi.getClass() + ")");
         }
         fragment.append(")");
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
+    }
+
+    protected void toXPathString(StringBuilder fragment, Calendar cal1, Calendar cal2) {
+         fragment.append(XS_DATETIME_FUNCTION + "('").append(XPathTextUtils.toXsdDate(cal1)).append("')  and ").append(propertyName).append(" <= ").append(XS_DATETIME_FUNCTION).append("('").append(XPathTextUtils.toXsdDate(cal2)).append("') ");
     }
 
     @Override

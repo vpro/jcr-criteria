@@ -222,7 +222,7 @@ public class AdvancedCriteriaImplITest {
                 n.setPrimaryType("a");
                 Calendar calendar = Calendar.getInstance();
                 calendar.clear();
-                calendar.set(dateTime.getYear(), dateTime.getMonthValue()-1, dateTime.getDayOfMonth(),
+                calendar.set(dateTime.getYear(), dateTime.getMonthValue() - 1, dateTime.getDayOfMonth(),
                     dateTime.getHour(), dateTime.getMinute(), dateTime.getSecond());
                 n.setProperty("date", calendar);
             }
@@ -237,7 +237,7 @@ public class AdvancedCriteriaImplITest {
                         Restrictions.between(attr("date"),
                             LocalDate.of(2019, 1, 5),
                             LocalDate.of(2019, 1, 8))
-                    ), 5);
+                    ), 4);
 
         }
     }

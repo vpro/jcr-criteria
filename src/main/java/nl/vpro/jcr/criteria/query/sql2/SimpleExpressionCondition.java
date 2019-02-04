@@ -1,12 +1,14 @@
 package nl.vpro.jcr.criteria.query.sql2;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import lombok.SneakyThrows;
+
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
+import org.apache.jackrabbit.value.ValueFactoryImpl;
+
 import nl.vpro.jcr.criteria.query.criterion.Op;
+import nl.vpro.jcr.criteria.query.utils.Utils;
 
 /**
  * @author Michiel Meeuwissen
@@ -39,7 +41,9 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
         return true;
     }
 
+    @SneakyThrows
     public static SimpleExpressionCondition<?> of(Field field, Op op, Object v) {
+        v = Utils.toCalendarIfPossible(v);
         if (v instanceof String) {
             return new StringSimpleExpressionCondition(field, op, (String) v);
         } else if (v instanceof Boolean) {
@@ -47,11 +51,7 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
         } else if (v instanceof Number) {
             return new NumberSimpleExpressionCondition(field, op, (Number) v);
         } else if (v instanceof Calendar) {
-            return new StringSimpleExpressionCondition(field, op, v.toString());
-        } else if (v instanceof LocalDate) {
-            return new CastFromStringSimpleExpressionCondition("date", field, op, ((LocalDate) v).atStartOfDay().atOffset(ZoneOffset.UTC).format(FORMAT));
-        } else if (v instanceof LocalDateTime) {
-            return new CastFromStringSimpleExpressionCondition("date", field, op, ((LocalDateTime) v).atOffset(ZoneOffset.UTC).format(FORMAT));
+            return new CastFromStringSimpleExpressionCondition("date", field, op, ValueFactoryImpl.getInstance().createValue((Calendar) v).getString());
         } else {
             throw new UnsupportedOperationException("Unrecognized " + v.getClass() + " " + v);
         }
