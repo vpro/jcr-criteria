@@ -52,7 +52,7 @@ public class AdvancedResultImpl implements AdvancedResult {
 
     private final int pageNumberStartingFromOne;
 
-    private final String statement;
+    private final Criteria.Expression statement;
 
     private String spellCheckerSuggestion;
 
@@ -76,7 +76,7 @@ public class AdvancedResultImpl implements AdvancedResult {
         LongSupplier queryCounter,
         Integer itemsPerPage,
         int pageNumberStartingFromOne,
-        String statement,
+        Criteria.Expression statement,
         Query spellCheckerQuery,
         boolean applyLocalPaging,
         int offset) {

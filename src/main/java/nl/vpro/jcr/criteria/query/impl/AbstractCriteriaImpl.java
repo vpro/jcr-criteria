@@ -34,6 +34,7 @@ import java.util.function.LongSupplier;
 import javax.jcr.Session;
 import javax.jcr.query.Query;
 
+import nl.vpro.jcr.criteria.advanced.impl.AdvancedCriteriaImpl;
 import nl.vpro.jcr.criteria.advanced.impl.AdvancedResultImpl;
 import nl.vpro.jcr.criteria.advanced.impl.QueryExecutorHelper;
 import nl.vpro.jcr.criteria.query.AdvancedResult;
@@ -214,11 +215,12 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
         return () -> {
             long startTime = System.nanoTime();
             try {
-                Criteria countCriteria = JCRCriteriaFactory.createCriteria();
+                AdvancedCriteriaImpl countCriteria = JCRCriteriaFactory.createCriteria();
                 for (CriterionEntry c : getCriterionEntries()) {
                     countCriteria.add(c.getCriterion());
                 }
                 countCriteria.setBasePath(basePath);
+                countCriteria.setType(type);
                 countCriteria.setSpellCheckString(spellCheckString);
 
                 Expression expr = countCriteria.toExpression(language);
