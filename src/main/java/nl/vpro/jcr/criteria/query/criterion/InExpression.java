@@ -25,11 +25,14 @@ import java.util.Arrays;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
+import nl.vpro.jcr.criteria.query.sql2.Condition;
+import nl.vpro.jcr.criteria.query.sql2.Field;
+import nl.vpro.jcr.criteria.query.sql2.OrCondition;
+import nl.vpro.jcr.criteria.query.sql2.SimpleExpressionCondition;
 
 
 /**
  * @author fgrilli
- * TODO: untested
  */
 @EqualsAndHashCode
 public class InExpression implements Criterion  {
@@ -70,6 +73,25 @@ public class InExpression implements Criterion  {
         inClause.append(") ");
         return inClause.toString();
     }
+
+    @Override
+    public Condition toSQLCondition(Criteria criteria) {
+        if (values.length == 1) {
+            return toSQLCondition(values[0]);
+        } else {
+            OrCondition orCondition = new OrCondition();
+            for (CharSequence cs : values) {
+                orCondition.getClauses().add(toSQLCondition(cs));
+            }
+            return orCondition;
+        }
+
+    }
+
+    protected Condition toSQLCondition(CharSequence cs) {
+        return SimpleExpressionCondition.of(Field.of(nodeName), useContains ? Op.CONTAINS : Op.EQ, cs);
+    }
+
 
 
 
