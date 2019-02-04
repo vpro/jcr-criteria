@@ -266,6 +266,36 @@ public class AdvancedCriteriaImplITest {
 
     }
 
+
+
+    @Test(dataProvider = "language")
+    public void in(String language) throws RepositoryException {
+
+        {
+            Node node1 = root.addNode("node1");
+            node1.setProperty("a", "a");
+
+            Node node2 = node1.addNode("node2");
+            node2.setProperty("a", "x y b z");
+
+            Node node2_1 = node2.addNode("node2_1");
+            node2_1.setProperty("a", "c");
+
+            Node node3 = root.addNode("node3");
+            node3.setProperty("a", "d");
+
+            session.save();
+        }
+
+        AdvancedCriteriaImpl.Builder criteria = builder()
+            .add(Restrictions.in(attr("a"), "b", "c"))
+            .order(Order.desc("@jcr:score"));
+
+
+        check(criteria, language,2);
+
+    }
+
     void check(AdvancedCriteriaImpl.Builder builder, String language,  int expectedSize) {
         check(builder.language(language).build(), expectedSize);
     }
