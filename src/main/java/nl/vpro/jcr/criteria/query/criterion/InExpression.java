@@ -25,10 +25,7 @@ import java.util.Arrays;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
-import nl.vpro.jcr.criteria.query.sql2.Condition;
-import nl.vpro.jcr.criteria.query.sql2.Field;
-import nl.vpro.jcr.criteria.query.sql2.OrCondition;
-import nl.vpro.jcr.criteria.query.sql2.SimpleExpressionCondition;
+import nl.vpro.jcr.criteria.query.sql2.*;
 
 
 /**
@@ -89,7 +86,11 @@ public class InExpression implements Criterion  {
     }
 
     protected Condition toSQLCondition(CharSequence cs) {
-        return SimpleExpressionCondition.of(Field.of(nodeName), useContains ? Op.CONTAINS : Op.EQ, cs);
+        if (useContains) {
+            return new ContainsCondition(nodeName, cs.toString());
+        } else {
+            return SimpleExpressionCondition.of(Field.of(nodeName), Op.EQ, cs);
+        }
     }
 
 
