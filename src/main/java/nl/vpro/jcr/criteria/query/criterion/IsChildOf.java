@@ -18,7 +18,6 @@ public class IsChildOf extends BaseCriterion implements Criterion {
 
     public IsChildOf(String path) {
         this.path = path;
-
     }
 
      @Override

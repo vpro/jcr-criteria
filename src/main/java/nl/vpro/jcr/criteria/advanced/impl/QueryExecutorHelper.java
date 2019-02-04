@@ -41,7 +41,7 @@ import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 @Slf4j
 public final class QueryExecutorHelper {
 
-    private static ThreadLocal<Boolean> executing = ThreadLocal.withInitial(() -> Boolean.FALSE);
+    private static final ThreadLocal<Boolean> EXECUTING = ThreadLocal.withInitial(() -> Boolean.FALSE);
 
     private QueryExecutorHelper() {
         // don't instantiate
@@ -144,7 +144,7 @@ public final class QueryExecutorHelper {
             }
 
             try {
-                executing.set(Boolean.TRUE);
+                EXECUTING.set(Boolean.TRUE);
                 log.debug("Executing {} {}", expr.getLanguage(), expr.getStatement());
                 return new AdvancedResultImpl(
                     query.execute(),
@@ -156,7 +156,7 @@ public final class QueryExecutorHelper {
                     forcePagingWithDocumentOrder,
                     offset);
             } finally {
-                executing.set(Boolean.FALSE);
+                EXECUTING.set(Boolean.FALSE);
             }
         } catch (RepositoryException e) {
             JCRQueryException jqe = new JCRQueryException(expr.getStatement(), e);
@@ -176,8 +176,8 @@ public final class QueryExecutorHelper {
     /**
      * Indicates if this helper class is executing a query
      */
-    public static boolean isExecuting() {
-        return executing.get();
+    public static boolean getExecuting() {
+        return EXECUTING.get();
     }
 
 }

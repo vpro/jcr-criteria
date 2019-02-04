@@ -37,17 +37,17 @@ public class InExpression implements Criterion  {
 
     private String nodeName;
 
-    private String[] values;
+    private CharSequence [] values;
 
     private boolean useContains;
 
-    public InExpression(String nodeName, String[] values, boolean useContains) {
+    public InExpression(String nodeName, CharSequence[] values, boolean useContains) {
         this.nodeName = nodeName;
         this.values = values;
         this.useContains = useContains;
     }
 
-    public InExpression(String nodeName, String[] values) {
+    public InExpression(String nodeName, CharSequence[] values) {
         this(nodeName, values, true);
     }
 
@@ -69,6 +69,7 @@ public class InExpression implements Criterion  {
         inClause.append(") ");
         return inClause.toString();
     }
+
 
 
 

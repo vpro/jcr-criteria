@@ -68,30 +68,6 @@ public class AdvancedResultImpl implements AdvancedResult {
     private Long totalResults;
 
 
-    AdvancedResultImpl(
-        QueryResult jcrQueryResult,
-        LongSupplier queryCounter,
-        int itemsPerPage,
-        int pageNumberStartingFromOne,
-        String statement,
-        Query spellCheckerQuery) throws RepositoryException {
-        this(jcrQueryResult, queryCounter, itemsPerPage, pageNumberStartingFromOne, statement, spellCheckerQuery, false);
-    }
-
-    /**
-     * @param applyLocalPaging don't assume the result iterator is already paginated, do it "manually"
-     */
-    AdvancedResultImpl(
-        QueryResult jcrQueryResult,
-        LongSupplier queryCounter,
-        int itemsPerPage,
-        int pageNumberStartingFromOne,
-        String statement,
-        Query spellCheckerQuery,
-        boolean applyLocalPaging) {
-        this(jcrQueryResult, queryCounter, itemsPerPage, pageNumberStartingFromOne, statement, spellCheckerQuery, applyLocalPaging, 0);
-    }
-
     /**
 
      * @param applyLocalPaging don't assume the result iterator is already paginated, do it "manually"

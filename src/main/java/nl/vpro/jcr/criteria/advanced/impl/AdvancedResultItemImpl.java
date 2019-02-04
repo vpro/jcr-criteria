@@ -20,6 +20,7 @@
 package nl.vpro.jcr.criteria.advanced.impl;
 
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.jcr.Node;
@@ -101,25 +102,18 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
     }
 
     @Override
+    @SneakyThrows
     public String getTitle() {
-        try {
-            if (hasProperty("title")) {
-                return getProperty("title").getString();
-            }
-        } catch (RepositoryException e) {
-            throw new RuntimeException(e);
+        if (hasProperty("title")) {
+            return getProperty("title").getString();
         }
-
         return null;
     }
 
     @Override
+    @SneakyThrows
     public String getHandle() {
-        try {
-            return getPath();
-        } catch (RepositoryException e) {
-            throw new RuntimeException(e);
-        }
+        return getPath();
     }
 
     @Override
