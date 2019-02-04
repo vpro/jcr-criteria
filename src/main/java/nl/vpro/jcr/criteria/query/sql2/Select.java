@@ -54,7 +54,7 @@ public class Select {
         for (TranslatableCriteria.OrderEntry orderEntry : criteria.getOrderEntries()) {
             select.getOrder().add(Order
                 .builder()
-                .direction(orderEntry.getOrder().isAscending() ? OrderDirection.asc : OrderDirection.desc)
+                .direction(orderEntry.getOrder().isAscending() ? OrderDirection.ASC : OrderDirection.DESC)
                 .field(Field.of(orderEntry.getOrder().getNodeName()))
                 .build());
         }

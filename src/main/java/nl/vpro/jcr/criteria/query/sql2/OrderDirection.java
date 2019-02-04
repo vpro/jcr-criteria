@@ -5,6 +5,6 @@ package nl.vpro.jcr.criteria.query.sql2;
  * @since 2.0
  */
 public enum OrderDirection {
-    asc,
-    desc;
+    ASC,
+    DESC;
 }

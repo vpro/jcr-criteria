@@ -1,6 +1,7 @@
 package nl.vpro.jcr.criteria.query.sql2;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import nl.vpro.jcr.criteria.query.criterion.Criterion;
 
@@ -9,20 +10,24 @@ import nl.vpro.jcr.criteria.query.criterion.Criterion;
  * @since 2.0
  */
 @Data
+@EqualsAndHashCode
 public class Field {
 
-    private String name;
+    private final String name;
 
-    private boolean attribute;
+    private final boolean attribute;
 
     public static Field of(String name) {
-        Field field = new Field();
+        String n;
+        boolean a;
         if (name.startsWith(Criterion.ATTRIBUTE_SELECTOR)) {
-            field.setName(name.substring(Criterion.ATTRIBUTE_SELECTOR.length()));
-            field.setAttribute(true);
+            n = name.substring(Criterion.ATTRIBUTE_SELECTOR.length());
+            a = true;
         } else {
-            field.setName(name);
+            n = name;
+            a = false;
         }
+        Field field = new Field(n, a);
         return field;
     }
 
