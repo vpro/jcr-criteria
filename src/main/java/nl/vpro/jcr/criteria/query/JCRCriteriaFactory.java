@@ -37,6 +37,9 @@ public final class JCRCriteriaFactory {
     /**
      * Creates a query criteria for dynamic query composition. All the details can be set on the Criteria instance
      * returned.
+     *
+     * You could also use {@link #builder()} for a more fluent interface.
+     *
      * @return an AdvancedCriteriaImpl
      */
     public static AdvancedCriteriaImpl createCriteria() {
@@ -45,6 +48,7 @@ public final class JCRCriteriaFactory {
 
 
     /**
+     * Created a {@Link AdvancedCriteriaImpl.Builder} which can be used to construct an {@link ExecutableQuery}
      * @since 2.0
      */
     public static AdvancedCriteriaImpl.Builder builder() {
