@@ -314,9 +314,6 @@ public class AdvancedCriteriaImplITest {
             session.save();
         }
 
-        AdvancedResultImpl advancedResultItems = directSql("SELECT a.* FROM [nt:unstructured] AS a ORDER BY a.integer ASC");
-
-
 
         ExecutableQuery query = builder()
             .fromUnstructured()
@@ -331,8 +328,14 @@ public class AdvancedCriteriaImplITest {
         assertThat(result.getItemsPerPage()).isEqualTo(10);
         assertThat(result.getTotalSize()).isEqualTo(101); // those 100 plus root.
         List<String> test = new ArrayList<>();
+        double[] score = new double[1];
+        score[0] = -1d;
         result.getItems(row -> {
             try {
+                if (score[0] > 0) {
+                    assertThat(score[0]).isEqualTo(row.getScore());
+                }
+                score[0] = row.getScore();
                 return row.getNode().getPath();
             } catch(Exception e) {
                 return e.getMessage();
@@ -352,10 +355,6 @@ public class AdvancedCriteriaImplITest {
             "/node18");
         assertThat(result.getPage()).isEqualTo(2);
         assertThat(result.getNumberOfPages()).isEqualTo(11);
-
-
-
-
     }
 
     AdvancedResultImpl check(AdvancedCriteriaImpl.Builder builder, String language,  int expectedSize) {
