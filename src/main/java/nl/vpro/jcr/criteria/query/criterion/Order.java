@@ -22,6 +22,8 @@ package nl.vpro.jcr.criteria.query.criterion;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import org.apache.jackrabbit.JcrConstants;
+
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
 
@@ -83,7 +85,7 @@ public class Order extends BaseCriterion implements Criterion {
      * @since 2.0
      */
     public static Order score() {
-        return Order.desc("@jcr:score");
+        return Order.desc("@" + JcrConstants.JCR_SCORE);
     }
 
     @Override
