@@ -60,7 +60,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull CharSequence value) {
-        return new SimpleExpression(nodeName, value, Op.eq);
+        return new SimpleExpression(nodeName, value, Op.EQ);
     }
 
 
@@ -69,7 +69,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull UUID value) {
-        return new SimpleExpression(nodeName, value.toString(), Op.eq);
+        return new SimpleExpression(nodeName, value.toString(), Op.EQ);
     }
 
     /**
@@ -77,21 +77,21 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull Number value) {
-        return new SimpleExpression(nodeName, value, Op.eq);
+        return new SimpleExpression(nodeName, value, Op.EQ);
     }
     /**
      * See {@link #eq(String, CharSequence)}
      */
     @Nonnull
     public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull Calendar value) {
-        return new SimpleExpression(nodeName, value, Op.eq);
+        return new SimpleExpression(nodeName, value, Op.EQ);
     }
     /**
      * See {@link #eq(String, CharSequence)}
      */
      @Nonnull
     public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull Boolean value) {
-        return new SimpleExpression(nodeName, value, Op.eq);
+        return new SimpleExpression(nodeName, value, Op.EQ);
     }
 
     /**
@@ -100,7 +100,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull LocalDateTime value) {
-        return new SimpleExpression(nodeName, value, Op.eq);
+        return new SimpleExpression(nodeName, value, Op.EQ);
     }
 
     /**
@@ -221,35 +221,35 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression ne(@Nonnull String nodeName, @Nonnull CharSequence value) {
-        return new SimpleExpression(nodeName, value, Op.ne);
+        return new SimpleExpression(nodeName, value, Op.NE);
     }
     /**
      * See {@link #ne(String, CharSequence)}
      */
     @Nonnull
     public static SimpleExpression ne(@Nonnull String nodeName, @Nonnull Number value) {
-        return new SimpleExpression(nodeName, value, Op.ne);
+        return new SimpleExpression(nodeName, value, Op.NE);
     }
     /**
      * See {@link #ne(String, CharSequence)}
      */
     @Nonnull
     public static SimpleExpression ne(@Nonnull String nodeName, @Nonnull Calendar value) {
-        return new SimpleExpression(nodeName, value, Op.ne);
+        return new SimpleExpression(nodeName, value, Op.NE);
     }
     /**
      * See {@link #ne(String, CharSequence)}
      */
     @Nonnull
     public static SimpleExpression ne(@Nonnull String nodeName, @Nonnull LocalDateTime value) {
-        return new SimpleExpression(nodeName, value, Op.ne);
+        return new SimpleExpression(nodeName, value, Op.NE);
     }
     /**
      * See {@link #ne(String, CharSequence)}
      */
     @Nonnull
     public static SimpleExpression ne(@Nonnull String nodeName, @Nonnull Boolean value) {
-        return new SimpleExpression(nodeName, value, Op.ne);
+        return new SimpleExpression(nodeName, value, Op.NE);
     }
     /**
      * Apply a "like" constraint of type {@link MatchMode#ANYWHERE} to the named node <br>
@@ -410,14 +410,14 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression gt(@Nonnull String nodeName, @Nonnull CharSequence value) {
-        return new SimpleExpression(nodeName, value, Op.gt);
+        return new SimpleExpression(nodeName, value, Op.GT);
     }
     /**
      * See {@link #gt(String, CharSequence)}
      */
     @Nonnull
     public static SimpleExpression gt(@Nonnull String nodeName, @Nonnull Number value) {
-        return new SimpleExpression(nodeName, value, Op.gt);
+        return new SimpleExpression(nodeName, value, Op.GT);
     }
 
     /**
@@ -425,7 +425,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression gt(@Nonnull String nodeName, @Nonnull Calendar value) {
-        return new SimpleExpression(nodeName, value, Op.gt);
+        return new SimpleExpression(nodeName, value, Op.GT);
     }
 
     /**
@@ -434,7 +434,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression gt(@Nonnull String nodeName, @Nonnull LocalDateTime value) {
-        return new SimpleExpression(nodeName, value, Op.gt);
+        return new SimpleExpression(nodeName, value, Op.GT);
     }
 
 
@@ -447,7 +447,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression lt(@Nonnull String nodeName, @Nonnull CharSequence value) {
-        return new SimpleExpression(nodeName, value, Op.lt);
+        return new SimpleExpression(nodeName, value, Op.LT);
     }
 
     /**
@@ -455,7 +455,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression lt(@Nonnull String nodeName, @Nonnull Number value) {
-        return new SimpleExpression(nodeName, value, Op.lt);
+        return new SimpleExpression(nodeName, value, Op.LT);
     }
 
     /**
@@ -463,7 +463,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression lt(@Nonnull String nodeName, @Nonnull Calendar value) {
-        return new SimpleExpression(nodeName, value, Op.lt);
+        return new SimpleExpression(nodeName, value, Op.LT);
     }
 
     /**
@@ -472,7 +472,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression lt(@Nonnull String nodeName, @Nonnull  LocalDateTime value) {
-        return new SimpleExpression(nodeName, value, Op.lt);
+        return new SimpleExpression(nodeName, value, Op.LT);
     }
 
     /**
@@ -483,7 +483,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression le(@Nonnull String nodeName, @Nonnull CharSequence value) {
-        return new SimpleExpression(nodeName, value, Op.le);
+        return new SimpleExpression(nodeName, value, Op.LE);
     }
 
     /**
@@ -491,21 +491,21 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression le(@Nonnull String nodeName, @Nonnull Number value) {
-        return new SimpleExpression(nodeName, value, Op.le);
+        return new SimpleExpression(nodeName, value, Op.LE);
     }
     /**
      * See {@link #le(String, CharSequence)}
      */
     @Nonnull
     public static SimpleExpression le(@Nonnull String nodeName, @Nonnull Calendar value) {
-        return new SimpleExpression(nodeName, value, Op.le);
+        return new SimpleExpression(nodeName, value, Op.LE);
     }
     /**
      * See {@link #le(String, CharSequence)}
      */
     @Nonnull
     public static SimpleExpression le(@Nonnull String nodeName, @Nonnull LocalDateTime value) {
-        return new SimpleExpression(nodeName, value, Op.le);
+        return new SimpleExpression(nodeName, value, Op.LE);
     }
 
     /**
@@ -516,19 +516,19 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression ge(@Nonnull String nodeName, @Nonnull CharSequence value) {
-        return new SimpleExpression(nodeName, value, Op.ge);
+        return new SimpleExpression(nodeName, value, Op.GE);
     }
     @Nonnull
     public static SimpleExpression ge(String nodeName, Number value) {
-        return new SimpleExpression(nodeName, value, Op.ge);
+        return new SimpleExpression(nodeName, value, Op.GE);
     }
     @Nonnull
     public static SimpleExpression ge(String nodeName, Calendar value) {
-        return new SimpleExpression(nodeName, value, Op.ge);
+        return new SimpleExpression(nodeName, value, Op.GE);
     }
     @Nonnull
     public static SimpleExpression ge(String nodeName, LocalDateTime value) {
-        return new SimpleExpression(nodeName, value, Op.ge);
+        return new SimpleExpression(nodeName, value, Op.GE);
     }
 
     /**

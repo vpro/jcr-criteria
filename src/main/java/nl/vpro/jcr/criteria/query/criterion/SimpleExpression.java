@@ -86,10 +86,10 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
         } else if (value instanceof Boolean) {
             boolean boolValue = (boolean) value;
             switch(getOp()) {
-                case ne:
+                case NE:
                     boolValue = ! boolValue;
                     break;
-                case eq:
+                case EQ:
                     break;
                 default:
                     throw new IllegalArgumentException();

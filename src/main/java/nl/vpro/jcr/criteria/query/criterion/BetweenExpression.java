@@ -89,8 +89,8 @@ public class BetweenExpression extends BaseCriterion implements Criterion {
     @Override
     public Condition toSQLCondition(Criteria criteria) {
         return new AndCondition(
-            SimpleExpressionCondition.of(Field.of(propertyName), Op.ge, lo),
-            SimpleExpressionCondition.of(Field.of(propertyName), Op.le, hi)
+            SimpleExpressionCondition.of(Field.of(propertyName), Op.GE, lo),
+            SimpleExpressionCondition.of(Field.of(propertyName), Op.LE, hi)
         );
     }
 

@@ -7,14 +7,14 @@ import lombok.Getter;
  * @since 2.0
  */
 public enum Op {
-    eq("="),
-    ne("!="),
-    lt("<"),
-    le("<="),
-    gt(">"),
-    ge(">="),
-    contains(null),
-    like(null);
+    EQ("="),
+    NE("!="),
+    LT("<"),
+    LE("<="),
+    GT(">"),
+    GE(">="),
+    CONTAINS(null),
+    LIKE(null);
 
     @Getter
     private final String xpath;
@@ -26,5 +26,9 @@ public enum Op {
     @Override
     public String toString() {
         return this.xpath;
+    }
+
+    public static Op valueOfIgnoreCase(String value) {
+        return value == null ? null : Op.valueOf(value.toUpperCase());
     }
 }
