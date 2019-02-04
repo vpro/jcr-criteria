@@ -350,6 +350,7 @@ public class AdvancedCriteriaImplITest {
             "/node16",
             "/node17",
             "/node18");
+        assertThat(result.getPage()).isEqualTo(2);
 
 
 

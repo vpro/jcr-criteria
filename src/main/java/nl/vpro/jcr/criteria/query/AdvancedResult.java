@@ -48,7 +48,7 @@ public interface AdvancedResult extends Iterable<AdvancedResultItem> {
     Integer getItemsPerPage();
 
     /**
-     * Gets the page number (1, 2, 3...)
+     * Gets the page number (1, 2, 3...) <em>Note that this not <bold>not</bold> start at 0.</em>
      * @return the page number (1, 2, 3...)
      */
     int getPage();
