@@ -2,7 +2,6 @@ package nl.vpro.jcr.criteria.query.sql2;
 
 import lombok.SneakyThrows;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import org.apache.jackrabbit.value.ValueFactoryImpl;
@@ -29,10 +28,8 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
     }
 
 
-
     abstract String getValue();
 
-    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ISO_DATE_TIME;
 
     @Override
     public boolean toSql2(StringBuilder builder) {
@@ -44,8 +41,8 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
     @SneakyThrows
     public static SimpleExpressionCondition<?> of(Field field, Op op, Object v) {
         v = Utils.toCalendarIfPossible(v);
-        if (v instanceof String) {
-            return new StringSimpleExpressionCondition(field, op, (String) v);
+        if (v instanceof CharSequence) {
+            return new StringSimpleExpressionCondition(field, op, v.toString());
         } else if (v instanceof Boolean) {
             return new BooleanSimpleExpressionCondition(field, op, (Boolean) v);
         } else if (v instanceof Number) {
