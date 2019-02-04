@@ -76,7 +76,8 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
             // character with '' (two consecutive single quote characters).
             String escValue = StringUtils.replace((String) value, "'", "''");
             fragment.append("'")
-                .append(escValue);
+                .append(escValue)
+                .append("'");
         } else if (value instanceof Number) {
             fragment.append(propertyName).append(getOp());
             fragment.append(value);
