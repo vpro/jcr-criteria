@@ -351,6 +351,8 @@ public class AdvancedCriteriaImplITest {
             "/node17",
             "/node18");
         assertThat(result.getPage()).isEqualTo(2);
+        assertThat(result.getNumberOfPages()).isEqualTo(11);
+
 
 
 
