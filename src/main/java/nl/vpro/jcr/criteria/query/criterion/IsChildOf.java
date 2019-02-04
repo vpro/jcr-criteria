@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.sql2.Condition;
-import nl.vpro.jcr.criteria.query.sql2.IsChild;
+import nl.vpro.jcr.criteria.query.sql2.IsChildNode;
 
 /**
  * @author Michiel Meeuwissen
@@ -23,6 +23,6 @@ public class IsChildOf extends BaseCriterion implements Criterion {
 
      @Override
      public  Condition toSQLCondition(Criteria criteria) {
-         return new IsChild(path);
+         return new IsChildNode(path);
     }
 }

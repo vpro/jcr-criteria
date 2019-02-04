@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.sql2.Condition;
-import nl.vpro.jcr.criteria.query.sql2.IsDescendant;
+import nl.vpro.jcr.criteria.query.sql2.IsDescendantNode;
 
 /**
  * @author Michiel Meeuwissen
@@ -25,6 +25,6 @@ public class IsDescendantOf extends BaseCriterion implements Criterion {
 
      @Override
      public  Condition toSQLCondition(Criteria criteria) {
-        return new IsDescendant(path);
+        return new IsDescendantNode(path);
     }
 }

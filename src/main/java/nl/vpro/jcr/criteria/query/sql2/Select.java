@@ -43,7 +43,7 @@ public class Select {
     public static Select from(AbstractCriteriaImpl criteria) {
         Select select = new Select();
         if (criteria.getBasePath() != null) {
-            select.condition.clauses.add(new IsChild(criteria.getBasePath()));
+            select.condition.clauses.add(new IsDescendantNode(criteria.getBasePath()));
         }
         if (criteria.getType() != null) {
             select.type = criteria.getType();

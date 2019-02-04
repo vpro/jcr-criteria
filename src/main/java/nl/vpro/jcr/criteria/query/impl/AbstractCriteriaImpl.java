@@ -189,7 +189,8 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     @Override
     public Expression toSql2Expression() {
-        return Expression.sql2(Select.from(this).toSql2());
+        return Expression.sql2(
+            Select.from(this).toSql2());
     }
 
 

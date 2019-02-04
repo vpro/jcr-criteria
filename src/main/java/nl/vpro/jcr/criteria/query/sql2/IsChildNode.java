@@ -4,6 +4,9 @@ package nl.vpro.jcr.criteria.query.sql2;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
+
 import nl.vpro.jcr.criteria.query.criterion.Criterion;
 
 /**
@@ -12,9 +15,15 @@ import nl.vpro.jcr.criteria.query.criterion.Criterion;
  */
 @AllArgsConstructor
 @Data
-public class IsChild implements Condition {
+public class IsChildNode implements Condition {
 
-    String path;
+    final String path;
+
+    protected IsChildNode(Node node) throws RepositoryException {
+        this(node.getPath());
+
+    }
+
     @Override
     public boolean toSql2(StringBuilder builder) {
         if (path != null && ! "/".equals(path) && ! Criterion.ALL_ELEMENTS.equals(path)) {

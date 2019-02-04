@@ -19,8 +19,10 @@
 
 package nl.vpro.jcr.criteria.query;
 
+import java.util.Optional;
 import java.util.function.LongSupplier;
 
+import javax.jcr.Node;
 import javax.jcr.Session;
 
 /**
@@ -33,6 +35,18 @@ public interface ExecutableQuery {
      * @return the search result
      */
     AdvancedResult execute(Session session);
+
+    /**
+     * @since 2.0
+     */
+    default Optional<Node> findFirst(Session session) {
+        AdvancedResult result = execute(session);
+        ResultIterator<AdvancedResultItem> items = result.getItems();
+        if (items.hasNext()) {
+            return Optional.of(items.next().getJCRNode());
+        }
+        return Optional.empty();
+    }
 
 
     LongSupplier getCountSupplier(Session session);

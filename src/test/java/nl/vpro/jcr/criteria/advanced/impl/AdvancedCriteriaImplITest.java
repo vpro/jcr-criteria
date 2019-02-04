@@ -5,10 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
-import java.util.UUID;
 
 import javax.jcr.Node;
 import javax.jcr.PropertyType;
@@ -20,13 +17,14 @@ import javax.jcr.nodetype.NodeTypeTemplate;
 import javax.jcr.nodetype.PropertyDefinitionTemplate;
 import javax.jcr.query.Query;
 
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import nl.vpro.jcr.criteria.CriteriaTestUtils;
 import nl.vpro.jcr.criteria.query.AdvancedResultItem;
 import nl.vpro.jcr.criteria.query.Criteria;
-import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
-import nl.vpro.jcr.criteria.query.criterion.Disjunction;
 import nl.vpro.jcr.criteria.query.criterion.MatchMode;
 import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.criterion.Restrictions;
@@ -149,17 +147,18 @@ public class AdvancedCriteriaImplITest {
         {
             check(
                 builder()
-                    .language(language)
                     .type(NodeType.NT_UNSTRUCTURED)
                     .basePath("/")
                     .add(Restrictions.attrEq("a", Boolean.TRUE)),
+                language,
                 2);
 
                 ;
-            check(builder().language(language)
+            check(builder()
                     .type(NodeType.NT_UNSTRUCTURED)
                     .basePath("/")
                     .add(Restrictions.attrIsFalsy("a")),
+                language,
                 3); // hello2, byte2, root
         }
     }
@@ -177,15 +176,15 @@ public class AdvancedCriteriaImplITest {
             session.save();
         }
         {
-            check(builder().language(language)
+            check(builder()
                     .type(NodeType.NT_UNSTRUCTURED)
                     .add(Restrictions.isNotNull("@a")),
-                3);
+                language, 3);
             check(
                 builder()
-                    .language(language)
                     .type(NodeType.NT_UNSTRUCTURED)
                     .add(Restrictions.isNull("@a")),
+                language,
                 2); // goodbye and root
 
                 ;
@@ -205,10 +204,11 @@ public class AdvancedCriteriaImplITest {
             session.save();
         }
         {
-            check(builder().language(language)
+            check(builder()
                     .type("a")
                     .asc(attr("long"))
                     .add(Restrictions.between(attr("long"), 4, 8)),
+                language,
                 5); // 4, 5, 6, 7, 9
         }
     }
@@ -230,57 +230,44 @@ public class AdvancedCriteriaImplITest {
             session.save();
         }
         {
-            check(builder().language(language)
+            check(builder()
                     .type("a")
                     .asc(attr("date"))
                     .add(
                         Restrictions.between(attr("date"),
                             LocalDate.of(2019, 1, 5),
                             LocalDate.of(2019, 1, 8))
-                    ), 4);
+                    ), language, 4);
 
         }
     }
 
     @Test(dataProvider = "language")
-    @Ignore("Need to explore why")
-    public void someUseCase(String language) throws RepositoryException {
+    public void withBasePath(String language) throws RepositoryException {
+       Node node1;
         {
-            Node node1 = root.addNode("node1");
-            node1.setProperty("media", "ce297ce9-aaa5-43d5-be44-41045e782708");
-            node1.setPrimaryType("a");
+            node1 = root.addNode("node1");
+
+            Node node2 = node1.addNode("node2");
+
+            Node node2_1 = node2.addNode("node2_1");
+
+            Node node3 = root.addNode("node3");
+
             session.save();
         }
 
-        String basepath = "/jcr:root/*";
-
-        Criteria criteria = JCRCriteriaFactory
-            .createCriteria()
-            .setBasePath(basepath)
-            .addOrder(Order.desc("@jcr:score"));
+        AdvancedCriteriaImpl.Builder criteria = builder()
+            .basePath(node1.getPath())
+            .order(Order.desc("@jcr:score"));
 
 
-        List<String> nt= Arrays.asList("a", "b");
-        Disjunction nodetypes = Restrictions.disjunction();
-        for (String string : nt) {
-            nodetypes.add(Restrictions.eq("@jcr:primaryType", string));
-        }
-        criteria.add(nodetypes);
-
-        Disjunction properties = Restrictions.disjunction();
-        List<String> prop = Arrays.asList("media", "group");
-        UUID uuid = UUID.fromString("ce297ce9-aaa5-43d5-be44-41045e782708");
-        for (String string : prop) {
-            properties.add(Restrictions.contains(string, uuid));
-        }
-        criteria.add(properties);
-
-        check(criteria, 1);
+        check(criteria, language,2);
 
     }
 
-    void check(AdvancedCriteriaImpl.Builder builder, int expectedSize) {
-        check(builder.build(), expectedSize);
+    void check(AdvancedCriteriaImpl.Builder builder, String language,  int expectedSize) {
+        check(builder.language(language).build(), expectedSize);
     }
     @SneakyThrows
     void check(Criteria criteria, int expectedSize) {

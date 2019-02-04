@@ -104,6 +104,15 @@ public final class Restrictions {
     }
 
     /**
+     * See {@link #eq(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull LocalDate value) {
+        return new SimpleExpression(nodeName, value, Op.EQ);
+    }
+
+    /**
      * See {@link #eq(String, CharSequence)}, but wraps {@link #attr} arround the first argument.
      * @since 2.0
      */
@@ -143,6 +152,15 @@ public final class Restrictions {
     public static SimpleExpression attrEq(@Nonnull String attName, @Nonnull LocalDateTime value) {
         return eq(attr(attName), value);
     }
+    /**
+     * See {@link #eq(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression attrEq(@Nonnull String nodeName, @Nonnull LocalDate value) {
+        return new SimpleExpression(nodeName, value, Op.EQ);
+    }
+
 
 
     /**
