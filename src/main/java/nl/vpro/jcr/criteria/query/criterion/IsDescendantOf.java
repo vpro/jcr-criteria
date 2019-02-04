@@ -9,6 +9,7 @@ import nl.vpro.jcr.criteria.query.sql2.IsDescendant;
 /**
  * @author Michiel Meeuwissen
  * @since 2.0
+ * TODO: untested
  */
 @EqualsAndHashCode(callSuper = true)
 public class IsDescendantOf extends BaseCriterion implements Criterion {

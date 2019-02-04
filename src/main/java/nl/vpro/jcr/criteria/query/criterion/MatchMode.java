@@ -19,47 +19,38 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
-import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
-
 /**
  * Represents an strategy for matching strings using "like".
  * @author Federico Grilli
  */
-@SuppressWarnings("serial")
-@EqualsAndHashCode
-public abstract class MatchMode implements Serializable {
+public enum MatchMode {
 
     /**
      * Match the start of the string to the pattern
      */
-    public static final MatchMode START = new MatchMode("START") {
+    START {
 
         @Override
         public String toMatchString(String pattern) {
             return pattern + '%';
         }
-    };
+    },
 
     /**
      * Match the end of the string to the pattern
      */
-    public static final MatchMode END = new MatchMode("END") {
+    END {
 
         @Override
         public String toMatchString(String pattern) {
             return '%' + pattern;
         }
-    };
+    },
 
     /**
      * Match the pattern anywhere in the string
      */
-    public static final MatchMode ANYWHERE = new MatchMode("ANYWHERE") {
+    ANYWHERE {
 
         @Override
         public String toMatchString(String pattern) {
@@ -67,25 +58,13 @@ public abstract class MatchMode implements Serializable {
         }
     };
 
-    private static final Map<String, MatchMode> INSTANCES = new HashMap<>();
 
-    private static final long serialVersionUID = -7446324572335777782L;
-
-    private final String name;
-
-    protected MatchMode(String name) {
-        this.name = name;
+    MatchMode() {
     }
 
     @Override
     public String toString(){
-        return name;
-    }
-
-    static {
-        INSTANCES.put(END.name, END);
-        INSTANCES.put(START.name, START);
-        INSTANCES.put(ANYWHERE.name, ANYWHERE);
+        return name();
     }
 
     /**

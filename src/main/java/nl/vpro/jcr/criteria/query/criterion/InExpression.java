@@ -29,6 +29,7 @@ import nl.vpro.jcr.criteria.query.JCRQueryException;
 
 /**
  * @author fgrilli
+ * TODO: untested
  */
 @EqualsAndHashCode
 public class InExpression implements Criterion  {

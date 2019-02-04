@@ -9,6 +9,7 @@ import nl.vpro.jcr.criteria.query.sql2.IsChild;
 /**
  * @author Michiel Meeuwissen
  * @since 2.0
+ *  TODO: untested
  */
 @EqualsAndHashCode(callSuper = true)
 public class IsChildOf extends BaseCriterion implements Criterion {
