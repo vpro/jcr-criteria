@@ -357,6 +357,24 @@ public class AdvancedCriteriaImplITest {
         assertThat(result.getNumberOfPages()).isEqualTo(11);
     }
 
+    @Test(dataProvider = "language")
+    @SneakyThrows
+    public void not(String language) {
+        {
+            for (int i = 0; i < 10; i++) {
+                Node n = root.addNode("node" + i);
+                n.setProperty("integer", i);
+            }
+            session.save();
+        }
+        check(builder()
+            .fromUnstructured()
+            .add(Restrictions.isNotNull(attr("integer")))
+            .add(Restrictions.not(Restrictions.eq(attr("integer"), 5)))
+            .asc(attr("integer")), language, 9);
+
+    }
+
     AdvancedResultImpl check(AdvancedCriteriaImpl.Builder builder, String language,  int expectedSize) {
         return check(builder.language(language).build(), expectedSize);
     }
