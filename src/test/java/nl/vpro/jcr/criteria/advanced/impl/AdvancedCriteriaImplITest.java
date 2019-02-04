@@ -216,7 +216,7 @@ public class AdvancedCriteriaImplITest {
                 language,
                 5); // 4, 5, 6, 7, 8
 
-            List<Long> longs = result.stream().map(n -> longProp(n.getJCRNode(), "long")).collect(Collectors.toList());
+            List<Long> longs = result.stream().map(n -> longProp(n, "long")).collect(Collectors.toList());
             assertThat(longs).containsExactly(8L, 7L, 6L, 5L, 4L);
         }
     }
@@ -382,8 +382,8 @@ public class AdvancedCriteriaImplITest {
     AdvancedResultImpl check(Criteria criteria, int expectedSize) {
         AdvancedResultImpl result = (AdvancedResultImpl) criteria.execute(session);
         for (AdvancedResultItem item : result) {
-            boolean isUnstructured = item.getJCRNode().isNodeType(NodeType.NT_UNSTRUCTURED);
-            log.info("{} {} (is unstructured: {})", item.getJCRNode().getPrimaryNodeType().getName(), item, isUnstructured);
+            boolean isUnstructured = item.isNodeType(NodeType.NT_UNSTRUCTURED);
+            log.info("{} {} (is unstructured: {})", item.getPrimaryNodeType().getName(), item, isUnstructured);
         }
         assertFalse(result.totalSizeDetermined());
         assertEquals(expectedSize, result.getTotalSize());

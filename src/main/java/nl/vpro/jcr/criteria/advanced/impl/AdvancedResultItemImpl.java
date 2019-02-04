@@ -117,6 +117,7 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
     }
 
     @Override
+    @Deprecated
     public Node getJCRNode() {
         return this;
     }

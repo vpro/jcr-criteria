@@ -43,7 +43,7 @@ public interface ExecutableQuery {
         AdvancedResult result = execute(session);
         ResultIterator<AdvancedResultItem> items = result.getItems();
         if (items.hasNext()) {
-            return Optional.of(items.next().getJCRNode());
+            return Optional.of(items.next());
         }
         return Optional.empty();
     }
