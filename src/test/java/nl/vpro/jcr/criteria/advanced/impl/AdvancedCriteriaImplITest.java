@@ -5,7 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.jcr.Node;
 import javax.jcr.PropertyType;
@@ -16,6 +20,7 @@ import javax.jcr.nodetype.NodeTypeManager;
 import javax.jcr.nodetype.NodeTypeTemplate;
 import javax.jcr.nodetype.PropertyDefinitionTemplate;
 import javax.jcr.query.Query;
+import javax.jcr.query.Row;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -23,8 +28,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import nl.vpro.jcr.criteria.CriteriaTestUtils;
+import nl.vpro.jcr.criteria.query.AdvancedResult;
 import nl.vpro.jcr.criteria.query.AdvancedResultItem;
 import nl.vpro.jcr.criteria.query.Criteria;
+import nl.vpro.jcr.criteria.query.ExecutableQuery;
 import nl.vpro.jcr.criteria.query.criterion.MatchMode;
 import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.criterion.Restrictions;
@@ -32,6 +39,7 @@ import nl.vpro.jcr.criteria.query.criterion.Restrictions;
 import static nl.vpro.jcr.criteria.CriteriaTestUtils.*;
 import static nl.vpro.jcr.criteria.query.JCRCriteriaFactory.builder;
 import static nl.vpro.jcr.criteria.query.criterion.Restrictions.attr;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertFalse;
@@ -204,12 +212,16 @@ public class AdvancedCriteriaImplITest {
             session.save();
         }
         {
-            check(builder()
+            AdvancedResult result = check(builder()
+                    .fromUnstructured()
                     .type("a")
-                    .asc(attr("long"))
+                    .desc(attr("long"))
                     .add(Restrictions.between(attr("long"), 4, 8)),
                 language,
-                5); // 4, 5, 6, 7, 9
+                5); // 4, 5, 6, 7, 8
+
+            List<Long> longs = result.stream().map(n -> longProp(n.getJCRNode(), "long")).collect(Collectors.toList());
+            assertThat(longs).containsExactly(8L, 7L, 6L, 5L, 4L);
         }
     }
 
@@ -293,14 +305,53 @@ public class AdvancedCriteriaImplITest {
 
 
         check(criteria, language,2);
+    }
+
+    @Test(dataProvider = "language")
+    @SneakyThrows
+    public void pagingAndWrapping(String language) {
+        {
+            for (int i = 0; i < 100; i++) {
+                root.addNode("node" + i);
+                root.setProperty("integer", i);
+            }
+            session.save();
+        }
+        ExecutableQuery query = builder()
+            .fromUnstructured()
+            .offset(0)
+            .maxResults(10)
+            .language(language)
+            .asc("@integer")
+            .build();
+
+
+        AdvancedResult result = query.execute(session);
+        assertThat(result.getItemsPerPage()).isEqualTo(10);
+        assertThat(result.getTotalSize()).isEqualTo(100);
+        List<String> test = new ArrayList<>();
+        result.getItems(new Function<Row, String>() {
+            @Override
+            public String apply(Row row) {
+                try {
+                    return row.getNode().getPath() + ":" + row.getScore();
+                } catch(Exception e) {
+                    return e.getMessage();
+                }
+
+            }
+        }).forEachRemaining((c) -> test.add((String) c));
+        assertThat(test).containsExactly("a");
+
+
 
     }
 
-    void check(AdvancedCriteriaImpl.Builder builder, String language,  int expectedSize) {
-        check(builder.language(language).build(), expectedSize);
+    AdvancedResultImpl check(AdvancedCriteriaImpl.Builder builder, String language,  int expectedSize) {
+        return check(builder.language(language).build(), expectedSize);
     }
     @SneakyThrows
-    void check(Criteria criteria, int expectedSize) {
+    AdvancedResultImpl check(Criteria criteria, int expectedSize) {
         AdvancedResultImpl result = (AdvancedResultImpl) criteria.execute(session);
         for (AdvancedResultItem item : result) {
             boolean isUnstructured = item.getJCRNode().isNodeType(NodeType.NT_UNSTRUCTURED);
@@ -309,6 +360,7 @@ public class AdvancedCriteriaImplITest {
         assertFalse(result.totalSizeDetermined());
         assertEquals(expectedSize, result.getTotalSize());
         assertTrue(result.totalSizeDetermined());
+        return result;
 
     }
 
@@ -328,6 +380,11 @@ public class AdvancedCriteriaImplITest {
 
     }
 
+
+    @SneakyThrows
+    long longProp(Node node, String name) {
+        return node.getProperty(name).getLong();
+    }
 
 
 }

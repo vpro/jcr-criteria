@@ -26,10 +26,10 @@ import javax.jcr.RangeIterator;
  * Wraps a RowIterator, requiring subclasses to adapt each Row to a specific type.
  * @param <T> the type of results you will get from this iterator.
  * @author fgiust
- * @version $Id$
  */
-public interface ResultIterator<T> extends RangeIterator, Iterable<T> {
+public interface ResultIterator<T> extends RangeIterator {
 
     @Override
     T next();
+
 }

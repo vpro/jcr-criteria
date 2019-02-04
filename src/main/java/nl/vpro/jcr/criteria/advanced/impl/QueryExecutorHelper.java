@@ -143,21 +143,26 @@ public final class QueryExecutorHelper {
                     Query.XPATH);
             }
 
-            try {
-                EXECUTING.set(Boolean.TRUE);
-                log.debug("Executing {} {}", expr.getLanguage(), expr.getStatement());
-                return new AdvancedResultImpl(
-                    query.execute(),
-                    queryCounter,
-                    maxResults,
-                    pageNumberStartingFromOne,
-                    expr.getStatement(),
-                    spellCheckerQuery,
-                    forcePagingWithDocumentOrder,
-                    offset);
-            } finally {
-                EXECUTING.set(Boolean.FALSE);
-            }
+            log.debug("Executing {} {}", expr.getLanguage(), expr.getStatement());
+            return new AdvancedResultImpl(
+                () -> {
+                    try {
+                        EXECUTING.set(Boolean.TRUE);
+                        return query.execute();
+                    } catch (RepositoryException e) {
+                        throw new RuntimeException(e);
+                    } finally {
+                        EXECUTING.set(Boolean.FALSE);
+
+                    }
+                },
+                queryCounter,
+                maxResults,
+                pageNumberStartingFromOne,
+                expr.getStatement(),
+                spellCheckerQuery,
+                forcePagingWithDocumentOrder,
+                offset);
         } catch (RepositoryException e) {
             JCRQueryException jqe = new JCRQueryException(expr.getStatement(), e);
             log.error(jqe.getMessage());

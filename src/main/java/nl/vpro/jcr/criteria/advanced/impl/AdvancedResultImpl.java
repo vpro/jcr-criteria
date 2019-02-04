@@ -26,6 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.Function;
 import java.util.function.LongSupplier;
+import java.util.function.Supplier;
 
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
@@ -44,10 +45,7 @@ import nl.vpro.jcr.criteria.query.*;
 @ToString
 public class AdvancedResultImpl implements AdvancedResult {
 
-    private final QueryResult jcrQueryResult;
-
-    private RowIterator rowIterator;
-
+    private final Supplier<QueryResult> jcrQueryResult;
     private final LongSupplier queryCounter;
 
     private final Integer  itemsPerPage;
@@ -74,7 +72,7 @@ public class AdvancedResultImpl implements AdvancedResult {
      * @param offset TODO
      */
     AdvancedResultImpl(
-        QueryResult jcrQueryResult,
+        Supplier<QueryResult> jcrQueryResult,
         LongSupplier queryCounter,
         Integer itemsPerPage,
         int pageNumberStartingFromOne,
@@ -150,7 +148,8 @@ public class AdvancedResultImpl implements AdvancedResult {
                 offset = (Math.max(pageNumberStartingFromOne, 1) - 1) * itemsPerPage;
             }
             // removing preceding records
-            getRowIterator().skip(offset);
+            RowIterator rowIterator = getRowIterator();
+            rowIterator.skip(offset);
 
             // removing following records and alter getSize()
             return new ResultIteratorImpl<AdvancedResultItem>(rowIterator, AdvancedResultItemImpl::new) {
@@ -170,14 +169,11 @@ public class AdvancedResultImpl implements AdvancedResult {
     }
 
     protected RowIterator getRowIterator() {
-        if (rowIterator == null) {
-            try {
-                rowIterator = jcrQueryResult.getRows();
-            } catch (RepositoryException e) {
-                throw new JCRQueryException(statement, e);
-            }
+        try {
+            return jcrQueryResult.get().getRows();
+        } catch (RepositoryException e) {
+            throw new JCRQueryException(statement, e);
         }
-        return rowIterator;
     }
 
     @Override
@@ -222,7 +218,7 @@ public class AdvancedResultImpl implements AdvancedResult {
     public <K> ResultIterator<K> getItems(Function<Row, K> wrapper) {
         RowIterator rows;
         try {
-            rows = jcrQueryResult.getRows();
+            rows = jcrQueryResult.get().getRows();
         } catch (RepositoryException e)  {
             throw new JCRQueryException(statement, e);
         }

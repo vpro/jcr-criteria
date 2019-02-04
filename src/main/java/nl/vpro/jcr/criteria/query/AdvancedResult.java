@@ -20,7 +20,11 @@
 package nl.vpro.jcr.criteria.query;
 
 import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.function.Function;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import javax.jcr.query.Row;
 
@@ -89,9 +93,20 @@ public interface AdvancedResult extends Iterable<AdvancedResultItem> {
      */
     AdvancedResultItem getFirstResult();
 
+
+    /**
+     * @since 2.0
+     */
     @Override
     default Iterator<AdvancedResultItem> iterator() {
-        return getItems().iterator();
+        return getItems();
+    }
+
+    /**
+     * @since 2.0
+     */
+    default Stream<AdvancedResultItem> stream() {
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator(), Spliterator.ORDERED), false);
     }
 
     /**
@@ -177,13 +192,6 @@ public interface AdvancedResult extends Iterable<AdvancedResultItem> {
             // nothing to do
         }
 
-        /**
-         * Adds foreach support.
-         */
-        @Override
-        public Iterator<AdvancedResultItem> iterator() {
-            return this;
-        }
     }
 
 }

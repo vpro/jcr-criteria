@@ -19,7 +19,6 @@
 
 package nl.vpro.jcr.criteria.query;
 
-import java.util.Iterator;
 import java.util.function.Function;
 
 import javax.annotation.Nonnull;
@@ -77,14 +76,6 @@ public class ResultIteratorImpl<T> implements ResultIterator<T> {
     @Override
     public T next() {
         return wrapper.apply(rowIterator.nextRow());
-    }
-
-    /**
-     * Adds foreach support.
-     */
-    @Override
-    public Iterator<T> iterator() {
-        return this;
     }
 
 }
