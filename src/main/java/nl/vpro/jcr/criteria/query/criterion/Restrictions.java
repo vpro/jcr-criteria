@@ -618,7 +618,7 @@ public final class Restrictions {
      * @return Criterion
      */
     @Nonnull
-    public static Criterion in(String nodeName, String[] values) {
+    public static Criterion in(String nodeName, String... values) {
         return new InExpression(nodeName, values);
     }
 
