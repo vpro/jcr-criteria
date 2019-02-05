@@ -54,11 +54,16 @@ import static org.testng.AssertJUnit.assertFalse;
 public class AdvancedCriteriaImplITest {
 
 
-   @DataProvider(name = "language")
-   public static Object[][] language() {
-      return new Object[][] {{Query.XPATH}, {Query.JCR_SQL2}, {""}};
-   }
+    @DataProvider(name = "language")
+    public static Object[][] language() {
+        return new Object[][] {{Query.XPATH}, {Query.JCR_SQL2}, {""}};
+    }
 
+
+    @DataProvider(name = "sql2only")
+    public static Object[][] sql2only() {
+        return new Object[][] {{Query.JCR_SQL2}, {""}};
+    }
 
 
 
@@ -306,6 +311,30 @@ public class AdvancedCriteriaImplITest {
 
         check(criteria, language,2);
     }
+
+
+    @Test(dataProvider = "sql2only") // TODO support XPATH too?
+    public void isChild(String language) throws RepositoryException {
+
+        Node node2;
+        {
+            Node node1 = root.addNode("node1");
+            node2 = node1.addNode("node2");
+            Node node2_1 = node2.addNode("node2_1");
+            Node node2_2 = node2.addNode("node2_2");
+            Node node2_1_1 = node2_1.addNode("node2_1_1");
+            Node node3 = root.addNode("node3");
+            session.save();
+        }
+
+        AdvancedCriteriaImpl.Builder criteria = builder()
+            .add(Restrictions.isChildOf(node2))
+            .order(Order.desc("@jcr:score"));
+
+
+        check(criteria, language,2); // node 2_1 and 2_2 but not 2_1_1
+    }
+
 
     @Test(dataProvider = "language")
     @SneakyThrows

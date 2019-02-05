@@ -735,7 +735,7 @@ public final class Restrictions {
      * @since 2.0
      */
     @SneakyThrows
-    public static Criterion isDescendant(Node issueNode) {
+    public static Criterion isDescendantOf(Node issueNode) {
         return new IsDescendantOf(issueNode.getPath());
     }
 
@@ -744,7 +744,7 @@ public final class Restrictions {
      * @since 2.0
      */
     @SneakyThrows
-    public static Criterion isChild(Node issueNode) {
+    public static Criterion isChildOf(Node issueNode) {
         return new IsChildOf(issueNode.getPath());
     }
 
