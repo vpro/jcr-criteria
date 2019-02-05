@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
@@ -260,7 +257,7 @@ public class AdvancedCriteriaImplITest {
     }
 
     @Test(dataProvider = "language")
-    public void betweenLocaldatesAndInstances(String language) throws RepositoryException {
+    public void betweenLocaldatesAndInstancesAndFindFirst(String language) throws RepositoryException {
         {
             for (long i = 0; i < 10; i++) {
                 Node n = root.addNode("n" + i);
@@ -300,6 +297,11 @@ public class AdvancedCriteriaImplITest {
                         LocalDateTime.of(2019, 1, 1, 0, 50).atZone(ZoneId.of("Asia/Tashkent")).toInstant())
                 ), language, 4); // 20, 30, 40, 50
 
+        }
+        {
+            Optional<Node> firstNode = builder().type("a").asc(attr("date"))
+                .build().findFirst(session);
+            assertThat(firstNode.get().getPath()).isEqualTo("/n0");
         }
     }
 

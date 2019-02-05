@@ -5,7 +5,7 @@ package nl.vpro.jcr.criteria.query.sql2;
  * @since 2.0
  */
 public class NullCondition implements  Condition {
-    Field field;
+    final Field field;
 
     public NullCondition(String propertyName) {
         this.field = Field.of(propertyName);

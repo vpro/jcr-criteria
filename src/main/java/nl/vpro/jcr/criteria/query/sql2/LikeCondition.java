@@ -5,8 +5,8 @@ package nl.vpro.jcr.criteria.query.sql2;
  * @since 2.0
  */
 public class LikeCondition implements  Condition {
-    Field field;
-    String value;
+    final Field field;
+    final String value;
 
     public LikeCondition(String propertyName, String toMatchString) {
         this.field = Field.of(propertyName);
