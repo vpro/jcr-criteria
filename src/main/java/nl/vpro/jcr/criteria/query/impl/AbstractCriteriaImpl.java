@@ -73,6 +73,9 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     protected List<OrderEntry> orderEntries = new ArrayList<>();
 
     @Getter
+    protected List<Column> columns = new ArrayList<>();
+
+    @Getter
     protected int maxResults;
 
     protected int offset;

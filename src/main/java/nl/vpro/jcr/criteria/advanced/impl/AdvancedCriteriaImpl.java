@@ -23,12 +23,16 @@ import lombok.EqualsAndHashCode;
 import lombok.Singular;
 
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.validation.constraints.Min;
 
 import nl.vpro.jcr.criteria.query.criterion.Criterion;
 import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.impl.AbstractCriteriaImpl;
+import nl.vpro.jcr.criteria.query.impl.Column;
 
 import static javax.jcr.nodetype.NodeType.NT_UNSTRUCTURED;
 
@@ -60,11 +64,16 @@ public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
         String spellCheckString,
         boolean forcePagingWithDocumentOrder,
         String language,
-        ZoneId timeZone) {
+        ZoneId timeZone,
+        @Singular
+        List<Column> columns
+        ) {
         super(
             basePath == null ? Criterion.ALL_ELEMENTS : basePath,
             type,
-            null, null,
+            null,
+            null,
+            columns == null ? Arrays.asList(Column.ALL) : columns,
             maxResults, offset, spellCheckString, forcePagingWithDocumentOrder, language,
             timeZone == null ? ZoneId.systemDefault() : timeZone);
         this.criterionEntries = criterions.stream().map(c -> new CriterionEntry(c, this)).collect(Collectors.toList());
@@ -76,6 +85,13 @@ public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
      * @since 2.0
      */
     public static class Builder {
+
+        public Builder paging(
+            @Min(value = 1) int pageSize,
+            @Min(value = 1) int pageNumber) {
+            return offset((Math.max(pageNumber, 1) - 1) * pageSize)
+                .maxResults(pageSize);
+        }
 
         public Builder add(Criterion criterion) {
             return criterion(criterion);
