@@ -42,6 +42,18 @@ Criteria criteria = JCRCriteriaFactory.createCriteria()
             .add(Restrictions.gt(field, begin));
 
  AdvancedResult ar = criteria.execute(MgnlContext.getJCRSession(RepositoryConstants.WEBSITE));
- LOG.debug("JCR query : " + criteria.toXpathExpression());
+ log.debug("JCR query : " + criteria.toXpathExpression());
  AdvancedResultItem item = ar.getFirstResult();
 ```
+It can also be done, if you prefer using the builder pattern
+```java
+Criteria criteria = JCRCriteriaFactory.builder()
+            .basePath(basePath)
+            .order(Order.ascending(field))
+            .add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, NodeTypes.Page.NAME))
+            .add(Restrictions.in(Restrictions.attr(NodeTypes.Renderable.TEMPLATE), templates))
+            .add(Restrictions.gt(field, begin))
+            .build()
+            ;
+```
+
