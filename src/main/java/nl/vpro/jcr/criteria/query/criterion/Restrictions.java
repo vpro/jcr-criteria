@@ -128,7 +128,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression attrEq(@Nonnull String nodeName, @Nonnull UUID value) {
-        return new SimpleExpression(attr(nodeName), value.toString(), Op.EQ);
+        return eq(attr(nodeName), value.toString());
     }
 
     /**
@@ -169,7 +169,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression attrEq(@Nonnull String nodeName, @Nonnull LocalDate value) {
-        return new SimpleExpression(nodeName, value, Op.EQ);
+        return eq(attr(nodeName), value);
     }
 
 
@@ -239,7 +239,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression attrOp(@Nonnull Op op, @Nonnull String attrName, @Nonnull Object value) {
-        return new SimpleExpression(attr(attrName), value, op);
+        return op(op, attr(attrName), value);
     }
 
     /**
