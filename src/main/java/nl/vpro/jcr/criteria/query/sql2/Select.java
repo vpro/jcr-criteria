@@ -28,6 +28,9 @@ public class Select {
 
     public String toSql2() {
         StringBuilder builder = new StringBuilder("SELECT ");
+        if (columns.isEmpty()) {
+            columns.add(Column.ALL);
+        }
         builder.append(columns.stream().map(Column::getSql2).map(s -> String.format(s, "a")).collect(Collectors.joining(",")));
         builder.append(" from ");
         builder.append("[").append(type).append("] as a");
