@@ -259,8 +259,8 @@ public class AdvancedCriteriaImplITest {
         }
     }
 
-     @Test(dataProvider = "language")
-    public void betweenLocaldates(String language) throws RepositoryException {
+    @Test(dataProvider = "language")
+    public void betweenLocaldatesAndInstances(String language) throws RepositoryException {
         {
             for (long i = 0; i < 10; i++) {
                 Node n = root.addNode("n" + i);
@@ -286,6 +286,18 @@ public class AdvancedCriteriaImplITest {
                     Restrictions.between(attr("date"),
                         LocalDateTime.of(2019, 1, 1, 0, 12),
                         LocalDateTime.of(2019, 1, 1, 0, 50))
+                ), language, 4); // 20, 30, 40, 50
+
+        }
+        {
+            check(builder()
+                .type("a")
+                .asc(attr("date"))
+                .timeZone(ZoneId.of("Asia/Tashkent"))
+                .add(
+                    Restrictions.between(attr("date"),
+                        LocalDateTime.of(2019, 1, 1, 0, 12).atZone(ZoneId.of("Asia/Tashkent")).toInstant(),
+                        LocalDateTime.of(2019, 1, 1, 0, 50).atZone(ZoneId.of("Asia/Tashkent")).toInstant())
                 ), language, 4); // 20, 30, 40, 50
 
         }

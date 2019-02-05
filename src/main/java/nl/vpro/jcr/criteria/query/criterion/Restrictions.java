@@ -21,6 +21,7 @@ package nl.vpro.jcr.criteria.query.criterion;
 
 import lombok.SneakyThrows;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -575,6 +576,10 @@ public final class Restrictions {
     }
     @Nonnull
     public static Criterion between(String nodeName, LocalDate lo, LocalDate hi) {
+        return new BetweenExpression(nodeName, lo, hi);
+    }
+    @Nonnull
+    public static Criterion between(String nodeName, Instant lo, Instant hi) {
         return new BetweenExpression(nodeName, lo, hi);
     }
 
