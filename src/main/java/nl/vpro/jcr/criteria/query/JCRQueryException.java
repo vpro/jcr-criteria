@@ -27,18 +27,24 @@ public class JCRQueryException extends RuntimeException {
 
     private static final long serialVersionUID = -8737641628360563743L;
 
-    private String statement;
+    private Criteria.Expression expression;
 
-    public JCRQueryException(String statement, Throwable cause) {
-        super("An error occurred while executing a query. Xpath query was "
-            + statement
+    public JCRQueryException(Criteria.Expression expression, Throwable cause) {
+        super("An error occurred while executing a query.  Query was "
+            + expression.statement
             + ". Exception message is "
             + cause.getMessage(), cause);
-        this.statement = statement;
+        this.expression = expression;
     }
 
     public String getStatement() {
-        return statement;
+        return expression.getStatement();
     }
+
+
+    public String getLanguage() {
+        return expression.getLanguage();
+    }
+
 
 }

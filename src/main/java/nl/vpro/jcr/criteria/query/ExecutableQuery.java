@@ -19,6 +19,7 @@
 
 package nl.vpro.jcr.criteria.query;
 
+import java.time.ZoneId;
 import java.util.Optional;
 import java.util.function.LongSupplier;
 
@@ -43,13 +44,17 @@ public interface ExecutableQuery {
         AdvancedResult result = execute(session);
         ResultIterator<AdvancedResultItem> items = result.getItems();
         if (items.hasNext()) {
-            return Optional.of(items.next().getJCRNode());
+            return Optional.of(items.next());
         }
         return Optional.empty();
     }
 
 
     LongSupplier getCountSupplier(Session session);
+
+    default ZoneId getZoneId() {
+        return ZoneId.systemDefault();
+    }
 
 
 }

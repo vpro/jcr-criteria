@@ -31,7 +31,7 @@ import nl.vpro.jcr.criteria.query.sql2.Field;
 import nl.vpro.jcr.criteria.query.sql2.SimpleExpressionCondition;
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 
-import static nl.vpro.jcr.criteria.query.utils.Utils.toCalendarIfPossible;
+import static nl.vpro.jcr.utils.Utils.toCalendarIfPossible;
 
 
 /**
@@ -64,8 +64,8 @@ public class BetweenExpression extends BaseCriterion implements Criterion {
         StringBuilder fragment = new StringBuilder();
         fragment.append(" (").append(propertyName).append(" >= ");
 
-        Object v1 = toCalendarIfPossible(lo);
-        Object v2 = toCalendarIfPossible(hi);
+        Object v1 = toCalendarIfPossible(lo, criteria.getZoneId());
+        Object v2 = toCalendarIfPossible(hi, criteria.getZoneId());
         if (v1 instanceof CharSequence && v2 instanceof CharSequence) {
             fragment.append("'").append(v1).append("' and ").append(propertyName).append(" <= '").append(v2).append("'");
         } else if (v1 instanceof Number && v2 instanceof Number) {
@@ -89,8 +89,8 @@ public class BetweenExpression extends BaseCriterion implements Criterion {
     @Override
     public Condition toSQLCondition(Criteria criteria) {
         return new AndCondition(
-            SimpleExpressionCondition.of(Field.of(propertyName), Op.GE, lo),
-            SimpleExpressionCondition.of(Field.of(propertyName), Op.LE, hi)
+            SimpleExpressionCondition.of(Field.of(propertyName), Op.GE, lo, criteria.getZoneId()),
+            SimpleExpressionCondition.of(Field.of(propertyName), Op.LE, hi, criteria.getZoneId())
         );
     }
 

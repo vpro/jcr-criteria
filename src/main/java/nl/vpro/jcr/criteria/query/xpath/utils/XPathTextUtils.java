@@ -19,12 +19,7 @@
 
 package nl.vpro.jcr.criteria.query.xpath.utils;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -197,7 +192,14 @@ public final class XPathTextUtils {
     }
 
     public static boolean isValidNodePath(String path) {
-        return path != null && path.startsWith("/") && !path.contains("//") && !path.contains("*") && !path.contains("(") && !path.contains(")");
+        return path != null && (
+            Criterion.ALL_ELEMENTS.equals(path) ||
+                (path.startsWith("/") &&
+                    !path.contains("//") &&
+                    !path.contains("*") &&
+                    !path.contains("(") &&
+                    !path.contains(")")
+                ));
     }
 
 

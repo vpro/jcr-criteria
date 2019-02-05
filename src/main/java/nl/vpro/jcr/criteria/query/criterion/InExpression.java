@@ -21,6 +21,7 @@ package nl.vpro.jcr.criteria.query.criterion;
 
 import lombok.EqualsAndHashCode;
 
+import java.time.ZoneId;
 import java.util.Arrays;
 
 import nl.vpro.jcr.criteria.query.Criteria;
@@ -74,22 +75,22 @@ public class InExpression implements Criterion  {
     @Override
     public Condition toSQLCondition(Criteria criteria) {
         if (values.length == 1) {
-            return toSQLCondition(values[0]);
+            return toSQLCondition(values[0], criteria.getZoneId());
         } else {
             OrCondition orCondition = new OrCondition();
             for (CharSequence cs : values) {
-                orCondition.getClauses().add(toSQLCondition(cs));
+                orCondition.getClauses().add(toSQLCondition(cs, criteria.getZoneId()));
             }
             return orCondition;
         }
 
     }
 
-    protected Condition toSQLCondition(CharSequence cs) {
+    protected Condition toSQLCondition(CharSequence cs, ZoneId zoneId) {
         if (useContains) {
             return new ContainsCondition(nodeName, cs.toString());
         } else {
-            return SimpleExpressionCondition.of(Field.of(nodeName), Op.EQ, cs);
+            return SimpleExpressionCondition.of(Field.of(nodeName), Op.EQ, cs, zoneId);
         }
     }
 

@@ -8,19 +8,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.function.Function;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
-import javax.jcr.Node;
-import javax.jcr.PropertyType;
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
+import javax.jcr.*;
 import javax.jcr.nodetype.NodeType;
 import javax.jcr.nodetype.NodeTypeManager;
 import javax.jcr.nodetype.NodeTypeTemplate;
 import javax.jcr.nodetype.PropertyDefinitionTemplate;
 import javax.jcr.query.Query;
-import javax.jcr.query.Row;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -225,7 +221,7 @@ public class AdvancedCriteriaImplITest {
                 language,
                 5); // 4, 5, 6, 7, 8
 
-            List<Long> longs = result.stream().map(n -> longProp(n.getJCRNode(), "long")).collect(Collectors.toList());
+            List<Long> longs = result.stream().map(n -> longProp(n, "long")).collect(Collectors.toList());
             assertThat(longs).containsExactly(8L, 7L, 6L, 5L, 4L);
         }
     }
@@ -341,14 +337,16 @@ public class AdvancedCriteriaImplITest {
     public void pagingAndWrapping(String language) {
         {
             for (int i = 0; i < 100; i++) {
-                root.addNode("node" + i);
-                root.setProperty("integer", i);
+                Node n = root.addNode("node" + i);
+                n.setProperty("integer", i);
             }
             session.save();
         }
+
+
         ExecutableQuery query = builder()
             .fromUnstructured()
-            .offset(0)
+            .offset(10)
             .maxResults(10)
             .language(language)
             .asc("@integer")
@@ -357,22 +355,52 @@ public class AdvancedCriteriaImplITest {
 
         AdvancedResult result = query.execute(session);
         assertThat(result.getItemsPerPage()).isEqualTo(10);
-        assertThat(result.getTotalSize()).isEqualTo(100);
+        assertThat(result.getTotalSize()).isEqualTo(101); // those 100 plus root.
         List<String> test = new ArrayList<>();
-        result.getItems(new Function<Row, String>() {
-            @Override
-            public String apply(Row row) {
-                try {
-                    return row.getNode().getPath() + ":" + row.getScore();
-                } catch(Exception e) {
-                    return e.getMessage();
+        double[] score = new double[1];
+        score[0] = -1d;
+        result.getItems(row -> {
+            try {
+                if (score[0] > 0) {
+                    assertThat(score[0]).isEqualTo(row.getScore());
                 }
-
+                score[0] = row.getScore();
+                return row.getNode().getPath();
+            } catch(Exception e) {
+                return e.getMessage();
             }
+
         }).forEachRemaining((c) -> test.add((String) c));
-        assertThat(test).containsExactly("a");
+        assertThat(test).containsExactly(
+            "/node9",
+            "/node10",
+            "/node11",
+            "/node12",
+            "/node13",
+            "/node14",
+            "/node15",
+            "/node16",
+            "/node17",
+            "/node18");
+        assertThat(result.getPage()).isEqualTo(2);
+        assertThat(result.getNumberOfPages()).isEqualTo(11);
+    }
 
-
+    @Test(dataProvider = "language")
+    @SneakyThrows
+    public void not(String language) {
+        {
+            for (int i = 0; i < 10; i++) {
+                Node n = root.addNode("node" + i);
+                n.setProperty("integer", i);
+            }
+            session.save();
+        }
+        check(builder()
+            .fromUnstructured()
+            .add(Restrictions.isNotNull(attr("integer")))
+            .add(Restrictions.not(Restrictions.eq(attr("integer"), 5)))
+            .asc(attr("integer")), language, 9);
 
     }
 
@@ -383,8 +411,8 @@ public class AdvancedCriteriaImplITest {
     AdvancedResultImpl check(Criteria criteria, int expectedSize) {
         AdvancedResultImpl result = (AdvancedResultImpl) criteria.execute(session);
         for (AdvancedResultItem item : result) {
-            boolean isUnstructured = item.getJCRNode().isNodeType(NodeType.NT_UNSTRUCTURED);
-            log.info("{} {} (is unstructured: {})", item.getJCRNode().getPrimaryNodeType().getName(), item, isUnstructured);
+            boolean isUnstructured = item.isNodeType(NodeType.NT_UNSTRUCTURED);
+            log.info("{} {} (is unstructured: {})", item.getPrimaryNodeType().getName(), item, isUnstructured);
         }
         assertFalse(result.totalSizeDetermined());
         assertEquals(expectedSize, result.getTotalSize());
@@ -408,6 +436,20 @@ public class AdvancedCriteriaImplITest {
             false);
 
     }
+     AdvancedResultImpl directSql(String expression) {
+        return QueryExecutorHelper.execute(
+            Criteria.Expression.sql2(expression),
+            () -> {
+                throw new UnsupportedOperationException();
+
+            },
+            session,
+            null,
+            0,
+            null,
+            false);
+
+    }
 
 
     @SneakyThrows
@@ -416,4 +458,24 @@ public class AdvancedCriteriaImplITest {
     }
 
 
+    @SneakyThrows
+    protected void showSession() {
+        AtomicLong count = new AtomicLong(0);
+        showSession(session.getRootNode(), count);
+        log.info("Found {} unstructured", count.get());
+    }
+    @SneakyThrows
+    protected void showSession(Node node, AtomicLong count) {
+
+        boolean isUnstructured =  node.isNodeType(NodeType.NT_UNSTRUCTURED);
+        log.info("{} {} {}", node.getPrimaryNodeType().getName(), node, isUnstructured);
+        if (isUnstructured) {
+            count.incrementAndGet();
+        }
+        NodeIterator n = node.getNodes();
+
+        while(n.hasNext()) {
+           showSession(n.nextNode(), count);
+        }
+    }
 }

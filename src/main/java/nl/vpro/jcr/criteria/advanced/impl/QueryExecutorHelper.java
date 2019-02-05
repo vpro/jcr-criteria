@@ -159,12 +159,12 @@ public final class QueryExecutorHelper {
                 queryCounter,
                 maxResults,
                 pageNumberStartingFromOne,
-                expr.getStatement(),
+                expr,
                 spellCheckerQuery,
                 forcePagingWithDocumentOrder,
                 offset);
         } catch (RepositoryException e) {
-            JCRQueryException jqe = new JCRQueryException(expr.getStatement(), e);
+            JCRQueryException jqe = new JCRQueryException(expr, e);
             log.error(jqe.getMessage());
             throw jqe;
         }

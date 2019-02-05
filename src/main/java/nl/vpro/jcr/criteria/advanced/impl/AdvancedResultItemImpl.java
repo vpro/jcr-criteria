@@ -117,12 +117,14 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
     }
 
     @Override
+    @Deprecated
     public Node getJCRNode() {
         return this;
     }
 
     @Override
-    protected Node getNode() throws RepositoryException {
+    @SneakyThrows
+    protected Node getNode() {
         return row.getNode();
     }
     @Override

@@ -23,8 +23,10 @@ public class Select {
         StringBuilder builder = new StringBuilder("SELECT * from ");
         builder.append("[").append(type).append("] as a");
         if (condition.hasClauses()) {
-            builder.append(" WHERE ");
-            condition.toSql2(builder);
+            int length = builder.length();
+            if (condition.toSql2(builder)) {
+                builder.insert(length, " WHERE ");
+            }
         }
         if (! order.isEmpty()) {
             builder.append(" ORDER BY ");
