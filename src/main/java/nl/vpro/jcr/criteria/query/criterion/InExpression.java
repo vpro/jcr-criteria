@@ -75,11 +75,11 @@ public class InExpression implements Criterion  {
     @Override
     public Condition toSQLCondition(Criteria criteria) {
         if (values.length == 1) {
-            return toSQLCondition(values[0], criteria.getZoneId());
+            return toSQLCondition(values[0], criteria.getTimeZone());
         } else {
             OrCondition orCondition = new OrCondition();
             for (CharSequence cs : values) {
-                orCondition.getClauses().add(toSQLCondition(cs, criteria.getZoneId()));
+                orCondition.getClauses().add(toSQLCondition(cs, criteria.getTimeZone()));
             }
             return orCondition;
         }

@@ -60,13 +60,13 @@ public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
         String spellCheckString,
         boolean forcePagingWithDocumentOrder,
         String language,
-        ZoneId zoneId) {
+        ZoneId timeZone) {
         super(
             basePath == null ? Criterion.ALL_ELEMENTS : basePath,
             type,
             null, null,
             maxResults, offset, spellCheckString, forcePagingWithDocumentOrder, language,
-            zoneId == null ? ZoneId.systemDefault() : zoneId);
+            timeZone == null ? ZoneId.systemDefault() : timeZone);
         this.criterionEntries = criterions.stream().map(c -> new CriterionEntry(c, this)).collect(Collectors.toList());
         this.orderEntries = orders.stream().map(o -> new OrderEntry(o, this)).collect(Collectors.toList());
 

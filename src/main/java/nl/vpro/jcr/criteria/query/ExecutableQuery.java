@@ -52,7 +52,7 @@ public interface ExecutableQuery {
 
     LongSupplier getCountSupplier(Session session);
 
-    default ZoneId getZoneId() {
+    default ZoneId getTimeZone() {
         return ZoneId.systemDefault();
     }
 

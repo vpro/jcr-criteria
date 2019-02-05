@@ -64,8 +64,8 @@ public class BetweenExpression extends BaseCriterion implements Criterion {
         StringBuilder fragment = new StringBuilder();
         fragment.append(" (").append(propertyName).append(" >= ");
 
-        Object v1 = toCalendarIfPossible(lo, criteria.getZoneId());
-        Object v2 = toCalendarIfPossible(hi, criteria.getZoneId());
+        Object v1 = toCalendarIfPossible(lo, criteria.getTimeZone());
+        Object v2 = toCalendarIfPossible(hi, criteria.getTimeZone());
         if (v1 instanceof CharSequence && v2 instanceof CharSequence) {
             fragment.append("'").append(v1).append("' and ").append(propertyName).append(" <= '").append(v2).append("'");
         } else if (v1 instanceof Number && v2 instanceof Number) {
@@ -89,8 +89,8 @@ public class BetweenExpression extends BaseCriterion implements Criterion {
     @Override
     public Condition toSQLCondition(Criteria criteria) {
         return new AndCondition(
-            SimpleExpressionCondition.of(Field.of(propertyName), Op.GE, lo, criteria.getZoneId()),
-            SimpleExpressionCondition.of(Field.of(propertyName), Op.LE, hi, criteria.getZoneId())
+            SimpleExpressionCondition.of(Field.of(propertyName), Op.GE, lo, criteria.getTimeZone()),
+            SimpleExpressionCondition.of(Field.of(propertyName), Op.LE, hi, criteria.getTimeZone())
         );
     }
 

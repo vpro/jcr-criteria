@@ -90,7 +90,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     @Getter
     @Setter
-    private ZoneId zoneId;
+    private ZoneId timeZone;
 
 
     protected AbstractCriteriaImpl() {

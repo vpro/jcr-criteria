@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
@@ -235,6 +237,7 @@ public class AdvancedCriteriaImplITest {
                 n.setPrimaryType("a");
                 Calendar calendar = Calendar.getInstance();
                 calendar.clear();
+                calendar.setTimeZone(TimeZone.getTimeZone("Asia/Tashkent"));
                 calendar.set(dateTime.getYear(), dateTime.getMonthValue() - 1, dateTime.getDayOfMonth(),
                     dateTime.getHour(), dateTime.getMinute(), dateTime.getSecond());
                 n.setProperty("date", calendar);
@@ -244,16 +247,50 @@ public class AdvancedCriteriaImplITest {
         }
         {
             check(builder()
-                    .type("a")
-                    .asc(attr("date"))
-                    .add(
-                        Restrictions.between(attr("date"),
-                            LocalDate.of(2019, 1, 5),
-                            LocalDate.of(2019, 1, 8))
-                    ), language, 4);
+                .type("a")
+                .asc(attr("date"))
+                .timeZone(ZoneId.of("Asia/Tashkent"))
+                .add(
+                    Restrictions.between(attr("date"),
+                        LocalDate.of(2019, 1, 5),
+                        LocalDate.of(2019, 1, 8))
+                ), language, 4);
 
         }
     }
+
+     @Test(dataProvider = "language")
+    public void betweenLocaldates(String language) throws RepositoryException {
+        {
+            for (long i = 0; i < 10; i++) {
+                Node n = root.addNode("n" + i);
+                LocalDateTime dateTime = LocalDate.of(2019, 1, 1)
+                    .atStartOfDay().plusMinutes(10 * i);
+                n.setPrimaryType("a");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeZone(TimeZone.getTimeZone("Asia/Tashkent"));
+                calendar.clear();
+                calendar.set(dateTime.getYear(), dateTime.getMonthValue() - 1, dateTime.getDayOfMonth(),
+                    dateTime.getHour(), dateTime.getMinute(), dateTime.getSecond());
+                n.setProperty("date", calendar);
+            }
+
+            session.save();
+        }
+        {
+            check(builder()
+                .type("a")
+                .asc(attr("date"))
+                .timeZone(ZoneId.of("Asia/Tashkent"))
+                .add(
+                    Restrictions.between(attr("date"),
+                        LocalDateTime.of(2019, 1, 1, 0, 12),
+                        LocalDateTime.of(2019, 1, 1, 0, 50))
+                ), language, 4); // 20, 30, 40, 50
+
+        }
+    }
+
 
     @Test(dataProvider = "language")
     public void withBasePath(String language) throws RepositoryException {
