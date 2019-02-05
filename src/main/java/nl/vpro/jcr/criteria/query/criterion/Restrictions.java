@@ -179,7 +179,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static Criterion has(@Nonnull String name) {
-        return new IsNotNullExpression(name);
+        return isNotNull(name);
     }
     /**
      * Synonym to {@link #isNull(String)}
@@ -187,7 +187,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static Criterion hasnt(@Nonnull String name) {
-        return new IsNullExpression(name);
+        return isNull(name);
     }
 
 
@@ -686,7 +686,7 @@ public final class Restrictions {
      * @return Criterion
      */
     @Nonnull
-    public static Disjunction or(Criterion... clauses) {
+    public static Disjunction or(@Size(min = 2) Criterion... clauses) {
         return new Disjunction(true, clauses);
     }
 
@@ -707,6 +707,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static Criterion hasNodeType(String... nodetypes) {
+        // TODO
         return new InExpression(Criterion.JCR_PRIMARYTYPE, nodetypes, false);
     }
 
