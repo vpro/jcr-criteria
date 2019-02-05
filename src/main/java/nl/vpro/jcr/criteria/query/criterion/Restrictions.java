@@ -701,7 +701,7 @@ public final class Restrictions {
     }
 
     /**
-     * Apply a restriction on the node primary type. Shorcut for add(Restrictions.eq("@jcr:primaryType", value)).
+     * Apply a restriction on the node primary type. Shortcut for add(Restrictions.eq("@jcr:primaryType", value)).
      * @param nodetypes - list of accepted nodetypes.
      * @return Criterion
      */

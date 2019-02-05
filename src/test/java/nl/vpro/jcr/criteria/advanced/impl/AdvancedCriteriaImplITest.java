@@ -11,7 +11,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import javax.jcr.*;
-import javax.jcr.nodetype.NodeType;
 import javax.jcr.nodetype.NodeTypeManager;
 import javax.jcr.nodetype.NodeTypeTemplate;
 import javax.jcr.nodetype.PropertyDefinitionTemplate;
@@ -32,6 +31,7 @@ import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.criterion.Restrictions;
 import nl.vpro.jcr.criteria.query.impl.Column;
 
+import static javax.jcr.nodetype.NodeType.NT_UNSTRUCTURED;
 import static nl.vpro.jcr.criteria.CriteriaTestUtils.*;
 import static nl.vpro.jcr.criteria.query.JCRCriteriaFactory.builder;
 import static nl.vpro.jcr.criteria.query.criterion.Restrictions.*;
@@ -201,7 +201,7 @@ public class AdvancedCriteriaImplITest {
         {
             check(
                 builder()
-                    .type(NodeType.NT_UNSTRUCTURED)
+                    .type(NT_UNSTRUCTURED)
                     .basePath("/")
                     .add(Restrictions.attrEq("a", Boolean.TRUE)),
                 language,
@@ -209,7 +209,7 @@ public class AdvancedCriteriaImplITest {
 
                 ;
             check(builder()
-                    .type(NodeType.NT_UNSTRUCTURED)
+                    .type(NT_UNSTRUCTURED)
                     .basePath("/")
                     .add(Restrictions.attrIsFalsy("a")),
                 language,
@@ -231,12 +231,12 @@ public class AdvancedCriteriaImplITest {
         }
         {
             check(builder()
-                    .type(NodeType.NT_UNSTRUCTURED)
+                    .type(NT_UNSTRUCTURED)
                     .add(Restrictions.isNotNull("@a")),
                 language, 3);
             check(
                 builder()
-                    .type(NodeType.NT_UNSTRUCTURED)
+                    .type(NT_UNSTRUCTURED)
                     .add(Restrictions.isNull("@a")),
                 language,
                 2); // goodbye and root
@@ -453,8 +453,7 @@ public class AdvancedCriteriaImplITest {
 
         ExecutableQuery query = builder()
             .fromUnstructured()
-            .offset(10)
-            .maxResults(10)
+            .paging(10, 2)
             .language(language)
             .asc("@integer")
             .build();
@@ -511,6 +510,26 @@ public class AdvancedCriteriaImplITest {
 
     }
 
+    @Test(dataProvider = "language")
+    @SneakyThrows
+    public void nodeTypes(String language) {
+         {
+            for (int i = 0; i < 10; i++) {
+                Node n = root.addNode("node" + i);
+                n.setPrimaryType(new String[]{"a", "b", NT_UNSTRUCTURED}[i % 3]);
+            }
+             session.save();
+         }
+         check(builder()
+             .type("a")
+             ,language, 4);
+
+         check(builder()
+             .add(hasNodeType("a", "b"))
+             ,language, 7);
+
+    }
+
     AdvancedResult check(AdvancedCriteriaImpl.Builder builder, String language,  int expectedSize) {
         return check(builder.language(language).build(), expectedSize);
     }
@@ -518,7 +537,7 @@ public class AdvancedCriteriaImplITest {
     AdvancedResult  check(Criteria criteria, int expectedSize) {
         AdvancedResultImpl result = (AdvancedResultImpl) criteria.execute(session);
         for (AdvancedResultItem item : result) {
-            boolean isUnstructured = item.isNodeType(NodeType.NT_UNSTRUCTURED);
+            boolean isUnstructured = item.isNodeType(NT_UNSTRUCTURED);
             log.info("{} {} (is unstructured: {})", item.getPrimaryNodeType().getName(), item, isUnstructured);
         }
         assertFalse(result.totalSizeDetermined());
@@ -574,7 +593,7 @@ public class AdvancedCriteriaImplITest {
     @SneakyThrows
     protected void showSession(Node node, AtomicLong count) {
 
-        boolean isUnstructured =  node.isNodeType(NodeType.NT_UNSTRUCTURED);
+        boolean isUnstructured =  node.isNodeType(NT_UNSTRUCTURED);
         log.info("{} {} {}", node.getPrimaryNodeType().getName(), node, isUnstructured);
         if (isUnstructured) {
             count.incrementAndGet();
@@ -583,10 +602,10 @@ public class AdvancedCriteriaImplITest {
 
         while(n.hasNext()) {
             Node next = n.nextNode();
-            PropertyIterator properties = next.getProperties("jcr:*");
+          /*  PropertyIterator properties = next.getProperties("jcr:*");
             while(properties.hasNext()) {
                 log.info("{}", properties.nextProperty().getName());
-            }
+            }*/
             showSession(next, count);
         }
     }
