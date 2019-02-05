@@ -19,6 +19,7 @@
 
 package nl.vpro.jcr.criteria.query;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -48,6 +49,8 @@ public interface TranslatableCriteria extends Criteria {
      */
     Collection<CriterionEntry> getCriterionEntries();
 
+
+    @EqualsAndHashCode(onlyExplicitlyIncluded = true, of="criterion")
     final class CriterionEntry implements Serializable {
 
         private static final long serialVersionUID = 1L;
@@ -66,24 +69,9 @@ public interface TranslatableCriteria extends Criteria {
         public String toString() {
             return criterion.toString();
         }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            CriterionEntry that = (CriterionEntry) o;
-
-            return criterion != null ? criterion.equals(that.criterion) : that.criterion == null;
-
-        }
-
-        @Override
-        public int hashCode() {
-            return criterion != null ? criterion.hashCode() : 0;
-        }
     }
 
+    @EqualsAndHashCode(onlyExplicitlyIncluded = true, of="order")
     final class OrderEntry implements Serializable {
 
         private static final long serialVersionUID = 1L;
@@ -103,22 +91,6 @@ public interface TranslatableCriteria extends Criteria {
         @Override
         public String toString() {
             return order.toString();
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            OrderEntry that = (OrderEntry) o;
-
-            return order != null ? order.equals(that.order) : that.order == null;
-
-        }
-
-        @Override
-        public int hashCode() {
-            return order != null ? order.hashCode() : 0;
         }
     }
 }
