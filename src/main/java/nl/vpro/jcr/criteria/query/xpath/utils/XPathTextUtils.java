@@ -19,26 +19,25 @@
 
 package nl.vpro.jcr.criteria.query.xpath.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import nl.vpro.jcr.criteria.query.criterion.Criterion;
 
 
 /**
- * A utility class to escape xpath strings
+ * A utility class to escape query strings
  * @author fgiust
  * @author fgrilli
  */
+@Slf4j
 public final class XPathTextUtils {
-
-    private static final Logger LOG = LoggerFactory.getLogger(XPathTextUtils.class);
 
     /**
      * Date format used for date formatting.
@@ -105,10 +104,10 @@ public final class XPathTextUtils {
      * @return String encoded path eg //my//path/_x0032_009//*
      */
     public static String encodeDigitsInPath(String path) {
-        LOG.debug("path to encode is {}", path);
+        log.debug("path to encode is {}", path);
         if (StringUtils.isBlank(path)) {
             String msg = "path cannot be a null or empty string";
-            LOG.error(msg);
+            log.error(msg);
             throw new IllegalArgumentException(msg);
         }
 
@@ -159,7 +158,7 @@ public final class XPathTextUtils {
                 encodedPath.append(ch);
             }
         }
-        LOG.debug("returning encoded path {}", encodedPath);
+        log.debug("returning encoded path {}", encodedPath);
         return encodedPath.toString();
     }
 
