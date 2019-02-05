@@ -50,12 +50,13 @@ public interface TranslatableCriteria extends Criteria {
     Collection<CriterionEntry> getCriterionEntries();
 
 
-    @EqualsAndHashCode(onlyExplicitlyIncluded = true, of="criterion")
+    @EqualsAndHashCode(onlyExplicitlyIncluded = true)
     final class CriterionEntry implements Serializable {
 
         private static final long serialVersionUID = 1L;
 
         @Getter
+        @EqualsAndHashCode.Include
         private final Criterion criterion;
 
         @Getter
@@ -71,12 +72,13 @@ public interface TranslatableCriteria extends Criteria {
         }
     }
 
-    @EqualsAndHashCode(onlyExplicitlyIncluded = true, of="order")
+    @EqualsAndHashCode(onlyExplicitlyIncluded = true)
     final class OrderEntry implements Serializable {
 
         private static final long serialVersionUID = 1L;
 
         @Getter
+        @EqualsAndHashCode.Include
         private final Order order;
 
         @Getter
