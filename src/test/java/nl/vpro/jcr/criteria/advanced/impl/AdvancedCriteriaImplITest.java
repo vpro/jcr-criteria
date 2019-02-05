@@ -115,7 +115,7 @@ public class AdvancedCriteriaImplITest {
 
 
     @Test(dataProvider = "language")
-    public void start(String language) throws RepositoryException {
+    public void like(String language) throws RepositoryException {
         {
             Node hello = root.addNode("hello");
             hello.setProperty("a", "a1");
@@ -134,6 +134,45 @@ public class AdvancedCriteriaImplITest {
                     .build()
                 ;
             check(criteria, 2);
+        }
+    }
+
+
+    @Test(dataProvider = "language")
+    public void uuidMatch(String language) throws RepositoryException {
+        String helloId;
+        {
+            Node hello = root.addNode("hello");
+            hello.setProperty("a", "04df24e2-adc0-491b-8573-40a1155665d4");
+            hello.addMixin("mix:referenceable");
+            Node hello2 = root.addNode("hello2");
+            hello2.setProperty("a", "16e86c92-71ce-4779-9a0d-6d59dabc7398");
+            Node goodbye = root.addNode("bye");
+            goodbye.setProperty("a", "a2");
+            session.save();
+            helloId = hello.getIdentifier();
+        }
+        log.info("{}", helloId);
+        showSession();
+        {
+            Criteria criteria =
+                builder()
+                    .language(language)
+                    .basePath("/")
+                    .add(Restrictions.attrEq("a", UUID.fromString("16e86c92-71ce-4779-9a0d-6d59dabc7398")))
+                    .build()
+                ;
+            check(criteria, 1);
+        }
+         {
+            Criteria criteria =
+                builder()
+                    .language(language)
+                    .basePath("/")
+                    .add(Restrictions.attrEq("jcr:uuid", UUID.fromString(helloId)))
+                    .build()
+                ;
+            check(criteria, 1);
         }
     }
 
@@ -526,7 +565,12 @@ public class AdvancedCriteriaImplITest {
         NodeIterator n = node.getNodes();
 
         while(n.hasNext()) {
-           showSession(n.nextNode(), count);
+            Node next = n.nextNode();
+            PropertyIterator properties = next.getProperties("jcr:*");
+            while(properties.hasNext()) {
+                log.info("{}", properties.nextProperty().getName());
+            }
+            showSession(next, count);
         }
     }
 }

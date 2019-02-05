@@ -23,7 +23,8 @@ import nl.vpro.jcr.criteria.advanced.impl.AdvancedCriteriaImpl;
 
 
 /**
- * Factory for criteria queries. Since mgnlcriteria 2.x always use the simple createCriteria() factory method.
+ * Factory for criteria queries. Since mgnlcriteria 2.x always use the simple {@link #createCriteria()} factory method.
+ * Since vpro/jcr-criteria 2.0 we provide also {@link #builder()}
  * @author fgrilli
  * @author fgiust
  * @author diego_schivo
@@ -48,7 +49,7 @@ public final class JCRCriteriaFactory {
 
 
     /**
-     * Created a {@Link AdvancedCriteriaImpl.Builder} which can be used to construct an {@link ExecutableQuery}
+     * Create a {@link AdvancedCriteriaImpl.Builder} which can be used to construct an {@link ExecutableQuery}
      * @since 2.0
      */
     public static AdvancedCriteriaImpl.Builder builder() {

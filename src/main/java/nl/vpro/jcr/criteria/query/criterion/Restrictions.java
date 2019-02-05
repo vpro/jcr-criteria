@@ -121,6 +121,16 @@ public final class Restrictions {
     public static SimpleExpression attrEq(@Nonnull String attName, @Nonnull CharSequence value) {
         return eq(attr(attName), value);
     }
+
+    /**
+     * See {@link #eq(String, CharSequence)}
+     *  @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression attrEq(@Nonnull String nodeName, @Nonnull UUID value) {
+        return new SimpleExpression(attr(nodeName), value.toString(), Op.EQ);
+    }
+
     /**
      * See {@link #attrEq(String, CharSequence)}
      * @since 2.0
