@@ -87,6 +87,14 @@ public final class Restrictions {
     public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull Calendar value) {
         return new SimpleExpression(nodeName, value, Op.EQ);
     }
+      /**
+     * See {@link #eq(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression eq(@Nonnull String nodeName, @Nonnull Instant value) {
+        return new SimpleExpression(nodeName, value, Op.EQ);
+    }
+
     /**
      * See {@link #eq(String, CharSequence)}
      */
@@ -155,6 +163,16 @@ public final class Restrictions {
     public static SimpleExpression attrEq(@Nonnull String attName, @Nonnull Calendar value) {
         return eq(attr(attName), value);
     }
+
+     /**
+     * See {@link #attrEq(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static SimpleExpression attrEq(@Nonnull String attName, @Nonnull Instant value) {
+        return eq(attr(attName), value);
+    }
+
     /**
      * See {@link #attrEq(String, CharSequence)}
      * @since 2.0

@@ -31,8 +31,10 @@ import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
 import nl.vpro.jcr.criteria.query.sql2.Condition;
 import nl.vpro.jcr.criteria.query.sql2.Field;
+import nl.vpro.jcr.criteria.query.sql2.NotCondition;
 import nl.vpro.jcr.criteria.query.sql2.SimpleExpressionCondition;
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
+import nl.vpro.jcr.utils.Utils;
 
 /**
  * superclass for "simple" comparisons (with XPATH binary operators)
@@ -70,22 +72,23 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
     @Override
     public String toXPathString(Criteria criteria) throws JCRQueryException {
         StringBuilder fragment = new StringBuilder();
-        if (value instanceof String) {
+        Object v = Utils.toCalendarIfPossible(value, criteria.getTimeZone());
+        if (v instanceof CharSequence) {
             fragment.append(propertyName).append(getOp());
             // Generally, if you enclose values in single quotes, you just need to replace any literal single quote
             // character with '' (two consecutive single quote characters).
-            String escValue = StringUtils.replace((String) value, "'", "''");
+            String escValue = StringUtils.replace((String) v, "'", "''");
             fragment.append("'")
                 .append(escValue)
                 .append("'");
-        } else if (value instanceof Number) {
+        } else if (v instanceof Number) {
             fragment.append(propertyName).append(getOp());
-            fragment.append(value);
-        } else if (value instanceof Character) {
+            fragment.append(v);
+        } else if (v instanceof Character) {
             fragment.append(propertyName).append(getOp());
-            fragment.append("'").append(value).append("'");
-        } else if (value instanceof Boolean) {
-            boolean boolValue = (boolean) value;
+            fragment.append("'").append(v).append("'");
+        } else if (v instanceof Boolean) {
+            boolean boolValue = (boolean) v;
             switch(getOp()) {
                 case NE:
                     boolValue = ! boolValue;
@@ -102,14 +105,15 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
                 fragment.append(propertyName)
                     .append("='false'");
             }
-        } else if (value instanceof Calendar) {
-            fragment.append(propertyName).append(getOp());
-            Calendar cal = (Calendar) value;
-            fragment.append(XS_DATETIME_FUNCTION + "('").append(XPathTextUtils.toXsdDate(cal)).append("')'");
-        } else if (value != null) {
+        } else if (v instanceof Calendar) {
+            fragment.append(propertyName)
+                .append(getOp());
+            Calendar cal = (Calendar) v;
+            fragment.append(XS_DATETIME_FUNCTION + "('").append(XPathTextUtils.toXsdDate(cal)).append("')");
+        } else if (v != null) {
             fragment.append(propertyName).append(getOp());
             // just use the toString() of the given object
-            fragment.append("'").append(value);
+            fragment.append("'").append(v).append("'");
         }
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
@@ -117,7 +121,11 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
 
     @Override
     public Condition toSQLCondition(Criteria criteria) throws JCRQueryException {
-        return SimpleExpressionCondition.of(Field.of(propertyName), op, value, criteria.getTimeZone());
+        if (op == Op.NE) {
+            return new NotCondition(SimpleExpressionCondition.of(Field.of(propertyName), Op.EQ, value, criteria.getTimeZone()));
+        } else {
+            return SimpleExpressionCondition.of(Field.of(propertyName), op, value, criteria.getTimeZone());
+        }
     }
 
 }

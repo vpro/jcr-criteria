@@ -203,7 +203,7 @@ public class AdvancedCriteriaImplITest {
                 builder()
                     .type(NT_UNSTRUCTURED)
                     .basePath("/")
-                    .add(Restrictions.attrEq("a", Boolean.TRUE)),
+                    .add(attrIsTrue("a")),
                 language,
                 2);
 
@@ -211,7 +211,7 @@ public class AdvancedCriteriaImplITest {
             check(builder()
                     .type(NT_UNSTRUCTURED)
                     .basePath("/")
-                    .add(Restrictions.attrIsFalsy("a")),
+                    .add(attrIsFalsy("a")),
                 language,
                 3); // hello2, byte2, root
         }
@@ -279,6 +279,33 @@ public class AdvancedCriteriaImplITest {
             1);
             assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(4);
         }
+        {
+            AdvancedResult result = check(builder().fromUnstructured()
+                    .type("a")
+                    .desc(attr("long"))
+                    .add(le(attr("long"), 4)),
+                language,
+                5);
+            assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(4);
+        }
+        {
+            AdvancedResult result = check(builder().fromUnstructured()
+                    .type("a")
+                    .desc(attr("long"))
+                    .add(lt(attr("long"), 4)),
+                language,
+                4);
+            assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(3);
+        }
+        {
+            AdvancedResult result = check(builder().fromUnstructured()
+                    .type("a")
+                    .asc(attr("long"))
+                    .add(ne(attr("long"), 4)),
+                language,
+                9);
+            assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(0);
+        }
     }
 
     @Test(dataProvider = "language")
@@ -313,7 +340,7 @@ public class AdvancedCriteriaImplITest {
     }
 
     @Test(dataProvider = "language")
-    public void betweenLocaldatesAndInstancesAndFindFirst(String language) throws RepositoryException {
+    public void betweenLocalDatesAndInstancesAndFindFirst(String language) throws RepositoryException {
         {
             for (long i = 0; i < 10; i++) {
                 Node n = root.addNode("n" + i);
@@ -342,16 +369,34 @@ public class AdvancedCriteriaImplITest {
                 ), language, 4); // 20, 30, 40, 50
 
         }
-        {
+         {
             check(builder()
                 .type("a")
                 .asc(attr("date"))
                 .timeZone(ZoneId.of("Asia/Tashkent"))
                 .add(
+                    attrEq("date", LocalDateTime.of(2019, 1, 1, 0, 30))
+                ), language, 1);
+
+        }
+        {
+            check(builder()
+                .type("a")
+                .asc(attr("date"))
+                .add(
                     between(attr("date"),
                         LocalDateTime.of(2019, 1, 1, 0, 12).atZone(ZoneId.of("Asia/Tashkent")).toInstant(),
                         LocalDateTime.of(2019, 1, 1, 0, 50).atZone(ZoneId.of("Asia/Tashkent")).toInstant())
                 ), language, 4); // 20, 30, 40, 50
+
+        }
+        {
+            check(builder()
+                .type("a")
+                .asc(attr("date"))
+                .add(
+                    attrEq("date", LocalDateTime.of(2019, 1, 1, 0, 30).atZone(ZoneId.of("Asia/Tashkent")).toInstant())
+                ), language, 1);
 
         }
         {
