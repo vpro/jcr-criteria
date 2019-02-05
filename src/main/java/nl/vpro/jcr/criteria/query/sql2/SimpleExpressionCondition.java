@@ -5,6 +5,8 @@ import lombok.SneakyThrows;
 import java.time.ZoneId;
 import java.util.Calendar;
 
+import javax.annotation.Nonnull;
+
 import org.apache.jackrabbit.value.ValueFactoryImpl;
 
 import nl.vpro.jcr.criteria.query.criterion.Op;
@@ -22,7 +24,7 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
     final T value;
 
 
-    protected SimpleExpressionCondition(Field field, Op op, T value) {
+    protected SimpleExpressionCondition(@Nonnull  Field field, @Nonnull  Op op, @Nonnull  T value) {
         this.field = field;
         this.op = op;
         this.value = value;

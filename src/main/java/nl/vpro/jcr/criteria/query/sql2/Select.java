@@ -5,9 +5,11 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import nl.vpro.jcr.criteria.query.TranslatableCriteria;
 import nl.vpro.jcr.criteria.query.impl.AbstractCriteriaImpl;
+import nl.vpro.jcr.criteria.query.impl.Column;
 
 /**
  * @author Michiel Meeuwissen
@@ -18,9 +20,19 @@ public class Select {
     String type = "nt:base";
     final AndCondition condition = new AndCondition();
     final List<Order> order = new ArrayList<>();
+    final List<Column> columns = new ArrayList<>();
+
+    {
+        columns.add(Column.ALL);
+    }
 
     public String toSql2() {
-        StringBuilder builder = new StringBuilder("SELECT * from ");
+        StringBuilder builder = new StringBuilder("SELECT ");
+        if (columns.isEmpty()) {
+            columns.add(Column.ALL);
+        }
+        builder.append(columns.stream().map(Column::getSql2).map(s -> String.format(s, "a")).collect(Collectors.joining(",")));
+        builder.append(" from ");
         builder.append("[").append(type).append("] as a");
         if (condition.hasClauses()) {
             int length = builder.length();
@@ -44,6 +56,8 @@ public class Select {
 
     public static Select from(AbstractCriteriaImpl criteria) {
         Select select = new Select();
+        select.getColumns().clear();
+        select.getColumns().addAll(criteria.getColumns());
         if (criteria.getBasePath() != null) {
             select.condition.clauses.add(new IsDescendantNode(criteria.getBasePath()));
         }

@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
@@ -33,10 +30,11 @@ import nl.vpro.jcr.criteria.query.ExecutableQuery;
 import nl.vpro.jcr.criteria.query.criterion.MatchMode;
 import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.criterion.Restrictions;
+import nl.vpro.jcr.criteria.query.impl.Column;
 
 import static nl.vpro.jcr.criteria.CriteriaTestUtils.*;
 import static nl.vpro.jcr.criteria.query.JCRCriteriaFactory.builder;
-import static nl.vpro.jcr.criteria.query.criterion.Restrictions.attr;
+import static nl.vpro.jcr.criteria.query.criterion.Restrictions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertEquals;
@@ -111,14 +109,14 @@ public class AdvancedCriteriaImplITest {
         }
 
     }
+
     @AfterMethod
     public void shutdown() {
        CriteriaTestUtils.shutdown();
     }
 
-
     @Test(dataProvider = "language")
-    public void start(String language) throws RepositoryException {
+    public void like(String language) throws RepositoryException {
         {
             Node hello = root.addNode("hello");
             hello.setProperty("a", "a1");
@@ -133,12 +131,57 @@ public class AdvancedCriteriaImplITest {
                 builder()
                     .language(language)
                     .basePath("/")
+                    .column(Column.ALL)
+                    //.column(Column.EXCERPT) TODO Does't work
                     .add(Restrictions.attrLike("a", "a", MatchMode.START))
                     .build()
                 ;
-            check(criteria, 2);
+            AdvancedResult result = check(criteria, 2);
+            for (AdvancedResultItem item : result) {
+                log.info("{}", item.getExcerpt());
+            }
         }
     }
+
+
+    @Test(dataProvider = "language")
+    public void uuidMatch(String language) throws RepositoryException {
+        String helloId;
+        {
+            Node hello = root.addNode("hello");
+            hello.setProperty("a", "04df24e2-adc0-491b-8573-40a1155665d4");
+            hello.addMixin("mix:referenceable");
+            Node hello2 = root.addNode("hello2");
+            hello2.setProperty("a", "16e86c92-71ce-4779-9a0d-6d59dabc7398");
+            Node goodbye = root.addNode("bye");
+            goodbye.setProperty("a", "a2");
+            session.save();
+            helloId = hello.getIdentifier();
+        }
+        log.info("{}", helloId);
+        showSession();
+        {
+            Criteria criteria =
+                builder()
+                    .language(language)
+                    .basePath("/")
+                    .add(Restrictions.attrEq("a", UUID.fromString("16e86c92-71ce-4779-9a0d-6d59dabc7398")))
+                    .build()
+                ;
+            check(criteria, 1);
+        }
+         {
+            Criteria criteria =
+                builder()
+                    .language(language)
+                    .basePath("/")
+                    .add(Restrictions.attrEq("jcr:uuid", UUID.fromString(helloId)))
+                    .build()
+                ;
+            check(criteria, 1);
+        }
+    }
+
 
     @Test(dataProvider = "language")
     public void booleanMatch(String language) throws RepositoryException {
@@ -204,7 +247,7 @@ public class AdvancedCriteriaImplITest {
     }
 
     @Test(dataProvider = "language")
-    public void betweenLong(String language) throws RepositoryException {
+    public void betweenAndEqLong(String language) throws RepositoryException {
         {
             for (long i = 0; i < 10; i++) {
                 Node n = root.addNode("n" + i);
@@ -219,12 +262,22 @@ public class AdvancedCriteriaImplITest {
                     .fromUnstructured()
                     .type("a")
                     .desc(attr("long"))
-                    .add(Restrictions.between(attr("long"), 4, 8)),
+                    .add(between(attr("long"), 4, 8)),
                 language,
                 5); // 4, 5, 6, 7, 8
 
             List<Long> longs = result.stream().map(n -> longProp(n, "long")).collect(Collectors.toList());
             assertThat(longs).containsExactly(8L, 7L, 6L, 5L, 4L);
+        }
+        {
+            AdvancedResult result = check(builder()
+                .fromUnstructured()
+                .type("a")
+                .desc(attr("long"))
+                .add(attrEq("long", 4)),
+                language,
+            1);
+            assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(4);
         }
     }
 
@@ -251,7 +304,7 @@ public class AdvancedCriteriaImplITest {
                 .asc(attr("date"))
                 .timeZone(ZoneId.of("Asia/Tashkent"))
                 .add(
-                    Restrictions.between(attr("date"),
+                    between(attr("date"),
                         LocalDate.of(2019, 1, 5),
                         LocalDate.of(2019, 1, 8))
                 ), language, 4);
@@ -260,7 +313,7 @@ public class AdvancedCriteriaImplITest {
     }
 
     @Test(dataProvider = "language")
-    public void betweenLocaldatesAndInstances(String language) throws RepositoryException {
+    public void betweenLocaldatesAndInstancesAndFindFirst(String language) throws RepositoryException {
         {
             for (long i = 0; i < 10; i++) {
                 Node n = root.addNode("n" + i);
@@ -283,7 +336,7 @@ public class AdvancedCriteriaImplITest {
                 .asc(attr("date"))
                 .timeZone(ZoneId.of("Asia/Tashkent"))
                 .add(
-                    Restrictions.between(attr("date"),
+                    between(attr("date"),
                         LocalDateTime.of(2019, 1, 1, 0, 12),
                         LocalDateTime.of(2019, 1, 1, 0, 50))
                 ), language, 4); // 20, 30, 40, 50
@@ -295,11 +348,16 @@ public class AdvancedCriteriaImplITest {
                 .asc(attr("date"))
                 .timeZone(ZoneId.of("Asia/Tashkent"))
                 .add(
-                    Restrictions.between(attr("date"),
+                    between(attr("date"),
                         LocalDateTime.of(2019, 1, 1, 0, 12).atZone(ZoneId.of("Asia/Tashkent")).toInstant(),
                         LocalDateTime.of(2019, 1, 1, 0, 50).atZone(ZoneId.of("Asia/Tashkent")).toInstant())
                 ), language, 4); // 20, 30, 40, 50
 
+        }
+        {
+            Optional<Node> firstNode = builder().type("a").asc(attr("date"))
+                .build().findFirst(session);
+            assertThat(firstNode.get().getPath()).isEqualTo("/n0");
         }
     }
 
@@ -453,11 +511,11 @@ public class AdvancedCriteriaImplITest {
 
     }
 
-    AdvancedResultImpl check(AdvancedCriteriaImpl.Builder builder, String language,  int expectedSize) {
+    AdvancedResult check(AdvancedCriteriaImpl.Builder builder, String language,  int expectedSize) {
         return check(builder.language(language).build(), expectedSize);
     }
     @SneakyThrows
-    AdvancedResultImpl check(Criteria criteria, int expectedSize) {
+    AdvancedResult  check(Criteria criteria, int expectedSize) {
         AdvancedResultImpl result = (AdvancedResultImpl) criteria.execute(session);
         for (AdvancedResultItem item : result) {
             boolean isUnstructured = item.isNodeType(NodeType.NT_UNSTRUCTURED);
@@ -524,7 +582,12 @@ public class AdvancedCriteriaImplITest {
         NodeIterator n = node.getNodes();
 
         while(n.hasNext()) {
-           showSession(n.nextNode(), count);
+            Node next = n.nextNode();
+            PropertyIterator properties = next.getProperties("jcr:*");
+            while(properties.hasNext()) {
+                log.info("{}", properties.nextProperty().getName());
+            }
+            showSession(next, count);
         }
     }
 }
