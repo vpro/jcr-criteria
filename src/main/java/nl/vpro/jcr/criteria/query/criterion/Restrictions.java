@@ -128,7 +128,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression attrEq(@Nonnull String nodeName, @Nonnull UUID value) {
-        return eq(attr(nodeName), value.toString());
+        return eq(attr(nodeName), value);
     }
 
     /**
