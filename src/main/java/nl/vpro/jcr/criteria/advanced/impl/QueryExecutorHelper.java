@@ -164,9 +164,7 @@ public final class QueryExecutorHelper {
                 forcePagingWithDocumentOrder,
                 offset);
         } catch (RepositoryException e) {
-            JCRQueryException jqe = new JCRQueryException(expr, e);
-            log.error(jqe.getMessage());
-            throw jqe;
+            throw new JCRQueryException(expr, e);
         }
 
     }
