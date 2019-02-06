@@ -27,6 +27,7 @@ import nl.vpro.jcr.criteria.query.AdvancedResultItem;
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.ExecutableQuery;
 import nl.vpro.jcr.criteria.query.criterion.MatchMode;
+import nl.vpro.jcr.criteria.query.criterion.Op;
 import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.criterion.Restrictions;
 import nl.vpro.jcr.criteria.query.impl.Column;
@@ -612,6 +613,31 @@ public class AdvancedCriteriaImplITest {
          check(builder()
              .add(hasNodeType("a", "b"))
              ,language, 7);
+
+    }
+
+
+    @Test(dataProvider = "language")
+    @SneakyThrows
+    public void op(String language) {
+         {
+            for (int i = 0; i < 10; i++) {
+                Node n = root.addNode("node" + i);
+                n.setPrimaryType("a");
+                n.setProperty("long", i);
+                n.setProperty("media", "abcdefghijklm".substring(i, i + 2));
+            }
+             session.save();
+         }
+
+
+          check(builder()
+             .add(Restrictions.attrOp(Op.EQ, "long", 5))
+             ,language, 1);
+
+          check(builder()
+             .add(Restrictions.attrOp(Op.LT, "media", "d"))
+             ,language, 3);
 
     }
 
