@@ -222,7 +222,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static SimpleExpression attrIsTrue(@Nonnull String name) {
-        return eq(attr(name), Boolean.TRUE);
+        return isTrue(attr(name));
     }
 
 

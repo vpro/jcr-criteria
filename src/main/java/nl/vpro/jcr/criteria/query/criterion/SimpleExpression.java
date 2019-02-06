@@ -88,22 +88,12 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
             fragment.append(propertyName).append(getOp());
             fragment.append("'").append(v).append("'");
         } else if (v instanceof Boolean) {
-            boolean boolValue = (boolean) v;
-            switch(getOp()) {
-                case NE:
-                    boolValue = ! boolValue;
-                    break;
-                case EQ:
-                    break;
-                default:
-                    throw new IllegalArgumentException();
-            }
-            if (boolValue) {
-                fragment.append(propertyName)
-                    .append("='true'");
-            } else {
-                fragment.append(propertyName)
-                    .append("='false'");
+            fragment.append(propertyName).append(getOp());
+            fragment.append("'").append(v).append("'");
+            if (getOp() == Op.NE) {
+                fragment.append("or not(")
+                    .append(propertyName)
+                    .append(")");
             }
         } else if (v instanceof Calendar) {
             fragment.append(propertyName)

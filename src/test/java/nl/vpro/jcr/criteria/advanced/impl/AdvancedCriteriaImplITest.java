@@ -214,6 +214,13 @@ public class AdvancedCriteriaImplITest {
                     .add(attrIsFalsy("a")),
                 language,
                 3); // hello2, byte2, root
+
+             check(builder()
+                    .type(NT_UNSTRUCTURED)
+                    .basePath("/")
+                    .add(ne(attr("a"), Boolean.FALSE)),
+                language,
+                4); // root, hello, byte, bye2
         }
     }
 
@@ -232,12 +239,12 @@ public class AdvancedCriteriaImplITest {
         {
             check(builder()
                     .type(NT_UNSTRUCTURED)
-                    .add(Restrictions.isNotNull("@a")),
+                    .add(Restrictions.has("@a")),
                 language, 3);
             check(
                 builder()
                     .type(NT_UNSTRUCTURED)
-                    .add(Restrictions.isNull("@a")),
+                    .add(Restrictions.hasnt("@a")),
                 language,
                 2); // goodbye and root
 
