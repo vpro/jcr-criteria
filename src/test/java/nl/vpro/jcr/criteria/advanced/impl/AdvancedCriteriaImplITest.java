@@ -118,12 +118,17 @@ public class AdvancedCriteriaImplITest {
     @Test(dataProvider = "language")
     public void like(String language) throws RepositoryException {
         {
-            Node hello = root.addNode("hello");
-            hello.setProperty("a", "a1");
-            Node hello2 = root.addNode("hello2");
-            hello2.setProperty("a", "b");
-            Node goodbye = root.addNode("bye");
-            goodbye.setProperty("a", "a2");
+            Node n1 = root.addNode("n1");
+            n1.setProperty("a", "a1"); // a at start
+            Node n2 = root.addNode("n2");
+            n2.setProperty("a", "ba"); // at at begin
+            Node n3 = root.addNode("n3");
+            n3.setProperty("a", "a2"); // another a at start
+
+            Node n4 = root.addNode("n4");
+            n4.setProperty("a", "b a c"); // a, but neither at start, of at end
+            Node n5 = root.addNode("n5");
+            n5.setProperty("a", "b c d"); //no a at all
             session.save();
         }
         {
@@ -137,6 +142,34 @@ public class AdvancedCriteriaImplITest {
                     .build()
                 ;
             AdvancedResult result = check(criteria, 2);
+            for (AdvancedResultItem item : result) {
+                log.info("{}", item.getExcerpt());
+            }
+        }
+        {
+            Criteria criteria =
+                builder()
+                    .language(language)
+                    .basePath("/")
+                    .column(Column.ALL)
+                    .add(Restrictions.attrLike("a", "a"))
+                    .build()
+                ;
+            AdvancedResult result = check(criteria, 4);
+            for (AdvancedResultItem item : result) {
+                log.info("{}", item.getExcerpt());
+            }
+        }
+         {
+            Criteria criteria =
+                builder()
+                    .language(language)
+                    .basePath("/")
+                    .column(Column.ALL)
+                    .add(Restrictions.attrLike("a", "a", MatchMode.END))
+                    .build()
+                ;
+            AdvancedResult result = check(criteria, 1);
             for (AdvancedResultItem item : result) {
                 log.info("{}", item.getExcerpt());
             }

@@ -329,37 +329,10 @@ public final class Restrictions {
      */
     @Nonnull
     public static JCRFunctionExpression like(@Nonnull String nodeName, @Nonnull CharSequence value) {
-        return new LikeExpression(
-            nodeName,
-            XPathTextUtils.stringToJCRSearchExp(value.toString()),
-            " jcr:like",
-            MatchMode.ANYWHERE);
+        return like(nodeName, value, MatchMode.ANYWHERE);
     }
 
-    /**
-     * @since 2.0
-     */
-    @Nonnull
-    public static String attr(@Nonnull String attName) {
-        return Criterion.ATTRIBUTE_SELECTOR + attName;
-    }
 
-    /**
-     * See {@link #like(String, CharSequence)}
-     * @since 2.0
-     */
-    @Nonnull
-    public static JCRFunctionExpression attrLike(@Nonnull String attName, @Nonnull CharSequence value) {
-        return like(attr(attName), value);
-    }
-
-    /**
-     * @since 2.0
-     */
-    @Nonnull
-    public static JCRFunctionExpression attrLike(@Nonnull String attName, @Nonnull CharSequence value, @Nonnull MatchMode matchMode) {
-        return like(attr(attName), value, matchMode);
-    }
 
     /**
      * Apply a "like" constraint to the named node <br>
@@ -399,6 +372,23 @@ public final class Restrictions {
             matchMode);
     }
 
+
+    /**
+     * See {@link #like(String, CharSequence)}
+     * @since 2.0
+     */
+    @Nonnull
+    public static JCRFunctionExpression attrLike(@Nonnull String attName, @Nonnull CharSequence value) {
+        return attrLike(attName, value, MatchMode.ANYWHERE);
+    }
+
+    /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static JCRFunctionExpression attrLike(@Nonnull String attName, @Nonnull CharSequence value, @Nonnull MatchMode matchMode) {
+        return like(attr(attName), value, matchMode);
+    }
 
 
     /**
@@ -750,6 +740,15 @@ public final class Restrictions {
     public static Disjunction disjunction() {
         return new Disjunction(true);
     }
+
+    /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static String attr(@Nonnull String attName) {
+        return Criterion.ATTRIBUTE_SELECTOR + attName;
+    }
+
 
     private static Calendar getDayStart(Calendar cal) {
         Calendar cal2 = Calendar.getInstance();
