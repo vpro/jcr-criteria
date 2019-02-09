@@ -10,10 +10,9 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
-import javax.jcr.*;
-import javax.jcr.nodetype.NodeTypeManager;
-import javax.jcr.nodetype.NodeTypeTemplate;
-import javax.jcr.nodetype.PropertyDefinitionTemplate;
+import javax.jcr.Node;
+import javax.jcr.NodeIterator;
+import javax.jcr.RepositoryException;
 import javax.jcr.query.Query;
 
 import org.testng.annotations.AfterMethod;
@@ -71,52 +70,9 @@ public class AdvancedCriteriaImplITest {
     @BeforeMethod
     public void setup() throws RepositoryException {
         CriteriaTestUtils.setup();
-        Session session = getSession();
-
-        { // define a
-            NodeTypeManager nodeTypeManager = session.getWorkspace().getNodeTypeManager();
-            NodeTypeTemplate a  = nodeTypeManager.createNodeTypeTemplate();
-            a.setName("a");
-            {
-                PropertyDefinitionTemplate media  = nodeTypeManager.createPropertyDefinitionTemplate();
-                media.setName("media");
-                media.setRequiredType(PropertyType.STRING);
-                a.getPropertyDefinitionTemplates().add(media);
-            }
-            {
-                PropertyDefinitionTemplate title  = nodeTypeManager.createPropertyDefinitionTemplate();
-                title.setName("title");
-                title.setRequiredType(PropertyType.STRING);
-                a.getPropertyDefinitionTemplates().add(title);
-            }
-            {
-                PropertyDefinitionTemplate longType   = nodeTypeManager.createPropertyDefinitionTemplate();
-                longType.setName("long");
-                longType.setRequiredType(PropertyType.LONG);
-                a.getPropertyDefinitionTemplates().add(longType);
-            }
-            {
-                PropertyDefinitionTemplate dateType   = nodeTypeManager.createPropertyDefinitionTemplate();
-                dateType.setName("date");
-                dateType.setRequiredType(PropertyType.DATE);
-                a.getPropertyDefinitionTemplates().add(dateType);
-            }
-            a.setQueryable(true);
-            nodeTypeManager.registerNodeType(a, true);
-        }
-        { // define b
-
-            NodeTypeManager nodeTypeManager = session.getWorkspace().getNodeTypeManager();
-            NodeTypeTemplate b  = nodeTypeManager.createNodeTypeTemplate();
-            b.setName("b");
-            PropertyDefinitionTemplate media  = nodeTypeManager.createPropertyDefinitionTemplate();
-            media.setName("media");
-            media.setRequiredType(PropertyType.STRING);
-            b.getPropertyDefinitionTemplates().add(media);
-            b.setQueryable(true);
-            nodeTypeManager.registerNodeType(b, true);
-        }
-
+        getSession();
+        CriteriaTestUtils.defineA();
+        CriteriaTestUtils.defineB();
     }
 
     @AfterMethod

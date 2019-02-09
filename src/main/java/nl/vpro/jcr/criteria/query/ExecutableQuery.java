@@ -50,7 +50,9 @@ public interface ExecutableQuery {
     }
 
 
-    LongSupplier getCountSupplier(Session session);
+    default LongSupplier getCountSupplier(Session session) {
+        throw new UnsupportedOperationException();
+    }
 
     default ZoneId getTimeZone() {
         return ZoneId.systemDefault();

@@ -29,10 +29,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-import javax.jcr.Node;
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
-import javax.jcr.SimpleCredentials;
+import javax.jcr.*;
+import javax.jcr.nodetype.NodeTypeManager;
+import javax.jcr.nodetype.NodeTypeTemplate;
+import javax.jcr.nodetype.PropertyDefinitionTemplate;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.jackrabbit.core.TransientRepository;
@@ -80,6 +80,50 @@ public class CriteriaTestUtils {
 
     public static Session getSession() throws RepositoryException {
         return repository.login(new SimpleCredentials("admin", "admin".toCharArray()));
+    }
+    public static void defineA() throws RepositoryException {
+
+        NodeTypeManager nodeTypeManager = session.getWorkspace().getNodeTypeManager();
+        NodeTypeTemplate a  = nodeTypeManager.createNodeTypeTemplate();
+        a.setName("a");
+        {
+            PropertyDefinitionTemplate media  = nodeTypeManager.createPropertyDefinitionTemplate();
+            media.setName("media");
+            media.setRequiredType(PropertyType.STRING);
+            a.getPropertyDefinitionTemplates().add(media);
+        }
+        {
+            PropertyDefinitionTemplate title  = nodeTypeManager.createPropertyDefinitionTemplate();
+            title.setName("title");
+            title.setRequiredType(PropertyType.STRING);
+            a.getPropertyDefinitionTemplates().add(title);
+        }
+        {
+            PropertyDefinitionTemplate longType   = nodeTypeManager.createPropertyDefinitionTemplate();
+            longType.setName("long");
+            longType.setRequiredType(PropertyType.LONG);
+            a.getPropertyDefinitionTemplates().add(longType);
+        }
+        {
+            PropertyDefinitionTemplate dateType   = nodeTypeManager.createPropertyDefinitionTemplate();
+            dateType.setName("date");
+            dateType.setRequiredType(PropertyType.DATE);
+            a.getPropertyDefinitionTemplates().add(dateType);
+        }
+        a.setQueryable(true);
+        nodeTypeManager.registerNodeType(a, true);
+    }
+    public static void defineB() throws RepositoryException {
+
+        NodeTypeManager nodeTypeManager = session.getWorkspace().getNodeTypeManager();
+        NodeTypeTemplate b  = nodeTypeManager.createNodeTypeTemplate();
+        b.setName("b");
+        PropertyDefinitionTemplate media  = nodeTypeManager.createPropertyDefinitionTemplate();
+        media.setName("media");
+        media.setRequiredType(PropertyType.STRING);
+        b.getPropertyDefinitionTemplates().add(media);
+        b.setQueryable(true);
+        nodeTypeManager.registerNodeType(b, true);
     }
 
 }

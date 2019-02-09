@@ -19,8 +19,6 @@
 
 package nl.vpro.jcr.criteria.query;
 
-import java.util.function.LongSupplier;
-
 import javax.jcr.Session;
 
 import nl.vpro.jcr.criteria.advanced.impl.QueryExecutorHelper;
@@ -29,7 +27,7 @@ import nl.vpro.jcr.criteria.advanced.impl.QueryExecutorHelper;
 /**
  * @author fgiust
  */
-class DirectJcrQuery implements ExecutableQuery  {
+public class DirectJcrQuery implements ExecutableQuery  {
 
     private final Criteria.Expression expression;
 
@@ -82,9 +80,8 @@ class DirectJcrQuery implements ExecutableQuery  {
      * @return the DirectJcrQuery instance for chaining
      */
     public DirectJcrQuery setPaging(int itemsPerPage, int pageNumberStartingFromOne) {
-        this.maxResults = itemsPerPage;
-        this.offset = (Math.max(pageNumberStartingFromOne, 1) - 1) * maxResults;
-        return this;
+        return setMaxResultsPerPage(itemsPerPage)
+            .setOffset((Math.max(pageNumberStartingFromOne, 1) - 1) * maxResults);
     }
 
     @Override
@@ -92,20 +89,11 @@ class DirectJcrQuery implements ExecutableQuery  {
 
         return QueryExecutorHelper.execute(
             expression,
-            () -> {
-                throw new UnsupportedOperationException();
-
-            },
+            () -> { throw new UnsupportedOperationException(); },
             session,
             maxResults,
             offset,
             spellCheckString,
             false);
     }
-
-    @Override
-    public LongSupplier getCountSupplier(Session session) {
-        throw new UnsupportedOperationException();
-    }
-
 }
