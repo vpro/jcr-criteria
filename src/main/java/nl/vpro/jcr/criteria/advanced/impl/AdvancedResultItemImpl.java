@@ -46,11 +46,6 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
     }
 
     @Override
-    public String getExcerpt() {
-        return getExcerpt(".");
-    }
-
-    @Override
     public String getExcerpt(String selector) {
 
         Value excerptValue;
@@ -99,24 +94,10 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
 
     @Override
     @SneakyThrows
-    public String getTitle() {
-        if (hasProperty("title")) {
-            return getProperty("title").getString();
-        }
-        return null;
-    }
-
-    @Override
-    @SneakyThrows
-    public String getHandle() {
-        return getPath();
-    }
-
-    @Override
-    @SneakyThrows
     protected Node getNode() {
         return row.getNode();
     }
+
     @Override
     public String toString() {
         return "row:" + getHandle() + " " + getTitle();

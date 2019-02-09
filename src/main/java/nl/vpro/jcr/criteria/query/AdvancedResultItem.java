@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.query;
 
+import lombok.SneakyThrows;
+
 import javax.jcr.Node;
 
 
@@ -32,7 +34,9 @@ public interface AdvancedResultItem extends Node {
      * Returns the excerpt.
      * @return the excerpt
      */
-    String getExcerpt();
+    default String getExcerpt() {
+        return getExcerpt(".");
+    }
 
     /**
      * Returns the excerpt for a specific property.
@@ -69,11 +73,23 @@ public interface AdvancedResultItem extends Node {
      * Method added for compatibility with the old info.magnolia.cms.core.Content
      * @return the "title" property in this node
      */
-    String getTitle();
+    @SneakyThrows
+    default String getTitle() {
+        if (hasProperty("title")) {
+            return getProperty("title").getString();
+        }
+        return null;
+    }
 
     /**
      * Method added for compatibility with the old info.magnolia.cms.core.Content. You should use getPath()
      * @return the node path
      */
-    String getHandle();
+    @SneakyThrows
+    default String getHandle() {
+        return getPath();
+    }
+
+
+
 }
