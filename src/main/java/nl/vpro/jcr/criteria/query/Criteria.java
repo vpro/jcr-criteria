@@ -140,6 +140,7 @@ public interface Criteria extends ExecutableQuery {
      */
     Criteria setFirstResult(int firstResult);
 
+
     /**
      * Sets the base path of the query, i.e. the branch in the repository tree where the search will take place
      * @param path the /handle/of/a/node, or a xpath query prefix in the form /jcr:root/handle/of/a/node//*
@@ -159,7 +160,10 @@ public interface Criteria extends ExecutableQuery {
      * @param pageNumberStartingFromOne page number to retrieve (1, 2, 3, ...)
      * @return this (for method chaining)
      */
-    Criteria setPaging(int itemsPerPage, int pageNumberStartingFromOne);
+    default Criteria setPaging(int itemsPerPage, int pageNumberStartingFromOne) {
+        return setMaxResults(itemsPerPage).setFirstResult(
+            (Math.max(pageNumberStartingFromOne, 1) - 1) * itemsPerPage);
+    }
 
     /**
      * Sets the original input string for spell checking.

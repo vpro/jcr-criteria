@@ -32,11 +32,11 @@ import nl.vpro.jcr.criteria.query.TranslatableCriteria.OrderEntry;
 /**
  * @author Federico Grilli
  */
-public class JCRMagnoliaCriteriaQueryTranslator {
+public class CriteriaQueryTranslator {
 
     private final TranslatableCriteria criteria;
 
-    public JCRMagnoliaCriteriaQueryTranslator(final TranslatableCriteria criteria) throws JCRQueryException {
+    public CriteriaQueryTranslator(final TranslatableCriteria criteria) throws JCRQueryException {
 
         this.criteria = criteria;
     }

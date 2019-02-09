@@ -22,6 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.ZoneId;
@@ -46,7 +47,7 @@ import nl.vpro.jcr.criteria.query.criterion.Criterion;
 import nl.vpro.jcr.criteria.query.criterion.Junction;
 import nl.vpro.jcr.criteria.query.criterion.Order;
 import nl.vpro.jcr.criteria.query.sql2.Select;
-import nl.vpro.jcr.criteria.query.xpath.JCRMagnoliaCriteriaQueryTranslator;
+import nl.vpro.jcr.criteria.query.xpath.CriteriaQueryTranslator;
 import nl.vpro.jcr.criteria.query.xpath.XPathSelect;
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 
@@ -59,6 +60,8 @@ import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 @Slf4j
 @EqualsAndHashCode(doNotUseGetters = true)
 @AllArgsConstructor
+@Accessors(chain = true)
+
 public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     @Getter
@@ -76,12 +79,19 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     protected List<Column> columns = new ArrayList<>();
 
     @Getter
+    @Setter
     protected int maxResults;
 
-    protected int offset;
+    @Getter
+    @Setter
+    protected int firstResult;
 
+    @Getter
+    @Setter
     protected String spellCheckString;
 
+    @Getter
+    @Setter
     protected boolean forcePagingWithDocumentOrder;
 
     /**
@@ -141,50 +151,11 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     }
 
 
-    /**
-     * Returns the firstResult.
-     * @return the firstResult
-     */
-    public int getFirstResult() {
-        return offset;
-    }
-
-    @Override
-    public Criteria setFirstResult(int firstResult) {
-        this.offset = firstResult;
-        return this;
-    }
-
-
-    @Override
-    public Criteria setMaxResults(int maxResults) {
-        this.maxResults = maxResults;
-        return this;
-    }
-
-    @Override
-    public Criteria setPaging(int itemsPerPage, int pageNumberStartingFromOne) {
-        this.maxResults = itemsPerPage;
-        this.offset = (Math.max(pageNumberStartingFromOne, 1) - 1) * maxResults;
-        return this;
-    }
-
-    @Override
-    public Criteria setSpellCheckString(String spellCheckString) {
-        this.spellCheckString = spellCheckString;
-        return this;
-    }
-
-    @Override
-    public Criteria setForcePagingWithDocumentOrder(boolean force) {
-        this.forcePagingWithDocumentOrder = force;
-        return this;
-    }
 
     @Override
     @Deprecated
     public Expression toXpathExpression() {
-        JCRMagnoliaCriteriaQueryTranslator translator = new JCRMagnoliaCriteriaQueryTranslator(this);
+        CriteriaQueryTranslator translator = new CriteriaQueryTranslator(this);
         XPathSelect statement = new XPathSelect();
         statement.setType(type);
         if (! Criterion.ALL_ELEMENTS.equals(basePath) && basePath != null) {
@@ -214,7 +185,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
             getCountSupplier(session),
             session,
             maxResults,
-            offset,
+            firstResult,
             spellCheckString,
             forcePagingWithDocumentOrder && this.orderEntries.isEmpty());
     }
