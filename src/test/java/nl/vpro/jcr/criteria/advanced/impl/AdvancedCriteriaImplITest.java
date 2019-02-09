@@ -84,6 +84,12 @@ public class AdvancedCriteriaImplITest {
                 a.getPropertyDefinitionTemplates().add(media);
             }
             {
+                PropertyDefinitionTemplate title  = nodeTypeManager.createPropertyDefinitionTemplate();
+                title.setName("title");
+                title.setRequiredType(PropertyType.STRING);
+                a.getPropertyDefinitionTemplates().add(title);
+            }
+            {
                 PropertyDefinitionTemplate longType   = nodeTypeManager.createPropertyDefinitionTemplate();
                 longType.setName("long");
                 longType.setRequiredType(PropertyType.LONG);
@@ -558,6 +564,29 @@ public class AdvancedCriteriaImplITest {
     }
 
 
+     @Test(dataProvider = "sql2only")
+    public void isDescendant(String language) throws RepositoryException {
+
+        Node node2;
+        {
+            Node node1 = root.addNode("node1");
+            node2 = node1.addNode("node2");
+            Node node2_1 = node2.addNode("node2_1");
+            Node node2_2 = node2.addNode("node2_2");
+            Node node2_1_1 = node2_1.addNode("node2_1_1");
+            Node node3 = root.addNode("node3");
+            session.save();
+        }
+
+        AdvancedCriteriaImpl.Builder criteria = builder()
+            .add(Restrictions.isDescendantOf(node2))
+            .score();
+
+
+        check(criteria, language,3); // node 2_1 and 2_2 and also  2_1_1
+    }
+
+
     @Test(dataProvider = "language")
     @SneakyThrows
     public void pagingAndWrapping(String language) {
@@ -653,24 +682,35 @@ public class AdvancedCriteriaImplITest {
     @Test(dataProvider = "language")
     @SneakyThrows
     public void op(String language) {
-         {
+        {
             for (int i = 0; i < 10; i++) {
                 Node n = root.addNode("node" + i);
                 n.setPrimaryType("a");
                 n.setProperty("long", i);
-                n.setProperty("media", "abcdefghijklm".substring(i, i + 2));
+                n.setProperty("title", "abcdefghijklm".substring(i, i + 2));
             }
-             session.save();
-         }
+            session.save();
+        }
 
 
-          check(builder()
-             .add(Restrictions.attrOp(Op.EQ, "long", 5))
+        check(builder()
+                .add(Restrictions.attrOp(Op.EQ, "long", 5))
              ,language, 1);
 
-          check(builder()
-             .add(Restrictions.attrOp(Op.LT, "media", "d"))
-             ,language, 3);
+        {
+            AdvancedResult check = check(builder()
+                    .add(attrOp(Op.LT, "title", "d"))
+                    .desc(attr("title"))
+                , language, 3);
+            assertThat(check.getFirstResult().getTitle()).isEqualTo("cd");
+        }
+        {
+            AdvancedResult check = check(builder()
+                .add(attrOp(Op.LT, "title", "a"))
+                .desc(attr("title"))
+                , language, 0);
+            assertThat(check.getFirstResult()).isNull();
+        }
 
     }
 

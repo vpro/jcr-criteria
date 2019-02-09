@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.annotation.Nonnull;
-import javax.jcr.Node;
-import javax.jcr.RepositoryException;
 
 import nl.vpro.jcr.criteria.query.criterion.Criterion;
 
@@ -20,11 +18,6 @@ public class IsDescendantNode implements Condition {
 
     @Nonnull
     final String path;
-
-    protected IsDescendantNode(@Nonnull  Node node) throws RepositoryException {
-        this(node.getPath());
-
-    }
 
     @Override
     public boolean toSql2(StringBuilder builder) {
