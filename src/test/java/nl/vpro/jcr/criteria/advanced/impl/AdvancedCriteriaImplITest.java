@@ -38,6 +38,7 @@ import static nl.vpro.jcr.criteria.query.JCRCriteriaFactory.builder;
 import static nl.vpro.jcr.criteria.query.criterion.Restrictions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertFalse;
 
@@ -51,6 +52,7 @@ import static org.testng.AssertJUnit.assertFalse;
 public class AdvancedCriteriaImplITest {
 
 
+    @SuppressWarnings("deprecation")
     @DataProvider(name = "language")
     public static Object[][] language() {
         return new Object[][] {{Query.XPATH}, {Query.JCR_SQL2}, {""}};
@@ -347,6 +349,24 @@ public class AdvancedCriteriaImplITest {
                 9);
             assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(0);
         }
+         {
+            AdvancedResult result = check(builder().fromUnstructured()
+                    .type("a")
+                    .asc(attr("long"))
+                    .add(ge(attr("long"), 4)),
+                language,
+                6);
+            assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(4);
+        }
+         {
+            AdvancedResult result = check(builder().fromUnstructured()
+                    .type("a")
+                    .asc(attr("long"))
+                    .add(gt(attr("long"), 4)),
+                language,
+                5);
+            assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(5);
+        }
     }
 
     @Test(dataProvider = "language")
@@ -465,7 +485,7 @@ public class AdvancedCriteriaImplITest {
 
         AdvancedCriteriaImpl.Builder criteria = builder()
             .basePath(node1.getPath())
-            .order(Order.desc("@jcr:score"));
+            .score();
 
 
         check(criteria, language,2);
@@ -482,7 +502,7 @@ public class AdvancedCriteriaImplITest {
             node1.setProperty("a", "a");
 
             Node node2 = node1.addNode("node2");
-            node2.setProperty("a", "x y b z");
+            node2.setProperty("a", "x y b c z");
 
             Node node2_1 = node2.addNode("node2_1");
             node2_1.setProperty("a", "c");
@@ -495,10 +515,23 @@ public class AdvancedCriteriaImplITest {
 
         AdvancedCriteriaImpl.Builder criteria = builder()
             .add(Restrictions.in(attr("a"), "b", "c"))
-            .order(Order.desc("@jcr:score"));
+            .add(Order.SCORE);
 
 
-        check(criteria, language,2);
+        AdvancedResult result = check(criteria, language, 2);
+        Iterator<AdvancedResultItem> i = result.iterator(); ;
+        AdvancedResultItem item1 = i.next();
+        AdvancedResultItem item2 = i.next();
+        assertThat(i.hasNext()).isFalse();
+        try {
+            i.next();
+            fail("Should have thrown exception");
+        } catch(NoSuchElementException ignored) {
+
+        }
+        assertThat(item1.getScore()).isGreaterThan(item2.getScore());
+        assertThat(item1.getHandle()).isEqualTo("/node1/node2");
+        assertThat(item2.getHandle()).isEqualTo("/node1/node2/node2_1");
     }
 
 
@@ -640,6 +673,35 @@ public class AdvancedCriteriaImplITest {
              ,language, 3);
 
     }
+
+     @Test(dataProvider = "language")
+    @SneakyThrows
+    public void localPaging(String language) {
+         {
+            for (int i = 0; i < 50; i++) {
+                Node n = root.addNode("node" + i);
+                n.setPrimaryType("a");
+                n.setProperty("long", i);
+                n.setProperty("media", "abcdefghijklmopqrstuvw".substring(i % 20, (i % 20) + 2));
+            }
+             session.save();
+         }
+
+
+         AdvancedResult result = check(builder()
+                 .paging(10, 2)
+                 .type("a")
+                 .order(Order.desc(attr("long")))
+                 .forcePagingWithDocumentOrder(true)
+             ,language, 50);
+         assertThat(result).hasSize(10);
+         assertThat(result.getNumberOfPages()).isEqualTo(5);
+         assertThat(result.getItems().getPosition()).isEqualTo(0);
+
+
+
+    }
+
 
     AdvancedResult check(AdvancedCriteriaImpl.Builder builder, String language,  int expectedSize) {
         return check(builder.language(language).build(), expectedSize);

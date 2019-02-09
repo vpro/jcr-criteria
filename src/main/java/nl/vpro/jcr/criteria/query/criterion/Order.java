@@ -37,6 +37,13 @@ public class Order extends BaseCriterion implements Criterion {
 
     private static final long serialVersionUID = -1228583450961430360L;
 
+    /**
+     * @since 2.0
+     */
+
+    public static final Order SCORE = Order.desc("@" + JcrConstants.JCR_SCORE);
+
+
     @Getter
     private boolean ascending;
 
@@ -81,12 +88,6 @@ public class Order extends BaseCriterion implements Criterion {
         return new Order(propertyName, false);
     }
 
-    /**
-     * @since 2.0
-     */
-    public static Order score() {
-        return Order.desc("@" + JcrConstants.JCR_SCORE);
-    }
 
     @Override
     public String toString() {

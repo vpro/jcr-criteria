@@ -19,9 +19,14 @@
 
 package nl.vpro.jcr.criteria.query;
 
+import lombok.experimental.Delegate;
+
+import java.util.Iterator;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import javax.annotation.Nonnull;
+import javax.jcr.RangeIterator;
 import javax.jcr.query.Row;
 import javax.jcr.query.RowIterator;
 
@@ -36,6 +41,7 @@ public class ResultIteratorImpl<T> implements ResultIterator<T> {
     /**
      * The jcr RowIterator
      */
+    @Delegate(types = {ResultIterator.class, RangeIterator.class, Iterator.class},  excludes = Wrapped.class)
     protected final RowIterator rowIterator;
     protected final Function<Row, T> wrapper;
 
@@ -46,36 +52,15 @@ public class ResultIteratorImpl<T> implements ResultIterator<T> {
 
 
     @Override
-    public boolean hasNext() {
-        return rowIterator.hasNext();
-    }
-
-    @Override
-    public void remove() {
-        rowIterator.remove();
-    }
-
-    @Override
-    public void skip(long skipNum) {
-        rowIterator.skip(skipNum);
-    }
-
-
-    @Override
-    public long getSize() {
-        return rowIterator.getSize();
-    }
-
-
-    @Override
-    public long getPosition() {
-        return rowIterator.getPosition();
-    }
-
-
-    @Override
     public T next() {
         return wrapper.apply(rowIterator.nextRow());
+    }
+
+
+    private interface Wrapped<T> {
+        T next();
+        void forEachRemaining(Consumer<? super T> action);
+
     }
 
 }

@@ -86,11 +86,7 @@ public class AdvancedResultItemImpl extends JcrNodeWrapper implements AdvancedRe
     @Override
     public double getScore(String selector) {
         if (selector == null) {
-            try {
-                return row.getScore();
-            }catch (RepositoryException e) {
-                log.warn("unable to extract score from {}", row);
-            }
+            return getScore();
         }
         try {
             return row.getScore(selector);

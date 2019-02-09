@@ -127,7 +127,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     @Override
     public Criteria addOrderByScore() {
-        orderEntries.add(new OrderEntry(Order.desc("@jcr:score"), this));
+        orderEntries.add(new OrderEntry(Order.SCORE, this));
         return this;
     }
 

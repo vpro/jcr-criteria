@@ -67,7 +67,7 @@ public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
         ZoneId timeZone,
         @Singular
         List<Column> columns
-        ) {
+    ) {
         super(
             basePath == null ? Criterion.ALL_ELEMENTS : basePath,
             type,
@@ -109,6 +109,9 @@ public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
         }
         public Builder desc(String field){
             return order(Order.desc(field));
+        }
+        public Builder score() {
+            return order(Order.SCORE);
         }
 
 

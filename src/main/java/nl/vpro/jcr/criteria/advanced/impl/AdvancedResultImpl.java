@@ -140,7 +140,7 @@ public class AdvancedResultImpl implements AdvancedResult {
     }
 
     @Override
-    public ResultIterator<AdvancedResultItem> getItems() {
+    public <K> ResultIterator<K> getItems(Function<Row, K> wrapper) {
 
         if ((applyLocalPaging && ((itemsPerPage != null && itemsPerPage > 0) || offset > 0))) {
 
@@ -152,7 +152,7 @@ public class AdvancedResultImpl implements AdvancedResult {
             rowIterator.skip(offset);
 
             // removing following records and alter getSize()
-            return new ResultIteratorImpl<AdvancedResultItem>(rowIterator, AdvancedResultItemImpl::new) {
+            return new ResultIteratorImpl<K>(rowIterator, wrapper) {
 
                 @Override
                 public boolean hasNext() {
@@ -165,7 +165,7 @@ public class AdvancedResultImpl implements AdvancedResult {
             };
         }
 
-        return new ResultIteratorImpl<>(getRowIterator(), AdvancedResultItemImpl::new);
+        return new ResultIteratorImpl<K>(getRowIterator(), wrapper);
     }
 
     protected RowIterator getRowIterator() {
@@ -214,38 +214,6 @@ public class AdvancedResultImpl implements AdvancedResult {
 
 
 
-    @Override
-    public <K> ResultIterator<K> getItems(Function<Row, K> wrapper) {
-        RowIterator rows;
-        try {
-            rows = jcrQueryResult.get().getRows();
-        } catch (RepositoryException e)  {
-            throw new JCRQueryException(statement, e);
-        }
 
-        if (applyLocalPaging && itemsPerPage > 0)  {
-            final int offset = (Math.max(pageNumberStartingFromOne, 1) - 1) * itemsPerPage;
-
-            // removing preceding records
-            rows.skip(offset);
-
-            // removing following records and alter getSize()
-            return new ResultIteratorImpl<K>(rows, wrapper)  {
-                @Override
-                public boolean hasNext() {
-                    return super.getPosition() - offset < getSize() && super.hasNext();
-                }
-
-                @Override
-                public long getSize() {
-                    return Math.min(super.getSize() - offset, itemsPerPage);
-                }
-
-            };
-        }
-
-        return new ResultIteratorImpl<K>(rows, wrapper);
-
-    }
 
 }

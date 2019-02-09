@@ -19,7 +19,6 @@
 
 package nl.vpro.jcr.criteria.query;
 
-import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.Function;
@@ -27,6 +26,8 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import javax.jcr.query.Row;
+
+import nl.vpro.jcr.criteria.advanced.impl.AdvancedResultItemImpl;
 
 
 /**
@@ -78,7 +79,9 @@ public interface AdvancedResult extends Iterable<AdvancedResultItem> {
      * Gets an iterator over the results
      * @return an iterator over the results
      */
-    ResultIterator<AdvancedResultItem> getItems();
+    default ResultIterator<AdvancedResultItem> getItems() {
+        return getItems(AdvancedResultItemImpl::new);
+    }
 
     /**
      * Gets an iterator over the results, transforming objects using the given function while iterating
@@ -98,7 +101,7 @@ public interface AdvancedResult extends Iterable<AdvancedResultItem> {
      * @since 2.0
      */
     @Override
-    default Iterator<AdvancedResultItem> iterator() {
+    default ResultIterator<AdvancedResultItem> iterator() {
         return getItems();
     }
 

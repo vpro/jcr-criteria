@@ -57,7 +57,7 @@ import nl.vpro.jcr.criteria.query.criterion.Restrictions;
 @Slf4j
 public class CriteriaTestUtils {
 
-    static Repository repository;
+    static TransientRepository repository;
     static Path tempDirectory;
     static Path tempFile;
     public static Session session;
@@ -78,6 +78,8 @@ public class CriteriaTestUtils {
     }
 
     public static  void shutdown() {
+        repository.shutdown();
+
         try {
             FileUtils.deleteDirectory(tempDirectory.toFile());
             Files.deleteIfExists(tempFile);

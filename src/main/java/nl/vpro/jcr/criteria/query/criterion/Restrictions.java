@@ -379,7 +379,7 @@ public final class Restrictions {
      */
     @Nonnull
     public static JCRFunctionExpression attrLike(@Nonnull String attName, @Nonnull CharSequence value) {
-        return attrLike(attName, value, MatchMode.ANYWHERE);
+        return like(attr(attName), value);
     }
 
     /**
