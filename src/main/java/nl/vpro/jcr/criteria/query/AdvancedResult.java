@@ -19,6 +19,7 @@
 
 package nl.vpro.jcr.criteria.query;
 
+import java.util.NoSuchElementException;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.Function;
@@ -117,8 +118,6 @@ public interface AdvancedResult extends Iterable<AdvancedResultItem> {
      */
     class EmptyResult implements AdvancedResult {
 
-        private ResultIterator<AdvancedResultItem> iterator = new EmptyResultIterator();
-
         @Override
         public long getTotalSize() {
             return 0L;
@@ -139,10 +138,6 @@ public interface AdvancedResult extends Iterable<AdvancedResultItem> {
             return null;
         }
 
-        @Override
-        public ResultIterator<AdvancedResultItem> getItems() {
-            return iterator;
-        }
 
         @Override
         public int getNumberOfPages() {
@@ -156,18 +151,20 @@ public interface AdvancedResult extends Iterable<AdvancedResultItem> {
 
         @Override
         public <K> ResultIterator<K> getItems(Function<Row, K> wrapper) {
-            return null;
+            return new EmptyResultIterator<K>();
         }
     }
 
     /**
      * @author fgiust
      */
-    final class EmptyResultIterator implements ResultIterator<AdvancedResultItem> {
+    final class EmptyResultIterator<K> implements ResultIterator<K> {
 
         @Override
         public void skip(long skipNum) {
-            // nothing to do
+            if (skipNum > 0) {
+                throw new NoSuchElementException();
+            }
         }
 
         @Override
@@ -186,13 +183,13 @@ public interface AdvancedResult extends Iterable<AdvancedResultItem> {
         }
 
         @Override
-        public AdvancedResultItem next() {
-            return null;
+        public K next() {
+            throw new NoSuchElementException();
         }
 
         @Override
         public void remove() {
-            // nothing to do
+            throw new IllegalStateException();
         }
 
     }

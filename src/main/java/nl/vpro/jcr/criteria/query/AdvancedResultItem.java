@@ -61,7 +61,9 @@ public interface AdvancedResultItem extends Node {
      *
      */
     @Deprecated
-    Node getJCRNode();
+    default Node getJCRNode() {
+        return this;
+    }
 
     /**
      * Method added for compatibility with the old info.magnolia.cms.core.Content

@@ -20,6 +20,8 @@
 package nl.vpro.jcr.criteria.advanced;
 
 
+import lombok.SneakyThrows;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -135,19 +137,19 @@ public class BasePathTest {
         Assert.assertTrue(paths.contains("/Criteria/TranslatableCriteria/AbstractCriteriaImpl/AdvancedCriteriaImpl"));
     }
 
+    @SneakyThrows
     private Collection<String> searchPaths(String basePath, String title) {
         Criteria criteria = JCRCriteriaFactory.createCriteria();
         criteria.setBasePath(basePath);
         criteria.add(Restrictions.eq(Criterion.JCR_PRIMARYTYPE, "nt:page"));
-        if (!StringUtils.isEmpty(title))
-        {
+        if (!StringUtils.isEmpty(title)) {
             criteria.add(Restrictions.eq("@title", title));
         }
         AdvancedResult advResult = criteria.execute(CriteriaTestUtils.session);
         ResultIterator<? extends Node> items = advResult.getItems();
-        List<String> paths = new ArrayList<String>();
+        List<String> paths = new ArrayList<>();
         while (items.hasNext()) {
-            paths.add(CriteriaTestUtils.path(items.next()));
+            paths.add(items.next().getPath());
         }
         return paths;
     }
