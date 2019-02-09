@@ -19,6 +19,8 @@
 
 package nl.vpro.jcr.criteria.query;
 
+import lombok.experimental.Delegate;
+
 /**
  * Runtime exception wrapper for jcr checked exceptions.
  * @author fgrilli
@@ -27,23 +29,15 @@ public class JCRQueryException extends RuntimeException {
 
     private static final long serialVersionUID = -8737641628360563743L;
 
+    @Delegate
     private Criteria.Expression expression;
 
     public JCRQueryException(Criteria.Expression expression, Throwable cause) {
-        super("An error occurred while executing a query.  Query was "
+        super("An error occurred while executing a " + expression.getLanguage() + " query. Query was '"
             + expression.statement
-            + ". Exception message is "
+            + "'. Exception message is "
             + cause.getMessage(), cause);
         this.expression = expression;
-    }
-
-    public String getStatement() {
-        return expression.getStatement();
-    }
-
-
-    public String getLanguage() {
-        return expression.getLanguage();
     }
 
 
