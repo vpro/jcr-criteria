@@ -58,15 +58,6 @@ public enum MatchMode {
         }
     };
 
-
-    MatchMode() {
-    }
-
-    @Override
-    public String toString(){
-        return name();
-    }
-
     /**
      * convert the pattern, by appending/prepending "%"
      * @param pattern input pattern

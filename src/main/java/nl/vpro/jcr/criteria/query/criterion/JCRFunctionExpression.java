@@ -35,11 +35,11 @@ public class JCRFunctionExpression extends BaseCriterion implements Criterion {
 
     protected final String propertyName;
 
-    protected final Object value;
+    protected final CharSequence value;
 
     protected final String function;
 
-    public JCRFunctionExpression(String propertyName, Object value, String function) {
+    public JCRFunctionExpression(String propertyName, CharSequence value, String function) {
         this.propertyName = propertyName;
         this.value = value;
         this.function = function;

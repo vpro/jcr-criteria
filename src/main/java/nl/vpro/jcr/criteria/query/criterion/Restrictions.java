@@ -419,30 +419,12 @@ public final class Restrictions {
      */
     @Nonnull
     public static JCRFunctionExpression contains(@Nonnull  String nodeName, @Nonnull  CharSequence value, boolean escape) {
-        String exp;
+        CharSequence exp;
         if (escape) {
             exp = XPathTextUtils.stringToJCRSearchExp(value.toString());
         } else {
-            exp = value.toString();
+            exp = value;
         }
-        return new JCRFunctionExpression(nodeName, exp, " jcr:contains");
-    }
-
-    /**
-     * See {@link #contains(String, CharSequence)}
-     * @since 2.0
-     */
-    @Nonnull
-    public static JCRFunctionExpression contains(@Nonnull  String nodeName, @Nonnull  Number value) {
-        return new JCRFunctionExpression(nodeName, value, " jcr:contains");
-    }
-    /**
-     * See {@link #contains(String, CharSequence)}
-     * @since 2.0
-     */
-    @Nonnull
-    public static JCRFunctionExpression contains(@Nonnull  String nodeName, @Nonnull  UUID value) {
-         String exp = value.toString();
         return new JCRFunctionExpression(nodeName, exp, " jcr:contains");
     }
 
