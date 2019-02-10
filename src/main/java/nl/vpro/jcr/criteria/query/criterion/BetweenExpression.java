@@ -23,6 +23,8 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Calendar;
 
+import javax.annotation.Nonnull;
+
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
 import nl.vpro.jcr.criteria.query.sql2.AndCondition;
@@ -46,30 +48,37 @@ public class BetweenExpression extends BaseCriterion implements Criterion {
 
     private final Comparable<?> lo;
 
+    private final boolean lowerInclusive;
+
     private final Comparable<?> hi;
 
-    protected BetweenExpression(String propertyName, Comparable<?> lo, Comparable<?> hi) {
+    private final boolean higherInclusive;
+
+    protected BetweenExpression(@Nonnull String propertyName, @Nonnull Comparable<?> lo, boolean lowerInclusive, @Nonnull  Comparable<?> hi, boolean higherInclusive) {
         this.propertyName = propertyName;
         this.lo = lo;
+        this.lowerInclusive = lowerInclusive;
         this.hi = hi;
+        this.higherInclusive = higherInclusive;
     }
 
     @Override
     public String toString() {
-        return propertyName + " between " + lo + " and " + hi;
+        return propertyName + " between " + (lowerInclusive ? "[" : "<") + lo +
+            ", " + hi + (higherInclusive ? "]" : ">");
     }
 
     @Override
     public String toXPathString(Criteria criteria) throws JCRQueryException {
         StringBuilder fragment = new StringBuilder();
-        fragment.append(" (").append(propertyName).append(" >= ");
+        fragment.append(" (").append(propertyName).append(lowerOp().getXpath());
 
         Object v1 = toCalendarIfPossible(lo, criteria.getTimeZone());
         Object v2 = toCalendarIfPossible(hi, criteria.getTimeZone());
         if (v1 instanceof CharSequence && v2 instanceof CharSequence) {
-            fragment.append("'").append(v1).append("' and ").append(propertyName).append(" <= '").append(v2).append("'");
+            fragment.append('\'').append(v1).append("' and ").append(propertyName).append(higherOp().getXpath()).append('\'').append(v2).append('\'');
         } else if (v1 instanceof Number && v2 instanceof Number) {
-            fragment.append(v1).append(" and ").append(propertyName).append(" <= ").append(v2);
+            fragment.append(v1).append(" and ").append(propertyName).append(higherOp().getXpath()).append(v2);
         } else if (v1 instanceof Calendar && v2  instanceof Calendar) {
             Calendar cal1 = (Calendar) v1;
             Calendar cal2 = (Calendar) v2;
@@ -83,15 +92,23 @@ public class BetweenExpression extends BaseCriterion implements Criterion {
     }
 
     protected void toXPathString(StringBuilder fragment, Calendar cal1, Calendar cal2) {
-         fragment.append(XS_DATETIME_FUNCTION + "('").append(XPathTextUtils.toXsdDate(cal1)).append("')  and ").append(propertyName).append(" <= ").append(XS_DATETIME_FUNCTION).append("('").append(XPathTextUtils.toXsdDate(cal2)).append("') ");
+         fragment.append(XS_DATETIME_FUNCTION + "('").append(XPathTextUtils.toXsdDate(cal1)).append("')  and ").append(propertyName).append(higherOp().getXpath()).append(XS_DATETIME_FUNCTION).append("('").append(XPathTextUtils.toXsdDate(cal2)).append("') ");
     }
 
     @Override
     public Condition toSQLCondition(Criteria criteria) {
         return new AndCondition(
-            SimpleExpressionCondition.of(Field.of(propertyName), Op.GE, lo, criteria.getTimeZone()),
-            SimpleExpressionCondition.of(Field.of(propertyName), Op.LE, hi, criteria.getTimeZone())
+            SimpleExpressionCondition.of(Field.of(propertyName), lowerOp(), lo, criteria.getTimeZone()),
+            SimpleExpressionCondition.of(Field.of(propertyName), higherOp(), hi, criteria.getTimeZone())
         );
     }
+
+    protected Op lowerOp() {
+        return lowerInclusive ? Op.GE : Op.GT;
+    }
+    protected Op higherOp() {
+        return higherInclusive ? Op.LE : Op.LT;
+    }
+
 
 }

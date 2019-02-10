@@ -284,6 +284,13 @@ public final class Restrictions {
     public static SimpleExpression ne(@Nonnull String nodeName, @Nonnull Calendar value) {
         return new SimpleExpression(nodeName, value, Op.NE);
     }
+     /**
+     * See {@link #ne(String, CharSequence)}
+     */
+    @Nonnull
+    public static SimpleExpression ne(@Nonnull String nodeName, @Nonnull Instant value) {
+        return new SimpleExpression(nodeName, value, Op.NE);
+    }
     /**
      * See {@link #ne(String, CharSequence)}
      */
@@ -578,27 +585,70 @@ public final class Restrictions {
      */
     @Nonnull
     public static Criterion between(String nodeName, CharSequence lo, CharSequence hi) {
-        return new BetweenExpression(nodeName, lo.toString(), hi.toString());
+        return between(nodeName, lo, true, hi, true);
+    }
+
+    /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static Criterion between(String nodeName, CharSequence lo, boolean lowerInclusive,  CharSequence hi, boolean higherInclusive) {
+        return new BetweenExpression(nodeName, lo.toString(), lowerInclusive, hi.toString(), higherInclusive);
     }
     @Nonnull
     public static Criterion between(String nodeName, Number lo, Number hi) {
-        return new BetweenExpression(nodeName, (Comparable) lo, (Comparable) hi);
+        return between(nodeName, lo, true, hi, true);
+    }
+    /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static Criterion between(String nodeName, Number lo, boolean lowerInclusive, Number hi, boolean higherInclusive) {
+        return new BetweenExpression(nodeName, (Comparable) lo, lowerInclusive, (Comparable) hi, higherInclusive);
     }
     @Nonnull
     public static Criterion between(String nodeName, Calendar lo, Calendar hi) {
-        return new BetweenExpression(nodeName, lo, hi);
+        return between(nodeName, lo, true, hi, true);
+    }
+    /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static Criterion between(String nodeName, Calendar lo, boolean lowerInclusive, Calendar hi, boolean higherInclusive) {
+        return new BetweenExpression(nodeName, lo, lowerInclusive, hi, higherInclusive);
     }
     @Nonnull
     public static Criterion between(String nodeName, LocalDateTime lo, LocalDateTime hi) {
-        return new BetweenExpression(nodeName, lo, hi);
+        return between(nodeName, lo, true, hi, true);
+    }
+    /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static Criterion between(String nodeName, LocalDateTime lo, boolean lowerInclusive, LocalDateTime hi, boolean higherInclusive) {
+        return new BetweenExpression(nodeName, lo, lowerInclusive, hi, higherInclusive);
     }
     @Nonnull
     public static Criterion between(String nodeName, LocalDate lo, LocalDate hi) {
-        return new BetweenExpression(nodeName, lo, hi);
+        return between(nodeName, lo, true, hi, true);
+    }
+    /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static Criterion between(String nodeName, LocalDate lo, boolean lowerInclusive, LocalDate hi, boolean higherInclusive) {
+        return new BetweenExpression(nodeName, lo, lowerInclusive, hi, higherInclusive);
     }
     @Nonnull
     public static Criterion between(String nodeName, Instant lo, Instant hi) {
-        return new BetweenExpression(nodeName, lo, hi);
+        return between(nodeName, lo, true, hi, true);
+    }
+    /**
+     * @since 2.0
+     */
+    @Nonnull
+    public static Criterion between(String nodeName, Instant lo, boolean lowerInclusive, Instant hi, boolean higherInclusive) {
+        return new BetweenExpression(nodeName, lo, lowerInclusive, hi, higherInclusive);
     }
 
 

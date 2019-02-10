@@ -125,7 +125,7 @@ public class AdvancedCriteriaImplITest {
                 log.info("{}", item.getExcerpt());
             }
         }
-         {
+        {
             Criteria criteria =
                 builder()
                     .language(language)
@@ -251,6 +251,52 @@ public class AdvancedCriteriaImplITest {
         }
     }
 
+
+    @Test(dataProvider = "language")
+    public void betweenStringsAndEq(String language) throws RepositoryException {
+        {
+            for (long i = 0; i < 100; i++) {
+                Node n = root.addNode("n" + i);
+                LocalDateTime dateTime = LocalDate.of(2019, 1, 1).plusDays(i).atStartOfDay();
+                n.setPrimaryType("a");
+                n.setProperty("title", String.format("title%02d", i));
+            }
+
+            session.save();
+        }
+        {
+            check(builder()
+                .type("a")
+                .asc(attr("title"))
+                .add(
+                    between(attr("title"),
+                        "title20",
+                        "title25")
+                ), language, 6);
+
+        }
+        {
+            check(builder()
+                .type("a")
+                .asc(attr("title"))
+                .add(
+                    ne(attr("title"),
+                        "title24")
+                ), language, 99);
+
+        }
+         {
+            check(builder()
+                .type("a")
+                .asc(attr("title"))
+                .add(
+                    attrEq("title", "title24")
+                ), language, 1);
+
+        }
+    }
+
+
     @Test(dataProvider = "language")
     public void betweenAndEqLong(String language) throws RepositoryException {
         {
@@ -267,12 +313,12 @@ public class AdvancedCriteriaImplITest {
                     .fromUnstructured()
                     .type("a")
                     .desc(attr("long"))
-                    .add(between(attr("long"), 4, 8)),
+                    .add(between(attr("long"), 4, false, 8, true)),
                 language,
-                5); // 4, 5, 6, 7, 8
+                4); // 5, 6, 7, 8
 
             List<Long> longs = result.stream().map(n -> longProp(n, "long")).collect(Collectors.toList());
-            assertThat(longs).containsExactly(8L, 7L, 6L, 5L, 4L);
+            assertThat(longs).containsExactly(8L, 7L, 6L, 5L);
         }
         {
             AdvancedResult result = check(builder()
@@ -332,7 +378,7 @@ public class AdvancedCriteriaImplITest {
     }
 
     @Test(dataProvider = "language")
-    public void betweenDates(String language) throws RepositoryException {
+    public void betweenDatesAndEq(String language) throws RepositoryException {
         {
             for (long i = 0; i < 10; i++) {
                 Node n = root.addNode("n" + i);
@@ -360,7 +406,20 @@ public class AdvancedCriteriaImplITest {
                 ), language, 4);
 
         }
+        {
+            check(builder()
+                .type("a")
+                .asc(attr("date"))
+                .timeZone(ZoneId.of("Asia/Tashkent"))
+                .add(
+                    attrEq("date",
+                        LocalDate.of(2019, 1, 6))
+                ), language, 1);
+
+        }
     }
+
+
 
     @Test(dataProvider = "language")
     public void betweenLocalDatesAndInstancesAndFindFirst(String language) throws RepositoryException {
@@ -392,7 +451,7 @@ public class AdvancedCriteriaImplITest {
                 ), language, 4); // 20, 30, 40, 50
 
         }
-         {
+        {
             check(builder()
                 .type("a")
                 .asc(attr("date"))
@@ -400,6 +459,16 @@ public class AdvancedCriteriaImplITest {
                 .add(
                     attrEq("date", LocalDateTime.of(2019, 1, 1, 0, 30))
                 ), language, 1);
+
+        }
+        {
+          check(builder()
+                .type("a")
+                .asc(attr("date"))
+                .timeZone(ZoneId.of("Asia/Tashkent"))
+                .add(
+                    ne(attr("date"), LocalDateTime.of(2019, 1, 1, 0, 30))
+                ), language, 9);
 
         }
         {
@@ -420,6 +489,44 @@ public class AdvancedCriteriaImplITest {
                 .add(
                     attrEq("date", LocalDateTime.of(2019, 1, 1, 0, 30).atZone(ZoneId.of("Asia/Tashkent")).toInstant())
                 ), language, 1);
+
+        }
+        {
+            check(builder()
+                .type("a")
+                .asc(attr("date"))
+                .add(
+                    ne(attr("date"), LocalDateTime.of(2019, 1, 1, 0, 30).atZone(ZoneId.of("Asia/Tashkent")).toInstant())
+                ), language, 9);
+
+        }
+        {
+            check(builder()
+                .type("a")
+                .asc(attr("date"))
+                .add(
+                    between(attr("date"),
+                        GregorianCalendar.from(LocalDateTime.of(2019, 1, 1, 0, 12).atZone(ZoneId.of("Asia/Tashkent"))),
+                        GregorianCalendar.from(LocalDateTime.of(2019, 1, 1, 0, 50).atZone(ZoneId.of("Asia/Tashkent"))))
+                ), language, 4); // 20, 30, 40, 50
+
+        }
+        {
+            check(builder()
+                .type("a")
+                .asc(attr("date"))
+                .add(
+                    attrEq("date", GregorianCalendar.from(LocalDateTime.of(2019, 1, 1, 0, 30).atZone(ZoneId.of("Asia/Tashkent"))))
+                ), language, 1);
+
+        }
+        {
+            check(builder()
+                .type("a")
+                .asc(attr("date"))
+                .add(
+                    ne(attr("date"), GregorianCalendar.from(LocalDateTime.of(2019, 1, 1, 0, 30).atZone(ZoneId.of("Asia/Tashkent"))))
+                ), language, 9);
 
         }
         {
