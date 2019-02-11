@@ -19,7 +19,9 @@
 
 package nl.vpro.jcr.criteria.query.criterion;
 
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
@@ -37,16 +39,13 @@ public class JCRFunctionExpression extends BaseCriterion implements Criterion {
 
     protected final CharSequence value;
 
+    @Getter(AccessLevel.PROTECTED)
     protected final String function;
 
     public JCRFunctionExpression(String propertyName, CharSequence value, String function) {
         this.propertyName = propertyName;
         this.value = value;
         this.function = function;
-    }
-
-    protected final String getFunction() {
-        return function;
     }
 
     @Override

@@ -50,8 +50,8 @@ public abstract class Junction implements Criterion {
     @Getter(AccessLevel.PACKAGE)
     final String op;
 
-    @Getter @Setter
-
+    @Getter
+    @Setter
     boolean outer;
 
     protected Junction(String op, boolean outer, Criterion... clauses) {

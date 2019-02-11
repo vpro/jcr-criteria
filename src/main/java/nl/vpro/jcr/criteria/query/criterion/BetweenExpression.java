@@ -20,6 +20,7 @@
 package nl.vpro.jcr.criteria.query.criterion;
 
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 
 import java.util.Calendar;
 
@@ -54,7 +55,10 @@ public class BetweenExpression extends BaseCriterion implements Criterion {
 
     private final boolean higherInclusive;
 
-    protected BetweenExpression(@Nonnull String propertyName, @Nonnull Comparable<?> lo, boolean lowerInclusive, @Nonnull  Comparable<?> hi, boolean higherInclusive) {
+    protected BetweenExpression(
+        @NonNull @Nonnull String propertyName,
+        @NonNull @Nonnull Comparable<?> lo, boolean lowerInclusive,
+        @NonNull @Nonnull  Comparable<?> hi, boolean higherInclusive) {
         this.propertyName = propertyName;
         this.lo = lo;
         this.lowerInclusive = lowerInclusive;
