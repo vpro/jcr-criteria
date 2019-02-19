@@ -107,8 +107,9 @@ public class AdvancedResultImpl implements AdvancedResult {
         if (! totalSizeDetermined()) {
             long queryTotalSize = -1;
             try { // jcrQueryResult instanceof JackrabbitQueryResult) {
-                Method m = jcrQueryResult.getClass().getMethod("getTotalSize");
-                queryTotalSize = (int) m.invoke(jcrQueryResult);
+                QueryResult queryResult = jcrQueryResult.get();
+                Method m = queryResult.getClass().getMethod("getTotalSize");
+                queryTotalSize = (int) m.invoke(queryResult);
             } catch (InvocationTargetException | IllegalAccessException e) {
                 log.error(e.getMessage(), e);
             } catch (NoSuchMethodException e) {
