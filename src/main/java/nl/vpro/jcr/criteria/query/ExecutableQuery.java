@@ -35,7 +35,12 @@ public interface ExecutableQuery {
      * Executes the query
      * @return the search result
      */
-    AdvancedResult execute(Session session);
+    default AdvancedResult execute(Session session) {
+        return execute(session, null);
+    }
+
+    AdvancedResult execute(Session session, String language);
+
 
     /**
      * @since 2.0
@@ -50,7 +55,7 @@ public interface ExecutableQuery {
     }
 
 
-    default LongSupplier getCountSupplier(Session session) {
+    default LongSupplier getCountSupplier(Session session, String language) {
         throw new UnsupportedOperationException();
     }
 

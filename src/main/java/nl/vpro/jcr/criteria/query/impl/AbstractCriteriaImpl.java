@@ -40,7 +40,6 @@ import nl.vpro.jcr.criteria.advanced.impl.AdvancedCriteriaImpl;
 import nl.vpro.jcr.criteria.advanced.impl.AdvancedResultImpl;
 import nl.vpro.jcr.criteria.advanced.impl.QueryExecutorHelper;
 import nl.vpro.jcr.criteria.query.AdvancedResult;
-import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
 import nl.vpro.jcr.criteria.query.TranslatableCriteria;
 import nl.vpro.jcr.criteria.query.criterion.Criterion;
@@ -121,7 +120,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
 
     @Override
-    public Criteria add(Criterion criterion) {
+    public AbstractCriteriaImpl add(Criterion criterion) {
         if (criterion instanceof Junction) {
             ((Junction) criterion).setOuter(false);
         }
@@ -130,19 +129,19 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     }
 
     @Override
-    public Criteria addOrder(Order order) {
+    public AbstractCriteriaImpl addOrder(Order order) {
         orderEntries.add(new OrderEntry(order, this));
         return this;
     }
 
     @Override
-    public Criteria addOrderByScore() {
+    public AbstractCriteriaImpl addOrderByScore() {
         orderEntries.add(new OrderEntry(Order.SCORE, this));
         return this;
     }
 
     @Override
-    public Criteria setBasePath(String path) {
+    public AbstractCriteriaImpl setBasePath(String path) {
         if (!XPathTextUtils.isValidNodePath(path)) {
             throw new IllegalArgumentException("Path " + path + " is not a valid node path");
         }
@@ -178,11 +177,14 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
 
     @Override
-    public AdvancedResult execute(Session session) {
+    public AdvancedResult execute(Session session, String language) {
+        if (language == null) {
+            language = this.language;
+        }
         Expression expr = toExpression(language);
         return QueryExecutorHelper.execute(
             expr,
-            getCountSupplier(session),
+            getCountSupplier(session, language),
             session,
             maxResults,
             firstResult,
@@ -191,7 +193,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     }
 
     @Override
-    public LongSupplier getCountSupplier(Session session) {
+    public LongSupplier getCountSupplier(Session session, String language) {
         return () -> {
             long startTime = System.nanoTime();
             try {

@@ -85,7 +85,10 @@ public class DirectJcrQuery implements ExecutableQuery  {
     }
 
     @Override
-    public AdvancedResult execute(Session session) {
+    public AdvancedResult execute(Session session, String language) {
+        if (language != null && ! language.equals(expression.getLanguage())) {
+            throw new IllegalArgumentException("This direct JCR criteria can only be executed as " + expression.getLanguage());
+        }
 
         return QueryExecutorHelper.execute(
             expression,
