@@ -196,6 +196,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     public LongSupplier getCountSupplier(Session session, String language) {
         return () -> {
             long startTime = System.nanoTime();
+            Expression expr = null;
             try {
                 AdvancedCriteriaImpl countCriteria = JCRCriteriaFactory.createCriteria();
                 for (CriterionEntry c : getCriterionEntries()) {
@@ -205,7 +206,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
                 countCriteria.setType(type);
                 countCriteria.setSpellCheckString(spellCheckString);
 
-                Expression expr = countCriteria.toExpression(language);
+                expr = countCriteria.toExpression(language);
                 final AdvancedResultImpl result = QueryExecutorHelper.execute(
                     expr,
                     () -> -1,
@@ -220,9 +221,9 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
             } finally {
                 long duration = TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
                 if (duration > 50) {
-                    log.info("Total size was not available, determining it took {} ms", duration);
+                    log.info("Total size was not available for {}, determining it took {} ms", expr, duration);
                 } else {
-                    log.debug("Total size was not available, determining it took {} ms", duration);
+                    log.debug("Total size was not available for {}, determining it took {} ms", expr, duration);
                 }
             }
         };

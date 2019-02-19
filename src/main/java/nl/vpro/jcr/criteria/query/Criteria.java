@@ -246,6 +246,10 @@ public interface Criteria extends ExecutableQuery {
         public static Expression sql2(String statement) {
             return new Expression(Query.JCR_SQL2, statement);
         }
+        @Override
+        public String toString() {
+            return language + ":" + statement;
+        }
 
     }
 
