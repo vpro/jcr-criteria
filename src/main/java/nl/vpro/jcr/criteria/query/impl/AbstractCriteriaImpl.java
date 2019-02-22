@@ -95,6 +95,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     /**
      * Language to produce queries in (Supported are {@link Query#XPATH}, {@link Query#JCR_SQL2} and <code>null</code>, which means to prefer SQL2, but fall back to XPATH)
+     * @deprecated use language on {@link #execute(Session, String)}
      */
     @Getter
     @Setter

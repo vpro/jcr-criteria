@@ -63,6 +63,7 @@ public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
         int offset,
         String spellCheckString,
         boolean forcePagingWithDocumentOrder,
+        @Deprecated
         String language,
         ZoneId timeZone,
         @Singular

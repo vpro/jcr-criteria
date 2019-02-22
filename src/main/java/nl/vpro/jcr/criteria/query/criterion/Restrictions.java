@@ -801,8 +801,17 @@ public final class Restrictions {
      */
     @SneakyThrows
     public static Criterion isDescendantOf(Node issueNode) {
-        return new IsDescendantOf(issueNode.getPath());
+        return isDescendantOf(issueNode.getPath());
     }
+
+    /**
+     * @since 2.1
+     */
+    public static Criterion isDescendantOf(String path) {
+        return new IsDescendantOf(path);
+    }
+
+
 
 
     /**
@@ -810,7 +819,14 @@ public final class Restrictions {
      */
     @SneakyThrows
     public static Criterion isChildOf(Node issueNode) {
-        return new IsChildOf(issueNode.getPath());
+        return isChildOf(issueNode.getPath());
+    }
+
+    /**
+     * @since 2.1
+     */
+    public static Criterion isChildOf(String path) {
+        return new IsChildOf(path);
     }
 
 }

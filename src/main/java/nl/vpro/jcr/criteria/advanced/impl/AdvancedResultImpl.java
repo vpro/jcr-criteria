@@ -110,10 +110,11 @@ public class AdvancedResultImpl implements AdvancedResult {
                 QueryResult queryResult = jcrQueryResult.get();
                 Method m = queryResult.getClass().getMethod("getTotalSize");
                 queryTotalSize = (int) m.invoke(queryResult);
+                log.debug("Using  {}", m);
             } catch (InvocationTargetException | IllegalAccessException e) {
                 log.error(e.getMessage(), e);
             } catch (NoSuchMethodException e) {
-                log.debug(e.getMessage());
+                log.debug("{}: {}", e.getClass().getSimpleName(),  e.getMessage());
             }
             if (queryTotalSize == -1 && (itemsPerPage == 0 || applyLocalPaging)) {
                 totalResults = getRowIterator().getSize();

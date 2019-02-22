@@ -99,14 +99,13 @@ public class AdvancedCriteriaImplITest {
         {
             Criteria criteria =
                 builder()
-                    .language(language)
                     .basePath("/")
                     .column(Column.ALL)
                     //.column(Column.EXCERPT) TODO Does't work
                     .add(Restrictions.attrLike("a", "a", MatchMode.START))
                     .build()
                 ;
-            AdvancedResult result = check(criteria, 2);
+            AdvancedResult result = check(criteria, language, 2);
             for (AdvancedResultItem item : result) {
                 log.info("{}", item.getExcerpt());
             }
@@ -114,13 +113,12 @@ public class AdvancedCriteriaImplITest {
         {
             Criteria criteria =
                 builder()
-                    .language(language)
                     .basePath("/")
                     .column(Column.ALL)
                     .add(Restrictions.attrLike("a", "a"))
                     .build()
                 ;
-            AdvancedResult result = check(criteria, 4);
+            AdvancedResult result = check(criteria, language, 4);
             for (AdvancedResultItem item : result) {
                 log.info("{}", item.getExcerpt());
             }
@@ -128,13 +126,12 @@ public class AdvancedCriteriaImplITest {
         {
             Criteria criteria =
                 builder()
-                    .language(language)
                     .basePath("/")
                     .column(Column.ALL)
                     .add(Restrictions.attrLike("a", "a", MatchMode.END))
                     .build()
                 ;
-            AdvancedResult result = check(criteria, 1);
+            AdvancedResult result = check(criteria, language, 1);
             for (AdvancedResultItem item : result) {
                 log.info("{}", item.getExcerpt());
             }
@@ -161,22 +158,20 @@ public class AdvancedCriteriaImplITest {
         {
             Criteria criteria =
                 builder()
-                    .language(language)
                     .basePath("/")
                     .add(Restrictions.attrEq("a", UUID.fromString("16e86c92-71ce-4779-9a0d-6d59dabc7398")))
                     .build()
                 ;
-            check(criteria, 1);
+            check(criteria, language, 1);
         }
          {
             Criteria criteria =
                 builder()
-                    .language(language)
                     .basePath("/")
                     .add(Restrictions.attrEq("jcr:uuid", UUID.fromString(helloId)))
                     .build()
                 ;
-            check(criteria, 1);
+            check(criteria, language, 1);
         }
     }
 
@@ -205,7 +200,7 @@ public class AdvancedCriteriaImplITest {
                 language,
                 2);
 
-                ;
+
             check(builder()
                     .type(NT_UNSTRUCTURED)
                     .basePath("/")
@@ -246,7 +241,6 @@ public class AdvancedCriteriaImplITest {
                 language,
                 2); // goodbye and root
 
-                ;
 
         }
     }
@@ -665,12 +659,11 @@ public class AdvancedCriteriaImplITest {
         ExecutableQuery query = builder()
             .fromUnstructured()
             .paging(10, 2)
-            .language(language)
             .asc("@integer")
             .build();
 
 
-        AdvancedResult result = query.execute(session);
+        AdvancedResult result = query.execute(session, language);
         assertThat(result.getItemsPerPage()).isEqualTo(10);
         assertThat(result.getTotalSize()).isEqualTo(101); // those 100 plus root.
         List<String> test = new ArrayList<>();
@@ -807,11 +800,11 @@ public class AdvancedCriteriaImplITest {
 
 
     AdvancedResult check(AdvancedCriteriaImpl.Builder builder, String language,  int expectedSize) {
-        return check(builder.language(language).build(), expectedSize);
+        return check(builder.build(), language, expectedSize);
     }
     @SneakyThrows
-    AdvancedResult  check(Criteria criteria, int expectedSize) {
-        AdvancedResultImpl result = (AdvancedResultImpl) criteria.execute(session);
+    AdvancedResult  check(Criteria criteria, String language, int expectedSize) {
+        AdvancedResultImpl result = (AdvancedResultImpl) criteria.execute(session, language);
         for (AdvancedResultItem item : result) {
             boolean isUnstructured = item.isNodeType(NT_UNSTRUCTURED);
             log.info("{} {} (is unstructured: {})", item.getPrimaryNodeType().getName(), item, isUnstructured);
