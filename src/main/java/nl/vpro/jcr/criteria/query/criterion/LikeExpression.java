@@ -22,6 +22,7 @@ package nl.vpro.jcr.criteria.query.criterion;
 import lombok.EqualsAndHashCode;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
@@ -39,10 +40,10 @@ public class LikeExpression extends JCRFunctionExpression {
 
     private MatchMode matchMode;
 
-    public LikeExpression(@Nonnull  String propertyName, @Nonnull  CharSequence value, @Nonnull  String function, @Nonnull  MatchMode matchMode) {
+    public LikeExpression(@Nonnull  String propertyName, @Nonnull  CharSequence value, @Nonnull  String function, @Nullable  MatchMode matchMode) {
         super(propertyName, value, function);
         if (matchMode == null) {
-            throw new IllegalArgumentException("MatchMode can't be null");
+            matchMode = MatchMode.NONE;
         }
         this.matchMode = matchMode;
     }
@@ -52,7 +53,8 @@ public class LikeExpression extends JCRFunctionExpression {
         StringBuilder fragment = new StringBuilder();
         fragment.append(" (").append(function).append("(");
         fragment.append(propertyName);
-        fragment.append(", '").append(matchMode.toMatchString(value.toString())).append("') ) ");
+        fragment.append(", '").append(
+            matchMode.toMatchString(value.toString())).append("') ) ");
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
     }

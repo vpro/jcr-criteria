@@ -136,6 +136,20 @@ public class AdvancedCriteriaImplITest {
                 log.info("{}", item.getExcerpt());
             }
         }
+        {
+            Criteria criteria =
+                builder()
+                    .basePath("/")
+                    .column(Column.ALL)
+                    .add(Restrictions.attrLike("a", "b % c", MatchMode.NONE))
+                    .build()
+                ;
+            AdvancedResult result = check(criteria, language, 1);
+            for (AdvancedResultItem item : result) {
+                log.info("{}", item.getExcerpt());
+            }
+            assertThat(result.getFirstResult().getHandle()).isEqualTo("/n4");
+        }
     }
 
 

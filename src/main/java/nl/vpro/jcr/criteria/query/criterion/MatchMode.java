@@ -56,6 +56,18 @@ public enum MatchMode {
         public String toMatchString(String pattern) {
             return '%' + pattern + '%';
         }
+    },
+
+    /**
+     * The pattern may itself contain the %'s
+     * @since 2.1
+     */
+    NONE{
+
+        @Override
+        public String toMatchString(String pattern) {
+            return pattern;
+        }
     };
 
     /**
