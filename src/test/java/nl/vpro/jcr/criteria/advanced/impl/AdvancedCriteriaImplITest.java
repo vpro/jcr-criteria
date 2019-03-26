@@ -635,13 +635,13 @@ public class AdvancedCriteriaImplITest {
     }
 
 
-     @Test(dataProvider = "sql2only")
-    public void isDescendant(String language) throws RepositoryException {
+    @Test(dataProvider = "sql2only")
+    public void isDescendantOrSame(String language) throws RepositoryException {
 
         Node node2;
         {
             Node node1 = root.addNode("node1");
-            node2 = node1.addNode("node2");
+            node2 = node1.addNode("node'&2");
             Node node2_1 = node2.addNode("node2_1");
             Node node2_2 = node2.addNode("node2_2");
             Node node2_1_1 = node2_1.addNode("node2_1_1");
@@ -655,6 +655,21 @@ public class AdvancedCriteriaImplITest {
 
 
         check(criteria, language,3); // node 2_1 and 2_2 and also  2_1_1
+
+
+
+        AdvancedCriteriaImpl.Builder criteriaOrSame = builder()
+            .add(Restrictions.or(
+                Restrictions.isDescendantOf(node2),
+                Restrictions.isSame(node2))
+            )
+            .score();
+
+        check(criteriaOrSame, language,4); // node 2_1 and 2_2 and also  2_1_1, and node2 itself
+
+
+
+
     }
 
 

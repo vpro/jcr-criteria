@@ -812,6 +812,23 @@ public final class Restrictions {
     }
 
 
+      /**
+     * @since 2.1
+     */
+    public static Criterion isSame(String path) {
+        return new IsSame(path);
+    }
+
+
+      /**
+     * @since 2.1
+     */
+      @SneakyThrows
+    public static Criterion isSame(Node node) {
+        return isSame(node.getPath());
+    }
+
+
 
 
     /**

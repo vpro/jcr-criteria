@@ -102,7 +102,11 @@ public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
         }
 
         public Builder fromUnstructured() {
-            return type(NT_UNSTRUCTURED);
+            return from(NT_UNSTRUCTURED);
+        }
+
+        public Builder from(String type) {
+            return type(type);
         }
 
         public Builder asc(String field){

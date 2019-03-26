@@ -22,7 +22,7 @@ public class IsChildNode implements Condition {
     @Override
     public boolean toSql2(StringBuilder builder) {
         if (! Criterion.ALL_ELEMENTS.equals(path)) {
-            builder.append("ISCHILDNODE(a, '").append(path).append("')");
+            builder.append("ISCHILDNODE(a, '").append(Utils.escapeQuotedPath(path)).append("')");
             return true;
         }
         return false;
