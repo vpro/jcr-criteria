@@ -8,7 +8,7 @@ import nl.vpro.jcr.criteria.query.sql2.IsSameNode;
 
 /**
  * @author Michiel Meeuwissen
- * @since 2.0
+ * @since 2.1
  */
 @EqualsAndHashCode(callSuper = true)
 public class IsSame extends BaseCriterion implements Criterion {
