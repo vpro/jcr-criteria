@@ -17,7 +17,7 @@ You can download the most recent jar from https://oss.sonatype.org/content/repos
 <dependency>
     <groupId>nl.vpro</groupId>
     <artifactId>jcr-criteria</artifactId>
-    <version>2.0</version>
+    <version>2.1</version>
 </dependency>
 ```
 
