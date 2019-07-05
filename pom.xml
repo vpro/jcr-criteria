@@ -44,7 +44,7 @@
   <properties>
     <jcr.version>2.0</jcr.version>
     <slf4j.version>1.7.13</slf4j.version>
-    <jackrabbit.version>2.19.1</jackrabbit.version>
+    <jackrabbit.version>2.19.3</jackrabbit.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
@@ -134,7 +134,7 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.8.1</version>
+      <version>3.9</version>
     </dependency>
     <dependency>
       <groupId>org.testng</groupId>
@@ -151,7 +151,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.6</version>
+      <version>1.18.8</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.findbugs</groupId>
