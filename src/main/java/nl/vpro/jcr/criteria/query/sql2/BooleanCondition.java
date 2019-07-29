@@ -36,8 +36,8 @@ public abstract class BooleanCondition implements Condition {
             }
         }
         if (appendCount > 1) {
-            //builder.insert(location, '(');
-            //builder.append(')');
+            builder.insert(location, '(');
+            builder.append(')');
         }
         return appendCount > 0;
     }
