@@ -4,7 +4,7 @@ env:
   - SONATYPE_USERNAME=vpro
   - secure: JGi3VM0XMxgp+tdUwgsr2UHbGVEm2rFCFDwctYk2xpt/e5QFbFhFjbcx+KLd4JGSFA3TKUAOkhYu3My+lYM2x0pDCYZWgYp5TXOysRiiQma6hgzF23QAgta/TwcEhsOw3DrQazi0D8RkUAu1BC5CFx3MwkARUIQU6gDWHSrEAfQ=
 jdk:
-- oraclejdk8
+- openjdk8
 sudo: false
 script: mvn clean test install
 after_success:
