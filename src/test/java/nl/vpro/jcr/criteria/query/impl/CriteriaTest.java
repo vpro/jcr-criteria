@@ -65,7 +65,7 @@ public class CriteriaTest {
         conjunction.add(Restrictions.attrEq("anotherproperty", "anothertest"));
 
         assertEquals(criteria.toXpathExpression().getStatement(), "/jcr:root/site//*[(@property='test' and @anotherproperty='anothertest')]");
-        assertEquals(criteria.toSql2Expression().getStatement(), "SELECT * from [nt:base] as a WHERE ISDESCENDANTNODE(a, '/site') AND [property] = 'test' AND [anotherproperty] = 'anothertest'");
+        assertEquals(criteria.toSql2Expression().getStatement(), "SELECT * from [nt:base] as a WHERE (ISDESCENDANTNODE(a, '/site') AND ([property] = 'test' AND [anotherproperty] = 'anothertest'))");
     }
 
     @Test
@@ -80,7 +80,7 @@ public class CriteriaTest {
 
         assertEquals(criteria.toXpathExpression().getStatement(), "/jcr:root/site//*[((property='false' or not(property)) or @anotherproperty='true')]");
 
-        assertEquals(criteria.toSql2Expression().getStatement(), "SELECT * from [nt:base] as a WHERE ISDESCENDANTNODE(a, '/site') AND [property] = false OR [property] IS NULL OR [anotherproperty] = true");
+        assertEquals(criteria.toSql2Expression().getStatement(), "SELECT * from [nt:base] as a WHERE (ISDESCENDANTNODE(a, '/site') AND (([property] = false OR [property] IS NULL) OR [anotherproperty] = true))");
     }
 
     /**

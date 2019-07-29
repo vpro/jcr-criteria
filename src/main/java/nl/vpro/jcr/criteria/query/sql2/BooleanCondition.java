@@ -4,7 +4,6 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -24,16 +23,23 @@ public abstract class BooleanCondition implements Condition {
 
     @Override
     public boolean toSql2(StringBuilder builder) {
-        Iterator<Condition> i = clauses.iterator();
-        int length = builder.length();
+
+        int location = builder.length();
+        int appendCount = 0;
         String op = getBooleanOperator();
-        while(i.hasNext()) {
-            if (builder.length() > length) {
+        for (Condition clause : clauses) {
+            if (appendCount > 0) {
                 builder.append(op);
             }
-            i.next().toSql2(builder);
+            if (clause.toSql2(builder)) {
+                appendCount++;
+            }
         }
-        return builder.length() > length;
+        if (appendCount > 1) {
+            //builder.insert(location, '(');
+            //builder.append(')');
+        }
+        return appendCount > 0;
     }
 
     public boolean hasClauses() {
