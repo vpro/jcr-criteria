@@ -666,9 +666,39 @@ public class AdvancedCriteriaImplITest {
             .score();
 
         check(criteriaOrSame, language,4); // node 2_1 and 2_2 and also  2_1_1, and node2 itself
+    }
+
+
+    @Test(dataProvider = "language")
+    public void booleans(String language) throws RepositoryException {
+        {
+            for (long i = 0; i < 20; i++) {
+                Node n = root.addNode("n" + i);
+                if (i % 2 == 0) {
+                    n.setProperty("foo", true);
+                }
+                n.setProperty("a", i % 5);
+                if (i % 2 == 0) {
+                    log.info("foo: {} a: {}", i % 2 == 0, i % 5);
+                }
+            }
+            session.save();
+        }
 
 
 
+        AdvancedCriteriaImpl.Builder criteria = builder()
+            .add(Restrictions.attrIsTrue("foo"))
+            .add(Restrictions.or(
+                Restrictions.attrEq("a", 2),
+                Restrictions.attrEq("a", 3)
+                )
+            )
+            .score();
+        // 20 nodes
+        // 10 have foo
+        // of those 4 have either a=2 or a=3
+        check(criteria, language,4);
 
     }
 
