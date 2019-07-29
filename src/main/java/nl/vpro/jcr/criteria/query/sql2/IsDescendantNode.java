@@ -4,7 +4,7 @@ package nl.vpro.jcr.criteria.query.sql2;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import javax.annotation.Nonnull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import nl.vpro.jcr.criteria.query.criterion.Criterion;
 
@@ -18,7 +18,7 @@ import static nl.vpro.jcr.criteria.query.sql2.Utils.escapeQuotedPath;
 @Data
 public class IsDescendantNode implements Condition {
 
-    @Nonnull
+    @NonNull
     final String path;
 
     @Override

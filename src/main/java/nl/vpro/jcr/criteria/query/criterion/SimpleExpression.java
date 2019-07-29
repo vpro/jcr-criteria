@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Calendar;
 
-import javax.annotation.Nonnull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -51,7 +51,7 @@ public class SimpleExpression extends BaseCriterion implements Criterion {
 
     private final Op op;
 
-    protected SimpleExpression(@Nonnull String propertyName, @Nonnull Object value, @Nonnull Op op) {
+    protected SimpleExpression(@NonNull String propertyName, @NonNull Object value, @NonNull Op op) {
         this.propertyName = propertyName;
         this.value = value;
         this.op = op;

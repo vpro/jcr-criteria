@@ -21,8 +21,8 @@ package nl.vpro.jcr.criteria.query.criterion;
 
 import lombok.EqualsAndHashCode;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;
@@ -40,7 +40,7 @@ public class LikeExpression extends JCRFunctionExpression {
 
     private MatchMode matchMode;
 
-    public LikeExpression(@Nonnull  String propertyName, @Nonnull  CharSequence value, @Nonnull  String function, @Nullable  MatchMode matchMode) {
+    public LikeExpression(@NonNull  String propertyName, @NonNull  CharSequence value, @NonNull  String function, @Nullable MatchMode matchMode) {
         super(propertyName, value, function);
         if (matchMode == null) {
             matchMode = MatchMode.NONE;

@@ -5,7 +5,7 @@ import lombok.SneakyThrows;
 import java.time.ZoneId;
 import java.util.Calendar;
 
-import javax.annotation.Nonnull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import org.apache.jackrabbit.value.ValueFactoryImpl;
 
@@ -24,7 +24,7 @@ public abstract class SimpleExpressionCondition<T> implements  Condition {
     final T value;
 
 
-    protected SimpleExpressionCondition(@Nonnull  Field field, @Nonnull  Op op, @Nonnull  T value) {
+    protected SimpleExpressionCondition(@NonNull  Field field, @NonNull  Op op, @NonNull  T value) {
         this.field = field;
         this.op = op;
         this.value = value;

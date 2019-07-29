@@ -2,7 +2,7 @@ package nl.vpro.jcr.criteria.query.sql2;
 
 import lombok.Data;
 
-import javax.annotation.Nonnull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * @author Michiel Meeuwissen
@@ -13,7 +13,7 @@ public class ContainsCondition implements  Condition {
     final Field field;
     final String value;
 
-    public ContainsCondition(@Nonnull  String propertyName, @Nonnull  String toMatchString) {
+    public ContainsCondition(@NonNull  String propertyName, @NonNull  String toMatchString) {
         this.field = Field.of(propertyName);
         this.value = toMatchString;
     }

@@ -4,7 +4,7 @@ package nl.vpro.jcr.criteria.query.sql2;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import javax.annotation.Nonnull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import static nl.vpro.jcr.criteria.query.sql2.Utils.escapeQuotedPath;
 
@@ -16,7 +16,7 @@ import static nl.vpro.jcr.criteria.query.sql2.Utils.escapeQuotedPath;
 @Data
 public class IsSameNode implements Condition {
 
-    @Nonnull
+    @NonNull
     final String path;
 
     @Override

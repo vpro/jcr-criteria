@@ -1,6 +1,6 @@
 package nl.vpro.jcr.criteria.query.sql2;
 
-import javax.annotation.Nonnull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import nl.vpro.jcr.criteria.query.criterion.Op;
 
@@ -10,11 +10,11 @@ import nl.vpro.jcr.criteria.query.criterion.Op;
  */
 public class CastFromStringSimpleExpressionCondition extends SimpleExpressionCondition<String> {
 
-    @Nonnull
+    @NonNull
     private final String castTo;
 
     public CastFromStringSimpleExpressionCondition(
-        @Nonnull  String castTo, @Nonnull Field field, @Nonnull Op op, String value) {
+        @NonNull  String castTo, @NonNull Field field, @NonNull Op op, String value) {
         super(field, op, value);
         this.castTo = castTo;
     }

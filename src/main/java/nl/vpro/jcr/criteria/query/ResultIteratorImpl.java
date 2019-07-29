@@ -25,10 +25,11 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
 import javax.jcr.RangeIterator;
 import javax.jcr.query.Row;
 import javax.jcr.query.RowIterator;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 
 /**
@@ -45,7 +46,7 @@ public class ResultIteratorImpl<T> implements ResultIterator<T> {
     protected final RowIterator rowIterator;
     protected final Function<Row, T> wrapper;
 
-    public  ResultIteratorImpl(@Nonnull RowIterator rowIterator, @Nonnull Function<Row, T> wrapper) {
+    public  ResultIteratorImpl(@NonNull RowIterator rowIterator, @NonNull Function<Row, T> wrapper) {
         this.rowIterator = rowIterator;
         this.wrapper = wrapper;
     }
