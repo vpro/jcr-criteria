@@ -29,6 +29,7 @@ import nl.vpro.jcr.criteria.query.JCRCriteriaFactory;
 /**
  * @author dschivo
  */
+@SuppressWarnings("deprecation")
 public class ConjunctionTest {
 
     /**
