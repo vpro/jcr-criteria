@@ -1,9 +1,7 @@
+[![Maven Central](https://img.shields.io/maven-central/v/nl.vpro/jcr-criteria.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22nl.vpro%22%20AND%20a:%22jcr-criteria%22)
 [![javadoc](http://www.javadoc.io/badge/nl.vpro/jcr-criteria.svg?color=blue)](http://www.javadoc.io/doc/nl.vpro/jcr-criteria)
 [![Build Status](https://travis-ci.org/vpro/jcr-criteria.svg?)](https://travis-ci.org/vpro/jcr-criteria)
-[![Maven Central](https://img.shields.io/maven-central/v/nl.vpro/jcr-criteria.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22nl.vpro%22%20AND%20a:%22jcr-criteria%22)
 [![codecov](https://codecov.io/gh/vpro/jcr-criteria/branch/master/graph/badge.svg)](https://codecov.io/gh/vpro/jcr-criteria)
-
-
 
 # jcr-criteria
 
