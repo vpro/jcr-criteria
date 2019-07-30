@@ -63,4 +63,4 @@ AdvancedResult result = criteria.execute(session);
 ```
 
 ## Java 11 and higher
-This project is shipped with a `module-info.java` which is though the only file compiled with java 11. The is compiled with java 8, so it is java 8 compatible, but it does participate in jigsaw.
+This project is shipped (since 2.2) with a `module-info.java` which is though the only file compiled with java 11. The is compiled with java 8, so it is java 8 compatible, but it does participate in jigsaw.
