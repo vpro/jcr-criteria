@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/vpro/jcr-criteria.svg?)](https://travis-ci.org/vpro/jcr-criteria)
 [![Maven Central](https://img.shields.io/maven-central/v/nl.vpro/jcr-criteria.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22nl.vpro%22%20AND%20a:%22jcr-criteria%22)
+[![javadoc](http://www.javadoc.io/badge/nl.vpro/jcr-criteria.svg?color=blue)](http://www.javadoc.io/doc/nl.vpro/jcr-criteria)
+[![Build Status](https://travis-ci.org/vpro/jcr-criteria.svg?)](https://travis-ci.org/vpro/jcr-criteria)
 [![codecov](https://codecov.io/gh/vpro/jcr-criteria/branch/master/graph/badge.svg)](https://codecov.io/gh/vpro/jcr-criteria)
-
 
 # jcr-criteria
 
@@ -46,7 +46,7 @@ Criteria criteria = JCRCriteriaFactory.createCriteria()
  log.debug("JCR query : " + criteria.toXpathExpression());
  AdvancedResultItem item = ar.getFirstResult();
 ```
-It can also be done, if you prefer using the builder pattern
+It can also be done, if you prefer, using the builder pattern
 ```java
 
 static import nl.vpro.jcr.criteria.query.criterion.Restrictions.*;
@@ -62,3 +62,5 @@ ExecutableQuery criteria = JCRCriteriaFactory.builder()
 AdvancedResult result = criteria.execute(session);
 ```
 
+## Java 11 and higher
+This project is shipped (since 2.2) with a `module-info.java` which is though the only file compiled with java 11. The rest is compiled with java 8, so it is java 8 compatible, but it does participate in jigsaw if you happen to use java 11 already.

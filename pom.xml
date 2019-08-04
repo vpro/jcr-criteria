@@ -298,7 +298,7 @@ stream in forked JVM 1. -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>2.10.3</version>
+            <version>3.1.1</version>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
@@ -307,23 +307,6 @@ stream in forked JVM 1. -->
                 </goals>
               </execution>
             </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>java-10</id>
-      <activation>
-        <jdk>10</jdk>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-                <useManifestOnlyJar>false</useManifestOnlyJar>
-                <argLine>--add-modules java.sql</argLine>
-            </configuration>
           </plugin>
         </plugins>
       </build>
