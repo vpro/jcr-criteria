@@ -1,6 +1,6 @@
 package nl.vpro.jcr.criteria.query.criterion;
 
-import org.jetbrains.annotations.NotNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.testng.annotations.Test;
 
 import nl.vpro.jcr.criteria.advanced.impl.AdvancedCriteriaImpl;
@@ -27,7 +27,7 @@ public class BetweenExpressionTest {
     static class Unknown implements Comparable<Unknown> {
 
         @Override
-        public int compareTo(@NotNull BetweenExpressionTest.Unknown o) {
+        public int compareTo(BetweenExpressionTest.@NonNull Unknown o) {
             return 0;
 
         }

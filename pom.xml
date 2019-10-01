@@ -44,8 +44,8 @@
   <properties>
     <jcr.version>2.0</jcr.version>
     <slf4j.version>1.7.26</slf4j.version>
-    <jackrabbit.version>2.19.3</jackrabbit.version>
-    <lombok.version>1.18.8</lombok.version>
+    <jackrabbit.version>2.19.4</jackrabbit.version>
+    <lombok.version>1.18.10</lombok.version>
     <java.version>8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -206,7 +206,7 @@ stream in forked JVM 1. -->
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>6.14.3</version>
+      <version>7.0.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -230,7 +230,7 @@ stream in forked JVM 1. -->
     <dependency>
       <groupId>org.checkerframework</groupId>
       <artifactId>checker-qual</artifactId>
-      <version>2.8.2</version>
+      <version>2.11.0</version>
     </dependency>
     <dependency>
       <groupId>javax.validation</groupId>
@@ -245,7 +245,7 @@ stream in forked JVM 1. -->
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.13.1</version>
+      <version>3.13.2</version>
       <scope>test</scope>
     </dependency>
 
