@@ -1,6 +1,7 @@
 package nl.vpro.jcr.criteria.query.criterion;
 
-import org.jetbrains.annotations.NotNull;
+import javax.validation.constraints.NotNull;
+
 import org.testng.annotations.Test;
 
 import nl.vpro.jcr.criteria.advanced.impl.AdvancedCriteriaImpl;

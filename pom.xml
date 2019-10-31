@@ -44,8 +44,8 @@
   <properties>
     <jcr.version>2.0</jcr.version>
     <slf4j.version>1.7.26</slf4j.version>
-    <jackrabbit.version>2.19.3</jackrabbit.version>
-    <lombok.version>1.18.8</lombok.version>
+    <jackrabbit.version>2.19.5</jackrabbit.version>
+    <lombok.version>1.18.10</lombok.version>
     <java.version>8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -149,7 +149,7 @@ stream in forked JVM 1. -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.4</version>
+        <version>0.8.5</version>
         <executions>
           <execution>
             <goals>
@@ -206,7 +206,7 @@ stream in forked JVM 1. -->
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>6.14.3</version>
+      <version>7.0.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
