@@ -43,7 +43,7 @@
 
   <properties>
     <jcr.version>2.0</jcr.version>
-    <slf4j.version>1.7.26</slf4j.version>
+    <slf4j.version>1.7.28</slf4j.version>
     <jackrabbit.version>2.19.5</jackrabbit.version>
     <lombok.version>1.18.10</lombok.version>
     <java.version>8</java.version>
@@ -79,6 +79,7 @@ stream in forked JVM 1. -->
               <version>${lombok.version}</version>
             </path>
           </annotationProcessorPaths>
+          <showDeprecation>true</showDeprecation>
         </configuration>
         <executions>
           <execution>
