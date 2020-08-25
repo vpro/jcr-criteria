@@ -9,10 +9,10 @@ module nl.vpro.jcr.criteria {
     requires static lombok;
 
     requires jcr;
-    requires slf4j.api;
     requires jackrabbit.jcr.commons;
     requires java.validation;
     requires org.apache.commons.lang3;
+    requires org.slf4j;
 
     exports nl.vpro.jcr.criteria.query;
     exports nl.vpro.jcr.criteria.query.criterion;

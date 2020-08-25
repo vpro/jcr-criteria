@@ -3,32 +3,20 @@ package nl.vpro.jcr.criteria.advanced.impl;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
+import java.util.Optional;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
-import javax.jcr.Node;
-import javax.jcr.NodeIterator;
-import javax.jcr.RepositoryException;
+import javax.jcr.*;
 import javax.jcr.query.Query;
 
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import nl.vpro.jcr.criteria.CriteriaTestUtils;
-import nl.vpro.jcr.criteria.query.AdvancedResult;
-import nl.vpro.jcr.criteria.query.AdvancedResultItem;
-import nl.vpro.jcr.criteria.query.Criteria;
-import nl.vpro.jcr.criteria.query.ExecutableQuery;
-import nl.vpro.jcr.criteria.query.criterion.MatchMode;
-import nl.vpro.jcr.criteria.query.criterion.Op;
-import nl.vpro.jcr.criteria.query.criterion.Order;
-import nl.vpro.jcr.criteria.query.criterion.Restrictions;
+import nl.vpro.jcr.criteria.query.*;
+import nl.vpro.jcr.criteria.query.criterion.*;
 import nl.vpro.jcr.criteria.query.impl.Column;
 
 import static javax.jcr.nodetype.NodeType.NT_UNSTRUCTURED;
@@ -62,8 +50,6 @@ public class AdvancedCriteriaImplITest {
     public static Object[][] sql2only() {
         return new Object[][] {{Query.JCR_SQL2}, {""}};
     }
-
-
 
 
 
@@ -178,7 +164,7 @@ public class AdvancedCriteriaImplITest {
                 ;
             check(criteria, language, 1);
         }
-         {
+        {
             Criteria criteria =
                 builder()
                     .basePath("/")
@@ -186,6 +172,16 @@ public class AdvancedCriteriaImplITest {
                     .build()
                 ;
             check(criteria, language, 1);
+        }
+
+        {
+            Criteria criteria =
+                builder()
+                    .basePath("/")
+                    .add(Restrictions.in(Restrictions.attr("jcr:uuid"), helloId))
+                    .build()
+                ;
+            check(criteria, language, 1); // FAILS!
         }
     }
 
