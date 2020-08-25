@@ -171,6 +171,8 @@ public class AdvancedCriteriaImplITest {
                     .add(Restrictions.attrEq("jcr:uuid", UUID.fromString(helloId)))
                     .build()
                 ;
+            log.info("{}", criteria.toSql2Expression());
+
             check(criteria, language, 1);
         }
 
@@ -178,9 +180,10 @@ public class AdvancedCriteriaImplITest {
             Criteria criteria =
                 builder()
                     .basePath("/")
-                    .add(Restrictions.in(Restrictions.attr("jcr:uuid"), helloId))
+                    .add(Restrictions.in(UUID.fromString(helloId)))
                     .build()
                 ;
+            log.info("{}", criteria.toSql2Expression());
             check(criteria, language, 1); // FAILS!
         }
     }

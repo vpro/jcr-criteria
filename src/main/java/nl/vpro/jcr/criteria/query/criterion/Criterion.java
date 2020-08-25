@@ -56,6 +56,11 @@ public interface Criterion extends Serializable {
      */
     String JCR_ROOT = "/jcr:root";
 
+
+    /**
+     * The jcr root path "/jcr:root".
+     */
+    String JCR_UUID = JCR_PREFIX + "uuid";
     /**
      * Xpath for all elements "//*".
      */

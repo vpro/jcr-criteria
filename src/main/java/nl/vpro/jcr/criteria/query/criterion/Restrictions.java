@@ -21,12 +21,8 @@ package nl.vpro.jcr.criteria.query.criterion;
 
 import lombok.SneakyThrows;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.UUID;
+import java.time.*;
+import java.util.*;
 
 import javax.jcr.Node;
 import javax.validation.constraints.Size;
@@ -676,6 +672,28 @@ public final class Restrictions {
     @NonNull
     public static Criterion in(String nodeName, String... values) {
         return new InExpression(nodeName, values);
+    }
+
+
+     /**
+     * Apply an "in" constraint on the jcr:uuid attribute
+     * @param values - a UUID[]
+     * @return Criterion
+     */
+    @NonNull
+    public static Criterion in(UUID... values) {
+        return new InExpression(Criterion.JCR_UUID, Arrays.stream(values).map(UUID::toString).toArray(String[]::new), false);
+    }
+
+
+    /**
+     * Apply an "in" constraint on the jcr:uuid attribute
+     * @param values - a collection of UUID's
+     * @return Criterion
+     */
+    @NonNull
+    public static Criterion in(Collection<UUID> values) {
+        return new InExpression(Criterion.JCR_UUID, values.stream().map(UUID::toString).toArray(String[]::new), false);
     }
 
     /**

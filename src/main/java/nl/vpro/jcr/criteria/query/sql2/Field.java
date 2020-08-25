@@ -17,9 +17,12 @@ public class Field {
 
     private final boolean attribute;
 
+    private final boolean needsBrackets;
+
     public static Field of(String name) {
         String n;
         boolean a;
+        boolean needsBrackets = true;
         if (name.startsWith(Criterion.ATTRIBUTE_SELECTOR)) {
             n = name.substring(Criterion.ATTRIBUTE_SELECTOR.length());
             a = true;
@@ -27,12 +30,21 @@ public class Field {
             n = name;
             a = false;
         }
-        Field field = new Field(n, a);
+        if (n.contains("*")) {
+            needsBrackets = false;
+        }
+        Field field = new Field(n, a, needsBrackets);
         return field;
     }
 
     public void toSql2(StringBuilder builder) {
-        builder.append("[").append(name).append("]");
+        if (needsBrackets) {
+            builder.append('[');
+        }
+        builder.append(name);
+        if (needsBrackets) {
+            builder.append(']');
+        }
     }
 
 }

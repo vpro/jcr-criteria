@@ -37,11 +37,11 @@ public class InExpression implements Criterion  {
 
     private static final long serialVersionUID = -8445602953808764036L;
 
-    private String nodeName;
+    private final String nodeName;
 
-    private CharSequence [] values;
+    private final CharSequence [] values;
 
-    private boolean useContains;
+    private final boolean useContains;
 
     public InExpression(String nodeName, CharSequence[] values, boolean useContains) {
         this.nodeName = nodeName;
