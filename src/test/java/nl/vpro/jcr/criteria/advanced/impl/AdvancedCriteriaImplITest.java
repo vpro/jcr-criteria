@@ -177,6 +177,7 @@ public class AdvancedCriteriaImplITest {
         }
 
         {
+            // Feature #9
             Criteria criteria =
                 builder()
                     .basePath("/")
@@ -184,7 +185,7 @@ public class AdvancedCriteriaImplITest {
                     .build()
                 ;
             log.info("{}", criteria.toSql2Expression());
-            check(criteria, language, 1); // FAILS!
+            check(criteria, language, 1);
         }
     }
 
