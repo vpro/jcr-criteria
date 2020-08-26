@@ -1,0 +1,4 @@
+[source,bash]
+----
+mvn -Pdeploy release:prepare release:perform -DreleaseVersion=2.7 -DdevelopmentVersion=2.8-SNAPSHOT
+----
