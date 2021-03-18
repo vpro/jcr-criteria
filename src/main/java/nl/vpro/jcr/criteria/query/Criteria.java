@@ -98,11 +98,10 @@ import nl.vpro.jcr.criteria.query.criterion.Order;
  * <br>
  * This API was inspired by Hibernate's Criteria API. <br>
  * <br>
- * @see {@link JCRCriteriaFactory#createCriteria()}
+ * @see JCRCriteriaFactory#createCriteria()
  * @see Order
  * @author Federico Grilli
  * @author fgiust
- * @version $Id$
  */
 public interface Criteria extends ExecutableQuery {
 
