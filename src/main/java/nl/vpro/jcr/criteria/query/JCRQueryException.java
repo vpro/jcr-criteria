@@ -30,7 +30,7 @@ public class JCRQueryException extends RuntimeException {
     private static final long serialVersionUID = -8737641628360563743L;
 
     @Delegate
-    private Criteria.Expression expression;
+    private final Criteria.Expression expression;
 
     public JCRQueryException(Criteria.Expression expression, Throwable cause) {
         super("An error occurred while executing a " + expression.getLanguage() + " query. Query was '"
