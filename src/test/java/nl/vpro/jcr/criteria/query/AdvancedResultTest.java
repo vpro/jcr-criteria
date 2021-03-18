@@ -10,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 /**
  *
  * @author Michiel Meeuwissen
- * @since ...
  */
 public class AdvancedResultTest  {
 
@@ -33,9 +32,6 @@ public class AdvancedResultTest  {
         assertThatThrownBy(() -> emptyResult.getItems().next()).isInstanceOf(NoSuchElementException.class);
         assertThatThrownBy(() -> emptyResult.getItems().remove()).isInstanceOf(IllegalStateException.class);
         assertThatThrownBy(() -> emptyResult.getItems().skip(1)).isInstanceOf(NoSuchElementException.class);
-
-
-
     }
 
 
