@@ -194,7 +194,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
     }
 
     @Override
-    public LongSupplier getCountSupplier(Session session, String language) {
+    public LongSupplier getCountSupplier(final Session session, final String language) {
         return () -> {
             long startTime = System.nanoTime();
             Expression expr = null;
@@ -212,7 +212,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
                     expr,
                     () -> -1,
                     session,
-                    0,
+                    null,
                     0,
                     spellCheckString,
                     forcePagingWithDocumentOrder && this.orderEntries.isEmpty());
