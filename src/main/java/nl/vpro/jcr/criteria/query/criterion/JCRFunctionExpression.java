@@ -28,6 +28,7 @@ import nl.vpro.jcr.criteria.query.JCRQueryException;
 
 
 /**
+ * Applies any XPATH function. Does not support SQL 2.
  * @author fgrilli
  */
 @EqualsAndHashCode(callSuper = true)
