@@ -8,8 +8,8 @@ import lombok.Getter;
  */
 public class Column {
 
-    public static Column ALL = new Column("", "*");
-    public static Column EXCERPT = new Column("rep:excerpt(%s)", "excerpt(%s)");
+    public static final Column ALL = new Column("", "*");
+    public static final Column EXCERPT = new Column("rep:excerpt(%s)", "excerpt(%s)");
 
 
     @Getter

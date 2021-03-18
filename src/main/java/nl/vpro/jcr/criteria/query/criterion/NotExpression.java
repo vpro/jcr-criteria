@@ -35,7 +35,7 @@ public class NotExpression extends BaseCriterion implements Criterion {
 
     private static final long serialVersionUID = -5057676844499041929L;
 
-    private Criterion expression;
+    private final Criterion expression;
 
     public NotExpression(Criterion expression) {
         this.expression = expression;
