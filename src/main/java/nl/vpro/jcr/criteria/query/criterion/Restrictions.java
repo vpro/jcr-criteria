@@ -394,18 +394,6 @@ public final class Restrictions {
         return like(attr(attName), value, matchMode);
     }
 
-
-    /**
-     * Apply a "contains" constraint to the named node. The value parameter will be escaped.
-     * @param nodeName - String a qualified (eg. nt:somenode) or unqualified (eg. somenode) node name. When a node is an
-     * attribute it must be preceded by the '@'character (eg. @nt:somenode)
-     * @return Criterion
-     */
-    @NonNull
-    public static JCRFunctionExpression contains(@NonNull String nodeName, @NonNull CharSequence value) {
-        return contains(nodeName, value, true);
-    }
-
     /**
      * Apply a "contains" constraint to the named node. Use this override with escape set to false if you want to keep
      * the search-engine syntax enabled (you are sure that the search-expression is always syntactically correct).
@@ -415,6 +403,7 @@ public final class Restrictions {
      * @return Criterion
      */
     @NonNull
+    @Deprecated
     public static JCRFunctionExpression contains(@NonNull  String nodeName, @NonNull  CharSequence value, boolean escape) {
         CharSequence exp;
         if (escape) {
@@ -423,6 +412,16 @@ public final class Restrictions {
             exp = value;
         }
         return new JCRFunctionExpression(nodeName, exp, " jcr:contains");
+    }
+
+    /**
+     * Apply a "contains" constraint to the named node. The value parameter will be escaped.
+     * @param nodeName - String a qualified (eg. nt:somenode) or unqualified (eg. somenode) node name. When a node is an
+     * attribute it must be preceded by the '@'character (eg. @nt:somenode)
+     * @return Criterion
+     */
+    public static Criterion contains(@NonNull  String nodeName, @NonNull  CharSequence value) {
+        return new ContainsExpression(nodeName, value);
     }
 
     /**
