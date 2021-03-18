@@ -28,12 +28,9 @@ public class PerformancelITest {
 
     @SuppressWarnings("deprecation")
     @DataProvider(name = "language")
-    public static Object[] language() {
-        return new Object[]{"", Query.XPATH, Query.JCR_SQL2};
+    public static Object[][] language() {
+        return new Object[][] {{Query.XPATH}, {Query.JCR_SQL2}, {""}};
     }
-
-
-
 
     int desired = 10;
 
@@ -44,12 +41,12 @@ public class PerformancelITest {
         CriteriaTestUtils.defineA();
         CriteriaTestUtils.defineB();
         long count = 0;
-        for (int i = 0; i < desired - 1; i++) {
+        for (long i = 0; i < desired - 1; i++) {
             Node n1 = root.addNode("n" + i);
             n1.setProperty("a", "a1"); // a at start
             n1.setProperty("long", i);
             count++;
-            for (int j = 0; j < desired; j++) {
+            for (long j = 0; j < desired; j++) {
                 Node n2 = n1.addNode("n" + i + "_" + j);
                 n2.setProperty("a", "a1"); // a at start
                 n2.setProperty("long", i * desired + j);
