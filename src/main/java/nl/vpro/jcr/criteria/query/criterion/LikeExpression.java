@@ -38,7 +38,7 @@ public class LikeExpression extends JCRFunctionExpression {
 
     private static final long serialVersionUID = 1810624472706401714L;
 
-    private MatchMode matchMode;
+    private final MatchMode matchMode;
 
     public LikeExpression(@NonNull  String propertyName, @NonNull  CharSequence value, @NonNull  String function, @Nullable MatchMode matchMode) {
         super(propertyName, value, function);
