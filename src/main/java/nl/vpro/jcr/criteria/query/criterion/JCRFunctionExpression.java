@@ -32,7 +32,7 @@ import nl.vpro.jcr.criteria.query.JCRQueryException;
  * @author fgrilli
  */
 @EqualsAndHashCode(callSuper = true)
-public class JCRFunctionExpression extends BaseCriterion implements Criterion {
+public class JCRFunctionExpression extends BaseCriterion  {
 
     private static final long serialVersionUID = -5570839091762158385L;
 
