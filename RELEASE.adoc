@@ -2,3 +2,11 @@
 ----
 mvn -Pdeploy release:prepare release:perform -DreleaseVersion=2.7 -DdevelopmentVersion=2.8-SNAPSHOT
 ----
+
+
+Snapshots are deployed to sonatype.
+
+[source,bash]
+----
+mvn -DaltDeploymentRepository=nexusvpro::http://nexus.vpro.nl/content/repositories/snapshots  deploy
+----
