@@ -670,6 +670,46 @@ public class AdvancedCriteriaImplITest {
 
 
     @Test(dataProvider = "language")
+    public void contains(String language) throws RepositoryException {
+
+        {
+            Node node1 = root.addNode("node1");
+            node1.setProperty("a", new String[] {"a", "b", "c"});
+
+            Node  node2 = node1.addNode("node2");
+            node2.setProperty("a", new String[] {"x", "y", "c"});
+
+            session.save();
+        }
+
+        {
+            AdvancedCriteriaImpl.Builder criteria = builder()
+                .add(Restrictions.contains(attr("a"), "a"))
+                .add(Order.SCORE);
+
+
+            check(criteria, language, 1);
+        }
+        {
+            AdvancedCriteriaImpl.Builder criteria = builder()
+                .add(Restrictions.contains(attr("a"), "ab"))
+                .add(Order.SCORE);
+
+
+            check(criteria, language, 0);
+        }
+        {
+            AdvancedCriteriaImpl.Builder criteria = builder()
+                .add(Restrictions.contains(attr("a"), "c"))
+                .add(Order.SCORE);
+
+
+            AdvancedResult result = check(criteria, language, 2);
+        }
+    }
+
+
+    @Test(dataProvider = "language")
     public void booleans(String language) throws RepositoryException {
         {
             for (long i = 0; i < 20; i++) {
