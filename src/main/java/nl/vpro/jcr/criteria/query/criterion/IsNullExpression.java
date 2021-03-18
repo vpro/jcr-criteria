@@ -34,7 +34,7 @@ public class IsNullExpression extends BaseCriterion implements Criterion {
 
     private static final long serialVersionUID = -1600960388638847909L;
 
-    private String nodeName;
+    private final String nodeName;
 
     public IsNullExpression(String nodeName) {
         this.nodeName = nodeName;
@@ -52,10 +52,10 @@ public class IsNullExpression extends BaseCriterion implements Criterion {
         log.debug("xpathString is {} ", fragment);
         return fragment.toString();
     }
+
     @Override
     public NullCondition toSQLCondition(Criteria criteria) {
         return new NullCondition(nodeName);
     }
-
 
 }
