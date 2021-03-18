@@ -59,7 +59,7 @@ public class AdvancedCriteriaImpl extends AbstractCriteriaImpl  {
         List<Criterion> criterions,
         @Singular
         List<Order> orders,
-        int maxResults,
+        Integer maxResults,
         int offset,
         String spellCheckString,
         boolean forcePagingWithDocumentOrder,

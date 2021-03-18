@@ -7,6 +7,7 @@ import java.time.*;
 import java.util.Optional;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import javax.jcr.*;
@@ -17,6 +18,7 @@ import org.testng.annotations.*;
 import nl.vpro.jcr.criteria.CriteriaTestUtils;
 import nl.vpro.jcr.criteria.query.*;
 import nl.vpro.jcr.criteria.query.criterion.*;
+import nl.vpro.jcr.criteria.query.impl.AbstractCriteriaImpl;
 import nl.vpro.jcr.criteria.query.impl.Column;
 
 import static javax.jcr.nodetype.NodeType.NT_UNSTRUCTURED;
@@ -35,6 +37,7 @@ import static org.testng.AssertJUnit.assertFalse;
  * @since 1.1
  */
 
+@SuppressWarnings("unchecked")
 @Slf4j
 public class AdvancedCriteriaImplITest {
 
@@ -91,7 +94,7 @@ public class AdvancedCriteriaImplITest {
                     .add(Restrictions.attrLike("a", "a", MatchMode.START))
                     .build()
                 ;
-            AdvancedResult result = check(criteria, language, 2);
+            List<AdvancedResultItem>  result = check(criteria, language, 2);
             for (AdvancedResultItem item : result) {
                 log.info("{}", item.getExcerpt());
             }
@@ -104,7 +107,7 @@ public class AdvancedCriteriaImplITest {
                     .add(Restrictions.attrLike("a", "a"))
                     .build()
                 ;
-            AdvancedResult result = check(criteria, language, 4);
+            List<AdvancedResultItem> result = check(criteria, language, 4);
             for (AdvancedResultItem item : result) {
                 log.info("{}", item.getExcerpt());
             }
@@ -117,7 +120,7 @@ public class AdvancedCriteriaImplITest {
                     .add(Restrictions.attrLike("a", "a", MatchMode.END))
                     .build()
                 ;
-            AdvancedResult result = check(criteria, language, 1);
+            List<AdvancedResultItem>  result = check(criteria, language, 1);
             for (AdvancedResultItem item : result) {
                 log.info("{}", item.getExcerpt());
             }
@@ -130,11 +133,11 @@ public class AdvancedCriteriaImplITest {
                     .add(Restrictions.attrLike("a", "b % c", MatchMode.NONE))
                     .build()
                 ;
-            AdvancedResult result = check(criteria, language, 1);
+            List<AdvancedResultItem>  result = check(criteria, language, 1);
             for (AdvancedResultItem item : result) {
                 log.info("{}", item.getExcerpt());
             }
-            assertThat(result.getFirstResult().getHandle()).isEqualTo("/n4");
+            assertThat(result.get(0).getHandle()).isEqualTo("/n4");
         }
     }
 
@@ -317,7 +320,7 @@ public class AdvancedCriteriaImplITest {
             session.save();
         }
         {
-            AdvancedResult result = check(builder()
+            List<AdvancedResultItem>  result = check(builder()
                     .fromUnstructured()
                     .type("a")
                     .desc(attr("long"))
@@ -329,59 +332,59 @@ public class AdvancedCriteriaImplITest {
             assertThat(longs).containsExactly(8L, 7L, 6L, 5L);
         }
         {
-            AdvancedResult result = check(builder()
+            List<AdvancedResultItem> result = check(builder()
                 .fromUnstructured()
                 .type("a")
                 .desc(attr("long"))
                 .add(attrEq("long", 4)),
                 language,
             1);
-            assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(4);
+            assertThat(result.get(0).getProperty("long").getLong()).isEqualTo(4);
         }
         {
-            AdvancedResult result = check(builder().fromUnstructured()
+            List<AdvancedResultItem> result = check(builder().fromUnstructured()
                     .type("a")
                     .desc(attr("long"))
                     .add(le(attr("long"), 4)),
                 language,
                 5);
-            assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(4);
+            assertThat(result.get(0).getProperty("long").getLong()).isEqualTo(4);
         }
         {
-            AdvancedResult result = check(builder().fromUnstructured()
+            List<AdvancedResultItem> result = check(builder().fromUnstructured()
                     .type("a")
                     .desc(attr("long"))
                     .add(lt(attr("long"), 4)),
                 language,
                 4);
-            assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(3);
+            assertThat(result.get(0).getProperty("long").getLong()).isEqualTo(3);
         }
         {
-            AdvancedResult result = check(builder().fromUnstructured()
+            List<AdvancedResultItem> result = check(builder().fromUnstructured()
                     .type("a")
                     .asc(attr("long"))
                     .add(ne(attr("long"), 4)),
                 language,
                 9);
-            assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(0);
+            assertThat(result.get(0).getProperty("long").getLong()).isEqualTo(0);
         }
          {
-            AdvancedResult result = check(builder().fromUnstructured()
+            List<AdvancedResultItem> result = check(builder().fromUnstructured()
                     .type("a")
                     .asc(attr("long"))
                     .add(ge(attr("long"), 4)),
                 language,
                 6);
-            assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(4);
+            assertThat(result.get(0).getProperty("long").getLong()).isEqualTo(4);
         }
          {
-            AdvancedResult result = check(builder().fromUnstructured()
+            List<AdvancedResultItem> result = check(builder().fromUnstructured()
                     .type("a")
                     .asc(attr("long"))
                     .add(gt(attr("long"), 4)),
                 language,
                 5);
-            assertThat(result.getFirstResult().getProperty("long").getLong()).isEqualTo(5);
+            assertThat(result.get(0).getProperty("long").getLong()).isEqualTo(5);
         }
     }
 
@@ -595,17 +598,10 @@ public class AdvancedCriteriaImplITest {
             .add(Order.SCORE);
 
 
-        AdvancedResult result = check(criteria, language, 2);
-        Iterator<AdvancedResultItem> i = result.iterator(); ;
-        AdvancedResultItem item1 = i.next();
-        AdvancedResultItem item2 = i.next();
-        assertThat(i.hasNext()).isFalse();
-        try {
-            i.next();
-            fail("Should have thrown exception");
-        } catch(NoSuchElementException ignored) {
+        List<AdvancedResultItem>  result = check(criteria, language, 2);
 
-        }
+        AdvancedResultItem item1 = result.get(0);
+        AdvancedResultItem item2 = result.get(1);
         assertThat(item1.getScore()).isGreaterThan(item2.getScore());
         assertThat(item1.getHandle()).isEqualTo("/node1/node2");
         assertThat(item2.getHandle()).isEqualTo("/node1/node2/node2_1");
@@ -704,7 +700,7 @@ public class AdvancedCriteriaImplITest {
                 .add(Order.SCORE);
 
 
-            AdvancedResult result = check(criteria, language, 2);
+            check(criteria, language, 2);
         }
     }
 
@@ -853,23 +849,23 @@ public class AdvancedCriteriaImplITest {
              ,language, 1);
 
         {
-            AdvancedResult check = check(builder()
+            List<AdvancedResultItem>  check = check(builder()
                     .add(attrOp(Op.LT, "title", "d"))
                     .desc(attr("title"))
                 , language, 3);
-            assertThat(check.getFirstResult().getTitle()).isEqualTo("cd");
+            assertThat(check.get(0).getTitle()).isEqualTo("cd");
         }
         {
-            AdvancedResult check = check(builder()
+            List<AdvancedResultItem>  check = check(builder()
                 .add(attrOp(Op.LT, "title", "a"))
                 .desc(attr("title"))
-                , language, 0);
-            assertThat(check.getFirstResult()).isNull();
-        }
+                , language, 0, (r) -> {
+                    assertThat(r.getFirstResult()).isNull();
+                }); }
 
     }
 
-     @Test(dataProvider = "language")
+    @Test(dataProvider = "language")
     @SneakyThrows
     public void localPaging(String language) {
          {
@@ -882,27 +878,25 @@ public class AdvancedCriteriaImplITest {
              session.save();
          }
 
-
-         AdvancedResult result = check(builder()
+        check(builder()
                  .paging(10, 2)
                  .type("a")
                  .order(Order.desc(attr("long")))
                  .forcePagingWithDocumentOrder(true)
-             ,language, 50);
-         assertThat(result).hasSize(10);
-         assertThat(result.getNumberOfPages()).isEqualTo(5);
-         assertThat(result.getItems().getPosition()).isEqualTo(0);
-
-
+             ,language, 50, (r) -> {
+                assertThat(r).hasSize(10);
+                assertThat(r.getNumberOfPages()).isEqualTo(5);
+                assertThat(r.getItems().getPosition()).isEqualTo(0);
+            });
 
     }
 
 
-    AdvancedResult check(AdvancedCriteriaImpl.Builder builder, String language,  int expectedSize) {
-        return check(builder.build(), language, expectedSize);
+    private List<AdvancedResultItem> check(AdvancedCriteriaImpl.Builder builder, String language, int expectedSize, Consumer<AdvancedResultImpl>... checkers) {
+        return check(builder.build(), language, expectedSize, checkers);
     }
     @SneakyThrows
-    AdvancedResult  check(Criteria criteria, String language, int expectedSize) {
+    private List<AdvancedResultItem>  check(Criteria criteria, String language, int expectedSize, Consumer<AdvancedResultImpl>... checkers) {
         AdvancedResultImpl result = (AdvancedResultImpl) criteria.execute(session, language);
         for (AdvancedResultItem item : result) {
             boolean isUnstructured = item.isNodeType(NT_UNSTRUCTURED);
@@ -911,39 +905,35 @@ public class AdvancedCriteriaImplITest {
         assertFalse(result.totalSizeDetermined());
         assertEquals(expectedSize, result.getTotalSize());
         assertTrue(result.totalSizeDetermined());
-        return result;
+
+        for (Consumer<AdvancedResultImpl> checker : checkers) {
+            checker.accept(result);
+        }
+
+
+        List<AdvancedResultItem> resultList = new ArrayList<>();
+        Iterator<AdvancedResultItem> iterator = result.iterator(); ;
+
+        int expectedIterationSize = expectedSize;
+        if (criteria instanceof AbstractCriteriaImpl) {
+            if (((AbstractCriteriaImpl) criteria).getMaxResults() != null) {
+                expectedIterationSize = Math.min(((AbstractCriteriaImpl) criteria).getMaxResults(), expectedSize);
+            }
+        }
+        for (int i = 0 ; i < expectedIterationSize; i++) {
+            resultList.add(iterator.next());
+        }
+        assertThat(iterator.hasNext()).isFalse();
+        try {
+            iterator.next();
+            fail("Should have thrown exception");
+        } catch(NoSuchElementException ignored) {
+
+        }
+        return resultList;
 
     }
 
-
-    AdvancedResultImpl directXpath(String expression) {
-        return QueryExecutorHelper.execute(
-            Criteria.Expression.xpath(expression),
-            () -> {
-                throw new UnsupportedOperationException();
-
-            },
-            session,
-            null,
-            0,
-            null,
-            false);
-
-    }
-     AdvancedResultImpl directSql(String expression) {
-        return QueryExecutorHelper.execute(
-            Criteria.Expression.sql2(expression),
-            () -> {
-                throw new UnsupportedOperationException();
-
-            },
-            session,
-            null,
-            0,
-            null,
-            false);
-
-    }
 
 
     @SneakyThrows

@@ -44,7 +44,7 @@ public interface Criterion extends Serializable {
     /**
      * The xpath attribute prefix "@"
      */
-    String ATTRIBUTE_SELECTOR = "@";
+    char ATTRIBUTE_SELECTOR = '@';
 
     /**
      * The jcr prefix "jcr:".

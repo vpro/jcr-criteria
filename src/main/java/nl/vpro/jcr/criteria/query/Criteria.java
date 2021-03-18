@@ -127,10 +127,10 @@ public interface Criteria extends ExecutableQuery {
 
     /**
      * Set a limit upon the number of objects to be retrieved.
-     * @param maxResults the maximum number of results
+     * @param maxResults the maximum number of results. <code>null</code> for no maximum
      * @return this (for method chaining)
      */
-    Criteria setMaxResults(int maxResults);
+    Criteria setMaxResults(Integer maxResults);
 
     /**
      * Set the first result to be retrieved.

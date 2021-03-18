@@ -111,7 +111,7 @@ public class AdvancedResultImpl implements AdvancedResult {
             } catch (NoSuchMethodException e) {
                 log.debug("{}: {}", e.getClass().getSimpleName(),  e.getMessage());
             }
-            if (queryTotalSize == -1 && (itemsPerPage == 0 || applyLocalPaging)) {
+            if (queryTotalSize == -1 && (itemsPerPage == null || itemsPerPage == 0 || applyLocalPaging)) {
                 totalResults = getRowIterator().getSize();
             } else {
                 if (queryTotalSize == -1) {

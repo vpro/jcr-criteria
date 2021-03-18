@@ -79,7 +79,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
 
     @Getter
     @Setter
-    protected int maxResults;
+    protected Integer maxResults;
 
     @Getter
     @Setter

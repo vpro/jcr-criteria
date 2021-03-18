@@ -23,8 +23,8 @@ public class Field {
         String n;
         boolean a;
         boolean needsBrackets = true;
-        if (name.startsWith(Criterion.ATTRIBUTE_SELECTOR)) {
-            n = name.substring(Criterion.ATTRIBUTE_SELECTOR.length());
+        if (name.length() > 0 && name.charAt(0) == Criterion.ATTRIBUTE_SELECTOR) {
+            n = name.substring(1);
             a = true;
         } else {
             n = name;
