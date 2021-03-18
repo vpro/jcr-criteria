@@ -73,6 +73,7 @@ public class PerformancelITest {
     @Test(dataProvider = "language")
     public void run(String language) {
         int page = 1;
+        long totalStart = System.nanoTime();
         while(true) {
             AdvancedCriteriaImpl.Builder criteria = builder()
                 .basePath("/n" + (desired / 2))
@@ -80,13 +81,15 @@ public class PerformancelITest {
                 .score();
 
             AdvancedResult execute = criteria.build().execute(session, language);
-            long start = System.nanoTime();
+            ///long start = System.nanoTime();
             log.info("{}", execute.getTotalSize());
-            log.info("Took {}", Duration.ofNanos(System.nanoTime() - start));
+            //log.info("Took {}", Duration.ofNanos(System.nanoTime() - start));
             if (execute.getItems().getSize()== 0) {
                 break;
             }
         }
+        log.info("Took {}", Duration.ofNanos(System.nanoTime() - totalStart));
+
 
 
     }

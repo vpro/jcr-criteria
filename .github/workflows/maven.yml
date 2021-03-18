@@ -21,7 +21,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B -fn
     - name: codecov
-      run: bash <(curl -s https://codecov.io/bash)
+      run: bash <(curl -s https://codecov.io/bash) -f target/surefire-reports/TEST-TestSuite.xml
       if: ${{ github.event_name == 'push' }}
     - name: Publish Test Report
       uses: scacap/action-surefire-report@v1

@@ -40,6 +40,8 @@ import nl.vpro.jcr.criteria.query.*;
 @ToString
 public class AdvancedResultImpl implements AdvancedResult {
 
+    private static final String TOTAL_SIZE = "getTotalSize";
+
     private final Supplier<QueryResult> jcrQueryResult;
     private final LongSupplier queryCounter;
 
@@ -103,13 +105,13 @@ public class AdvancedResultImpl implements AdvancedResult {
             long queryTotalSize = -1;
             try { // jcrQueryResult instanceof JackrabbitQueryResult) {
                 QueryResult queryResult = jcrQueryResult.get();
-                Method m = queryResult.getClass().getMethod("getTotalSize");
+                Method m =  queryResult.getClass().getMethod(TOTAL_SIZE);
                 queryTotalSize = (int) m.invoke(queryResult);
                 log.debug("Using  {}", m);
             } catch (InvocationTargetException | IllegalAccessException e) {
                 log.error(e.getMessage(), e);
-            } catch (NoSuchMethodException e) {
-                log.debug("{}: {}", e.getClass().getSimpleName(),  e.getMessage());
+            } catch (NoSuchMethodException noSuchMethodException) {
+                log.debug("{}: {}", noSuchMethodException.getClass().getSimpleName(), noSuchMethodException.getMessage());
             }
             if (queryTotalSize == -1 && (itemsPerPage == null || itemsPerPage == 0 || applyLocalPaging)) {
                 totalResults = getRowIterator().getSize();
