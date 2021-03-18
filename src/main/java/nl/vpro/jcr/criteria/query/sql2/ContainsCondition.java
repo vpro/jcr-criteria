@@ -10,10 +10,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  */
 @Data
 public class ContainsCondition implements  Condition {
-    final Field field;
-    final String value;
+    private final Field field;
+    private final CharSequence value;
 
-    public ContainsCondition(@NonNull  String propertyName, @NonNull  String toMatchString) {
+    public ContainsCondition(@NonNull  String propertyName, @NonNull  CharSequence toMatchString) {
         this.field = Field.of(propertyName);
         this.value = toMatchString;
     }
