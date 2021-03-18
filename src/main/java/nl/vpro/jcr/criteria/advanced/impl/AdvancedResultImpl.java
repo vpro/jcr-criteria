@@ -24,16 +24,11 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.function.Function;
-import java.util.function.LongSupplier;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
-import javax.jcr.query.Query;
-import javax.jcr.query.QueryResult;
-import javax.jcr.query.Row;
-import javax.jcr.query.RowIterator;
+import javax.jcr.query.*;
 
 import nl.vpro.jcr.criteria.query.*;
 
