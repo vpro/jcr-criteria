@@ -9,4 +9,10 @@ Snapshots are deployed to sonatype.
 [source,bash]
 ----
 mvn -DaltDeploymentRepository=nexusvpro::http://nexus.vpro.nl/content/repositories/snapshots  deploy
+---
+
+releases can be put quicker to nexus.vpro.nl like this:
+[source, bash]
+git checkout 2.8
+mvn -DaltDeploymentRepository=nexusvpro::http://nexus.vpro.nl/content/repositories/releases  deploy
 ----
