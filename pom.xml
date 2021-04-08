@@ -45,7 +45,8 @@
     <jcr.version>2.0</jcr.version>
     <slf4j.version>1.7.30</slf4j.version>
     <jackrabbit.version>2.21.5</jackrabbit.version>
-    <lombok.version>1.18.18</lombok.version>
+    <lombok.version>1.18.20</lombok.version>
+    <checker.framework.version>3.12.0</checker.framework.version>
     <java.version>8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -73,7 +74,18 @@
               <artifactId>lombok</artifactId>
               <version>${lombok.version}</version>
             </path>
+          <!--  <path>
+              <groupId>org.checkerframework</groupId>
+              <artifactId>checker</artifactId>
+              <version>${checker.framework.version}</version>
+            </path>-->
           </annotationProcessorPaths>
+        <!--  <annotationProcessors>
+            <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>
+            <annotationProcessor>org.checkerframework.checker.interning.InterningChecker</annotationProcessor>
+            <annotationProcessor>org.checkerframework.checker.fenum.FenumChecker</annotationProcessor>
+            <annotationProcessor>org.checkerframework.checker.formatter.FormatterChecker</annotationProcessor>
+          </annotationProcessors>-->
           <showDeprecation>true</showDeprecation>
         </configuration>
         <executions>
@@ -237,8 +249,16 @@
     <dependency>
       <groupId>org.checkerframework</groupId>
       <artifactId>checker-qual</artifactId>
-      <version>3.11.0</version>
+      <version>${checker.framework.version}</version>
+      <scope>provided</scope>
     </dependency>
+  <!--  <dependency>
+      <groupId>org.checkerframework</groupId>
+      <artifactId>checker</artifactId>
+        <version>${checker.framework.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  -->
     <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>
@@ -258,7 +278,7 @@
     <dependency>
       <groupId>org.apache.derby</groupId>
       <artifactId>derby</artifactId>
-      <version>10.14.2.0</version>
+      <version>10.15.2.0</version>
       <scope>test</scope>
     </dependency>
 
