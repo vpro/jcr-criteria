@@ -4,7 +4,7 @@ image:https://img.shields.io/maven-central/v/nl.vpro/jcr-criteria.svg?label=Mave
 image:http://www.javadoc.io/badge/nl.vpro/jcr-criteria.svg?color=blue[javadoc,link=http://www.javadoc.io/doc/nl.vpro/jcr-criteria]
 image:https://github.com/vpro/jcr-criteria/workflows/build/badge.svg?[Build Status,link=https://github.com/vpro/jcr-criteria/actions?query=workflow%3Abuild]
 image:https://img.shields.io/nexus/s/https/oss.sonatype.org/nl.vpro/jcr-criteria.svg[snapshots,link=https://oss.sonatype.org/content/repositories/snapshots/nl/vpro/jcr-criteria/]
-image:https://codecov.io/gh/vpro/jcr-criteria/branch/master/graph/badge.svg[codecov,link=https://codecov.io/gh/vpro/jcr-criteria]
+image:https://codecov.io/gh/vpro/jcr-criteria/branch/main/graph/badge.svg[codecov,link=https://codecov.io/gh/vpro/jcr-criteria]
 
 This is a way to create and execute JCR queries using Java code, using an interface which was inspired by the Criteria API as used by Hibernate/JPA. This code is based on the http://www.openmindlab.com/lab/products/mgnlcriteria.html[Criteria API for Magnolia CMS] (openutils-mgnlcriteria) module which was developed by Openmind.
 
