@@ -1,0 +1,39 @@
+---
+name: release
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      MAVEN_OPTS: -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: 8
+      - name: Create settings.xml
+        uses: s4u/maven-settings-action@v2
+        with:
+          servers: '[{"id": "vpro-ossrh-release", "username": "vpro", "password": "${{secrets.SONATYPE_PASSWORD}}"}]'
+      - uses: crazy-max/ghaction-import-gpg@v3
+        with:
+          gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
+          passphrase: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
+      - uses: oleksiyrudenko/gha-git-credentials@v2.1
+        with:
+          global: true
+          name: 'github'
+          email: 'digitaal-techniek@vpro.nl'
+          token: '${{ secrets.GITHUB_TOKEN  }}'
+      - name: Release
+        run: mvn -Pdeploy --batch-mode  -Darguments=-DskipTests  release:prepare release:perform
