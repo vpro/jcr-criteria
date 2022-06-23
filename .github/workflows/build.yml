@@ -37,6 +37,6 @@ jobs:
     - name: Publish Test Report
       uses: scacap/action-surefire-report@v1
     - name: Deploy with Maven
-      run: mvn -B -Ddeploy  -DskipTests=true deploy
+      run: mvn -B -Pdeploy  -DskipTests=true deploy
       if: ${{ github.event_name == 'push' }}
 
