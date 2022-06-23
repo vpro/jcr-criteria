@@ -44,9 +44,9 @@
   <properties>
     <jcr.version>2.0</jcr.version>
     <slf4j.version>1.7.30</slf4j.version>
-    <jackrabbit.version>2.21.10</jackrabbit.version>
+    <jackrabbit.version>2.21.11</jackrabbit.version>
     <lombok.version>1.18.24</lombok.version>
-    <checker.framework.version>3.21.4</checker.framework.version>
+    <checker.framework.version>3.22.2</checker.framework.version>
     <java.version>8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -58,7 +58,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M3</version>
+        <version>3.0.0-M7</version>
       </plugin>
 
       <plugin>
@@ -219,7 +219,7 @@
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>7.5</version>
+      <version>7.6.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -272,7 +272,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.19.0</version>
+      <version>3.23.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
