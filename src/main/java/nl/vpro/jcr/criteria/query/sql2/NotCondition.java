@@ -14,9 +14,9 @@ public class NotCondition implements Condition {
 
     @Override
     public boolean toSql2(StringBuilder builder) {
-        builder.append("not (");
+        builder.append("(not (");
         wrapped.toSql2(builder);
-        builder.append(")");
+        builder.append("))");
         return true;
     }
 }
