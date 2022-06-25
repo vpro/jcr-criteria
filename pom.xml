@@ -31,8 +31,8 @@
   </developers>
 
   <scm>
-    <connection>scm:git:git://git@github.com/vpro/jcr-criteria.git</connection>
-    <developerConnection>scm:git:git@github.com:vpro/jcr-criteria.git</developerConnection>
+    <connection>scm:git:${project.scm.url}</connection>
+    <developerConnection>scm:git:${project.scm.url}</developerConnection>
     <url>https://github.com/vpro/jcr-criteria</url>
     <tag>HEAD</tag>
   </scm>
