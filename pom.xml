@@ -234,7 +234,7 @@
     <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct-processor</artifactId>
-      <version>1.4.2.Final</version>
+      <version>1.5.2.Final</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -269,7 +269,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.23.0</version>
+      <version>3.23.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
