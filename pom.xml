@@ -41,9 +41,9 @@
   <properties>
     <jcr.version>2.0</jcr.version>
     <slf4j.version>1.7.36</slf4j.version>
-    <jackrabbit.version>2.21.12</jackrabbit.version>
+    <jackrabbit.version>2.21.13</jackrabbit.version>
     <lombok.version>1.18.24</lombok.version>
-    <checker.framework.version>3.25.0</checker.framework.version>
+    <checker.framework.version>3.26.0</checker.framework.version>
     <java.version>8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -229,7 +229,7 @@
     <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct-processor</artifactId>
-      <version>1.5.2.Final</version>
+      <version>1.5.3.Final</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
