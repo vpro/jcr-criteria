@@ -864,4 +864,10 @@ public final class Restrictions {
         return new IsChildOf(path);
     }
 
+    /**
+     * @since 2.11
+     */
+    public static Criterion name(final String name) {
+        return new Name(name);
+    }
 }
