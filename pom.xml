@@ -121,7 +121,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.2.2</version>
+        <version>3.3.0</version>
         <configuration>
           <archive>
             <manifestEntries>
@@ -188,7 +188,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-deploy-plugin</artifactId>
-        <version>3.0.0-M2</version>
+        <version>3.0.0</version>
       </plugin>
     </plugins>
   </build>
