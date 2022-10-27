@@ -9,7 +9,7 @@ public interface Condition {
 
 
     /**
-     * return if something appended
+     * @return {@code true} if something appended
      */
     boolean toSql2(StringBuilder builder);
 
