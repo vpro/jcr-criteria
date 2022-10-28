@@ -1,18 +1,19 @@
+= Releasing
+
+Note that this is now automated via https://github.com/vpro/jcr-criteria/actions/workflows/release.yml[github actions].
+
+Basically this is how it goes:
+
 [source,bash]
 ----
-mvn -Pdeploy release:prepare release:perform -DreleaseVersion=2.7 -DdevelopmentVersion=2.8-SNAPSHOT
+mvn -Pdeploy release:prepare release:perform -B
 ----
-
 
 Snapshots are deployed to sonatype.
 
-[source,bash]
-----
-mvn -DaltDeploymentRepository=nexusvpro::http://nexus.vpro.nl/content/repositories/snapshots  deploy
----
-
 releases can be put quicker to nexus.vpro.nl like this:
 [source, bash]
+----
 git checkout 2.8
 mvn -DaltDeploymentRepository=nexusvpro::http://nexus.vpro.nl/content/repositories/releases  deploy
 ----
