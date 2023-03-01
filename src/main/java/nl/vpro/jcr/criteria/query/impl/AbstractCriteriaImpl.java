@@ -205,6 +205,7 @@ public abstract class AbstractCriteriaImpl implements TranslatableCriteria {
                 }
                 countCriteria.setBasePath(basePath);
                 countCriteria.setType(type);
+                countCriteria.setTimeZone(timeZone);
                 countCriteria.setSpellCheckString(spellCheckString);
 
                 expr = countCriteria.toExpression(language);
