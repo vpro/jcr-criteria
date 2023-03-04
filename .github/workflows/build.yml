@@ -29,6 +29,8 @@ jobs:
       run: mvn -B -fn
     - name: Publisher test results
       uses: EnricoMi/publish-unit-test-result-action@v2.4.2
+      with:
+        junit_files: "**/target/surefire-reports/*.xml"
     - name: Publish to codecov
       uses: codecov/codecov-action@v3
       continue-on-error: true
