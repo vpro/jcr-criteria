@@ -30,6 +30,7 @@
     </developer>
   </developers>
 
+
   <scm>
     <connection>scm:git:${project.scm.url}</connection>
     <developerConnection>scm:git:${project.scm.url}</developerConnection>
@@ -41,9 +42,9 @@
   <properties>
     <jcr.version>2.0</jcr.version>
     <slf4j.version>1.7.36</slf4j.version>
-    <jackrabbit.version>2.21.19</jackrabbit.version>
+    <jackrabbit.version>2.21.20</jackrabbit.version>
     <lombok.version>1.18.30</lombok.version>
-    <checker.framework.version>3.38.0</checker.framework.version>
+    <checker.framework.version>3.39.0</checker.framework.version>
     <java.version>8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -54,7 +55,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M9</version>
+        <version>3.1.2</version>
       </plugin>
 
       <plugin>
@@ -132,7 +133,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
-        <version>3.0.0-M7</version>
+        <version>3.0.1</version>
         <configuration>
           <branchName>${project.version}</branchName>
           <tagNameFormat>@{project.version}</tagNameFormat>
@@ -140,7 +141,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.5.0</version>
+        <version>3.6.0</version>
         <configuration>
           <doclint>none</doclint>
           <additionalJOption>-quiet</additionalJOption>
@@ -150,7 +151,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.8</version>
+        <version>0.8.11</version>
         <executions>
           <execution>
             <id>default-prepare-agent</id>
@@ -188,7 +189,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-deploy-plugin</artifactId>
-        <version>3.1.0</version>
+        <version>3.1.1</version>
       </plugin>
     </plugins>
   </build>
@@ -229,7 +230,7 @@
     <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct-processor</artifactId>
-      <version>1.5.3.Final</version>
+      <version>1.5.5.Final</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
