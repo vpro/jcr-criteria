@@ -44,7 +44,7 @@
     <slf4j.version>1.7.36</slf4j.version>
     <jackrabbit.version>2.21.20</jackrabbit.version>
     <lombok.version>1.18.30</lombok.version>
-    <checker.framework.version>3.39.0</checker.framework.version>
+    <checker.framework.version>3.40.0</checker.framework.version>
     <java.version>8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
