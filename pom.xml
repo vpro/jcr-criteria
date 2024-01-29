@@ -42,7 +42,7 @@
   <properties>
     <jcr.version>2.0</jcr.version>
     <slf4j.version>1.7.36</slf4j.version>
-    <jackrabbit.version>2.21.20</jackrabbit.version>
+    <jackrabbit.version>2.21.22</jackrabbit.version>
     <lombok.version>1.18.30</lombok.version>
     <checker.framework.version>3.40.0</checker.framework.version>
     <java.version>8</java.version>
@@ -265,7 +265,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.24.2</version>
+      <version>3.25.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
