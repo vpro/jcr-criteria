@@ -14,16 +14,15 @@ jobs:
        MAVEN_OPTS: -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 11
+    - name: Set up JDK 21
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
-        java-version: 11
-        server-id: vpro-ossrh
-        server-username: SONATYPE_USERNAME
-        server-password: SONATYPE_PASSWORD
+        java-version: s1
+        server-id: central
+        server-username: CENTRAL_USERNAME
+        server-password: CENTRAL_PASSWORD
         gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
-        gpg-passphrase: GPG_SECRET_KEY_PASSPHRASE
         cache: maven
     - name: Build with Maven
       run: mvn -B -fn
@@ -37,7 +36,7 @@ jobs:
       run: mvn -B -Pdeploy  -DskipTests=true deploy
       if: ${{ github.event_name == 'push' }}
       env:
-        SONATYPE_USERNAME: vpro
-        SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-        GPG_SECRET_KEY_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
+        CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+        CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
+        MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
 
