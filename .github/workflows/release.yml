@@ -13,12 +13,11 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: 11
-          server-id: vpro-ossrh
-          server-username: SONATYPE_USERNAME
-          server-password: SONATYPE_PASSWORD
+          java-version: 21
+          server-id: central
+          server-username: CENTRAL_USERNAME
+          server-password: CENTRAL_USERNAME
           gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
-          gpg-passphrase: GPG_SECRET_KEY_PASSPHRASE
           cache: maven
       - uses: oleksiyrudenko/gha-git-credentials@v2.1.1
         with:
@@ -29,6 +28,6 @@ jobs:
       - name: Release
         run: mvn -Pdeploy --batch-mode  -Darguments=-DskipTests  release:prepare release:perform
         env:
-          SONATYPE_USERNAME: vpro
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          GPG_SECRET_KEY_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+          CENTRAL_PASSWORD: ${{ secrets.CENTRAL_USERNAME }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
