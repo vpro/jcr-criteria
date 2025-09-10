@@ -42,7 +42,7 @@
   <properties>
     <jcr.version>2.0</jcr.version>
     <slf4j.version>2.0.17</slf4j.version>
-    <jackrabbit.version>2.22.1</jackrabbit.version>
+    <jackrabbit.version>2.22.2</jackrabbit.version>
     <lombok.version>1.18.38</lombok.version>
     <checker.framework.version>3.49.5</checker.framework.version>
     <java.version>8</java.version>
