@@ -41,8 +41,8 @@
 
   <properties>
     <jcr.version>2.0</jcr.version>
-    <slf4j.version>2.0.16</slf4j.version>
-    <jackrabbit.version>2.22.0</jackrabbit.version>
+    <slf4j.version>2.0.17</slf4j.version>
+    <jackrabbit.version>2.22.2</jackrabbit.version>
     <lombok.version>1.18.40</lombok.version>
     <checker.framework.version>3.50.0</checker.framework.version>
     <java.version>8</java.version>
@@ -276,7 +276,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.26.3</version>
+      <version>3.27.3</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -354,5 +354,15 @@
     </profile>
   </profiles>
 
+  <distributionManagement>
+    <snapshotRepository>
+      <id>vpro-ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>vpro-ossrh-release</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
 
 </project>
