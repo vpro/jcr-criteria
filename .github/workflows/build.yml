@@ -28,6 +28,8 @@ jobs:
       run: mvn -B -fn
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
+      with:
+        files: "**/target/surefire-reports/*.xml"
     - name: Publish to codecov
       uses: codecov/codecov-action@v5
       continue-on-error: true
