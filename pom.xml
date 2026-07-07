@@ -12,7 +12,7 @@
   <licenses>
     <license>
       <name>Apache 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
     </license>
   </licenses>
 
@@ -42,10 +42,10 @@
   <properties>
     <jcr.version>2.0</jcr.version>
     <slf4j.version>2.0.17</slf4j.version>
-    <jackrabbit.version>2.22.2</jackrabbit.version>
-    <lombok.version>1.18.40</lombok.version>
-    <checker.framework.version>3.50.0</checker.framework.version>
-    <java.version>8</java.version>
+    <jackrabbit.version>2.22.3</jackrabbit.version>
+    <lombok.version>1.18.46</lombok.version>
+    <checker.framework.version>4.2.1</checker.framework.version>
+    <java.version>21</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
@@ -55,74 +55,28 @@
     <plugins>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.1.2</version>
+        <version>3.2.5</version>
       </plugin>
 
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
+        <version>3.15.0</version>
         <configuration>
-          <source>11</source>
-          <target>11</target>
+          <source>21</source>
+          <target>21</target>
           <annotationProcessorPaths>
             <path>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
               <version>${lombok.version}</version>
             </path>
-          <!--  <path>
-              <groupId>org.checkerframework</groupId>
-              <artifactId>checker</artifactId>
-              <version>${checker.framework.version}</version>
-            </path>-->
           </annotationProcessorPaths>
-        <!--  <annotationProcessors>
-            <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>
-            <annotationProcessor>org.checkerframework.checker.interning.InterningChecker</annotationProcessor>
-            <annotationProcessor>org.checkerframework.checker.fenum.FenumChecker</annotationProcessor>
-            <annotationProcessor>org.checkerframework.checker.formatter.FormatterChecker</annotationProcessor>
-          </annotationProcessors>-->
           <showDeprecation>true</showDeprecation>
         </configuration>
-        <executions>
-          <execution>
-            <id>default-compile</id>
-            <configuration>
-              <!-- compile everything to ensure module-info contains right entries -->
-              <source>11</source>
-              <release>11</release>
-            </configuration>
-          </execution>
-          <execution>
-            <id>base-compile</id>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-            <!-- recompile everything for target VM except the module-info.java -->
-            <configuration>
-              <excludes>
-                <exclude>module-info.java</exclude>
-              </excludes>
-              <source>${java.version}</source>
-              <release>${java.version}</release>
-            </configuration>
-          </execution>
-          <execution>
-            <id>test-compile</id>
-            <phase>process-test-sources</phase>
-            <goals>
-              <goal>testCompile</goal>
-            </goals>
-            <configuration>
-              <source>11</source>
-              <release>11</release>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>3.5.0</version>
         <configuration>
           <archive>
             <manifestEntries>
@@ -133,7 +87,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
-        <version>3.0.1</version>
+        <version>3.3.1</version>
         <configuration>
           <branchName>${project.version}</branchName>
           <tagNameFormat>@{project.version}</tagNameFormat>
@@ -141,7 +95,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.6.0</version>
+        <version>3.12.0</version>
         <configuration>
           <doclint>none</doclint>
           <additionalJOption>-quiet</additionalJOption>
@@ -151,7 +105,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.11</version>
+        <version>0.8.15</version>
         <executions>
           <execution>
             <id>default-prepare-agent</id>
@@ -170,7 +124,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.2.1</version>
+        <version>3.6.3</version>
         <executions>
           <execution>
             <id>enforce-maven</id>
@@ -188,13 +142,9 @@
         </executions>
       </plugin>
       <plugin>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>3.1.1</version>
-      </plugin>
-      <plugin>
         <groupId>org.sonatype.central</groupId>
         <artifactId>central-publishing-maven-plugin</artifactId>
-        <version>0.8.0</version>
+        <version>0.11.0</version>
         <extensions>true</extensions>
         <configuration>
           <publishingServerId>central</publishingServerId>
@@ -218,18 +168,12 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.18.0</version>
+      <version>3.20.0</version>
     </dependency>
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>7.11.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>${slf4j.version}</version>
+      <version>7.12.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -291,6 +235,13 @@
       <version>10.17.1.0</version> <!-- 10.16 is java 17 -->
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>nl.mmprogrami</groupId>
+      <artifactId>setup-log4j2</artifactId>
+      <version>1.6</version>
+      <scope>test</scope>
+      <classifier>test</classifier>
+    </dependency>
 
   </dependencies>
 
@@ -302,19 +253,8 @@
         <defaultGoal>deploy</defaultGoal>
         <plugins>
           <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.13</version>
-            <extensions>true</extensions>
-            <configuration>
-              <serverId>vpro-ossrh-release</serverId>
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
-            </configuration>
-          </plugin>
-          <plugin>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>3.0.1</version>
+            <version>3.2.8</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -327,7 +267,7 @@
           </plugin>
           <plugin>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.2.1</version>
+            <version>3.4.0</version>
             <executions>
               <execution>
                 <id>attach-sources</id>
@@ -353,16 +293,5 @@
       </build>
     </profile>
   </profiles>
-
-  <distributionManagement>
-    <snapshotRepository>
-      <id>vpro-ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>vpro-ossrh-release</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
 
 </project>
