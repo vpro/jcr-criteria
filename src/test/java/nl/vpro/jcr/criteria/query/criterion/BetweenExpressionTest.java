@@ -1,6 +1,6 @@
 package nl.vpro.jcr.criteria.query.criterion;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.testng.annotations.Test;
 
 import nl.vpro.jcr.criteria.advanced.impl.AdvancedCriteriaImpl;

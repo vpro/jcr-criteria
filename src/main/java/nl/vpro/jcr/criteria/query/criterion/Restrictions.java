@@ -27,7 +27,7 @@ import java.util.*;
 import javax.jcr.Node;
 import javax.validation.constraints.Size;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import nl.vpro.jcr.criteria.query.xpath.utils.XPathTextUtils;
 

@@ -5,7 +5,7 @@
 module nl.vpro.jcr.criteria {
 
 
-    requires static org.checkerframework.checker.qual;
+    requires static transitive org.jspecify;
     requires static lombok;
 
     requires jcr;

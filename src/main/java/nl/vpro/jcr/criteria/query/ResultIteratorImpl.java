@@ -29,7 +29,7 @@ import javax.jcr.RangeIterator;
 import javax.jcr.query.Row;
 import javax.jcr.query.RowIterator;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jspecify.annotations.NonNull;
 
 
 /**

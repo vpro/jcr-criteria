@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Calendar;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
 

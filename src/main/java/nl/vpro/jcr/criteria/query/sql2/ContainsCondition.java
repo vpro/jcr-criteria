@@ -2,7 +2,7 @@ package nl.vpro.jcr.criteria.query.sql2;
 
 import lombok.Data;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * @author Michiel Meeuwissen

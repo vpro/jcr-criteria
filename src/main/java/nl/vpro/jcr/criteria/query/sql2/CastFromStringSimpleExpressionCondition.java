@@ -1,6 +1,6 @@
 package nl.vpro.jcr.criteria.query.sql2;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import nl.vpro.jcr.criteria.query.criterion.Op;
 

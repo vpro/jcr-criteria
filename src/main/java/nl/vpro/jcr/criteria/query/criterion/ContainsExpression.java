@@ -21,7 +21,7 @@ package nl.vpro.jcr.criteria.query.criterion;
 
 import lombok.EqualsAndHashCode;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import nl.vpro.jcr.criteria.query.Criteria;
 import nl.vpro.jcr.criteria.query.JCRQueryException;

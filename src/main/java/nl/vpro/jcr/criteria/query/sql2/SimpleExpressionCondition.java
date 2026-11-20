@@ -5,7 +5,7 @@ import lombok.SneakyThrows;
 import java.time.ZoneId;
 import java.util.Calendar;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import org.apache.jackrabbit.value.ValueFactoryImpl;
 
